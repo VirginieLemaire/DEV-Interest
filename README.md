@@ -1,3 +1,0 @@
-# DEV <Interest>
-
-## Présentation
