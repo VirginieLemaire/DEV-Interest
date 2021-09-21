@@ -1,5 +1,6 @@
 // == Import : npm
 import PropTypes from 'prop-types';
+import { changeField } from '../../../action/user';
 
 // == Import : local
 import './field.scss';
@@ -10,11 +11,8 @@ const Field = ({
   type,
   name,
   placeholder,
-  onChange,
+  handleChange,
 }) => {
-  const handleChange = (evt) => {
-    onChange(evt.target.value, name);
-  };
 
   const inputId = `field-${name}`;
 
@@ -47,7 +45,7 @@ Field.propTypes = {
   type: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 // Valeurs par défaut pour les props

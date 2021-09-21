@@ -2,23 +2,28 @@
 
 import { useSelector } from 'react-redux';
 
+import './app.scss';
+
 import Footer from '../Footer';
 import Header from '../Header';
-import './app.scss';
+import ConnexionModal from '../ConnexionModal';
+
 
 // == Composant
 const App = () => {
-  const cards = useSelector((state) => state.cards.cards)
+  const connexionModal = useSelector((state) => state.user.connexionModal);
 
-  console.log(cards);
-  return(
-  <div className="app">
-    <div className="content-wrap">
-      <Header />
+  return (
+    <div className="app">
+      <div className={connexionModal ? 'main__page blur' : 'main__page'}>
+        <div className="content-wrap">
+          <Header />
+        </div>
+        <Footer />
+      </div>
+      <ConnexionModal />
     </div>
-    <Footer />  
-  </div>
-);
+  );
 }
 // == Export
 export default App;

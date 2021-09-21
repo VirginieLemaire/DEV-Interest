@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { changeSearchField } from '../../action/user';
+import { changeField, showConnexionModal } from '../../action/user';
 import { fetchCards } from '../../action/cards';
 
 import './header.scss';
@@ -14,7 +14,7 @@ import Button from '../GenericComponents/Button';
 const Header = () => {
   const dispatch = useDispatch();
 
-  const currentSearch = useSelector((state) => state.user.currentSearch);
+  const search = useSelector((state) => state.user.search);
   const loading = useSelector((state) => state.cards.loading);
 
   const handleSearchSubmit = (event) => {
@@ -22,12 +22,12 @@ const Header = () => {
     dispatch(fetchCards());
   }
 
-  const handleSubmitChange = (event) => {
-    dispatch(changeSearchField(event.target.value))
+  const handleSearchChange = (event) => {
+    dispatch(changeField(event.target.value, 'search'))
   }
 
   const handleConnexionButtonClick = (event) => {
-    event.preventDefault();
+    dispatch(showConnexionModal());
   }
 
   return (
@@ -40,9 +40,9 @@ const Header = () => {
       className="header__search-bar"
       placeholder='Search...'
       handleSubmit={handleSearchSubmit}
-      handleChange={handleSubmitChange}
+      handleChange={handleSearchChange}
       size="half"
-      value={currentSearch}
+      value={search}
     />
     <Button 
       className="header__button"
