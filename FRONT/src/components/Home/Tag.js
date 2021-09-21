@@ -2,9 +2,9 @@ import './home.scss';
 import PropTypes from 'prop-types';
 
 const Tag = ({ name, color }) => (
-  <div className="home__tags-container__tag" style={{ background: color }}>
+  <a href="/" className="home__tags-container__tag" style={{ background: color }}>
     {name}
-  </div>
+  </a>
 );
 
 Tag.propTypes = {
