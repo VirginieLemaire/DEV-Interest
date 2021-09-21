@@ -7,10 +7,10 @@
   margin-top: 4rem;
   color: vars.$text-color;
 
-
   &__catch-title {
     font-size: 2rem;
     font-style: italic;
+    line-height: 2.5rem;
   }
 
   &__break {
@@ -20,6 +20,7 @@
   &__catch-phrase {
     font-size: 1.5rem;
     font-style: italic;
+    line-height: 2rem;
   }
 
   &__tags-container {

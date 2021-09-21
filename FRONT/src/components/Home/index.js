@@ -13,16 +13,18 @@ const Home = ({
 
   return (
     <div className="home">
-      <p className="home__catch-title">Découvre de nouvelles choses</p>
+      {
+        isConnected ? <p className="home__catch-title">Salut {user.name}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
+      }
       <SearchBar
         loading={false}
-        placeholder="Saisis un mot clé..."
+        placeholder={isConnected ? 'Découvre de nouvelles choses' : 'Saisis un mot clé...'}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         value=""
       />
       <hr className="home__break" />
-      <p className="home__catch-phrase">...et partage tes bons plans que tu peux garder en favoris!</p>
+      {!isConnected ? <p className="home__catch-phrase">...et partage tes bons plans que tu peux garder en favoris!</p> : null}
       <div className="home__button-container">
         <Button
           color
