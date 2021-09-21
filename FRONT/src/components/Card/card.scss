@@ -2,7 +2,7 @@
 
 .card{
   width: 300px;
-  border-radius: vars.$border-radius-input;
+  // border-radius: vars.$border-radius-input;
   background-color: vars.$white-color;
   margin: 0 2rem;
   box-shadow: 4px 24px 60px rgba(0,0,0, 0.15);
@@ -12,7 +12,7 @@
   }
 
   &__image{
-    border-radius: vars.$border-radius-input vars.$border-radius-input 0 0;
+    // border-radius: vars.$border-radius-input vars.$border-radius-input 0 0;
     height: 350px;
     width: 100%;
     object-fit: cover;
@@ -98,13 +98,14 @@
       padding: 0;
       &:hover{
         font-weight: bold;
+        color: vars.$primary-color-plus;
       }
     }
 
     &.bookmark{
       font-size: 1.2rem;
       &:hover{
-
+        color: vars.$primary-color-plus;
       }
     }
   }
