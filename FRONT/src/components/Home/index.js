@@ -2,47 +2,9 @@ import './home.scss';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import Tag from './Tag';
+import { isConnected, user, categories, techs } from '../../../public/fakeDatas';
 
-const categories = [
-  {
-    name: 'Approfondir',
-  },
-  {
-    name: 'Apprendre',
-  },
-  {
-    name: 'Me challenger',
-  },
-];
-
-const techs = [
-  {
-    name: 'HTML',
-    color: '#eaa8a8',
-  },
-  {
-    name: 'CSS',
-    color: '#00bfff',
-  },
-  {
-    name: 'JavaScript',
-    color: '#e0e000',
-  },
-  {
-    name: 'PHP',
-    color: '#6270ea',
-  },
-  {
-    name: 'Python',
-    color: '#f9a95e',
-  },
-  {
-    name: 'Mongo',
-    color: '#069101',
-  },
-];
-
-const Home = () => {
+const Home = ({ isConnected, user, categories, techs }) => {
   const handleSubmit = () => console.log('Submit');
   const handleChange = () => console.log('Change');
   const handleClick = () => console.log('Click');
