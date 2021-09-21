@@ -2,6 +2,18 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP TABLE IF EXISTS 
+    user_prefer_card, 
+    card_has_category, 
+    card_has_tech, 
+    "card", 
+    "category",
+    "tech", 
+    "user", 
+    "type", 
+    "language", 
+    "level", 
+    "role"
+;
 
 COMMIT;
