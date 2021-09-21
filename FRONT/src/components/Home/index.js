@@ -22,15 +22,15 @@ const techs = [
   },
   {
     name: 'CSS',
-    color: '#6be2ef',
+    color: '#00bfff',
   },
   {
     name: 'JavaScript',
-    color: '#e7fc5f',
+    color: '#e0e000',
   },
   {
     name: 'PHP',
-    color: '6270ea',
+    color: '#6270ea',
   },
   {
     name: 'Python',
@@ -38,7 +38,7 @@ const techs = [
   },
   {
     name: 'Mongo',
-    color: '#61f95e',
+    color: '#069101',
   },
 ];
 
@@ -57,14 +57,16 @@ const Home = () => {
         handleChange={handleChange}
         value=""
       />
-      <hr />
+      <hr className="home__break" />
       <p className="home__catch-phrase">...et partage tes bons plans que tu peux garder en favoris!</p>
-      <Button
-        color
-        styling="full"
-        handleClick={handleClick}
-        content="Proposer une nouvelle ressource"
-      />
+      <div className="home__button-container">
+        <Button
+          color
+          styling="full"
+          handleClick={handleClick}
+          content="Proposer une nouvelle ressource"
+        />
+      </div>
       <div className="home__tags-container">
         {
           categories.map((category) => (
