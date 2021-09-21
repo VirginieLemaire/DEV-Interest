@@ -1,0 +1,60 @@
+@use '../../styles/vars';
+
+.button{
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: vars.$border-radius-input;
+  border: none;
+  white-space: nowrap;
+  
+  &.full{
+
+    &.color{
+      background-color: vars.$primary-color;
+      color: vars.$white-color;
+
+      &:hover{
+        background-color: vars.$primary-color-plus;
+        color: vars.$white-color;
+      }
+    }
+
+    &.no-color{
+      background-color: vars.$light-color;
+      color: vars.$text-color;
+      &:hover{
+        background-color: vars.$light-color-plus;
+        color: vars.$white-color;
+      }
+    }
+  }
+
+  &.outline{
+
+    &.color{
+      background-color: transparent;
+      color: vars.$primary-color;
+      border: 2px solid vars.$primary-color;
+
+      &:hover{
+        background-color: vars.$primary-color;
+        color: vars.$white-color;
+      }
+    }
+
+    &.no-color{
+      background-color: transparent;
+      color: vars.$light-color-plus;
+      border: 2px solid vars.$light-color-plus;
+      &:hover{
+        background-color: vars.$light-color-plus;
+        color: vars.$text-color;
+      }
+    }
+  }
+
+  &:hover{
+    color: vars.$white-color;
+    background-color: vars.$primary-color;
+  }
+}
