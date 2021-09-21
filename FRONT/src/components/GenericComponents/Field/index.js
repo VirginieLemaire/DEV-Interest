@@ -1,6 +1,5 @@
 // == Import : npm
 import PropTypes from 'prop-types';
-import { changeField } from '../../../action/user';
 
 // == Import : local
 import './field.scss';
