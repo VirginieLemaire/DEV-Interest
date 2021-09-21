@@ -1,10 +1,12 @@
 import './home.scss';
+import PropTypes from 'prop-types';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import Tag from './Tag';
-import { isConnected, user, categories, techs } from '../../../public/fakeDatas';
 
-const Home = ({ isConnected, user, categories, techs }) => {
+const Home = ({
+  isConnected, user, categories, techs,
+}) => {
   const handleSubmit = () => console.log('Submit');
   const handleChange = () => console.log('Change');
   const handleClick = () => console.log('Click');
@@ -43,6 +45,27 @@ const Home = ({ isConnected, user, categories, techs }) => {
       </div>
     </div>
   );
+};
+
+Home.propTypes = {
+  isConnected: PropTypes.bool.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+  techs: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      color: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
 };
 
 export default Home;
