@@ -1,0 +1,53 @@
+@use '../../styles/vars';
+
+.footer{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  margin-top: 1rem;
+
+  &__social-links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    height: 2rem;
+    border-top: 1px solid vars.$light-color;
+    width: 100%;
+    padding: 1.2rem;
+    &>a:hover{
+      color: vars.$primary-color;
+    }
+  }
+
+  &__compulsory-links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 1rem;
+    background-color: vars.$light-color;
+    width: 100%;
+    font-size: 0.8rem;
+  }
+}
+
+.footer_link:hover{
+  color: vars.$primary-color;
+}
+
+@media (max-width: 640px) {
+  .footer{
+    
+    &__compulsory-links{
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+  }
+}
