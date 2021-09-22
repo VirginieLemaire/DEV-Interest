@@ -7,6 +7,7 @@ export const initialState = {
   password: 'You',
   username: 'Roger',
   bookmarks: [],
+  isConnected: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
