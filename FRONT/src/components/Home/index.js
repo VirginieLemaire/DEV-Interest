@@ -51,6 +51,7 @@ const Home = () => {
           styling="full"
           handleClick={handleClick}
           content="Proposer une nouvelle ressource"
+          fontSize="medium"
         />
       </div>
       <div className="home__tags-container">
