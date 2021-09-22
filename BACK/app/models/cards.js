@@ -6,7 +6,20 @@ class Cards {
             this[proname] = obj[proname];
         }
     }
-    static async findAllCards(limit,skip) {
+    static async findAllCards() {
+        try {
+            
+            const {rows} = await client.query(`SELECT * FROM card`);
+           
+                return rows.map(row => new Cards(row));
+            
+                
+        }catch(error) {
+            console.log(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+    static async findQueryAllCards(limit,skip) {
         try {
             
             const {rows} = await client.query(`SELECT * FROM card LIMIT ${limit} OFFSET ${skip}`);
