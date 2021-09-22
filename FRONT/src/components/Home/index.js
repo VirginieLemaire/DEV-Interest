@@ -22,6 +22,7 @@ const Home = ({
         isConnected ? <p className="home__catch-title">Salut {username}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
       }
       <SearchBar
+        fontSize="medium"
         size="half"
         loading={false}
         placeholder={isConnected ? 'Découvre de nouvelles choses' : 'Saisis un mot clé...'}
