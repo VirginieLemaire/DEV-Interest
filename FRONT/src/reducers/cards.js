@@ -29,7 +29,6 @@ const reducer = (state = initialState, action = {}) => {
         cards: action.cards,
         loading: false,
       }
-
     default:
       return state;
   }
