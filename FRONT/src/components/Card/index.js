@@ -4,20 +4,17 @@ import { Link } from 'react-router-dom';
 
 import './card.scss';
 
-
 // == Composant
-const Card = ({ card }) => {
-
-  return (
-    <div className="card">
+const Card = ({ card }) => (
+  <div className="card">
     <Link className="card_link" to={`/cards/${card.slug}/${card.id}`}>
       <img className="card__image" src={card.image} alt={card.title} />
       <div className="card__buttons-group">
-      <a href={card.link} target="_blank" rel="noreferrer">
-        <button className="card__button media" type="button">{card.media}</button>
-      </a>
-      <button className="card__button bookmark" type="button"><BsBookmark /></button>
-    </div>
+        <a href={card.link} target="_blank" rel="noreferrer">
+          <button className="card__button media" type="button">{card.media}</button>
+        </a>
+        <button className="card__button bookmark" type="button"><BsBookmark /></button>
+      </div>
       <h2 className="card__title">{card.title}</h2>
       <h3 className="card__website">{card.website}</h3>
       <div className="card__meta">
@@ -27,12 +24,12 @@ const Card = ({ card }) => {
           </div>
           <div className="card__tags-techno">
             {
-            card.technos.map(
-              (techno) => (
-                <aside key={techno} className={`card__tags-techno--item ${techno.toLowerCase()}`}>{techno}</aside>
-              ),
-            )
-          }
+              card.technos.map(
+                (techno) => (
+                  <aside key={techno} className={`card__tags-techno--item ${techno.toLowerCase()}`}>{techno}</aside>
+                ),
+              )
+            }
           </div>
         </div>
         <div className={`card__level ${card.level.toLowerCase()}`}>
@@ -41,8 +38,8 @@ const Card = ({ card }) => {
       </div>
     </Link>
   </div>
-  );
-}
+);
+
 
 Card.propTypes = {
   card: PropTypes.shape({

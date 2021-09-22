@@ -1,20 +1,23 @@
 @use '../../styles/vars';
 
 .home {
+  width: 80%;
+  margin: auto;
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  margin-top: 4rem;
+  align-items: center;
   color: vars.$text-color;
 
   &__catch-title {
+    margin-top: 4rem;
     font-size: 2rem;
     font-style: italic;
     line-height: 2.5rem;
   }
 
   &__break {
-    width: 50%;
+    width: 20%;
   }
 
   &__catch-phrase {
@@ -39,13 +42,18 @@
   }
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+@media (max-width: 640px) {
   .home {
+    max-width: 100%;
     padding: 1rem;
     gap: 3rem;
+    text-align: center;
+
+    &__catch-title {
+      margin-top: 0;
+    }
 
     &__tags-container {
-      gap: 0;
       overflow-x: scroll;
       justify-content: flex-start;
       margin-right: -1rem;
@@ -56,4 +64,5 @@
       }
     }
   }
+
 }

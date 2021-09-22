@@ -13,6 +13,6 @@ Tag.propTypes = {
 };
 
 Tag.defaultProps = {
-  color: '#058EA7',
+  color: '#7a7676',
 };
 export default Tag;

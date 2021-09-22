@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import './app.scss';
 import {
-  isConnected, user, categories, techs,
+  isConnected, categories, techs,
 } from '../../../public/fakeDatas';
 
 import Home from '../Home';
@@ -24,13 +24,13 @@ import UserAccount from '../UserAccount';
 
 const App = () => {
   console.log(cards);
-  
+
   const connexionModal = useSelector((state) => state.user.connexionModal);
-  const cards = useSelector((state) => state.cards.cards)
-  const user = useSelector((state) => state.user)
+  const cards = useSelector((state) => state.cards.cards);
+  const user = useSelector((state) => state.user);
 
   return (
-   <div className="app">
+    <div className="app">
       <div className={connexionModal ? 'main__page blur' : 'main__page'}>
         <div className="content-wrap">
           <Header />
@@ -40,22 +40,22 @@ const App = () => {
             </Route>
             <Route exac path="/search">
               {
-              cards.map(
-                (card) => (
-                  <Card key={card.id} card={card}/>
-                )
-              )
-              }
-            </Route>
-              {
                 cards.map(
                   (card) => (
-                    <Route key={card.id} path={`/card/${card.slug}/${card.id}`} exact>
-                      <CardDetails />
-                    </Route>
+                    <Card key={card.id} card={card} />
                   )
                 )
               }
+            </Route>
+            {
+              cards.map(
+                (card) => (
+                  <Route key={card.id} path={`/card/${card.slug}/${card.id}`} exact>
+                    <CardDetails />
+                  </Route>
+                )
+              )
+            }
             <Route path="/add-card" exact>
               <AddCard />
             </Route>
@@ -76,6 +76,6 @@ const App = () => {
       <ConnexionModal />
     </div>
   );
-}
+};
 
 export default App;
