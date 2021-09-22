@@ -1,4 +1,5 @@
 const {Router} = require('express');
+
 const cardController = require('./controllers/cardController');
 const userController = require('./controllers/userController');
 
@@ -9,5 +10,6 @@ router.post('/cards',cardController.findQueryAllCards);
 
 //USERS
 router.get('/users/:id', userController.findById);
+
 
 module.exports = router;
