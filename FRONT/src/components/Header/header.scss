@@ -1,0 +1,35 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 2rem;
+    align-items: center;
+    
+    &__logo{
+        height: 2rem;
+    }
+
+    &__search-bar{
+
+    }
+
+    &__button{
+
+    }
+}
+
+@media (max-width: 640px) {
+    .header{
+        flex-direction: column;
+        gap: 2rem;
+        margin: 2rem 0;
+        
+        &__logo{
+            height: 1.3rem;
+        }
+
+        &__button{
+
+        }
+    }
+}

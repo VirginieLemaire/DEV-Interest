@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './search-bar.scss';
 
+// la propriété loading est a false par défaut et si passée à vrai affiche un spinner
 // la propriété "size" est facultative et a comme valeur par défaut une width de 100%,
 // "size" peut prendre 3 valeurs : "quarter", "half", "three-quarter"
 // qui appliquent respectivement 25%, 50%, 75% de width
@@ -34,11 +35,12 @@ SearchBar.propTypes = {
   handleChange: PropTypes.func.isRequired,
   size: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
 };
 
 SearchBar.defaultProps = {
   size: 'full',
+  value: '',
 };
 
 // == Export
