@@ -1,6 +1,8 @@
 // == Import
 
 import { useSelector } from 'react-redux';
+
+import Footer from '../Footer';
 import Header from '../Header';
 import './app.scss';
 
@@ -11,7 +13,10 @@ const App = () => {
   console.log(cards);
   return(
   <div className="app">
-    <Header />
+    <div className="content-wrap">
+      <Header />
+    </div>
+    <Footer />  
   </div>
 );
 }
