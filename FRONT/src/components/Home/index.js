@@ -3,18 +3,21 @@ import PropTypes from 'prop-types';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import Tag from './Tag';
+import { useSelector } from 'react-redux';
 
 const Home = ({
-  isConnected, user, categories, techs,
+  isConnected, categories, techs,
 }) => {
   const handleSubmit = () => console.log('Submit');
   const handleChange = () => console.log('Change');
   const handleClick = () => console.log('Click');
 
+  const username = useSelector((state) => state.user.username)
+
   return (
     <div className="home">
       {
-        isConnected ? <p className="home__catch-title">Salut {user.name}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
+        isConnected ? <p className="home__catch-title">Salut {username}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
       }
       <SearchBar
         loading={false}
@@ -51,9 +54,6 @@ const Home = ({
 
 Home.propTypes = {
   isConnected: PropTypes.bool.isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,

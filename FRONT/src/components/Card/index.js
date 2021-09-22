@@ -10,7 +10,7 @@ const Card = ({ card }) => {
 
   return (
     <div className="card">
-    <Link className="card_link" to={`/cards/${card.slug}`}>
+    <Link className="card_link" to={`/cards/${card.slug}/${card.id}`}>
       <img className="card__image" src={card.image} alt={card.title} />
       <div className="card__buttons-group">
       <a href={card.link} target="_blank" rel="noreferrer">
