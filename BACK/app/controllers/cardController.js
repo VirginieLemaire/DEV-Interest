@@ -1,4 +1,4 @@
-const Cards = require('../models/cards');
+const Cards = require('../models/card');
 
 const cardsController = {
     findAllCards: async (req, res) => {
