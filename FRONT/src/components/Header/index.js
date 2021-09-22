@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 import { changeField, showConnexionModal } from '../../action/user';
 import { fetchCards } from '../../action/cards';
@@ -13,12 +14,14 @@ import Button from '../GenericComponents/Button';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const search = useSelector((state) => state.user.search);
   const loading = useSelector((state) => state.cards.loading);
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
+    history.push('/search');
     dispatch(fetchCards());
   }
 
