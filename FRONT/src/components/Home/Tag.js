@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Tag = ({ name, color }) => (
   <Link className="tag_link" to="">
-    <div className="home__tags-container__tag" style={{ background: color }}>
+    <div className="home__tags-content-wraper__tags-container__tag" style={{ background: color }}>
       {name}
     </div>
   </Link>

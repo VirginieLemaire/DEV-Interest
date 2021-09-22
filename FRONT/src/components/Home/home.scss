@@ -16,6 +16,10 @@
     line-height: 2.5rem;
   }
 
+  &__searchbar-container {
+    width: 40%;
+  }
+
   &__break {
     width: 20%;
   }
@@ -26,18 +30,21 @@
     line-height: 2rem;
   }
 
-  &__tags-container {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    color: vars.$light-color;
-    font-size: .8rem;
-    font-weight: bold;
+  &__tags-content-wraper {
 
-    &__tag {
-      border-radius: vars.$border-radius-input;
-      padding: .5rem 1rem;
-      white-space: nowrap;
+    &__tags-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      color: vars.$light-color;
+      font-size: .8rem;
+      font-weight: bold;
+
+      &__tag {
+        border-radius: vars.$border-radius-input;
+        padding: .5rem 1rem;
+        white-space: nowrap;
+      }
     }
   }
 
@@ -51,25 +58,31 @@
 
 @media (max-width: 640px) {
   .home {
-    max-width: 100%;
-    padding: 1rem;
+    width: 100%;
     gap: 3rem;
-    text-align: center;
+    overflow-x: hidden;
 
     &__catch-title {
       margin-top: 0;
     }
 
-    &__tags-container {
-      overflow-x: scroll;
-      justify-content: flex-start;
-      margin-right: -1rem;
-      margin-left: -1rem;
+    &__searchbar-container {
+      width: 80%;
+    }
 
-      &__tag {
+    &__tags-content-wraper {
+      overflow: auto;
+
+      &__tags-container {
+        gap: 0;
+        justify-content: flex-start;
+        margin-right: -1rem;
         margin-left: 1rem;
+
+        &__tag {
+          margin-left: 1rem;
+        }
       }
     }
   }
-
 }

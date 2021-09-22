@@ -33,15 +33,17 @@ const Home = () => {
       {
         isConnected ? <p className="home__catch-title">Salut {username}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
       }
-      <SearchBar
-        fontSize="medium"
-        size="half"
-        loading={false}
-        placeholder={isConnected ? 'Découvre de nouvelles choses' : 'Saisis un mot clé...'}
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        value=""
-      />
+      <div className="home__searchbar-container">
+        <SearchBar
+          fontSize="medium"
+          // size="half"
+          loading={false}
+          placeholder={isConnected ? 'Découvre de nouvelles choses' : 'Saisis un mot clé...'}
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          value=""
+        />
+      </div>
       <hr className="home__break" />
       {!isConnected ? <p className="home__catch-phrase">...et partage tes bons plans que tu peux garder en favoris!</p> : null}
       <div className="home__button-container">
@@ -54,12 +56,14 @@ const Home = () => {
           fontSize="medium"
         />
       </div>
-      <div className="home__tags-container">
-        {
-          tags.map((tag) => (
-            <Tag key={tag} name={tag} />
-          ))
-        }
+      <div className="home__tags-content-wraper">
+        <div className="home__tags-content-wraper__tags-container">
+          {
+            tags.map((tag) => (
+              <Tag key={tag} name={tag} />
+            ))
+          }
+        </div>
       </div>
       <div className="home__cards-container">
         {

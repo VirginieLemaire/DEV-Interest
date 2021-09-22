@@ -1,11 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
-
 import './app.scss';
-import {
-  isConnected, categories, techs,
-} from '../../../public/fakeDatas';
 
 import Home from '../Home';
 import Footer from '../Footer';
@@ -14,17 +10,14 @@ import ConnexionModal from '../ConnexionModal';
 import Card from '../Card';
 import CardDetails from '../CardDetails';
 import Page404 from '../Page404';
-import UserBookmarks from '../UserBookmarks';
+import UserBookmarks from '../UserAccount/UserBookmarks';
 import AddCard from '../AddCard';
 import Legal from '../Legal';
 import TermsOfUse from '../TermsOfUse';
 import About from '../About';
 import UserAccount from '../UserAccount';
 
-
 const App = () => {
-  console.log(cards);
-
   const connexionModal = useSelector((state) => state.user.connexionModal);
   const cards = useSelector((state) => state.cards.cards);
   const user = useSelector((state) => state.user);
