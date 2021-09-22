@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import Tag from './Tag';
+import Card from '../Card';
 
 const Home = ({
   isConnected, categories, techs,
@@ -13,6 +14,7 @@ const Home = ({
   const handleClick = () => console.log('Click');
 
   const username = useSelector((state) => state.user.username);
+  const cards = useSelector((state) => state.cards.cards);
 
   return (
     <div className="home">
@@ -47,6 +49,13 @@ const Home = ({
         {
           techs.map((tech) => (
             <Tag key={tech.name} name={tech.name} color={tech.color} />
+          ))
+        }
+      </div>
+      <div className="home__cards-container">
+        {
+          cards.map((card) => (
+            <Card key={card.id} card={card} />
           ))
         }
       </div>

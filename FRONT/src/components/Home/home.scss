@@ -40,6 +40,14 @@
       white-space: nowrap;
     }
   }
+
+  &__cards-container {
+    width: 80%;
+    gap: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 640px) {
