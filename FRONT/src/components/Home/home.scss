@@ -1,0 +1,59 @@
+@use '../../styles/vars';
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin-top: 4rem;
+  color: vars.$text-color;
+
+  &__catch-title {
+    font-size: 2rem;
+    font-style: italic;
+    line-height: 2.5rem;
+  }
+
+  &__break {
+    width: 50%;
+  }
+
+  &__catch-phrase {
+    font-size: 1.5rem;
+    font-style: italic;
+    line-height: 2rem;
+  }
+
+  &__tags-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    color: vars.$light-color;
+    font-size: .8rem;
+    font-weight: bold;
+
+    &__tag {
+      border-radius: vars.$border-radius-input;
+      padding: .5rem;
+      white-space: nowrap;
+    }
+  }
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .home {
+    padding: 1rem;
+    gap: 3rem;
+
+    &__tags-container {
+      gap: 0;
+      overflow-x: scroll;
+      justify-content: flex-start;
+      margin-right: -1rem;
+      margin-left: -1rem;
+
+      &__tag {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

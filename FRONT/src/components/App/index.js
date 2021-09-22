@@ -1,15 +1,21 @@
 import { useSelector } from 'react-redux';
 
 import './app.scss';
+import {
+  isConnected, user, categories, techs,
+} from '../../../public/fakeDatas';
 
+import Home from '../Home';
 import Footer from '../Footer';
 import Header from '../Header';
+
 import ConnexionModal from '../ConnexionModal';
 import Card from '../Card';
 
 
-// == Composant
 const App = () => {
+  console.log(cards);
+  
   const connexionModal = useSelector((state) => state.user.connexionModal);
   const cards = useSelector((state) => state.cards.cards)
 
@@ -18,6 +24,7 @@ const App = () => {
       <div className={connexionModal ? 'main__page blur' : 'main__page'}>
         <div className="content-wrap">
           <Header />
+          <Home isConnected={isConnected} user={user} categories={categories} techs={techs} />
           {
            cards.map(
              (card) => (
@@ -32,5 +39,5 @@ const App = () => {
     </div>
   );
 }
-// == Export
+
 export default App;
