@@ -1,3 +1,5 @@
+@use '../../styles/vars';
+
 .header{
     display: flex;
     justify-content: space-between;
@@ -16,6 +18,13 @@
     &__button{
 
     }
+}
+
+.user-button{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: vars.$primary-color;
 }
 
 @media (max-width: 640px) {

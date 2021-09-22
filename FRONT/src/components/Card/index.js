@@ -27,6 +27,7 @@ const Card = ({ card }) => (
           {
             // card.techs.map(
             //   (tech) => (
+            // eslint-disable-next-line max-len
             //     <aside key={tech} className={`card__tags-techno--item ${tech.toLowerCase()}`}>{tech}</aside>
             //   ),
             // )

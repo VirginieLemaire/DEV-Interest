@@ -1,4 +1,4 @@
-import { SAVE_CARDS } from '../action/cards';
+import { IS_LOADING, SAVE_CARDS } from '../action/cards';
 
 export const initialState = {
   cards: [],
@@ -14,6 +14,11 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         cards: action.cards,
         loading: false,
+      };
+    case IS_LOADING:
+      return {
+        ...state,
+        loading: !state.loading,
       };
     default:
       return state;

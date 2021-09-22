@@ -1,7 +1,8 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';
 
-import { changeField, showConnexionModal } from '../../action/user';
+import { changeField, showConnexionModal, userLogin, userLogout } from '../../action/user';
 import { fetchCards } from '../../action/cards';
 
 import './header.scss';
@@ -16,6 +17,8 @@ const Header = () => {
 
   const search = useSelector((state) => state.user.search);
   const loading = useSelector((state) => state.cards.loading);
+  const isLogged = useSelector((state) => state.user.isLogged);
+  const username = useSelector((state) => state.user.username);
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
@@ -29,7 +32,16 @@ const Header = () => {
 
   const handleConnexionButtonClick = () => {
     dispatch(showConnexionModal());
+    dispatch(userLogin());
   };
+
+  const handleUserButtonClick = (e) => {
+    e.preventDefault();
+  };
+
+  const handleLogoutButtonClick = () => {
+    dispatch(userLogout());
+  }
 
   return (
     <div className="header">
@@ -45,13 +57,34 @@ const Header = () => {
         size="half"
         value={search}
       />
-      <Button
-        className="header__button"
-        color
-        styling="full"
-        handleClick={handleConnexionButtonClick}
-        content="Se connecter"
-      />
+      { isLogged && (
+        <div className="user-button">
+          <Button
+            className="header__button"
+            color
+            styling="outline"
+            handleClick={handleLogoutButtonClick}
+            content="Déconnexion"
+          />
+          <Button
+            className="header__button"
+            color
+            styling="full"
+            handleClick={handleUserButtonClick}
+            content={`Hello ${username}!`}
+          />
+          <IoIosArrowDown />
+        </div>
+      )}
+      { !isLogged && (
+        <Button
+          className="header__button"
+          color
+          styling="full"
+          handleClick={handleConnexionButtonClick}
+          content="Se connecter"
+        />
+      )}
     </div>
   );
 };

@@ -17,7 +17,6 @@ export default (store) => (next) => (action) => {
             store.dispatch(saveCards(response.data));
           },
         );
-      store.dispatch(isLoading());
       next(action);
       break;
     default:

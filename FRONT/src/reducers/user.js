@@ -1,4 +1,4 @@
-import { CHANGE_FIELD, SHOW_CONNEXION_MODAL } from '../action/user';
+import { CHANGE_FIELD, SHOW_CONNEXION_MODAL, USER_LOGIN, USER_LOGOUT } from '../action/user';
 
 export const initialState = {
   search: '',
@@ -6,7 +6,7 @@ export const initialState = {
   email: '',
   password: '',
   username: 'Roger',
-  isLogged: true,
+  isLogged: false,
   bookmarks: [],
 };
 
@@ -21,6 +21,16 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         connexionModal: !state.connexionModal,
+      };
+    case USER_LOGIN:
+      return {
+        ...state,
+        isLogged: true,
+      };
+    case USER_LOGOUT:
+      return {
+        ...state,
+        isLogged: false,
       };
     default:
       return state;
