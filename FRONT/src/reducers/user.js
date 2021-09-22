@@ -1,11 +1,16 @@
+import { CHANGE_SEARCH_FIELD } from "../action/user";
+
 export const initialState = {
-  initialstate: '',
+  currentSearch: '',
 };
 
 const reducer = (state = initialState, action = {}) => {
-  // console.log('reducer recipes', state);
-  // dans un reducer qui a été combiné, on n'accède qu'à sa tranche de state
   switch (action.type) {
+    case CHANGE_SEARCH_FIELD:
+      return {
+        ...state,
+        currentSearch: action.value,
+      };
     default:
       return state;
   }

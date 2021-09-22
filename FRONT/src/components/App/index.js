@@ -1,18 +1,17 @@
 // == Import
-import Button from '../GenericComponents/Button';
+
+import { useSelector } from 'react-redux';
+import Header from '../Header';
 import './app.scss';
 
 // == Composant
 const App = () => {
-  
-  const handleClick = (e) =>{
-    e.preventDefault();
-  }
+  const cards = useSelector((state) => state.cards.cards)
 
+  console.log(cards);
   return(
   <div className="app">
-    <h1>Composant : App</h1>
-    <Button color styling="full" submit handleClick={handleClick} content="Se connecter" />
+    <Header />
   </div>
 );
 }
