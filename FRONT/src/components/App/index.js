@@ -33,5 +33,6 @@ const App = () => {
       <ConnexionModal />
     </div>
   );
+}
 
 export default App;
