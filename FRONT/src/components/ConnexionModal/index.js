@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { changeField, showConnexionModal } from '../../action/user';
@@ -12,6 +12,7 @@ import Button from '../GenericComponents/Button';
 
 const ConnexionModal = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const connexionModal = useSelector((state) => state.user.connexionModal);
 
@@ -19,15 +20,20 @@ const ConnexionModal = () => {
   const password = useSelector((state) => state.user.password);
 
   const handleEmailChange = (event) => {
-    dispatch(changeField(event.target.value, 'email'))
+    dispatch(changeField(event.target.value, 'email'));
   };
 
   const handlePasswordChange = (event) => {
-    dispatch(changeField(event.target.value, 'password'))
+    dispatch(changeField(event.target.value, 'password'));
   };
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     dispatch(showConnexionModal());
+  };
+
+  const handleRedirect = () => {
+    history.push('/');
+    handleClick();
   };
 
   if (!connexionModal) {
@@ -38,7 +44,7 @@ const ConnexionModal = () => {
     <div className="connexion-modal" onClick={handleClick}>
       <div className="connexion-modal__content" onClick={(e) => e.stopPropagation()}>
         <div className="connexion-modal__header">
-          <img className="connexion-modal__logo" src={logoCourt} alt="logo court" />
+          <img className="connexion-modal__logo" src={logoCourt} alt="logo court" onClick={handleRedirect} />
           <h4 className="connexion-modal__title">Se connecter</h4>
         </div>
         <div className="connexion-modal__body">
@@ -66,7 +72,7 @@ const ConnexionModal = () => {
           />
           <div className="connexion-modal__option">
             <div>Vous n'avez pas de compte ?</div>
-            <Link className="linky" to="/">S'inscrire</Link>
+            <Link className="linky" to="/signup" onClick={handleClick}>S'inscrire</Link>
           </div>
         </div>
       </div>

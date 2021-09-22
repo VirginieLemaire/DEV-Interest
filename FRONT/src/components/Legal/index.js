@@ -1,7 +1,7 @@
 import './legal.scss';
 
 const Legal = () => (
-  <div className='legal'>
+  <div className="legal">
     Legal
   </div>
 );

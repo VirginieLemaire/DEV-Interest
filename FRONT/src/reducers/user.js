@@ -1,11 +1,12 @@
-import { CHANGE_FIELD, CHANGE_SEARCH_FIELD, SHOW_CONNEXION_MODAL } from "../action/user";
+import { CHANGE_FIELD, SHOW_CONNEXION_MODAL } from '../action/user';
 
 export const initialState = {
   search: '',
   connexionModal: false,
-  email: 'hello',
-  password: 'You',
+  email: '',
+  password: '',
   username: 'Roger',
+  isLogged: true,
   bookmarks: [],
 };
 
