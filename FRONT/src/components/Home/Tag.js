@@ -1,10 +1,13 @@
 import './home.scss';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Tag = ({ name, color }) => (
-  <a href="/" className="home__tags-container__tag" style={{ background: color }}>
-    {name}
-  </a>
+  <Link className="tag_link" to="">
+    <div className="home__tags-container__tag" style={{ background: color }}>
+      {name}
+    </div>
+  </Link>
 );
 
 Tag.propTypes = {
