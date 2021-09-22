@@ -9,7 +9,7 @@ class Cards {
     static async findAllCards() {
         try {
             
-            const {rows} = await client.query(`SELECT * FROM card`);
+            const {rows} = await client.query(`SELECT * FROM cards`);
            
                 return rows.map(row => new Cards(row));
             
@@ -22,7 +22,7 @@ class Cards {
     static async findQueryAllCards(limit,skip) {
         try {
             
-            const {rows} = await client.query(`SELECT * FROM card LIMIT ${limit} OFFSET ${skip}`);
+            const {rows} = await client.query(`SELECT * FROM cards LIMIT ${limit} OFFSET ${skip}`);
            
                 return rows.map(row => new Cards(row));
             
