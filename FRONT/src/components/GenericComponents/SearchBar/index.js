@@ -35,11 +35,12 @@ SearchBar.propTypes = {
   handleChange: PropTypes.func.isRequired,
   size: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
 };
 
 SearchBar.defaultProps = {
   size: 'full',
+  value: '',
 };
 
 // == Export
