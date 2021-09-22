@@ -35,9 +35,7 @@ const App = () => {
         <div className="content-wrap">
           <Header />
           <Switch>
-            <Route exact path="/">
-              <Home isConnected={isConnected} categories={categories} techs={techs} />
-            </Route>
+            <Route component={Home} exact path="/" />
             <Route exac path="/search">
               {
                 cards.map(
@@ -53,7 +51,7 @@ const App = () => {
                   <Route key={card.id} path={`/card/${card.slug}/${card.id}`} exact>
                     <CardDetails />
                   </Route>
-                )
+                ),
               )
             }
             <Route path="/add-card" exact>
