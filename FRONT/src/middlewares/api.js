@@ -1,12 +1,23 @@
+import axios from 'axios';
+
 import { FETCH_CARDS, isLoading, saveCards } from '../action/cards';
 
-import fakeData from '../data';
+const axiosInstance = axios.create({
+  baseURL: 'https://devinterest.herokuapp.com/',
+});
 
 export default (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_CARDS:
       store.dispatch(isLoading());
-      store.dispatch(saveCards(fakeData));
+      axiosInstance
+        .get('/cards')
+        .then(
+          (response) => {
+            store.dispatch(saveCards(response.data));
+          },
+        );
+      store.dispatch(isLoading());
       next(action);
       break;
     default:
