@@ -1,19 +1,22 @@
 import './home.scss';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import Tag from './Tag';
 import Card from '../Card';
 import { randomArrayShuffle } from '../../selectors/utils';
+import { fetchCards } from '../../action/cards';
+import SearchResults from '../SearchResults';
+
 
 const Home = () => {
+  const dispatch = useDispatch();
   const handleSubmit = () => console.log('Submit');
   const handleChange = () => console.log('Change');
   const handleClick = () => console.log('Click');
 
-  const username = useSelector((state) => state.user.username);
   const { username, isConnected } = useSelector((state) => state.user);
   const cards = useSelector((state) => state.cards.cards);
 
@@ -29,6 +32,10 @@ const Home = () => {
   const tags = groupCategoriesAndTechnos.flat(1);
   // Make tags array random
   randomArrayShuffle(tags);
+
+  useEffect(() => {
+    dispatch(fetchCards());
+  }, []);
 
   return (
     <div className="home">
@@ -67,13 +74,7 @@ const Home = () => {
           }
         </div>
       </div>
-      <div className="home__cards-container">
-        {
-          cards.map((card) => (
-            <Card key={card.id} card={card} />
-          ))
-        }
-      </div>
+      <SearchResults />
     </div>
   );
 };

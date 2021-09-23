@@ -1,11 +1,6 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { useLocation, useHistory } from 'react-router-dom';
-
 import {
   changeField, showConnexionModal, userLogin, userLogout,
 } from '../../action/user';
@@ -31,7 +26,6 @@ const Header = () => {
   const loading = useSelector((state) => state.cards.loading);
   const isLogged = useSelector((state) => state.user.isLogged);
   const username = useSelector((state) => state.user.username);
-
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
@@ -104,13 +98,6 @@ const Header = () => {
           content="Se connecter"
         />
       )}
-      <Button
-        className="header__button"
-        color
-        styling="full"
-        handleClick={handleConnexionButtonClick}
-        content="Se connecter"
-      />
     </div>
   );
 };
