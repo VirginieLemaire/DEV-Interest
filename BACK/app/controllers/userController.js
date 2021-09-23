@@ -1,3 +1,4 @@
+const { request } = require("express");
 const User = require("../models/user");
 
 const userController = {
@@ -11,6 +12,21 @@ const userController = {
             console.log(error);
         }
     },
+    //Renvoyer les infos user suite au login - ou une erreur
+    login: async (request, response) => {
+        try {
+            //récupérer les infos de login
+            const login = request.body
+            //authentification
+            const user = await new User(login).findUser();
+            response.status(200).json(user);
+        } catch (error) {
+            //lire l'erreur
+            console.trace(error);
+            //envoyer l'info au front
+            response.status(500).json(error.message);
+        }
+    }
 }
 
 module.exports = userController;

@@ -25,14 +25,12 @@ const Card = ({ card }) => (
         </div>
         <div className="card__tags-techno">
           {
-            // card.techs.map(
-            //   (tech) => (
-            // eslint-disable-next-line max-len
-            //     <aside key={tech} className={`card__tags-techno--item ${tech.toLowerCase()}`}>{tech}</aside>
-            //   ),
-            // )
+            card.techs.map(
+              (tech) => (
+                <aside key={`${card.id}-${tech}`} className={`card__tags-techno--item ${tech.toLowerCase()}`}>{tech}</aside>
+              ),
+            )
           }
-          <aside className={`card__tags-techno--item ${card.techs.toLowerCase()}`}>{card.techs}</aside>
         </div>
       </div>
       <div className={`card__level ${card.level.toLowerCase()}`}>
@@ -51,10 +49,9 @@ Card.propTypes = {
     title: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
-    // techs: PropTypes.arrayOf(
-    //   PropTypes.string.isRequired,
-    // ).isRequired,
-    techs: PropTypes.string.isRequired,
+    techs: PropTypes.arrayOf(
+      PropTypes.string.isRequired,
+    ).isRequired,
     level: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,

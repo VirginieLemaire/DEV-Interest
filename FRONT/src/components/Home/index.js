@@ -10,7 +10,6 @@ import { randomArrayShuffle } from '../../selectors/utils';
 import { fetchCards } from '../../action/cards';
 import SearchResults from '../SearchResults';
 
-
 const Home = () => {
   const dispatch = useDispatch();
   const handleSubmit = () => console.log('Submit');
@@ -65,15 +64,18 @@ const Home = () => {
           fontSize="medium"
         />
       </div>
-      <div className="home__tags-content-wraper">
-        <div className="home__tags-content-wraper__tags-container">
-          {
-            tags.map((tag) => (
-              <Tag key={tag} name={tag} />
-            ))
-          }
-        </div>
-      </div>
+      {
+      //   <div className="home__tags-content-wraper">
+      //   <div className="home__tags-content-wraper__tags-container">
+      //     {
+      //       tags.map((tag) => (
+      //         <Tag key={tag} name={tag} />
+      //       ))
+      //     }
+      //   </div>
+      // </div>
+      }
+
       <SearchResults />
     </div>
   );

@@ -14,7 +14,7 @@ export default (store) => (next) => (action) => {
         .get('/cards')
         .then(
           (response) => {
-            store.dispatch(saveCards(response.data));
+            store.dispatch(saveCards(response.data.data));
           },
         );
       next(action);
