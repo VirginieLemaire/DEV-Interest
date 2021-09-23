@@ -6,6 +6,7 @@ import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
 import Button from '../GenericComponents/Button';
+import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
 import './card-details.scss';
 
@@ -39,7 +40,7 @@ const CardDetails = () => {
               {(card.level === 'difficile') && (<FaThermometerFull />)}
             </div>
             <div className="card-details__board__infos__tags-container__level">
-              <div>{card.level}</div>
+              <Tag name={card.level} />
             </div>
           </div>
           <div className="card-details__board__infos__tags-container">
@@ -49,7 +50,7 @@ const CardDetails = () => {
             <div className="card-details__board__infos__tags-container__techs-container">
               {
                 card.techs.map((tech) => (
-                  <div>{tech}</div>
+                  <Tag name={tech} />
                 ))
               }
             </div>
@@ -59,21 +60,23 @@ const CardDetails = () => {
               <FaTags />
             </div>
             <div className="card-details__board__infos__tags-container__category">
-              <div>{card.category}</div>
+              <Tag name={card.category} />
             </div>
           </div>
           <div className="card-details__board__infos__buttons-container">
             <Link to="">
-              <div className="card-details__board__infos__buttons-container__type">
-                {card.type}
-              </div>
+              <Button
+                styling='outline'
+                color
+                handleClick={handleClick}
+                content={card.type}
+              />
             </Link>
             <Button
               styling='full'
               color
               handleClick={handleClick}
               content='Favoris'
-              fontSize='medium'
             />
           </div>
         </div>
