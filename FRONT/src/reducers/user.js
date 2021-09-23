@@ -8,6 +8,7 @@ export const initialState = {
   username: 'Roger',
   isLogged: false,
   bookmarks: [],
+  isConnected: false,
 };
 
 const reducer = (state = initialState, action = {}) => {

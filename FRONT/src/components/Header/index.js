@@ -1,6 +1,10 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { useLocation, useHistory } from 'react-router-dom';
 
 import {
   changeField, showConnexionModal, userLogin, userLogout,
@@ -13,6 +17,12 @@ import logo from '../../assets/DI-logo.png';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 
+// custom hook to get the current pathname in React
+const usePathname = () => {
+  const location = useLocation();
+  return location.pathname;
+};
+
 const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -21,6 +31,7 @@ const Header = () => {
   const loading = useSelector((state) => state.cards.loading);
   const isLogged = useSelector((state) => state.user.isLogged);
   const username = useSelector((state) => state.user.username);
+
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
@@ -45,20 +56,26 @@ const Header = () => {
     dispatch(userLogout());
   };
 
+  const pathname = usePathname();
+
   return (
     <div className="header">
       <Link className="header__home-link" to="/">
         <img className="header__logo" src={logo} alt="DEV Interest Logo" />
       </Link>
-      <SearchBar
-        loading={loading}
-        className="header__search-bar"
-        placeholder="Search..."
-        handleSubmit={handleSearchSubmit}
-        handleChange={handleSearchChange}
-        size="half"
-        value={search}
-      />
+      {
+        (pathname !== '/') && (
+          <SearchBar
+            loading={loading}
+            className="header__search-bar"
+            placeholder="Search..."
+            handleSubmit={handleSearchSubmit}
+            handleChange={handleSearchChange}
+            size="half"
+            value={search}
+          />
+        )
+      }
       { isLogged && (
         <div className="user-button">
           <Button
@@ -87,6 +104,13 @@ const Header = () => {
           content="Se connecter"
         />
       )}
+      <Button
+        className="header__button"
+        color
+        styling="full"
+        handleClick={handleConnexionButtonClick}
+        content="Se connecter"
+      />
     </div>
   );
 };

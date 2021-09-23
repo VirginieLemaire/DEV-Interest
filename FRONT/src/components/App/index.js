@@ -12,7 +12,7 @@ import Header from '../Header';
 import ConnexionModal from '../ConnexionModal';
 import CardDetails from '../CardDetails';
 import Page404 from '../Page404';
-import UserBookmarks from '../UserBookmarks';
+import UserBookmarks from '../UserAccount/UserBookmarks';
 import AddCard from '../AddCard';
 import Legal from '../Legal';
 import TermsOfUse from '../TermsOfUse';
@@ -33,9 +33,7 @@ const App = () => {
         <div className="content-wrap">
           <Header />
           <Switch>
-            <Route exact path="/">
-              <Home isConnected={isConnected} categories={categories} techs={techs} />
-            </Route>
+            <Route component={Home} exact path="/" />
             <Route exac path="/search">
               <SearchResults />
             </Route>
