@@ -3,12 +3,25 @@ const Cards = require('../models/card');
 const cardsController = {
     findAllCards: async (req, res) => {
         try {
+            let {page, size} = req.query;
+            if (!page) {
+                page =1;
+            }
+            if (!size) {
+                size = 30;
+            }
 
-            const card = await Cards.findAllCards();
+            const limit = parseInt(size);
+            const skip = (page - 1) * size;
+            const card = await Cards.findAllCards(limit, skip);
             if(card === "") {
                 res.status(200).json('Pas de contenu !');
             }else {
-                res.json(card);
+                res.json({
+                    page,
+                    size,
+                    data: card
+                });
             }
             
         } catch(error) {
@@ -19,14 +32,27 @@ const cardsController = {
 
     findQueryAllCards: async (req, res) => {
         try {
-            let skip = req.query.skip;
-            let limit = 30;
-            
-            const card = await Cards.findAllCards(limit,skip);
+            // pagination
+            let {page, size} = req.query;
+            if (!page) {
+                page =1;
+            }
+            if (!size) {
+                size = 30;
+            }
+
+            const limit = parseInt(size);
+            const skip = (page - 1) * size;
+
+            const card = await Cards.findQueryAllCards(limit,skip);
             if(card === "") {
                 res.status(200).json('Pas de contenu !');
             }else {
-                res.json(card);
+                res.json({
+                    page,
+                    size,
+                    data: card
+                });
             }
             
         } catch(error) {
