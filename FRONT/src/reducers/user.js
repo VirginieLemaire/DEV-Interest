@@ -5,7 +5,9 @@ export const initialState = {
   connexionModal: false,
   email: 'hello',
   password: 'You',
-  username: 'Jean Claude',
+  username: 'Roger',
+  bookmarks: [],
+  isConnected: false,
 };
 
 const reducer = (state = initialState, action = {}) => {

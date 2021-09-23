@@ -12,14 +12,14 @@ import './search-bar.scss';
 // "size" peut prendre 3 valeurs : "quarter", "half", "three-quarter"
 // qui appliquent respectivement 25%, 50%, 75% de width
 const SearchBar = ({
-  loading, placeholder, handleSubmit, handleChange, size, value,
+  loading, placeholder, handleSubmit, handleChange, size, value, fontSize,
 }) => (
-  <div className={`search-bar ${size}`}>
+  <div className={`search-bar ${size} ${fontSize}`}>
     <form autoComplete="off" className="search-bar__form" onSubmit={handleSubmit}>
       {(loading === false) && <FontAwesomeIcon icon={faSearch} className="search-bar__icon notloading" />}
       {(loading === true) && <FontAwesomeIcon icon={faSpinner} className="search-bar__icon loading" />}
       <input
-        className="search-bar__input"
+        className={`search-bar__input ${fontSize}`}
         type="text"
         placeholder={placeholder}
         onChange={handleChange}
@@ -36,11 +36,13 @@ SearchBar.propTypes = {
   size: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.string,
+  fontSize: PropTypes.string,
 };
 
 SearchBar.defaultProps = {
   size: 'full',
   value: '',
+  fontSize: 'normal',
 };
 
 // == Export
