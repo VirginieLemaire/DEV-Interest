@@ -1,0 +1,76 @@
+@use '../../styles/vars';
+
+.connexion-modal{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__content{
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+    width: 500px;
+    background-color: vars.$white-color;
+    border-radius: vars.$border-radius-input;
+  }
+
+  &__logo{
+    width: 4rem;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  &__header{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3rem;
+
+  }
+
+  &__footer{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding-bottom: 3rem;
+  }
+
+  &__title{
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: vars.$primary-color;
+    padding-top: 10px;
+  }
+
+  &__body{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 60px;
+
+  }
+
+  &__option{
+    display: flex;
+    gap: 0.5rem
+  }
+}
+
+.linky{
+  font-weight: bold;
+  color: vars.$primary-color
+}

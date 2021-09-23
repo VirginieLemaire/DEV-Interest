@@ -1,0 +1,115 @@
+@use '../../styles/vars';
+
+.card{
+  width: 300px;
+  background-color: vars.$white-color;
+  // box-shadow: 4px 24px 60px rgba(0,0,0, 0.15);
+
+  &__link{
+
+  }
+
+  &__image{
+    border-radius: vars.$border-radius-input;
+    height: auto;
+    min-height: 350px;
+    width: 300px;
+    object-fit: cover;
+  }
+
+  &__title{
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    font-size: 1.1rem;
+    max-height: 3.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__website{
+    text-align: left;
+    padding-left: 0.5rem;
+    color: vars.$light-color-plus;
+    // background-color: vars.$light-color;
+    // font-weight: bold;
+    margin-top: 1rem;
+  }
+
+  &__meta{
+    padding-top: 1rem;
+  }
+
+  &__tags{
+    display: flex;
+    padding: 0.5rem;
+
+    &-category{
+      width: 50%;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      
+
+      &--item{
+
+      }
+    }
+
+    &-techno{
+      width: 50%;
+      display:flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      padding: 0 0.5rem;
+
+      align-items: center;
+      // font-weight: bold;
+      font-size: 0.9rem;
+      &--item{
+        background-color: vars.$light-color;
+        padding: 0.3rem;
+        border-radius: vars.$border-radius-input;
+      }
+    }
+  }
+
+  &__level{
+    background-color: vars.$light-color;
+    color: rgba(vars.$primary-color, 0.5);
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform:uppercase;
+  }
+
+  &__buttons-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+  }
+
+  &__button{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: vars.$primary-color;
+
+    &.media{
+      padding: 0;
+      &:hover{
+        font-weight: bold;
+        color: vars.$primary-color-plus;
+      }
+    }
+
+    &.bookmark{
+      font-size: 1.2rem;
+      &:hover{
+        color: vars.$primary-color-plus;
+      }
+    }
+  }
+}

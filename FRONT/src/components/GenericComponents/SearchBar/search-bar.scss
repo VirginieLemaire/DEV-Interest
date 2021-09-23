@@ -1,0 +1,58 @@
+@use '../../../styles/vars';
+
+.search-bar{
+  background-color: vars.$light-color;
+  color: vars.$text-color;
+  padding: 0.5rem 1rem;
+  border-radius: vars.$border-radius-input;
+  font-size: 1rem;
+
+  &.quarter{
+    width: 25%;
+  }
+
+  &.half{
+    width: 50%;
+  }
+
+  &.three-quarter{
+    width: 75%;
+  }
+
+  &.full{
+    width: 100%;
+  }
+
+  &__form{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__icon{
+    color: vars.$text-color;
+
+    &.notloading{
+
+    }
+
+    &.loading{
+      animation: spin 2s linear infinite;
+    }
+  }
+
+  &__input{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+  }
+
+
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
