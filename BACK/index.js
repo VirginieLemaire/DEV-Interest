@@ -9,6 +9,8 @@ app.use(express.json());
 const port = process.env.PORT || 3000;
 app.use(express.urlencoded({extended:false}));
 
+//autoriser toutes les adresses web
+app.use(cors());
 
 app.use('/', router);
 
