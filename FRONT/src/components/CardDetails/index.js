@@ -9,18 +9,20 @@ const CardDetails = () => {
   const handleClick = (event) => {
     console.log(event);
   }
+  const date = Date.parse(card.createdAt)
+  console.log(date)
   return (
     <div className="card-details">
       <div className="card-details__board">
-        <div className="card-details__board__picture-container">
-          <img className="card-details__board__picture-container__image" src={card.img} alt={card.title} />
+        <div className="card-details__board__image-container">
+          <img className="card-details__board__image-container__image" src={card.image} alt={card.title} />
         </div>
         <div className="card-details__board__infos">
-          <h1 className="card-details__board__infos__title">{card.title}</h1>
+          <h1 className="card-details__board__infos__title"><strong>{card.title}</strong></h1>
           <p className="card-details__board__infos__description">{card.description}</p>
           <div className="card-details__board__infos__contributor-container">
-            <p className="card-details__board__infos__contributor">Proposé par: {card.contributor}</p>
-            <p className="card-details__board__infos__date">le {card.createdAt}</p>
+            <p className="card-details__board__infos__contributor">Proposé par: <strong>{card.contributor}</strong></p>
+            <p className="card-details__board__infos__date">le { }</p>
           </div>
           <div className="card-details__board__infos__level-container">
             <div className="card-details__board__infos__level-container__icon icons">
