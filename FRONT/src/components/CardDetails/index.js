@@ -1,40 +1,75 @@
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-
+import { Link } from 'react-router-dom';
+import Button from '../GenericComponents/Button';
+import SearchResults from '../SearchResults';
 import './card-details.scss';
 
 const CardDetails = () => {
-  const card = useSelector((state) => state.card[0]);
+  const card = useSelector((state) => state.cards.cards[0]);
+  const handleClick = (event) => {
+    console.log(event);
+  }
   return (
     <div className="card-details">
       <div className="card-details__board">
         <div className="card-details__board__picture-container">
-          <image className="card-details__board__picture-container__image" />
+          <img className="card-details__board__picture-container__image" src={card.img} alt={card.title} />
         </div>
-        <div className="card-details__board__picture-container__infos">
-          <h1 className="card-details__board__picture-container__infos__title"></h1>
-          <p className="card-details__board__picture-container__infos__description"></p>
-          <div className="card-details__board__picture-container__infos__contributor-container">
-            <p className="card-details__board__picture-container__infos__contributor">Proposé par:</p>
-            <p className="card-details__board__picture-container__infos__date">le</p>
+        <div className="card-details__board__infos">
+          <h1 className="card-details__board__infos__title">{card.title}</h1>
+          <p className="card-details__board__infos__description">{card.description}</p>
+          <div className="card-details__board__infos__contributor-container">
+            <p className="card-details__board__infos__contributor">Proposé par: {card.contributor}</p>
+            <p className="card-details__board__infos__date">le {card.createdAt}</p>
           </div>
-          <div className="card-details__board__picture-container__infos__level-container">
-
+          <div className="card-details__board__infos__level-container">
+            <div className="card-details__board__infos__level-container__icon icons">
+              <div>icone</div>
+            </div>
+            <div className="card-details__board__infos__level-container__level">
+              <div>{card.level}</div>
+            </div>
           </div>
-          <div className="card-details__board__picture-container__infos__technos-container">
-
+          <div className="card-details__board__infos__technos-container">
+            <div className="card-details__board__infos__technos-container__icon icons">
+              <div>icone</div>
+            </div>
+            <div className="card-details__board__infos__technos-container__technos">
+              <div>
+                {
+                  card.techs.map((tech) => (
+                    <div>{tech}</div>
+                  ))
+                }
+              </div>
+            </div>
           </div>
-          <div className="card-details__board__picture-container__infos__categories-container">
-
+          <div className="card-details__board___infos__category-container">
+            <div className="card-details__board__infos__category-container__icon icons">
+              <div>icone</div>
+            </div>
+            <div className="card-details__board__infos__category-container__category">
+              <div>{card.category}</div>
+            </div>
           </div>
-          <div className="card-details__board__picture-container__infos__buttons-container">
-
+          <div className="card-details__board__infos__buttons-container">
+            <Link to="">
+              <div className="card-details__board__infos__buttons-container__type">
+                {card.type}
+              </div>
+            </Link>
+            <Button
+              styling='full'
+              color
+              handleClick={handleClick}
+              content='Favoris'
+              fontSize='medium'
+            />
           </div>
         </div>
       </div>
       <h2 className="card-details__suggestion-title">D'autres cartes pourraient t'intéresser</h2>
-      <div className="card-details__cards-container">
-      </div>
+      {/* <SearchResults /> */}
     </div>
   );
 }

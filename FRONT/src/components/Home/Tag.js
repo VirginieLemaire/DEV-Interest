@@ -11,11 +11,12 @@ const Tag = ({ name, color }) => (
 );
 
 Tag.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   color: PropTypes.string,
 };
 
 Tag.defaultProps = {
+  name: "",
   color: '#7a7676',
 };
 export default Tag;
