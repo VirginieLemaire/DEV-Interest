@@ -14,7 +14,7 @@ GROUP BY card.id
 ORDER BY card.id;
 
 --Drop the previous cards view
-DROP VIEW cards,
+DROP VIEW cards;
 
 --create again the cards view integrating view card_id_techs
 CREATE VIEW cards AS

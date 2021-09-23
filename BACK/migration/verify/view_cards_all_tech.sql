@@ -2,6 +2,8 @@
 
 BEGIN;
 
--- XXX Add verifications here.
+
+SELECT * FROM card_id_techs WHERE false;
+SELECT * FROM cards WHERE false;
 
 ROLLBACK;
