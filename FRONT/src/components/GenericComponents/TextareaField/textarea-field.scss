@@ -15,7 +15,7 @@
     resize: none;
 
     &:focus {
-      border-color: vars.$primary-color;
+      border: 2px solid vars.$primary-color;
 
       & + .field-label {
         color: vars.$primary-color;
