@@ -1,12 +1,43 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import './card-details.scss';
 
-const CardDetails = () => (
-  <div className="cards-details">
-    card
-  </div>
-);
+const CardDetails = () => {
+  const card = useSelector((state) => state.card[0]);
+  return (
+    <div className="card-details">
+      <div className="card-details__board">
+        <div className="card-details__board__picture-container">
+          <image className="card-details__board__picture-container__image" />
+        </div>
+        <div className="card-details__board__picture-container__infos">
+          <h1 className="card-details__board__picture-container__infos__title"></h1>
+          <p className="card-details__board__picture-container__infos__description"></p>
+          <div className="card-details__board__picture-container__infos__contributor-container">
+            <p className="card-details__board__picture-container__infos__contributor">Proposé par:</p>
+            <p className="card-details__board__picture-container__infos__date">le</p>
+          </div>
+          <div className="card-details__board__picture-container__infos__level-container">
+
+          </div>
+          <div className="card-details__board__picture-container__infos__technos-container">
+
+          </div>
+          <div className="card-details__board__picture-container__infos__categories-container">
+
+          </div>
+          <div className="card-details__board__picture-container__infos__buttons-container">
+
+          </div>
+        </div>
+      </div>
+      <h2 className="card-details__suggestion-title">D'autres cartes pourraient t'intéresser</h2>
+      <div className="card-details__cards-container">
+      </div>
+    </div>
+  );
+}
 
 // Card.propTypes = {
 //   card: PropTypes.shape({
