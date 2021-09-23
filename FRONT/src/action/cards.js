@@ -18,3 +18,18 @@ export const isLoading = () => ({
   type: IS_LOADING,
 });
 
+export const CHANGE_NEW_CARD_FIELD = 'CHANGE_NEW_CARD_FIELD';
+export const changeNewCardField = (value, fieldName) => (
+  {
+    type: CHANGE_NEW_CARD_FIELD,
+    value,
+    fieldName,
+  }
+);
+
+export const CHANGE_NEW_CARD_CERTIFICATION = 'CHANGE_NEW_CARD_CERTIFICATION';
+export const changeNewCardCertification = () => (
+  {
+    type: CHANGE_NEW_CARD_CERTIFICATION,
+  }
+);

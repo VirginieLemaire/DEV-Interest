@@ -20,10 +20,8 @@ import SignUp from '../SignUp';
 import AddCardModal from '../AddCardModal';
 
 const App = () => {
-  const connexionModal = useSelector((state) => state.user.connexionModal);
-  const addCardModal = useSelector((state) => state.user.addCardModal);
-  const cards = useSelector((state) => state.cards.cards);
-  const user = useSelector((state) => state.user);
+  const { cards } = useSelector((state) => state.cards);
+  const { username, addCardModal, connexionModal } = useSelector((state) => state.user);
   console.log(cards);
 
   return (
@@ -49,10 +47,10 @@ const App = () => {
               <AddCard />
             </Route>
             <Route component={SignUp} path="/signup" exact />
-            <Route path={`${user.username.toLowerCase()}/bookmarks`} exact>
+            <Route path={`${username.toLowerCase()}/bookmarks`} exact>
               <UserBookmarks />
             </Route>
-            <Route path={`${user.username.toLowerCase()}/account`} exact>
+            <Route path={`${username.toLowerCase()}/account`} exact>
               <UserAccount />
             </Route>
             <Route component={Legal} path="/legal" exact />

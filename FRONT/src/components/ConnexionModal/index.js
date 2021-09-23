@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
 
 import {
-  changeField, login, 
+  changeField, login,
   showConnexionModal,
 } from '../../action/user';
 

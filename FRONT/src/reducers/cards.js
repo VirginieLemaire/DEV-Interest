@@ -1,8 +1,22 @@
-import { IS_LOADING, SAVE_CARDS } from '../action/cards';
+import {
+  CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD, IS_LOADING, SAVE_CARDS,
+} from '../action/cards';
 
 export const initialState = {
   cards: [],
   loading: false,
+  newCardTitle: '',
+  newCardWebsite: '',
+  newCardImage: '',
+  newCardDescription: '',
+  newCardCategory: '',
+  newCardLevel: '',
+  newCardType: '',
+  newCardUrl: '',
+  newCardContributor: '',
+  newCardLanguage: '',
+  newCardTechs: [],
+  newCardCertification: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -19,6 +33,16 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         loading: !state.loading,
+      };
+    case CHANGE_NEW_CARD_FIELD:
+      return {
+        ...state,
+        [action.fieldName]: action.value,
+      };
+    case CHANGE_NEW_CARD_CERTIFICATION:
+      return {
+        ...state,
+        newCardCertification: !state.newCardCertification,
       };
     default:
       return state;

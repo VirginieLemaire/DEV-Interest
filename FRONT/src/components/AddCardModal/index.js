@@ -6,6 +6,7 @@ import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
 
 import './add-card-modal.scss';
+import { changeNewCardField } from '../../action/cards';
 
 const AddCardModal = () => {
   const dispatch = useDispatch();
@@ -13,10 +14,10 @@ const AddCardModal = () => {
 
   const addCardModal = useSelector((state) => state.user.addCardModal);
 
-  const addCardLinkField = useSelector((state) => state.user.addCardLinkField);
+  const newCardUrl = useSelector((state) => state.cards.newCardUrl);
 
   const handleAddCardLinkChange = (event) => {
-    dispatch(changeField(event.target.value, 'addCardLinkField'));
+    dispatch(changeNewCardField(event.target.value, 'newCardUrl'));
   };
 
   const handleCloseModalClick = () => {
@@ -49,7 +50,7 @@ const AddCardModal = () => {
           <form autoComplete="off" onSubmit={handleSubmitAddCardLink}>
             <div className="add-card-modal__body">
               <Field
-                value={addCardLinkField}
+                value={newCardUrl}
                 type="text"
                 name="add-card-url"
                 placeholder="Lien URL de votre ressource..."
