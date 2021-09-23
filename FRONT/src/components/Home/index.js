@@ -1,9 +1,9 @@
 import './home.scss';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import Tag from './Tag';
-import { useSelector } from 'react-redux';
 
 const Home = ({
   isConnected, categories, techs,
@@ -12,7 +12,7 @@ const Home = ({
   const handleChange = () => console.log('Change');
   const handleClick = () => console.log('Click');
 
-  const username = useSelector((state) => state.user.username)
+  const username = useSelector((state) => state.user.username);
 
   return (
     <div className="home">

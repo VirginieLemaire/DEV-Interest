@@ -1,7 +1,7 @@
 import './user-account.scss';
 
 const UserAccount = () => (
-  <div className='user-account'>
+  <div className="user-account">
     UserAccount
   </div>
 );

@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { changeField, showConnexionModal } from '../../action/user';
+import { changeField, showConnexionModal, userLogin } from '../../action/user';
 
 import './connexion-modal.scss';
 
@@ -12,6 +12,7 @@ import Button from '../GenericComponents/Button';
 
 const ConnexionModal = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const connexionModal = useSelector((state) => state.user.connexionModal);
 
@@ -19,15 +20,30 @@ const ConnexionModal = () => {
   const password = useSelector((state) => state.user.password);
 
   const handleEmailChange = (event) => {
-    dispatch(changeField(event.target.value, 'email'))
+    dispatch(changeField(event.target.value, 'email'));
   };
 
   const handlePasswordChange = (event) => {
-    dispatch(changeField(event.target.value, 'password'))
+    dispatch(changeField(event.target.value, 'password'));
   };
 
-  const handleClick = (event) => {
+  const handleCloseModalClick = () => {
     dispatch(showConnexionModal());
+  };
+
+  const handleSignupClick = () => {
+    dispatch(showConnexionModal());
+    history.push('/signup');
+  };
+
+  const handleSubmitConnexion = () => {
+    dispatch(userLogin());
+    dispatch(showConnexionModal());
+  };
+
+  const handleHomeRedirect = () => {
+    history.push('/');
+    handleCloseModalClick();
   };
 
   if (!connexionModal) {
@@ -35,10 +51,10 @@ const ConnexionModal = () => {
   }
 
   return (
-    <div className="connexion-modal" onClick={handleClick}>
+    <div className="connexion-modal" onClick={handleCloseModalClick}>
       <div className="connexion-modal__content" onClick={(e) => e.stopPropagation()}>
         <div className="connexion-modal__header">
-          <img className="connexion-modal__logo" src={logoCourt} alt="logo court" />
+          <img className="connexion-modal__logo" src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
           <h4 className="connexion-modal__title">Se connecter</h4>
         </div>
         <div className="connexion-modal__body">
@@ -59,14 +75,15 @@ const ConnexionModal = () => {
         </div>
         <div className="connexion-modal__footer">
           <Button
+            submit
             styling="outline"
-            handleClick={handleClick}
+            handleClick={handleSubmitConnexion}
             content="Se connecter"
             color
           />
           <div className="connexion-modal__option">
             <div>Vous n'avez pas de compte ?</div>
-            <Link className="linky" to="/">S'inscrire</Link>
+            <Link className="linky" to="/signup" onClick={handleSignupClick}>S'inscrire</Link>
           </div>
         </div>
       </div>

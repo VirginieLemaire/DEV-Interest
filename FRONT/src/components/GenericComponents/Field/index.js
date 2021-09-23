@@ -12,7 +12,6 @@ const Field = ({
   placeholder,
   handleChange,
 }) => {
-
   const inputId = `field-${name}`;
 
   return (

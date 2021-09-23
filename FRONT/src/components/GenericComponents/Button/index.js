@@ -4,7 +4,8 @@ import './button.scss';
 
 // color (true or false) : permet d'utiliser soit la couleur principale ou en false un gris clair
 // styling ("full" or "outline"): permet d'avoir le fond du bouton rempli ou juste les contours
-// submit (true or false): si tu indique submit, le bouton sera submit sinon par défaut sans le précisé, le bouton est de type button
+// submit (true or false): si tu indique submit, le bouton sera submit
+// sinon par défaut sans le précisé, le bouton est de type button
 const Button = ({
   color, styling, submit, handleClick, content,
 }) => (

@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import './card-details.scss';
 
 const CardDetails = () => (
-  <div className='cards-details'>
+  <div className="cards-details">
     card
   </div>
 );

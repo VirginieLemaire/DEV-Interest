@@ -2,32 +2,33 @@
 
 .card{
   width: 300px;
-  // border-radius: vars.$border-radius-input;
   background-color: vars.$white-color;
-  margin: 0 2rem;
-  box-shadow: 4px 24px 60px rgba(0,0,0, 0.15);
+  // box-shadow: 4px 24px 60px rgba(0,0,0, 0.15);
 
   &__link{
 
   }
 
   &__image{
-    // border-radius: vars.$border-radius-input vars.$border-radius-input 0 0;
-    height: 350px;
-    width: 100%;
+    border-radius: vars.$border-radius-input;
+    height: auto;
+    min-height: 350px;
+    width: 300px;
     object-fit: cover;
   }
 
   &__title{
     padding: 0.5rem 0.5rem 0 0.5rem;
     font-size: 1.1rem;
-    max-height: 4.2rem;
+    max-height: 3.8rem;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   &__website{
-    text-align: center;
+    text-align: left;
+    padding-left: 0.5rem;
+    color: vars.$light-color-plus;
     // background-color: vars.$light-color;
     // font-weight: bold;
     margin-top: 1rem;
@@ -56,10 +57,13 @@
     &-techno{
       width: 50%;
       display:flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
       gap: 0.5rem;
-      justify-content: center;
+      padding: 0 0.5rem;
+
       align-items: center;
-      font-weight: bold;
+      // font-weight: bold;
       font-size: 0.9rem;
       &--item{
         background-color: vars.$light-color;
@@ -88,8 +92,6 @@
   }
 
   &__button{
-    background: transparent;
-    border: none;
     display: flex;
     justify-content: flex-start;
     align-items: center;

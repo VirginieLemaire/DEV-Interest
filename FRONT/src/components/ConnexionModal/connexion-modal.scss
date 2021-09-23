@@ -22,6 +22,9 @@
 
   &__logo{
     width: 4rem;
+    &:hover{
+      cursor: pointer;
+    }
   }
 
   &__header{
