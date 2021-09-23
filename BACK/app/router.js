@@ -11,5 +11,8 @@ router.post('/cards',cardController.findQueryAllCards);
 //USERS
 router.get('/users/:id', userController.findById);
 
+//LOGIN - SIGNUP
+router.post('/login', userController.login);
+
 
 module.exports = router;
