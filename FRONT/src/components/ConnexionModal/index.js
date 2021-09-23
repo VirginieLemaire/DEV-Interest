@@ -1,7 +1,11 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
 
-import { changeField, showConnexionModal, userLogin } from '../../action/user';
+import {
+  changeField, login, 
+  showConnexionModal,
+} from '../../action/user';
 
 import './connexion-modal.scss';
 
@@ -36,9 +40,10 @@ const ConnexionModal = () => {
     history.push('/signup');
   };
 
-  const handleSubmitConnexion = () => {
-    dispatch(userLogin());
+  const handleSubmitConnexion = (e) => {
+    e.preventDefault();
     dispatch(showConnexionModal());
+    dispatch(login());
   };
 
   const handleHomeRedirect = () => {
@@ -54,7 +59,15 @@ const ConnexionModal = () => {
     <div className="connexion-modal" onClick={handleCloseModalClick}>
       <div className="connexion-modal__content" onClick={(e) => e.stopPropagation()}>
         <div className="connexion-modal__header">
-          <img className="connexion-modal__logo" src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+          <div className="connexion-modal__header-header">
+            <div className="connexion-modal__header-header--item" />
+            <div className="connexion-modal__header-header--item">
+              <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+            </div>
+            <div className="connexion-modal__header-header--item" onClick={handleCloseModalClick}>
+              <GrFormClose className="close-icon" />
+            </div>
+          </div>
           <h4 className="connexion-modal__title">Se connecter</h4>
         </div>
         <div className="connexion-modal__body">
@@ -64,6 +77,7 @@ const ConnexionModal = () => {
             name="email"
             placeholder="Email"
             handleChange={handleEmailChange}
+            required
           />
           <Field
             value={password}
@@ -71,12 +85,12 @@ const ConnexionModal = () => {
             name="password"
             placeholder="Mot de passe"
             handleChange={handlePasswordChange}
+            required
           />
         </div>
         <div className="connexion-modal__footer">
           <Button
-            submit
-            styling="outline"
+            styling="full"
             handleClick={handleSubmitConnexion}
             content="Se connecter"
             color

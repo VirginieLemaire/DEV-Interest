@@ -51,6 +51,10 @@ const Header = () => {
     dispatch(userLogout());
   };
 
+  const handleBookmarksButtonClick = () => {
+    history.push(`${username}/bookmarks`);
+  };
+
   const pathname = usePathname();
 
   return (
@@ -76,7 +80,14 @@ const Header = () => {
           <Button
             className="header__button"
             color
-            styling="outline"
+            styling="text"
+            handleClick={handleBookmarksButtonClick}
+            content="Favoris"
+          />
+          <Button
+            className="header__button"
+            color
+            styling="text"
             handleClick={handleLogoutButtonClick}
             content="Déconnexion"
           />
@@ -87,7 +98,6 @@ const Header = () => {
             handleClick={handleUserButtonClick}
             content={`Hello ${username}!`}
           />
-          <AiTwotoneDiff />
           <IoIosArrowDown />
         </div>
       )}
