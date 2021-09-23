@@ -4,6 +4,7 @@ import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty
 import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
 import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
+import { FaTags } from '@react-icons/all-files/fa/FaTags';
 import Button from '../GenericComponents/Button';
 import SearchResults from '../SearchResults';
 import './card-details.scss';
@@ -32,7 +33,7 @@ const CardDetails = () => {
             <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
           <div className="card-details__board__infos__tags-container">
-            <div className="card-details__board__infos__tags-container__icon icons">
+            <div className="card-details__board__infos__tags-container__icon">
               {(card.level === 'facile') && (<FaThermometerEmpty />)}
               {(card.level === 'intermédiaire') && (<FaThermometerHalf />)}
               {(card.level === 'difficile') && (<FaThermometerFull />)}
@@ -42,7 +43,7 @@ const CardDetails = () => {
             </div>
           </div>
           <div className="card-details__board__infos__tags-container">
-            <div className="card-details__board__infos__tags-container__icon icons">
+            <div className="card-details__board__infos__tags-container__icon">
               <CgScreen />
             </div>
             <div className="card-details__board__infos__tags-container__techs-container">
@@ -54,8 +55,8 @@ const CardDetails = () => {
             </div>
           </div>
           <div className="card-details__board__infos__tags-container">
-            <div className="card-details__board__infos__tags-container__icon icons">
-              <div>icone</div>
+            <div className="card-details__board__infos__tags-container__icon">
+              <FaTags />
             </div>
             <div className="card-details__board__infos__tags-container__category">
               <div>{card.category}</div>
