@@ -8,8 +8,6 @@ const app = express();
 app.use(express.json());
 const port = process.env.PORT || 3000;
 app.use(express.urlencoded({extended:false}));
-//autorisation pour tout l'internet 
-app.use(cors());
 
 //autoriser toutes les adresses web
 app.use(cors());
