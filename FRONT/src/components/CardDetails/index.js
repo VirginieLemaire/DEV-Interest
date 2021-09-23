@@ -9,7 +9,11 @@ const CardDetails = () => {
   const handleClick = (event) => {
     console.log(event);
   }
-  const creationDate = new Date(card.createdat).toLocaleDateString("fr-FR")
+  const creationDate = new Date(card.createdat).toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
   return (
     <div className="card-details">
       <div className="card-details__board">
@@ -23,33 +27,31 @@ const CardDetails = () => {
             <p className="card-details__board__infos__contributor">Proposé par: <strong>{card.contributor}</strong></p>
             <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
-          <div className="card-details__board__infos__level-container">
-            <div className="card-details__board__infos__level-container__icon icons">
+          <div className="card-details__board__infos__tags-container">
+            <div className="card-details__board__infos__tags-container__icon icons">
               <div>icone</div>
             </div>
-            <div className="card-details__board__infos__level-container__level">
+            <div className="card-details__board__infos__tags-container__level">
               <div>{card.level}</div>
             </div>
           </div>
-          <div className="card-details__board__infos__technos-container">
-            <div className="card-details__board__infos__technos-container__icon icons">
+          <div className="card-details__board__infos__tags-container">
+            <div className="card-details__board__infos__tags-container__icon icons">
               <div>icone</div>
             </div>
-            <div className="card-details__board__infos__technos-container__technos">
-              <div>
-                {
-                  card.techs.map((tech) => (
-                    <div>{tech}</div>
-                  ))
-                }
-              </div>
+            <div className="card-details__board__infos__tags-container__techs-container">
+              {
+                card.techs.map((tech) => (
+                  <div>{tech}</div>
+                ))
+              }
             </div>
           </div>
-          <div className="card-details__board___infos__category-container">
-            <div className="card-details__board__infos__category-container__icon icons">
+          <div className="card-details__board__infos__tags-container">
+            <div className="card-details__board__infos__tags-container__icon icons">
               <div>icone</div>
             </div>
-            <div className="card-details__board__infos__category-container__category">
+            <div className="card-details__board__infos__tags-container__category">
               <div>{card.category}</div>
             </div>
           </div>
