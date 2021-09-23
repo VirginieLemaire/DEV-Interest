@@ -62,6 +62,10 @@ strong {
           flex-direction: row;
           gap: 1rem;
         }
+
+        &__icon {
+          transform: scale(1.5);
+        }
       }
 
       &__buttons-container {
