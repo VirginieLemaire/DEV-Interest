@@ -2,7 +2,9 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';
 
-import { changeField, showConnexionModal, userLogin, userLogout } from '../../action/user';
+import {
+  changeField, showConnexionModal, userLogin, userLogout,
+} from '../../action/user';
 import { fetchCards } from '../../action/cards';
 
 import './header.scss';
@@ -41,7 +43,7 @@ const Header = () => {
 
   const handleLogoutButtonClick = () => {
     dispatch(userLogout());
-  }
+  };
 
   return (
     <div className="header">
