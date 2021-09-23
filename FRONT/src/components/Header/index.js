@@ -1,6 +1,7 @@
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';
+import { AiTwotoneDiff } from '@react-icons/all-files/ai/AiTwotoneDiff';
 import {
   changeField, showConnexionModal, userLogin, userLogout,
 } from '../../action/user';
@@ -86,6 +87,7 @@ const Header = () => {
             handleClick={handleUserButtonClick}
             content={`Hello ${username}!`}
           />
+          <AiTwotoneDiff />
           <IoIosArrowDown />
         </div>
       )}
