@@ -1,0 +1,57 @@
+@use '../../../styles/vars';
+.textarea-field {
+  margin: .4em .4em .4em 0;
+  position: relative;
+
+  &__input {
+    width: 100%;
+    padding: .7em;
+    font-size: 1em;
+    border: 1px solid vars.$light-color;
+    border-radius: vars.$border-radius-input;
+    height: 10em;
+    font-family: 'Roboto';
+    outline: none;
+    resize: none;
+
+    &:focus {
+      border-color: vars.$primary-color;
+
+      & + .field-label {
+        color: vars.$primary-color;
+      }
+    }
+  }
+
+  &__label {
+    display: none;
+    position: absolute;
+    top: .2rem;
+    left: 1.2rem;
+    color: #999;
+    font-size: .7em;
+    text-transform: uppercase;
+    animation: labelSlideUpAndShow .3s;
+  }
+
+  &--has-content {
+    .textarea-field__label {
+      display: block;
+    }
+    .textarea-field__input {
+      padding: 1.4em 1.2em .4em;
+    }
+  }
+}
+
+
+@keyframes labelSlideUpAndShow{
+  0% {
+    transform: translateY(1em);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0em);
+    opacity: 1;
+  }
+}

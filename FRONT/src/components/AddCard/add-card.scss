@@ -13,4 +13,57 @@
     text-align: center;
     color: vars.$text-color;
   }
+
+  &__input{
+
+    &-title{
+
+    }
+
+    &-description{
+
+    }
+
+    &-url{
+
+    }
+    
+    &-image{
+
+    }
+
+    &-type{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+
+    &-level{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+
+    &-language{
+
+    }
+
+    &-techs{
+
+    }
+
+    &-certified{
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+  }
+
+  &__button{
+    text-align: center;
+  }
+}
+
+#field-newCardDescription{
+  height: 10rem;
 }

@@ -6,6 +6,7 @@ import { changeNewCardCertification, changeNewCardField } from '../../action/car
 
 import Button from '../GenericComponents/Button';
 import Field from '../GenericComponents/Field';
+import TextareaField from '../GenericComponents/TextAreaField';
 
 import './add-card.scss';
 
@@ -64,10 +65,10 @@ const AddCard = () => {
         handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardTitle'))}
         required
       />
-      <Field
+      <TextareaField
         className="add-card__input-description"
         value={newCardDescription}
-        type="text"
+        type="textarea"
         name="newCardDescription"
         placeholder="Description"
         handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardDescription'))}
@@ -120,7 +121,7 @@ const AddCard = () => {
         options={techValues}
         onChange={(value) => dispatch(changeNewCardField(value, 'newCardTechs'))}
       />
-      <label htmlFor="certify-add-card">
+      <label className="add-card__input-certified" htmlFor="certify-add-card">
         <input
           type="checkbox"
           id="certify-add-card"
@@ -131,12 +132,14 @@ const AddCard = () => {
         />
         Je certifie que la ressource partagée respecte les conditions d'utilisations
       </label>
-      <Button
-        color
-        styling="full"
-        handleClick={(e) => e.preventDefault()}
-        content="Partager !"
-      />
+      <div className="add-card__button">
+        <Button
+          color
+          styling="full"
+          handleClick={(e) => e.preventDefault()}
+          content="Partager !"
+        />
+      </div>
     </div>
 
   );
