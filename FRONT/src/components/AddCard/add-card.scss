@@ -45,7 +45,24 @@
     }
 
     &-language{
+      padding: 0.5rem;
+      border-radius: vars.$border-radius-input;
+      border: 1px solid vars.$light-color;
+      outline: none;
+      color: vars.$text-color;
+      font-size: 1em;
+      appearance: none;
+      text-align: center;
+      -webkit-appearance: none;
+      -moz-appearance: none;
 
+      &::-ms-expand{
+        display: none;
+      }
+
+      &:focus{
+        border-color: vars.$primary-color;
+      }
     }
 
     &-techs{
@@ -53,6 +70,7 @@
     }
 
     &-certified{
+      margin-top: 2rem;
       display: flex;
       align-items: center;
       font-size: 0.8rem;
@@ -60,6 +78,7 @@
   }
 
   &__button{
+    margin-top: 2rem;
     text-align: center;
   }
 }

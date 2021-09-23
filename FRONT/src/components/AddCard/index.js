@@ -6,7 +6,7 @@ import { changeNewCardCertification, changeNewCardField } from '../../action/car
 
 import Button from '../GenericComponents/Button';
 import Field from '../GenericComponents/Field';
-import TextareaField from '../GenericComponents/TextAreaField';
+import TextareaField from '../GenericComponents/TextareaField';
 
 import './add-card.scss';
 
@@ -55,7 +55,7 @@ const AddCard = () => {
 
   return (
     <div className="add-card">
-      <h2 className="add-card__title">Ajout d'une nouvelle ressource!</h2>
+      <h2 className="add-card__title">Ajout d'une nouvelle ressource</h2>
       <Field
         className="add-card__input-title"
         value={newCardTitle}
@@ -110,7 +110,7 @@ const AddCard = () => {
       </div>
       <select name="language" value={newCardLanguage} onChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardLanguage'))} className="add-card__input-language">
         {languageOptions.map((option) => (
-          <option value={option.value}>{option.label}</option>
+          <option value={option.value} className="add-card__input-language--item">{option.label}</option>
         ))}
       </select>
       <Select
