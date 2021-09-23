@@ -6,10 +6,10 @@ class Cards {
             this[proname] = obj[proname];
         }
     }
-    static async findAllCards() {
+    static async findAllCards(limit, skip) {
         try {
             
-            const {rows} = await client.query(`SELECT * FROM cards`);
+            const {rows} = await client.query(`SELECT * FROM cards ORDER BY createdAT LIMIT ${limit} OFFSET ${skip}`);
            
                 return rows.map(row => new Cards(row));
             
@@ -22,7 +22,7 @@ class Cards {
     static async findQueryAllCards(limit,skip) {
         try {
             
-            const {rows} = await client.query(`SELECT * FROM cards LIMIT ${limit} OFFSET ${skip}`);
+            const {rows} = await client.query(`SELECT * FROM cards ORDER BY createdAT LIMIT ${limit} OFFSET ${skip}`);
            
                 return rows.map(row => new Cards(row));
             
