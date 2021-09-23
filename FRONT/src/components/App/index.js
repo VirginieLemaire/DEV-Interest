@@ -38,14 +38,14 @@ const App = () => {
               <SearchResults />
             </Route>
             {
-                cards.map(
-                  (card) => (
-                    <Route key={card.id} path={`/card/${card.slug}/${card.id}`} exact>
-                      <CardDetails />
-                    </Route>
-                  ),
-                )
-              }
+              cards.map(
+                (card) => (
+                  <Route key={card.id} path={`/card/${card.slug}/${card.id}`} exact>
+                    <CardDetails />
+                  </Route>
+                ),
+              )
+            }
             <Route path="/add-card" exact>
               <AddCard />
             </Route>
