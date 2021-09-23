@@ -9,8 +9,7 @@ const CardDetails = () => {
   const handleClick = (event) => {
     console.log(event);
   }
-  const date = Date.parse(card.createdAt)
-  console.log(date)
+  const creationDate = new Date(card.createdat).toLocaleDateString("fr-FR")
   return (
     <div className="card-details">
       <div className="card-details__board">
@@ -22,7 +21,7 @@ const CardDetails = () => {
           <p className="card-details__board__infos__description">{card.description}</p>
           <div className="card-details__board__infos__contributor-container">
             <p className="card-details__board__infos__contributor">Proposé par: <strong>{card.contributor}</strong></p>
-            <p className="card-details__board__infos__date">le { }</p>
+            <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
           <div className="card-details__board__infos__level-container">
             <div className="card-details__board__infos__level-container__icon icons">
