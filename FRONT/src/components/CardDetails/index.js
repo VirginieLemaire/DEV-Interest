@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
 import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
 import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
-
+import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import Button from '../GenericComponents/Button';
 import SearchResults from '../SearchResults';
 import './card-details.scss';
@@ -43,7 +43,7 @@ const CardDetails = () => {
           </div>
           <div className="card-details__board__infos__tags-container">
             <div className="card-details__board__infos__tags-container__icon icons">
-              <div>icone</div>
+              <CgScreen />
             </div>
             <div className="card-details__board__infos__tags-container__techs-container">
               {
