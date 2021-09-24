@@ -36,6 +36,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem 1rem;
+      
     }
 
     &-level{
@@ -61,7 +62,7 @@
       }
 
       &:focus{
-        border-color: vars.$primary-color;
+        border: 2px solid vars.$primary-color;
       }
     }
 
@@ -86,3 +87,4 @@
 #field-newCardDescription{
   height: 10rem;
 }
+

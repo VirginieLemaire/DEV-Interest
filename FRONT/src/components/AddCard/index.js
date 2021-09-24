@@ -19,9 +19,17 @@ const AddCard = () => {
   const newCardDescription = useSelector((state) => state.cards.newCardDescription);
   const newCardUrl = useSelector((state) => state.cards.newCardUrl);
   const newCardImage = useSelector((state) => state.cards.newCardImage);
-  const newCardLanguage = useSelector((state) => state.cards.newCardLanguage);
-  const newCardType = useSelector((state) => state.cards.newCardType);
-  const newCardLevel = useSelector((state) => state.cards.newCardLevel);
+
+  const customTheme = (theme) => ({
+    ...theme,
+    borderRadius: 5,
+    colors: {
+      ...theme.colors,
+      primary25: '#F0EFEF',
+      primary: '#058EA7',
+      neutral20: '#F0EFEF',
+    },
+  });
 
   const languageOptions = [
     { label: 'Français', value: 'fr' },
@@ -92,34 +100,38 @@ const AddCard = () => {
         handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardImage'))}
         required
       />
-      <div value={newCardType} className="add-card__input-type" onChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardType'))}>
-        {typeValues.map((type) => (
-          <div>
-            <input id={type.value} type="radio" value={type.value} name="type" />
-            <label htmlFor={type.value}>{type.label}</label>
-          </div>
-        ))}
-      </div>
-      <div value={newCardLevel} className="add-card__input-level" onChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardLevel'))}>
-        {levelValues.map((level) => (
-          <div>
-            <input id={level.value} type="radio" value={level.value} name="level" />
-            <label htmlFor={level.value}>{level.label}</label>
-          </div>
-        ))}
-      </div>
-      <select name="language" value={newCardLanguage} onChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardLanguage'))} className="add-card__input-language">
-        {languageOptions.map((option) => (
-          <option value={option.value} className="add-card__input-language--item">{option.label}</option>
-        ))}
-      </select>
       <Select
+        placeholder="Type de ressource..."
+        closeMenuOnSelect
+        components={animatedComponents}
+        options={typeValues}
+        onChange={(value) => dispatch(changeNewCardField(value, 'newCardType'))}
+        theme={customTheme}
+      />
+      <Select
+        placeholder="Niveau..."
+        closeMenuOnSelect
+        components={animatedComponents}
+        options={levelValues}
+        onChange={(value) => dispatch(changeNewCardField(value, 'newCardLevel'))}
+        theme={customTheme}
+      />
+      <Select
+        placeholder="Langue..."
+        closeMenuOnSelect
+        components={animatedComponents}
+        options={languageOptions}
+        onChange={(value) => dispatch(changeNewCardField(value, 'newCardLanguage'))}
+        theme={customTheme}
+      />
+      <Select
+        placeholder="technologies..."
         closeMenuOnSelect={false}
         components={animatedComponents}
-        // defaultValue={[colourOptions[4], colourOptions[5]]}
         isMulti
         options={techValues}
         onChange={(value) => dispatch(changeNewCardField(value, 'newCardTechs'))}
+        theme={customTheme}
       />
       <label className="add-card__input-certified" htmlFor="certify-add-card">
         <input

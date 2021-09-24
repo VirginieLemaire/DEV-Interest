@@ -12,12 +12,14 @@ const Field = ({
   placeholder,
   handleChange,
   required,
+  autoComplete,
 }) => {
   const inputId = `field-${name}`;
 
   return (
     <div className={value.length > 0 ? 'field field--has-content' : 'field'}>
       <input
+        autoComplete={autoComplete ? 'on' : 'off'}
         // React - state
         value={value}
         onChange={handleChange}
@@ -47,6 +49,7 @@ Field.propTypes = {
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
+  autoComplete: PropTypes.bool,
 };
 
 // Valeurs par défaut pour les props
@@ -54,6 +57,7 @@ Field.defaultProps = {
   value: '',
   type: 'text',
   required: false,
+  autoComplete: false,
 };
 
 // == Export
