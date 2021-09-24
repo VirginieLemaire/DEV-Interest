@@ -62,11 +62,30 @@ class User {
             
             //renvoyer le user
             this.id = rows[0].id;
-            this.username = rows[0].username;
+            this.username = rows[0].user_name;
             console.log(this);
             return this;
             }
 
+        } catch (error) {
+            //voir l'erreur en console
+            console.trace(error);
+            //renvoyer l'erreur au front
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+    async signUp() {
+        try {
+            //hasher le mot de passe
+            const password = await bcrypt.hash(this.password, 10);
+            const {rows} = await client.query('INSERT INTO "user" (email, password, username) VALUES ($1, $2, $3) RETURNING id', [
+                this.email,
+                password,
+                this.username
+            ]);
+            this.id = rows[0].id;
+            return this;          
         } catch (error) {
             //voir l'erreur en console
             console.trace(error);
