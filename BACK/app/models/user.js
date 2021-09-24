@@ -87,8 +87,14 @@ class User {
                 //id du rôle par défaut (utilisateur)
                 1
             ]);
-            this.id = rows[0].id;
-            return this;          
+            // creer un user pour securiser
+            const userSecure = {
+                id: rows[0].id,
+                username: this.username,
+                email: this.email
+            }
+            
+            return userSecure;          
         } catch (error) {
             //voir l'erreur en console
             console.trace(error);

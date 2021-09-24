@@ -32,7 +32,7 @@ const userController = {
     signUp: async (request, response) => {
         try {
             const user = await new User(request.body).signUp();
-            //response.setHeader('Authorization', jwt.makeToken(user.id));
+            response.setHeader('Authorization', jwt.makeToken(user.id));
             response.status(201).json(user);
 
         } catch(error) {
