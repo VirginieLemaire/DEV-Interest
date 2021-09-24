@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeField, showAddCardModal } from '../../action/user';
+import { showAddCardModal } from '../../action/user';
 
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
