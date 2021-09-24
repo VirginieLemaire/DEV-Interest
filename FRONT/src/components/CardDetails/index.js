@@ -6,6 +6,7 @@ import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
 import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
+import { getDomainName } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
@@ -25,6 +26,7 @@ const CardDetails = ({ card }) => {
     month: 'long',
     day: 'numeric',
   });
+
   return (
     <div className="card-details">
       <div className="card-details__board">
@@ -69,12 +71,12 @@ const CardDetails = ({ card }) => {
             </div>
           </div>
           <div className="card-details__board__infos__buttons-container">
-            <Link to="">
+            <Link to={{ pathname: card.url }} target="_blank">
               <Button
                 styling="outline"
                 color
                 handleClick={handleClick}
-                content={card.type.capitalize()}
+                content={getDomainName(card.url).capitalize()}
               />
             </Link>
             <Button

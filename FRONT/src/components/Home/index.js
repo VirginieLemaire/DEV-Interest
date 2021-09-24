@@ -12,7 +12,7 @@ import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/user';
 
 const Home = () => {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const handleSubmit = () => console.log('Submit');
   const handleChange = () => console.log('Change');
   const handleClick = () => {
@@ -22,22 +22,22 @@ const Home = () => {
   const { username, isLogged } = useSelector((state) => state.user);
   const cards = useSelector((state) => state.cards.cards);
 
-  // Get categories from cards and remove doubles
-  const mapCategories = cards.map((card) => card.category);
-  const categories = [...new Set(mapCategories)];
-  // Get techs from cards and remove doubles
-  const mapTechnosArrays = cards.map((card) => card.technos);
-  const mergeTechnosArrays = mapTechnosArrays.flat(1);
-  const technos = [...new Set(mergeTechnosArrays)];
-  // Regroup categories and technos in an array
-  const groupCategoriesAndTechnos = [categories, technos];
-  const tags = groupCategoriesAndTechnos.flat(1);
-  // Make tags array random
-  randomArrayShuffle(tags);
+  // // Get categories from cards and remove doubles
+  // const mapCategories = cards.map((card) => card.category);
+  // const categories = [...new Set(mapCategories)];
+  // // Get techs from cards and remove doubles
+  // const mapTechnosArrays = cards.map((card) => card.technos);
+  // const mergeTechnosArrays = mapTechnosArrays.flat(1);
+  // const technos = [...new Set(mergeTechnosArrays)];
+  // // Regroup categories and technos in an array
+  // const groupCategoriesAndTechnos = [categories, technos];
+  // const tags = groupCategoriesAndTechnos.flat(1);
+  // // Make tags array random
+  // randomArrayShuffle(tags);
 
-  useEffect(() => {
-    dispatch(fetchCards());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchCards());
+  // }, []);
 
   return (
     <div className="home">

@@ -11,6 +11,7 @@ strong {
   gap: 3rem;
   color: vars.$text-color;
 
+
   &__board {
     display: flex;
     width: 60vw;
@@ -22,6 +23,7 @@ strong {
 
 
     &__image-container {
+      width: 100%;
 
       &__image {
         width: 100%;
@@ -34,10 +36,10 @@ strong {
     &__infos {
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       gap: 2rem;
       padding: 2rem 1rem 2rem 0;
       width: 100%;
-      position: relative;
 
       &__title {
         font-size: 1.5rem;
@@ -70,9 +72,6 @@ strong {
       }
 
       &__buttons-container {
-        position: absolute;
-        bottom: 2rem;
-        left: 25%;
         display: flex;
         justify-content: center;
         gap: 2rem;
