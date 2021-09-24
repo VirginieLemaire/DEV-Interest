@@ -1,5 +1,6 @@
 const JWT = require('jsonwebtoken');
 
+
 module.exports = {
     makeToken: userId => {
         try {
