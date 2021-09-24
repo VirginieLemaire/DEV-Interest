@@ -5,3 +5,4 @@ init 2021-09-21T13:30:14Z fred <frederic.botella@gmail.com> # Création des tabl
 view_cards 2021-09-22T15:15:53Z Virginie <student@teleporter> # Add view cards for the front-end
 view_cards_all_tech 2021-09-23T08:57:05Z Virginie <student@teleporter> # add view with all tech name for each card
 bookmarks 2021-09-23T13:28:32Z fred <frederic.botella@gmail.com> # ajout de id user pour les bookmarks
+functions_cards 2021-09-24T13:42:18Z Virginie <student@teleporter> # add functions to create and update cards
