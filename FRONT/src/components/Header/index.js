@@ -51,7 +51,7 @@ const Header = () => {
   };
 
   const handleBookmarksButtonClick = () => {
-    history.push(`${username}/bookmarks`);
+    history.push(`/${username.toLowerCase()}/bookmarks`);
   };
 
   const pathname = usePathname();
@@ -74,7 +74,7 @@ const Header = () => {
           />
         )
       }
-      { isLogged && (
+      {isLogged && (
         <div className="user-button">
           <Button
             className="header__button"
@@ -100,7 +100,7 @@ const Header = () => {
           <IoIosArrowDown />
         </div>
       )}
-      { !isLogged && (
+      {!isLogged && (
         <Button
           className="header__button"
           color

@@ -12,7 +12,7 @@ import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/user';
 
 const Home = () => {
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const handleSubmit = () => console.log('Submit');
   const handleChange = () => console.log('Change');
   const handleClick = () => {
@@ -35,9 +35,9 @@ const Home = () => {
   // // Make tags array random
   // randomArrayShuffle(tags);
 
-  // useEffect(() => {
-  //   dispatch(fetchCards());
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchCards());
+  }, []);
 
   return (
     <div className="home">

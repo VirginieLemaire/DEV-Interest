@@ -47,10 +47,10 @@ const App = () => {
               <AddCard />
             </Route>
             <Route component={SignUp} path="/signup" exact />
-            <Route path={`${username.toLowerCase()}/bookmarks`} exact>
+            <Route path={`/${username.toLowerCase()}/bookmarks`} exact>
               <UserBookmarks />
             </Route>
-            <Route path={`${username.toLowerCase()}/account`} exact>
+            <Route path={`/${username.toLowerCase()}/account`} exact>
               <UserAccount />
             </Route>
             <Route component={Legal} path="/legal" exact />

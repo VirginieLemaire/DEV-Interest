@@ -8,8 +8,8 @@ export const initialState = {
   addCardModal: false,
   email: '',
   password: '',
-  username: 'Roger',
-  isLogged: true,
+  username: '',
+  isLogged: false,
   bookmarks: [
     {
       id: 34,
