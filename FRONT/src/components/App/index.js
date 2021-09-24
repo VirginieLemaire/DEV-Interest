@@ -9,7 +9,7 @@ import Header from '../Header';
 import ConnexionModal from '../ConnexionModal';
 import CardDetails from '../CardDetails';
 import Page404 from '../Page404';
-import UserBookmarks from '../UserAccount/UserBookmarks';
+import UserBookmarks from '../UserBookmarks';
 import AddCard from '../AddCard';
 import Legal from '../Legal';
 import TermsOfUse from '../TermsOfUse';
@@ -46,10 +46,10 @@ const App = () => {
               <AddCard />
             </Route>
             <Route component={SignUp} path="/signup" exact />
-            <Route path={`${username.toLowerCase()}/bookmarks`} exact>
+            <Route path={`/${username.toLowerCase()}/bookmarks`} exact>
               <UserBookmarks />
             </Route>
-            <Route path={`${username.toLowerCase()}/account`} exact>
+            <Route path={`/${username.toLowerCase()}/account`} exact>
               <UserAccount />
             </Route>
             <Route component={Legal} path="/legal" exact />

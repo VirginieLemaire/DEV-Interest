@@ -44,6 +44,7 @@ const ConnexionModal = () => {
     e.preventDefault();
     dispatch(showConnexionModal());
     dispatch(login());
+    history.push('/');
   };
 
   const handleHomeRedirect = () => {
@@ -58,51 +59,55 @@ const ConnexionModal = () => {
   return (
     <div className="connexion-modal" onClick={handleCloseModalClick}>
       <div className="connexion-modal__content" onClick={(e) => e.stopPropagation()}>
-        <div className="connexion-modal__header">
-          <div className="connexion-modal__header-header">
-            <div className="connexion-modal__header-header--item" />
-            <div className="connexion-modal__header-header--item">
-              <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+        <form onSubmit={handleSubmitConnexion}>
+          <div className="connexion-modal__header">
+            <div className="connexion-modal__header-header">
+              <div className="connexion-modal__header-header--item" />
+              <div className="connexion-modal__header-header--item">
+                <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+              </div>
+              <div className="connexion-modal__header-header--item" onClick={handleCloseModalClick}>
+                <GrFormClose className="close-icon" />
+              </div>
             </div>
-            <div className="connexion-modal__header-header--item" onClick={handleCloseModalClick}>
-              <GrFormClose className="close-icon" />
+            <h4 className="connexion-modal__title">Se connecter</h4>
+          </div>
+          <div className="connexion-modal__body">
+            <Field
+              autoComplete
+              value={email}
+              type="email"
+              name="email"
+              placeholder="Email"
+              handleChange={handleEmailChange}
+              required
+            />
+            <Field
+              autoComplete
+              value={password}
+              type="password"
+              name="password"
+              placeholder="Mot de passe"
+              handleChange={handlePasswordChange}
+              required
+            />
+          </div>
+          <div className="connexion-modal__footer">
+            <Button
+              submit
+              styling="full"
+              handleClick={handleSubmitConnexion}
+              content="Se connecter"
+              color
+            />
+            <div className="connexion-modal__option">
+              <div>Vous n'avez pas de compte ?</div>
+              <div className="linky" onClick={handleSignupClick}>S'inscrire</div>
             </div>
           </div>
-          <h4 className="connexion-modal__title">Se connecter</h4>
-        </div>
-        <div className="connexion-modal__body">
-          <Field
-            autoComplete
-            value={email}
-            type="email"
-            name="email"
-            placeholder="Email"
-            handleChange={handleEmailChange}
-            required
-          />
-          <Field
-            autoComplete
-            value={password}
-            type="password"
-            name="password"
-            placeholder="Mot de passe"
-            handleChange={handlePasswordChange}
-            required
-          />
-        </div>
-        <div className="connexion-modal__footer">
-          <Button
-            styling="full"
-            handleClick={handleSubmitConnexion}
-            content="Se connecter"
-            color
-          />
-          <div className="connexion-modal__option">
-            <div>Vous n'avez pas de compte ?</div>
-            <Link className="linky" to="/signup" onClick={handleSignupClick}>S'inscrire</Link>
-          </div>
-        </div>
+        </form>
       </div>
+
     </div>
   );
 };
