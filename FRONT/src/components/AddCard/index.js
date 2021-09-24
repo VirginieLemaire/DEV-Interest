@@ -2,7 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
-import { addCard, changeNewCardCertification, changeNewCardField, changeNewCardTechs } from '../../action/cards';
+import {
+  addCard, changeNewCardCertification, changeNewCardField, changeNewCardTechs,
+} from '../../action/cards';
 import { slugify } from '../../selectors/cards';
 
 import Button from '../GenericComponents/Button';
@@ -15,6 +17,8 @@ const animatedComponents = makeAnimated();
 
 const AddCard = () => {
   const dispatch = useDispatch();
+
+  const isLogged = useSelector((state) => state.user.isLogged);
 
   const title = useSelector((state) => state.cards.newCard.title);
   const description = useSelector((state) => state.cards.newCard.description);
@@ -84,116 +88,122 @@ const AddCard = () => {
     dispatch(changeNewCardField(slugify(e.target.value), 'slug'));
   };
 
+  const handleSubmitNewCard = (e) => {
+    dispatch(addCard());
+  };
+
   return (
     <div className="add-card">
       <h2 className="add-card__title">Ajout d'une nouvelle ressource</h2>
-      <Field
-        className="add-card__input-title"
-        value={title}
-        type="text"
-        name="title"
-        placeholder="Titre de la ressource..."
-        handleChange={handleNewCardTitleChange}
-        required
-      />
-      <TextareaField
-        className="add-card__input-description"
-        value={description}
-        type="textarea"
-        name="description"
-        placeholder="Description..."
-        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'description'))}
-        required
-      />
-      <Field
-        className="add-card__input-image"
-        value={website}
-        type="text"
-        name="website"
-        placeholder="Nom du site..."
-        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'website'))}
-        required
-      />
-      <Field
-        className="add-card__input-description"
-        value={url}
-        type="text"
-        name="url"
-        placeholder="Lien de la ressource..."
-        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
-        required
-      />
-      <Field
-        className="add-card__input-image"
-        value={image}
-        type="text"
-        name="newCardImage"
-        placeholder="Url de l'image..."
-        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'image'))}
-        required
-      />
-      <Select
-        placeholder="Type de ressource..."
-        closeMenuOnSelect
-        components={animatedComponents}
-        options={typeValues}
-        onChange={(value) => dispatch(changeNewCardField(value.value, 'type'))}
-        theme={customTheme}
-      />
-      <Select
-        placeholder="Technologies..."
-        closeMenuOnSelect={false}
-        components={animatedComponents}
-        isMulti
-        options={techValues}
-        onChange={(value) => dispatch(changeNewCardTechs(value, 'techs'))}
-        theme={customTheme}
-      />
-      <Select
-        placeholder="Catégorie..."
-        closeMenuOnSelect
-        components={animatedComponents}
-        options={categoryValues}
-        onChange={(value) => dispatch(changeNewCardField(value.value, 'category'))}
-        theme={customTheme}
-      />
-      <Select
-        placeholder="Niveau..."
-        closeMenuOnSelect
-        components={animatedComponents}
-        options={levelValues}
-        onChange={(value) => dispatch(changeNewCardField(value.value, 'level'))}
-        theme={customTheme}
-      />
-      <Select
-        placeholder="Langue..."
-        closeMenuOnSelect
-        components={animatedComponents}
-        options={languageOptions}
-        onChange={(value) => dispatch(changeNewCardField(value.value, 'language'))}
-        theme={customTheme}
-      />
-      <label className="add-card__input-certified" htmlFor="certify-add-card">
-        <input
-          type="checkbox"
-          id="certify-add-card"
-          name="certification"
-          onChange={() => dispatch(changeNewCardCertification())}
-          className="add-card__certified"
+      <form className="add-card__form" onSubmit={handleSubmitNewCard}>
+        <Field
+          className="add-card__input-title"
+          value={title}
+          type="text"
+          name="title"
+          placeholder="Titre de la ressource..."
+          handleChange={handleNewCardTitleChange}
           required
         />
-        Je certifie que la ressource partagée respecte les conditions d'utilisations
-      </label>
-      <div className="add-card__button">
-        <Button
-          color
-          styling="full"
-          handleClick={() => dispatch(addCard())}
-          content="Partager !"
+        <TextareaField
+          className="add-card__input-description"
+          value={description}
+          type="textarea"
+          name="description"
+          placeholder="Description..."
+          handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'description'))}
+          required
         />
-      </div>
+        <Field
+          className="add-card__input-image"
+          value={website}
+          type="text"
+          name="website"
+          placeholder="Nom du site..."
+          handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'website'))}
+          required
+        />
+        <Field
+          className="add-card__input-description"
+          value={url}
+          type="text"
+          name="url"
+          placeholder="Lien de la ressource..."
+          handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
+          required
+        />
+        <Field
+          className="add-card__input-image"
+          value={image}
+          type="text"
+          name="newCardImage"
+          placeholder="Url de l'image..."
+          handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'image'))}
+          required
+        />
+        <Select
+          placeholder="Type de ressource..."
+          closeMenuOnSelect
+          components={animatedComponents}
+          options={typeValues}
+          onChange={(value) => dispatch(changeNewCardField(value.value, 'type'))}
+          theme={customTheme}
+        />
+        <Select
+          placeholder="Technologies..."
+          closeMenuOnSelect={false}
+          components={animatedComponents}
+          isMulti
+          options={techValues}
+          onChange={(value) => dispatch(changeNewCardTechs(value, 'techs'))}
+          theme={customTheme}
+        />
+        <Select
+          placeholder="Catégorie..."
+          closeMenuOnSelect
+          components={animatedComponents}
+          options={categoryValues}
+          onChange={(value) => dispatch(changeNewCardField(value.value, 'category'))}
+          theme={customTheme}
+        />
+        <Select
+          placeholder="Niveau..."
+          closeMenuOnSelect
+          components={animatedComponents}
+          options={levelValues}
+          onChange={(value) => dispatch(changeNewCardField(value.value, 'level'))}
+          theme={customTheme}
+        />
+        <Select
+          placeholder="Langue..."
+          closeMenuOnSelect
+          components={animatedComponents}
+          options={languageOptions}
+          onChange={(value) => dispatch(changeNewCardField(value.value, 'language'))}
+          theme={customTheme}
+        />
+        <label className="add-card__input-certified" htmlFor="certify-add-card">
+          <input
+            type="checkbox"
+            id="certify-add-card"
+            name="certification"
+            onChange={() => dispatch(changeNewCardCertification())}
+            className="add-card__certified"
+            required
+          />
+          Je certifie que la ressource partagée respecte les conditions d'utilisations
+        </label>
+        <div className="add-card__button">
+          <Button
+            submit
+            color
+            styling="full"
+            handleClick={handleSubmitNewCard}
+            content="Partager !"
+          />
+        </div>
+      </form>
     </div>
-
   );
 };
 
