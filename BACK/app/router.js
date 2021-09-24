@@ -6,8 +6,13 @@ const userController = require('./controllers/userController');
 
 const router = Router();
 
+//CARDS
+//liste de toutes les cartes, paginées par 30 dans l'ordre chronologique descendant
 router.get('/cards',cardController.findAllCards);
-router.post('/cards',cardController.findQueryAllCards);
+//ajout ou modification de carte
+router.post('/cards', cardController.save);
+//résultat de recherche
+router.post('/cards/?q=${keyword}&category=${category}&resource_language=${resource_language}&language=${language}&media=${type}&page=${askPage}',cardController.findQueryAllCards);
 
 //USERS
 router.get('/users/:id', userController.findById);
