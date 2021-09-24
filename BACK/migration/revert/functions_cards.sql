@@ -2,6 +2,7 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP FUNCTION update_card;
+DROP FUNCTION new_card;
 
 COMMIT;
