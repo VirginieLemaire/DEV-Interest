@@ -1,6 +1,6 @@
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { showAddCardModal } from '../../action/user';
+import { showAddCardModal, showConnexionModal } from '../../action/user';
 
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
@@ -13,24 +13,24 @@ const AddCardModal = () => {
   const history = useHistory();
 
   const addCardModal = useSelector((state) => state.user.addCardModal);
+  const isLogged = useSelector((state) => state.user.isLogged);
 
-  const newCardUrl = useSelector((state) => state.cards.newCardUrl);
-
-  const handleAddCardLinkChange = (event) => {
-    dispatch(changeNewCardField(event.target.value, 'newCardUrl'));
-  };
-
-  const handleCloseModalClick = () => {
-    dispatch(showAddCardModal());
-  };
+  const url = useSelector((state) => state.cards.newCard.url);
 
   const handleCloseModalAndRedirectClick = () => {
-    dispatch(showAddCardModal());
-    history.push('/add-card');
+    if (isLogged) {
+      dispatch(showAddCardModal());
+      history.push('/add-card');
+    }
   };
 
   const handleSubmitAddCardLink = (e) => {
     e.preventDefault();
+  };
+
+  const handleConnexionClick = () => {
+    dispatch(showAddCardModal());
+    dispatch(showConnexionModal());
   };
 
   if (!addCardModal) {
@@ -42,7 +42,7 @@ const AddCardModal = () => {
       <div className="add-card-modal__close">
         Close
       </div>
-      <div className="add-card-modal" onClick={handleCloseModalClick}>
+      <div className="add-card-modal" onClick={() => dispatch(showAddCardModal())}>
         <div className="add-card-modal__content" onClick={(e) => e.stopPropagation()}>
           <div className="add-card-modal__header">
             <h4 className="add-card-modal__title">Partager une nouvelle ressource</h4>
@@ -50,13 +50,32 @@ const AddCardModal = () => {
           <form autoComplete="off" onSubmit={handleSubmitAddCardLink}>
             <div className="add-card-modal__body">
               <Field
-                value={newCardUrl}
+                value={url}
                 type="text"
                 name="add-card-url"
                 placeholder="Lien URL de votre ressource..."
-                handleChange={handleAddCardLinkChange}
+                handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
               />
             </div>
+
+            {
+              (!isLogged) && (
+                <div className="add-card-modal__connexion-warning__container">
+                  <div
+                    className="add-card-modal__connexion-warning"
+                  >
+                    Il faut être connecter pour pouvoir ajouter une nouvelle ressource !
+                  </div>
+                  <div
+                    className="linky"
+                    onClick={handleConnexionClick}
+                  >
+                    Se connecter
+                  </div>
+                </div>
+              )
+            }
+
             <div className="add-card-modal__footer">
               <Button
                 submit
