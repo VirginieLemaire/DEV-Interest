@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
-import Tag from './Tag';
+import Tag from '../GenericComponents/Tag';
 import Card from '../Card';
 import { randomArrayShuffle } from '../../selectors/utils';
 import { fetchCards } from '../../action/cards';
