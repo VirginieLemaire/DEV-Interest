@@ -18,7 +18,7 @@ const userController = {
             //récupérer les infos de login
             const login = request.body
             //authentification
-            const user = await User.findUser(login.email, login.password);
+            const user = await new User(login).findUser();
             response.status(200).json(user);
         } catch (error) {
             //lire l'erreur

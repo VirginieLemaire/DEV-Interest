@@ -1,4 +1,6 @@
 const client = require('../database');
+const bcrypt = require('bcrypt');
+
 
 
 class User {
@@ -39,21 +41,31 @@ class User {
         }
     }
 
-    static async findUser(email, password) {
+    async findUser() {
         try {
-            //comparer les données de login avec la DB
-            const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1 and password = $2);`, [email, password]);
-            //condition pour agir selon que la requête renvoie quelque chose ou non
+            //comparer l'email de connexion avec la DB
+            const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]); //this vient du constructeur
+
+            //si pas de correspondance on renvoie une erreur
             if (!rows[0]) {
                 throw new Error('Identification failed');
             }
-            //TODO : hasher le mot de passe
 
-            //TODO : elever le mot de passe de la data à renvoyer et y placer le token
+            //TODO : hasher le mot de passe (quand les mdp seront hashé en DB)
+            if (this.password === rows[0].password) {
+            //si tout va bien, on compare le mot de passe avec bcrypt
+            //const isValid = await bcrypt.compare(password, rows[0].password);
+            //si pas de correspondance = renvoi erreur (sans préciser ce qui ne va pas, par sécurité)
+            // if (!isValid) {
+            //     throw new Error('Identification failed');
+            // }
             
             //renvoyer le user
-            console.log(rows[0]);
-            return new User(rows[0]);
+            this.id = rows[0].id;
+            this.username = rows[0].username;
+            console.log(this);
+            return this;
+            }
 
         } catch (error) {
             //voir l'erreur en console
@@ -62,7 +74,6 @@ class User {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-
 
 }
 
