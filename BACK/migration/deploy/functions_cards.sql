@@ -3,12 +3,44 @@
 BEGIN;
 
 -- create a new card
-CREATE FUNCTION new_card(TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,INT,INT,INT,INT,INT) RETURNS INT AS $$
-	INSERT INTO card (title,slug,website,description,url_image,url,user_id,level_id,language_id,type_id,category_id) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id;
+CREATE FUNCTION new_card(data json) RETURNS INT AS $$
+  INSERT INTO card (title,slug,website,description,url_image,url,user_id,level_id,language_id,type_id,category_id)
+    VALUES (
+      data->>'title',
+      data->>'slug',
+      data->>'website',
+      data->>'description',
+      data->>'url_image',
+      data->>'url',
+      (data->>'user_id')::INT,
+      (data->>'level_id')::INT,
+      (data->>'language_id')::INT,
+      (data->>'type_id')::INT,
+      (data->>'category_id')::INT    
+    ) RETURNING id
 $$ LANGUAGE SQL STRICT;
 -- update a new card
-CREATE FUNCTION update_card(TEXT,TEXT,TEXT,TEXT,TEXT,TEXT,INT,INT,INT,INT,INT, INT) RETURNS void AS $$
-	UPDATE card SET title= $1,slug=$2,website=$3,description=$4,url_image=$5,url=$6,user_id=$7,level_id=$8,language_id=$9,type_id=$10,category_id=$11 WHERE id=$12;
-$$ LANGUAGE SQL STRICT;
+CREATE FUNCTION update_card(data json) RETURNS void AS $$
+	UPDATE card SET 
+        title=data->>'title',
+        slug=data->>'slug',
+        website=data->>'website',
+        description=data->>'description',
+        url_image=data->>'url_image',
+        url=data->>'url',
+        user_id=(data->>'user_id')::INT,
+        level_id=(data->>'level_id')::INT,
+        language_id=(data->>'language_id')::INT,
+        type_id=(data->>'type_id')::INT,
+        category_id=(data->>'category_id')::INT
+    WHERE id=(data->>'id')::INT
+$$ LANGUAGE SQL STRICT; 
+
+COMMIT;
+
+BEGIN;
+
+
+
 
 COMMIT;

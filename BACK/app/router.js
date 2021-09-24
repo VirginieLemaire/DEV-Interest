@@ -10,7 +10,7 @@ const router = Router();
 //liste de toutes les cartes, paginées par 30 dans l'ordre chronologique descendant
 router.get('/cards',cardController.findAllCards);
 //ajout ou modification de carte
-router.post('/cards', cardController.save);
+router.post('/cards',cardController.save);
 //résultat de recherche
 router.post('/cards/?q=${keyword}&category=${category}&resource_language=${resource_language}&language=${language}&media=${type}&page=${askPage}',cardController.findQueryAllCards);
 

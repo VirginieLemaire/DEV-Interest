@@ -66,7 +66,7 @@ const cardsController = {
             const card = await new Cards(request.body).save();
             if (card) {
                 //on a une valeur de retour, il s'agit d'un INSERT
-                response.status(201).json(user);
+                response.status(201).json(card);
             } else {
                 //pas de valeur de retour, c'était un UPDATE
                 response.status(204).json('Update done');

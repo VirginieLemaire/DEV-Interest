@@ -40,7 +40,7 @@ class Cards {
                 await client.query('SELECT update_card($1)', [this]);
             } else {
                 //insérer les valeurs avec une fonction new_card qui fait l'objet d'une migration sqitch
-                const {rows} = await client.query('SELECT new_card ($1) AS id', [this]);
+                const {rows} = await client.query('SELECT new_card($1) AS id', [this]);
                 this.id = rows[0].id;
                 return this;
             }
