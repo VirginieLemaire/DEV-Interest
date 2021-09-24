@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
@@ -17,8 +18,9 @@ const animatedComponents = makeAnimated();
 
 const AddCard = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const isLogged = useSelector((state) => state.user.isLogged);
+  // const isLogged = useSelector((state) => state.user.isLogged);
 
   const title = useSelector((state) => state.cards.newCard.title);
   const description = useSelector((state) => state.cards.newCard.description);
