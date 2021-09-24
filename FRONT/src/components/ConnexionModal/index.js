@@ -72,6 +72,7 @@ const ConnexionModal = () => {
         </div>
         <div className="connexion-modal__body">
           <Field
+            autoComplete
             value={email}
             type="email"
             name="email"
@@ -80,6 +81,7 @@ const ConnexionModal = () => {
             required
           />
           <Field
+            autoComplete
             value={password}
             type="password"
             name="password"

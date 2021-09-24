@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
-import { changeNewCardCertification, changeNewCardField } from '../../action/cards';
+import { changeNewCardCertification, changeNewCardField, changeNewCardTechs } from '../../action/cards';
 
 import Button from '../GenericComponents/Button';
 import Field from '../GenericComponents/Field';
@@ -15,10 +15,11 @@ const animatedComponents = makeAnimated();
 const AddCard = () => {
   const dispatch = useDispatch();
 
-  const newCardTitle = useSelector((state) => state.cards.newCardTitle);
-  const newCardDescription = useSelector((state) => state.cards.newCardDescription);
-  const newCardUrl = useSelector((state) => state.cards.newCardUrl);
-  const newCardImage = useSelector((state) => state.cards.newCardImage);
+  const title = useSelector((state) => state.cards.newCard.title);
+  const description = useSelector((state) => state.cards.newCard.description);
+  const url = useSelector((state) => state.cards.newCard.url);
+  const image = useSelector((state) => state.cards.newCard.image);
+  const website = useSelector((state) => state.cards.newCard.website);
 
   const customTheme = (theme) => ({
     ...theme,
@@ -66,38 +67,47 @@ const AddCard = () => {
       <h2 className="add-card__title">Ajout d'une nouvelle ressource</h2>
       <Field
         className="add-card__input-title"
-        value={newCardTitle}
+        value={title}
         type="text"
-        name="newCardTitle"
-        placeholder="Titre de la ressource"
-        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardTitle'))}
+        name="title"
+        placeholder="Titre de la ressource..."
+        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'title'))}
         required
       />
       <TextareaField
         className="add-card__input-description"
-        value={newCardDescription}
+        value={description}
         type="textarea"
-        name="newCardDescription"
-        placeholder="Description"
-        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardDescription'))}
-        required
-      />
-      <Field
-        className="add-card__input-description"
-        value={newCardUrl}
-        type="text"
-        name="newCardUrl"
-        placeholder="Lien de la ressource"
-        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardUrl'))}
+        name="description"
+        placeholder="Description..."
+        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'description'))}
         required
       />
       <Field
         className="add-card__input-image"
-        value={newCardImage}
+        value={website}
+        type="text"
+        name="website"
+        placeholder="Nom du site..."
+        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'website'))}
+        required
+      />
+      <Field
+        className="add-card__input-description"
+        value={url}
+        type="text"
+        name="url"
+        placeholder="Lien de la ressource..."
+        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
+        required
+      />
+      <Field
+        className="add-card__input-image"
+        value={image}
         type="text"
         name="newCardImage"
-        placeholder="Url de l'image"
-        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'newCardImage'))}
+        placeholder="Url de l'image..."
+        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'image'))}
         required
       />
       <Select
@@ -105,7 +115,16 @@ const AddCard = () => {
         closeMenuOnSelect
         components={animatedComponents}
         options={typeValues}
-        onChange={(value) => dispatch(changeNewCardField(value, 'newCardType'))}
+        onChange={(value) => dispatch(changeNewCardField(value.value, 'type'))}
+        theme={customTheme}
+      />
+      <Select
+        placeholder="Technologies..."
+        closeMenuOnSelect={false}
+        components={animatedComponents}
+        isMulti
+        options={techValues}
+        onChange={(value) => dispatch(changeNewCardTechs(value, 'techs'))}
         theme={customTheme}
       />
       <Select
@@ -113,7 +132,7 @@ const AddCard = () => {
         closeMenuOnSelect
         components={animatedComponents}
         options={levelValues}
-        onChange={(value) => dispatch(changeNewCardField(value, 'newCardLevel'))}
+        onChange={(value) => dispatch(changeNewCardField(value.value, 'level'))}
         theme={customTheme}
       />
       <Select
@@ -121,23 +140,14 @@ const AddCard = () => {
         closeMenuOnSelect
         components={animatedComponents}
         options={languageOptions}
-        onChange={(value) => dispatch(changeNewCardField(value, 'newCardLanguage'))}
-        theme={customTheme}
-      />
-      <Select
-        placeholder="technologies..."
-        closeMenuOnSelect={false}
-        components={animatedComponents}
-        isMulti
-        options={techValues}
-        onChange={(value) => dispatch(changeNewCardField(value, 'newCardTechs'))}
+        onChange={(value) => dispatch(changeNewCardField(value.value, 'language'))}
         theme={customTheme}
       />
       <label className="add-card__input-certified" htmlFor="certify-add-card">
         <input
           type="checkbox"
           id="certify-add-card"
-          name="certify"
+          name="certification"
           onChange={() => dispatch(changeNewCardCertification())}
           className="add-card__certified"
           required

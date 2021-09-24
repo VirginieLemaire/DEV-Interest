@@ -1,8 +1,9 @@
 import {
-  CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD, IS_LOADING, SAVE_CARDS,
+  CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD, CHANGE_NEW_CARD_TECHS, IS_LOADING, SAVE_CARDS,
 } from '../action/cards';
 
 export const initialState = {
+  loading: false,
   cards: [
     {
       id: 34,
@@ -21,19 +22,18 @@ export const initialState = {
       techs: ['mongodb', 'PHP'],
     },
   ],
-  loading: false,
-  newCardTitle: '',
-  newCardWebsite: '',
-  newCardImage: '',
-  newCardDescription: '',
-  newCardCategory: '',
-  newCardLevel: '',
-  newCardType: '',
-  newCardUrl: '',
-  newCardContributor: '',
-  newCardLanguage: '',
-  newCardTechs: [],
-  newCardCertification: false,
+  newCard: {
+    title: '',
+    description: '',
+    website: '',
+    url: '',
+    image: '',
+    type: '',
+    techs: [],
+    level: '',
+    language: '',
+    certification: false,
+  },
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -54,12 +54,26 @@ const reducer = (state = initialState, action = {}) => {
     case CHANGE_NEW_CARD_FIELD:
       return {
         ...state,
-        [action.fieldName]: action.value,
+        newCard: {
+          ...state.newCard,
+          [action.fieldName]: action.value,
+        },
       };
+    case CHANGE_NEW_CARD_TECHS:
+      return {
+        ...state,
+        newCard: {
+          ...state.newCard,
+          [action.fieldName]: action.value.map((element) => element.value),
+        },
+      }
     case CHANGE_NEW_CARD_CERTIFICATION:
       return {
         ...state,
-        newCardCertification: !state.newCardCertification,
+        newCard: {
+          ...state.newCard,
+          certification: !state.newCard.certification,
+        },
       };
     default:
       return state;

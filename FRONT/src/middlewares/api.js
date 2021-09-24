@@ -41,6 +41,7 @@ export default (store) => (next) => (action) => {
 
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
         },
       ).catch(
         () => console.log('error'),
