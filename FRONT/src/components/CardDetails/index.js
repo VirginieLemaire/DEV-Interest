@@ -5,6 +5,7 @@ import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty
 import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
 import { FaThermometerThreeQuarters } from '@react-icons/all-files/fa/FaThermometerThreeQuarters'
 import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
+import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
 import { getDomainName } from '../../selectors/utils';
@@ -73,6 +74,14 @@ const CardDetails = ({ card }) => {
                 <Tag name={card.category.capitalize()} />
               </div>
             </div>
+            <div className="card-details__board__infos__tags-section__tags-container">
+              <div className="card-details__board__infos__tags-section__tags-container__icon">
+                <MdPermMedia />
+              </div>
+              <div className="card-details__board__infos__tags-section__tags-container__type">
+                <Tag name={card.type.capitalize()} />
+              </div>
+            </div>
           </div>
 
           <div className="card-details__board__infos__buttons-container">
@@ -102,7 +111,7 @@ const CardDetails = ({ card }) => {
 CardDetails.propTypes = {
   card: PropTypes.shape({
     slug: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
