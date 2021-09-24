@@ -79,10 +79,11 @@ class User {
         try {
             //hasher le mot de passe
             const password = await bcrypt.hash(this.password, 10);
-            const {rows} = await client.query('INSERT INTO "user" (email, password, user_name, role_id) VALUES ($1, $2, $3) RETURNING id', [
+            const {rows} = await client.query('INSERT INTO "user" (email, password, user_name, role_id) VALUES ($1, $2, $3, $4) RETURNING id', [
                 this.email,
                 password,
                 this.username,
+                //id du rôle par défaut (utilisateur)
                 1
             ]);
             this.id = rows[0].id;
