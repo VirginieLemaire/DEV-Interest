@@ -12,7 +12,7 @@ export const initialState = {
       image: 'https://images.unsplash.com/photo-1622447806884-6aabf9a96e7d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8MjFhcGMzVFVFVm98fGVufDB8fHx8&auto=format&fit=crop&w=400&q=68',
       description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
       category: 'Apprendre',
-      level: 'avancé',
+      level: 'intermédiaire',
       type: 'article',
       url: ' https://www.pinterest.fr/',
       contributor: 'Fred',

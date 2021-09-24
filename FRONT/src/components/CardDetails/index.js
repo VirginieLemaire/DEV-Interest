@@ -8,6 +8,7 @@ import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
 import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
+import { GrLanguage } from '@react-icons/all-files/gr/GrLanguage'
 import { getDomainName } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
@@ -36,7 +37,17 @@ const CardDetails = ({ card }) => {
           <img className="card-details__board__image-container__image" src={card.image} alt={card.title} />
         </div>
         <div className="card-details__board__infos">
-          <h1 className="card-details__board__infos__title"><strong>{card.title}</strong></h1>
+          <div className="card-details__board__infos__title-container">
+            <h1 className="card-details__board__infos__title-container__title"><strong>{card.title}</strong></h1>
+            <div className="card-details__board__infos__title-container__lang-container">
+              <div className="card-details__board__infos__title-container__lang-container__icon">
+                <GrLanguage />
+              </div>
+              <div className="card-details__board__infos__tags-section__tags-container__type">
+                <p>{card.lang.capitalize()}</p>
+              </div>
+            </div>
+          </div>
           <p className="card-details__board__infos__description">{card.description}</p>
           <div className="card-details__board__infos__contributor-container">
             <p className="card-details__board__infos__contributor">Proposé par: <strong>{card.contributor}</strong></p>
