@@ -37,8 +37,8 @@ const App = () => {
             {
               cards.map(
                 (card) => (
-                  <Route key={card.id} path={`/card/${card.slug}/${card.id}`} exact>
-                    <CardDetails />
+                  <Route key={card.id} path={`/cards/${card.slug}/${card.id}`} exact>
+                    <CardDetails key={card.id} card={card} />
                   </Route>
                 ),
               )
