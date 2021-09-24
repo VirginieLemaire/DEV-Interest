@@ -10,6 +10,10 @@ import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
 import './card-details.scss';
 
+String.prototype.capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 const CardDetails = () => {
   const card = useSelector((state) => state.cards.cards[0]);
   const handleClick = (event) => {
@@ -40,7 +44,7 @@ const CardDetails = () => {
               {(card.level === 'difficile') && (<FaThermometerFull />)}
             </div>
             <div className="card-details__board__infos__tags-container__level">
-              <Tag name={card.level} />
+              <Tag name={card.level.capitalize()} />
             </div>
           </div>
           <div className="card-details__board__infos__tags-container">
@@ -50,7 +54,7 @@ const CardDetails = () => {
             <div className="card-details__board__infos__tags-container__techs-container">
               {
                 card.techs.map((tech) => (
-                  <Tag name={tech} />
+                  <Tag name={tech.capitalize()} />
                 ))
               }
             </div>
@@ -60,7 +64,7 @@ const CardDetails = () => {
               <FaTags />
             </div>
             <div className="card-details__board__infos__tags-container__category">
-              <Tag name={card.category} />
+              <Tag name={card.category.capitalize()} />
             </div>
           </div>
           <div className="card-details__board__infos__buttons-container">
@@ -69,7 +73,7 @@ const CardDetails = () => {
                 styling='outline'
                 color
                 handleClick={handleClick}
-                content={card.type}
+                content={card.type.capitalize()}
               />
             </Link>
             <Button
