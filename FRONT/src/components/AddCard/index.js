@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
-import { changeNewCardCertification, changeNewCardField, changeNewCardTechs } from '../../action/cards';
+import { addCard, changeNewCardCertification, changeNewCardField, changeNewCardTechs } from '../../action/cards';
 import { slugify } from '../../selectors/cards';
 
 import Button from '../GenericComponents/Button';
@@ -188,7 +188,7 @@ const AddCard = () => {
         <Button
           color
           styling="full"
-          handleClick={(e) => e.preventDefault()}
+          handleClick={() => dispatch(addCard())}
           content="Partager !"
         />
       </div>

@@ -48,6 +48,8 @@
           cursor: pointer;
           :hover{
             font-size: 1.4rem;
+            background-color: vars.$light-color;
+            border-radius: 50%;
           }
         }
       }

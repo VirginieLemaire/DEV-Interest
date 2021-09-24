@@ -25,16 +25,18 @@ export const initialState = {
   newCard: {
     title: '',
     slug: '',
-    description: '',
     website: '',
+    description: '',
     url: '',
     image: '',
     type: '',
     techs: [],
     level: '',
     language: '',
-    certification: false,
+    category: '',
   },
+  certification: false,
+
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -71,10 +73,7 @@ const reducer = (state = initialState, action = {}) => {
     case CHANGE_NEW_CARD_CERTIFICATION:
       return {
         ...state,
-        newCard: {
-          ...state.newCard,
-          certification: !state.newCard.certification,
-        },
+        certification: !state.certification,
       };
     default:
       return state;

@@ -22,7 +22,6 @@ import AddCardModal from '../AddCardModal';
 const App = () => {
   const { cards } = useSelector((state) => state.cards);
   const { username, addCardModal, connexionModal } = useSelector((state) => state.user);
-  console.log(cards);
 
   return (
     <div className="app">

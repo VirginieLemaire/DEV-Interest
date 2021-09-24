@@ -42,3 +42,8 @@ export const changeNewCardCertification = () => (
     type: CHANGE_NEW_CARD_CERTIFICATION,
   }
 );
+
+export const ADD_CARD = 'ADD_CARD';
+export const addCard = () => ({
+  type: ADD_CARD,
+});

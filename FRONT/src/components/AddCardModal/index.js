@@ -1,5 +1,6 @@
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
 import { showAddCardModal, showConnexionModal } from '../../action/user';
 
 import Field from '../GenericComponents/Field';
@@ -7,6 +8,7 @@ import Button from '../GenericComponents/Button';
 
 import './add-card-modal.scss';
 import { changeNewCardField } from '../../action/cards';
+import logoCourt from '../../assets/DI-logo-court.png';
 
 const AddCardModal = () => {
   const dispatch = useDispatch();
@@ -24,13 +26,18 @@ const AddCardModal = () => {
     }
   };
 
-  const handleSubmitAddCardLink = (e) => {
-    e.preventDefault();
-  };
-
   const handleConnexionClick = () => {
     dispatch(showAddCardModal());
     dispatch(showConnexionModal());
+  };
+
+  const handleCloseModalClick = () => {
+    dispatch(showConnexionModal());
+  };
+
+  const handleHomeRedirect = () => {
+    history.push('/');
+    handleCloseModalClick();
   };
 
   if (!addCardModal) {
@@ -45,6 +52,15 @@ const AddCardModal = () => {
       <div className="add-card-modal" onClick={() => dispatch(showAddCardModal())}>
         <div className="add-card-modal__content" onClick={(e) => e.stopPropagation()}>
           <div className="add-card-modal__header">
+            <div className="connexion-modal__header-header">
+              <div className="connexion-modal__header-header--item" />
+              <div className="connexion-modal__header-header--item">
+                <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+              </div>
+              <div className="connexion-modal__header-header--item" onClick={() => dispatch(showAddCardModal())}>
+                <GrFormClose className="close-icon" />
+              </div>
+            </div>
             <h4 className="add-card-modal__title">Partager une nouvelle ressource</h4>
           </div>
           {
@@ -70,7 +86,7 @@ const AddCardModal = () => {
             }
           {
               (isLogged) && (
-                <form autoComplete="off" onSubmit={handleSubmitAddCardLink}>
+                <form autoComplete="off" onSubmit={(e) => e.preventDefault()}>
                   <div className="add-card-modal__body">
                     <Field
                       value={url}

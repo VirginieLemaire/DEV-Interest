@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import { FETCH_CARDS, isLoading, saveCards } from '../action/cards';
+import {
+  ADD_CARD, FETCH_CARDS, isLoading, saveCards,
+} from '../action/cards';
 import { connectUser, LOGIN } from '../action/user';
 
 const axiosInstance = axios.create({
@@ -20,6 +22,28 @@ export default (store) => (next) => (action) => {
         );
       next(action);
       break;
+    case ADD_CARD: {
+      const {
+        title, slug, website, description, url, image, level, language, type, category,
+      } = store.getState().cards.newCard;
+
+      const { id } = store.getState().user;
+      const newAddCard = {
+        title: title,
+        slug: slug,
+        website: website,
+        description: description,
+        url: url,
+        imge_url: image,
+        user_id: id,
+        level_id: level,
+        language_id: language,
+        type_id: type,
+        category_id: category,
+      };
+      console.log(newAddCard);
+      break;
+    }
     case LOGIN: {
       const { email, password } = store.getState().user;
 
