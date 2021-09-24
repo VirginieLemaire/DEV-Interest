@@ -24,6 +24,7 @@ export const initialState = {
   ],
   newCard: {
     title: '',
+    slug: '',
     description: '',
     website: '',
     url: '',
@@ -66,7 +67,7 @@ const reducer = (state = initialState, action = {}) => {
           ...state.newCard,
           [action.fieldName]: action.value.map((element) => element.value),
         },
-      }
+      };
     case CHANGE_NEW_CARD_CERTIFICATION:
       return {
         ...state,

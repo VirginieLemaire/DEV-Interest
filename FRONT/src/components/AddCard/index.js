@@ -3,6 +3,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 import { changeNewCardCertification, changeNewCardField, changeNewCardTechs } from '../../action/cards';
+import { slugify } from '../../selectors/cards';
 
 import Button from '../GenericComponents/Button';
 import Field from '../GenericComponents/Field';
@@ -78,6 +79,11 @@ const AddCard = () => {
     { value: 4, label: 'Autre' },
   ];
 
+  const handleNewCardTitleChange = (e) => {
+    dispatch(changeNewCardField(e.target.value, 'title'));
+    dispatch(changeNewCardField(slugify(e.target.value), 'slug'));
+  };
+
   return (
     <div className="add-card">
       <h2 className="add-card__title">Ajout d'une nouvelle ressource</h2>
@@ -87,7 +93,7 @@ const AddCard = () => {
         type="text"
         name="title"
         placeholder="Titre de la ressource..."
-        handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'title'))}
+        handleChange={handleNewCardTitleChange}
         required
       />
       <TextareaField
