@@ -113,7 +113,9 @@ const CardDetails = ({ card }) => {
           </div>
         </div>
       </div>
-      <h2 className="card-details__suggestion-title">D'autres cartes pourraient t'intéresser</h2>
+      <div className="card-details__suggestion-title-container">
+        <h2 className="card-details__suggestion-title-container__title">D'autres cartes pourraient t'intéresser</h2>
+      </div>
       {/* <SearchResults /> */}
     </div>
   );
