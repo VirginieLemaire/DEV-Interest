@@ -51,21 +51,22 @@ class User {
                 throw new Error('Identification failed');
             }
 
-            //TODO : hasher le mot de passe (quand les mdp seront hashé en DB)
-            if (this.password === rows[0].password) {
-            //si tout va bien, on compare le mot de passe avec bcrypt
-            //const isValid = await bcrypt.compare(password, rows[0].password);
-            //si pas de correspondance = renvoi erreur (sans préciser ce qui ne va pas, par sécurité)
-            // if (!isValid) {
-            //     throw new Error('Identification failed');
-            // }
-            
-            //renvoyer le user
-            this.id = rows[0].id;
-            this.username = rows[0].user_name;
-            console.log(this);
-            return this;
+            const isValid = await bcrypt.compare(this.password, rows[0].password);
+            if (!isValid) {
+                throw new Error('Identification failed');
+           
             }
+            // creer un user pour securiser
+            const userSecure = {
+                id: rows[0].id,
+                username: rows[0].user_name,
+                email: rows[0].email
+            }
+            console.log(userSecure);
+            //renvoyer le user
+            
+            return userSecure;
+            
 
         } catch (error) {
             //voir l'erreur en console
@@ -95,6 +96,16 @@ class User {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
+    // async deleteUserById() {
+    //     try {
+    //         const {rows} = await client.query('DELETE FROM "user" WHERE id $1;' [this.id])
+    //     } catch (error) {
+    //         //voir l'erreur en console
+    //         console.trace(error);
+    //         //renvoyer l'erreur au front
+    //         throw new Error(error.detail ? error.detail : error.message);
+    //     }
+    // }
 
 }
 
