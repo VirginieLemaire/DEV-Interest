@@ -13,7 +13,7 @@ module.exports = {
                 //header
                 {
                     algorithm: 'HS256',
-                    expiresIn: '1m'
+                    expiresIn: '30m'
 
                 }
             );
