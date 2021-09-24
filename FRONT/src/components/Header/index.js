@@ -1,7 +1,6 @@
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';
-import { AiTwotoneDiff } from '@react-icons/all-files/ai/AiTwotoneDiff';
 import {
   changeField, showConnexionModal, userLogin, userLogout,
 } from '../../action/user';
@@ -51,6 +50,10 @@ const Header = () => {
     dispatch(userLogout());
   };
 
+  const handleBookmarksButtonClick = () => {
+    history.push(`${username}/bookmarks`);
+  };
+
   const pathname = usePathname();
 
   return (
@@ -76,7 +79,14 @@ const Header = () => {
           <Button
             className="header__button"
             color
-            styling="outline"
+            styling="text"
+            handleClick={handleBookmarksButtonClick}
+            content="Favoris"
+          />
+          <Button
+            className="header__button"
+            color
+            styling="text"
             handleClick={handleLogoutButtonClick}
             content="Déconnexion"
           />
@@ -87,7 +97,6 @@ const Header = () => {
             handleClick={handleUserButtonClick}
             content={`Hello ${username}!`}
           />
-          <AiTwotoneDiff />
           <IoIosArrowDown />
         </div>
       )}

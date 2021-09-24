@@ -2,29 +2,27 @@
 import PropTypes from 'prop-types';
 
 // == Import : local
-import './field.scss';
+import './textarea-field.scss';
 
 // == Composant
-const Field = ({
+const TextareaField = ({
   value,
-  type,
   name,
   placeholder,
   handleChange,
   required,
 }) => {
-  const inputId = `field-${name}`;
+  const inputId = `textarea-field-${name}`;
 
   return (
-    <div className={value.length > 0 ? 'field field--has-content' : 'field'}>
-      <input
+    <div className={value.length > 0 ? 'textarea-field textarea-field--has-content' : 'textarea-field'}>
+      <textarea
         // React - state
         value={value}
         onChange={handleChange}
         // infos de base
         id={inputId}
-        type={type}
-        className="field__input"
+        className="textarea-field__input"
         placeholder={placeholder}
         name={name}
         required={required}
@@ -32,7 +30,7 @@ const Field = ({
 
       <label
         htmlFor={inputId}
-        className="field__label"
+        className="textarea-field__label"
       >
         {placeholder}
       </label>
@@ -40,9 +38,8 @@ const Field = ({
   );
 };
 
-Field.propTypes = {
+TextareaField.propTypes = {
   value: PropTypes.string,
-  type: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
@@ -50,11 +47,10 @@ Field.propTypes = {
 };
 
 // Valeurs par défaut pour les props
-Field.defaultProps = {
+TextareaField.defaultProps = {
   value: '',
-  type: 'text',
   required: false,
 };
 
 // == Export
-export default Field;
+export default TextareaField;

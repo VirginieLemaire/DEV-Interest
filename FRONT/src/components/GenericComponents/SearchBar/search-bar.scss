@@ -33,7 +33,9 @@
   &__icon {
     color: vars.$text-color;
 
-    &.notloading {}
+    &.notloading {
+
+    }
 
     &.loading {
       animation: spin 2s linear infinite;
