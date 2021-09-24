@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
@@ -20,7 +19,6 @@ String.prototype.capitalize = function () {
 };
 
 const CardDetails = ({ card }) => {
-  // const card = useSelector((state) => state.cards.cards[0]);
   const handleClick = (event) => {
     console.log(event);
   };
