@@ -40,9 +40,9 @@ const CardDetails = ({ card }) => {
           </div>
           <div className="card-details__board__infos__tags-container">
             <div className="card-details__board__infos__tags-container__icon">
-              {(card.level === 'facile') && (<FaThermometerEmpty />)}
+              {(card.level === 'débutant') && (<FaThermometerEmpty />)}
               {(card.level === 'intermédiaire') && (<FaThermometerHalf />)}
-              {(card.level === 'difficile') && (<FaThermometerFull />)}
+              {(card.level === 'expert') && (<FaThermometerFull />)}
             </div>
             <div className="card-details__board__infos__tags-container__level">
               <Tag name={card.level.capitalize()} />

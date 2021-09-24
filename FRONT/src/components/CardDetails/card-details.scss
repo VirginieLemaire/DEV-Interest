@@ -8,13 +8,13 @@ strong {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 5rem;
   gap: 3rem;
   color: vars.$text-color;
 
   &__board {
     display: flex;
-    width: 40%;
+    width: 60vw;
+    height: 70vh;
     gap: 1rem;
     box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
     background-color: vars.$white-color;
@@ -22,7 +22,6 @@ strong {
 
 
     &__image-container {
-      width: 100%;
 
       &__image {
         width: 100%;
@@ -38,6 +37,7 @@ strong {
       gap: 2rem;
       padding: 2rem 1rem 2rem 0;
       width: 100%;
+      position: relative;
 
       &__title {
         font-size: 1.5rem;
@@ -46,6 +46,7 @@ strong {
       &__description {
         font-size: 1.1rem;
         font-style: italic;
+        line-height: 1.5rem;
       }
 
       &__contributor-container {
@@ -69,6 +70,9 @@ strong {
       }
 
       &__buttons-container {
+        position: absolute;
+        bottom: 2rem;
+        left: 25%;
         display: flex;
         justify-content: center;
         gap: 2rem;
