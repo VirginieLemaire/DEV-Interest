@@ -53,6 +53,26 @@
     }
   }
 
+  &.text{
+
+    &.color{
+      background-color: transparent;
+      color: vars.$primary-color;
+
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+
+    &.no-color{
+      background-color: transparent;
+      color: vars.$light-color-plus;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
+
   &:hover{
     color: vars.$white-color;
     background-color: vars.$primary-color;
