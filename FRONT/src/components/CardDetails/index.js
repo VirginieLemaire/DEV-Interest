@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
 import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
+import { FaThermometerThreeQuarters } from '@react-icons/all-files/fa/FaThermometerThreeQuarters'
 import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
@@ -40,36 +41,40 @@ const CardDetails = ({ card }) => {
             <p className="card-details__board__infos__contributor">Proposé par: <strong>{card.contributor}</strong></p>
             <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
-          <div className="card-details__board__infos__tags-container">
-            <div className="card-details__board__infos__tags-container__icon">
-              {(card.level === 'débutant') && (<FaThermometerEmpty />)}
-              {(card.level === 'intermédiaire') && (<FaThermometerHalf />)}
-              {(card.level === 'expert') && (<FaThermometerFull />)}
+          <div className="card-details__board__infos__tags-section">
+            <div className="card-details__board__infos__tags-section__tags-container">
+              <div className="card-details__board__infos__tags-section__tags-container__icon">
+                {(card.level === 'débutant') && (<FaThermometerEmpty />)}
+                {(card.level === 'intermédiaire') && (<FaThermometerHalf />)}
+                {(card.level === 'avancé') && (<FaThermometerThreeQuarters />)}
+                {(card.level === 'expert') && (<FaThermometerFull />)}
+              </div>
+              <div className="card-details__board__infos__tags-section__tags-container__level">
+                <Tag name={card.level.capitalize()} />
+              </div>
             </div>
-            <div className="card-details__board__infos__tags-container__level">
-              <Tag name={card.level.capitalize()} />
+            <div className="card-details__board__infos__tags-section__tags-container">
+              <div className="card-details__board__infos__tags-section__tags-container__icon">
+                <CgScreen />
+              </div>
+              <div className="card-details__board__infos__tags-section__tags-container__techs-container">
+                {
+                  card.techs.map((tech) => (
+                    <Tag name={tech.capitalize()} />
+                  ))
+                }
+              </div>
+            </div>
+            <div className="card-details__board__infos__tags-section__tags-container">
+              <div className="card-details__board__infos__tags-section__tags-container__icon">
+                <FaTags />
+              </div>
+              <div className="card-details__board__infos__tags-section__tags-container__category">
+                <Tag name={card.category.capitalize()} />
+              </div>
             </div>
           </div>
-          <div className="card-details__board__infos__tags-container">
-            <div className="card-details__board__infos__tags-container__icon">
-              <CgScreen />
-            </div>
-            <div className="card-details__board__infos__tags-container__techs-container">
-              {
-                card.techs.map((tech) => (
-                  <Tag name={tech.capitalize()} />
-                ))
-              }
-            </div>
-          </div>
-          <div className="card-details__board__infos__tags-container">
-            <div className="card-details__board__infos__tags-container__icon">
-              <FaTags />
-            </div>
-            <div className="card-details__board__infos__tags-container__category">
-              <Tag name={card.category.capitalize()} />
-            </div>
-          </div>
+
           <div className="card-details__board__infos__buttons-container">
             <Link to={{ pathname: card.url }} target="_blank">
               <Button

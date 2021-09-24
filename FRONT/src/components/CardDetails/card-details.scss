@@ -56,20 +56,28 @@ strong {
         justify-content: space-between;
       }
 
-      &__tags-container {
+      &__tags-section {
         display: flex;
-        gap: 1rem;
+        flex-direction: column;
+        gap: 2rem;
 
-        &__techs-container {
+        &__tags-container {
           display: flex;
-          flex-direction: row;
           gap: 1rem;
+
+          &__techs-container {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+          }
+
+          &__icon {
+            transform: scale(1.5);
+          }
         }
 
-        &__icon {
-          transform: scale(1.5);
-        }
       }
+
 
       &__buttons-container {
         display: flex;
