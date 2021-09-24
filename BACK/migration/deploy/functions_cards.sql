@@ -19,6 +19,7 @@ CREATE FUNCTION new_card(data json) RETURNS INT AS $$
       (data->>'category_id')::INT    
     ) RETURNING id
 $$ LANGUAGE SQL STRICT;
+
 -- update a new card
 CREATE FUNCTION update_card(data json) RETURNS void AS $$
 	UPDATE card SET 
