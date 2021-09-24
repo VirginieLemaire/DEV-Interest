@@ -47,18 +47,7 @@ const AddCardModal = () => {
           <div className="add-card-modal__header">
             <h4 className="add-card-modal__title">Partager une nouvelle ressource</h4>
           </div>
-          <form autoComplete="off" onSubmit={handleSubmitAddCardLink}>
-            <div className="add-card-modal__body">
-              <Field
-                value={url}
-                type="text"
-                name="add-card-url"
-                placeholder="Lien URL de votre ressource..."
-                handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
-              />
-            </div>
-
-            {
+          {
               (!isLogged) && (
                 <div className="add-card-modal__connexion-warning__container">
                   <div
@@ -66,26 +55,43 @@ const AddCardModal = () => {
                   >
                     Il faut être connecter pour pouvoir ajouter une nouvelle ressource !
                   </div>
-                  <div
-                    className="linky"
-                    onClick={handleConnexionClick}
-                  >
-                    Se connecter
+                  <div className="add-card-modal__footer">
+
+                    <Button
+                      submit
+                      styling="full"
+                      handleClick={handleConnexionClick}
+                      content="Se connecter"
+                      color
+                    />
                   </div>
                 </div>
               )
             }
-
-            <div className="add-card-modal__footer">
-              <Button
-                submit
-                styling="full"
-                handleClick={handleCloseModalAndRedirectClick}
-                content="Envoyer"
-                color
-              />
-            </div>
-          </form>
+          {
+              (isLogged) && (
+                <form autoComplete="off" onSubmit={handleSubmitAddCardLink}>
+                  <div className="add-card-modal__body">
+                    <Field
+                      value={url}
+                      type="text"
+                      name="add-card-url"
+                      placeholder="Lien URL de votre ressource..."
+                      handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
+                    />
+                  </div>
+                  <div className="add-card-modal__footer">
+                    <Button
+                      submit
+                      styling="full"
+                      handleClick={handleCloseModalAndRedirectClick}
+                      content="Envoyer"
+                      color
+                    />
+                  </div>
+                </form>
+              )
+            }
         </div>
       </div>
     </div>

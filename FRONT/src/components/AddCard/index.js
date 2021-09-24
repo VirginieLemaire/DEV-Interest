@@ -33,33 +33,49 @@ const AddCard = () => {
   });
 
   const languageOptions = [
-    { label: 'Français', value: 'fr' },
-    { label: 'Anglais', value: 'en' },
-    { label: 'Autre', value: 'other' },
+    { value: 1, label: 'Français' },
+    { value: 2, label: 'Anglais' },
+    { value: 3, label: 'Autre' },
   ];
 
   const typeValues = [
-    { value: 'site_web', label: 'Site web' },
-    { value: 'article', label: 'article' },
-    { value: 'video', label: 'Vidéo' },
-    { value: 'repo', label: 'Repo' },
-    { value: 'package', label: 'Package' },
-    { value: 'image', label: 'Image' },
-    { value: 'other', label: 'Autre' },
+    { value: 1, label: 'Article' },
+    { value: 2, label: 'Site Web' },
+    { value: 3, label: 'Vidéo' },
+    { value: 4, label: 'Image' },
+    { value: 5, label: 'Site de challenge' },
+    { value: 6, label: 'Repo Github' },
+    { value: 7, label: 'Repo Bitbucket' },
+    { value: 8, label: 'Package' },
+    { value: 9, label: 'Autre' },
   ];
 
   const levelValues = [
-    { value: 'beginner', label: 'Débutant' },
-    { value: 'intermediate', label: 'Intermédiaire' },
-    { value: 'advanced', label: 'Avancé' },
-    { value: 'expert', label: 'Expert' },
+    { value: 1, label: 'Débutant' },
+    { value: 2, label: 'Intermédiaire' },
+    { value: 3, label: 'Avancé' },
+    { value: 4, label: 'Expert' },
   ];
 
   const techValues = [
-    { value: 'javascript', label: 'JS' },
-    { value: 'php', label: 'PHP' },
-    { value: 'c++', label: 'C++' },
-    { value: 'react', label: 'React' },
+    { value: 1, label: 'JavaScript' },
+    { value: 2, label: 'CSS' },
+    { value: 3, label: 'MongoDB' },
+    { value: 4, label: 'PHP' },
+    { value: 5, label: 'HTML' },
+    { value: 6, label: 'WordPress' },
+    { value: 7, label: 'PostgreSQL' },
+    { value: 8, label: 'MarkDown' },
+    { value: 9, label: 'Ruby' },
+    { value: 10, label: 'Python' },
+    { value: 11, label: 'Autre' },
+  ];
+
+  const categoryValues = [
+    { value: 1, label: 'Apprendre' },
+    { value: 2, label: 'Approfondir' },
+    { value: 3, label: 'Challenges et tutoriels' },
+    { value: 4, label: 'Autre' },
   ];
 
   return (
@@ -125,6 +141,14 @@ const AddCard = () => {
         isMulti
         options={techValues}
         onChange={(value) => dispatch(changeNewCardTechs(value, 'techs'))}
+        theme={customTheme}
+      />
+      <Select
+        placeholder="Catégorie..."
+        closeMenuOnSelect
+        components={animatedComponents}
+        options={categoryValues}
+        onChange={(value) => dispatch(changeNewCardField(value.value, 'category'))}
         theme={customTheme}
       />
       <Select
