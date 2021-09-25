@@ -32,16 +32,25 @@ class Cards {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
+    //enregistrer une nouvelle carte ou mettre à jour une carte
     async save() {
         try {
             //si les datas envoyées du front possèdent un id alors on faitun update, sinon un ajout
             if (this.id) {
+                //aller chercher les différents id dans la table card_has_tech pour checker quelle asociation a potentiellement été modifiée.
+                const association = await client.query('SELECT id FROM card_has_tech WHERE card_id = $1', [this.id]);
+                console.log(association);
+                //TODO : comparer l'existant DB et this pour mettre à jour seulement celui qu'on ne trouve pas
                 //updater l'enregistrement avec une fonction update_card qui fait l'objet d'une migration sqitch
                 await client.query('SELECT update_card($1)', [this]);
             } else {
                 //insérer les valeurs avec une fonction new_card qui fait l'objet d'une migration sqitch
                 const {rows} = await client.query('SELECT new_card($1) AS id', [this]);
                 this.id = rows[0].id;
+                //insérer les valeurs dans les tables de liaison
+                await client.query('SELECT card_category($1) AS id', [this]);
+                await client.query('SELECT card_tech($1) AS id', [this]);
+                //renvoyer l'info
                 return this;
             }
         } catch (error) {
