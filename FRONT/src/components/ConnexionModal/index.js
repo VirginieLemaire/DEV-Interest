@@ -1,4 +1,4 @@
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
 
@@ -13,6 +13,9 @@ import logoCourt from '../../assets/DI-logo-court.png';
 
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
+import EmailField from '../GenericComponents/EmailField';
+import PasswordField from '../GenericComponents/PasswordField';
+import SubmitButton from '../GenericComponents/SubmitButton';
 
 const ConnexionModal = () => {
   const dispatch = useDispatch();
@@ -22,18 +25,6 @@ const ConnexionModal = () => {
 
   const email = useSelector((state) => state.user.email);
   const password = useSelector((state) => state.user.password);
-
-  const handleEmailChange = (event) => {
-    dispatch(changeField(event.target.value, 'email'));
-  };
-
-  const handlePasswordChange = (event) => {
-    dispatch(changeField(event.target.value, 'password'));
-  };
-
-  const handleCloseModalClick = () => {
-    dispatch(showConnexionModal());
-  };
 
   const handleSignupClick = () => {
     dispatch(showConnexionModal());
@@ -49,7 +40,7 @@ const ConnexionModal = () => {
 
   const handleHomeRedirect = () => {
     history.push('/');
-    handleCloseModalClick();
+    dispatch(showConnexionModal());
   };
 
   if (!connexionModal) {
@@ -57,7 +48,7 @@ const ConnexionModal = () => {
   }
 
   return (
-    <div className="connexion-modal" onClick={handleCloseModalClick}>
+    <div className="connexion-modal" onClick={() => dispatch(showConnexionModal())}>
       <div className="connexion-modal__content" onClick={(e) => e.stopPropagation()}>
         <form onSubmit={handleSubmitConnexion}>
           <div className="connexion-modal__header">
@@ -66,37 +57,34 @@ const ConnexionModal = () => {
               <div className="connexion-modal__header-header--item">
                 <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
               </div>
-              <div className="connexion-modal__header-header--item" onClick={handleCloseModalClick}>
+              <div className="connexion-modal__header-header--item" onClick={() => dispatch(showConnexionModal())}>
                 <GrFormClose className="close-icon" />
               </div>
             </div>
             <h4 className="connexion-modal__title">Se connecter</h4>
           </div>
           <div className="connexion-modal__body">
-            <Field
+            <EmailField
               autoComplete
               value={email}
-              type="email"
               name="email"
               placeholder="Email"
-              handleChange={handleEmailChange}
+              handleChange={(e) => dispatch(changeField(e.target.value, 'email'))}
               required
             />
-            <Field
+            <PasswordField
               autoComplete
               value={password}
-              type="password"
               name="password"
               placeholder="Mot de passe"
-              handleChange={handlePasswordChange}
+              handleChange={(e) => dispatch(changeField(e.target.value, 'password'))}
               required
+              minlength="4"
             />
           </div>
           <div className="connexion-modal__footer">
-            <Button
-              submit
+            <SubmitButton
               styling="full"
-              handleClick={handleSubmitConnexion}
               content="Se connecter"
               color
             />

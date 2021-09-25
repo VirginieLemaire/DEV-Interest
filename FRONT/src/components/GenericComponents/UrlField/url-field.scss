@@ -13,7 +13,7 @@
     &:focus {
       border: 2px solid vars.$primary-color;
 
-      & + .field-label {
+      & + .url-field-label {
         color: vars.$primary-color;
       }
     }
@@ -31,10 +31,10 @@
   }
 
   &--has-content {
-    .field__label {
+    .url-field__label {
       display: block;
     }
-    .field__input {
+    .url-field__input {
       padding: 1.4em 1.2em .4em;
     }
   }

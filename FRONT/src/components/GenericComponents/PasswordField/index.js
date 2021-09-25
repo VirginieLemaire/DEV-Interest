@@ -2,22 +2,22 @@
 import PropTypes from 'prop-types';
 
 // == Import : local
-import './url-field.scss';
+import './password-field.scss';
 
 // == Composant
-const UrlField = ({
+const PasswordField = ({
   value,
   name,
   placeholder,
   handleChange,
   required,
   autoComplete,
-  pattern,
+  minlength,
 }) => {
-  const inputId = `url-field-${name}`;
+  const inputId = `password-field-${name}`;
 
   return (
-    <div className={value.length > 0 ? 'url-field url-field--has-content' : 'url-field'}>
+    <div className={value.length > 0 ? 'password-field password-field--has-content' : 'password-field'}>
       <input
         autoComplete={autoComplete ? 'on' : 'off'}
         // React - state
@@ -25,17 +25,17 @@ const UrlField = ({
         onChange={handleChange}
         // infos de base
         id={inputId}
-        type="url"
-        className="url-field__input"
+        type="password"
+        className="password-field__input"
         placeholder={placeholder}
         name={name}
-        pattern={pattern}
         required={required}
+        minLength={minlength}
       />
 
       <label
         htmlFor={inputId}
-        className="url-field__label"
+        className="password-field__label"
       >
         {placeholder}
       </label>
@@ -43,23 +43,23 @@ const UrlField = ({
   );
 };
 
-UrlField.propTypes = {
+PasswordField.propTypes = {
   value: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
   autoComplete: PropTypes.bool,
-  pattern: PropTypes.string,
+  minlength: PropTypes.string,
 };
 
 // Valeurs par défaut pour les props
-UrlField.defaultProps = {
+PasswordField.defaultProps = {
   value: '',
   required: false,
   autoComplete: false,
-  pattern: 'https://.*',
+  minlength: '4',
 };
 
 // == Export
-export default UrlField;
+export default PasswordField;

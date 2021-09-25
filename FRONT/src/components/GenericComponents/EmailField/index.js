@@ -2,22 +2,21 @@
 import PropTypes from 'prop-types';
 
 // == Import : local
-import './url-field.scss';
+import './email-field.scss';
 
 // == Composant
-const UrlField = ({
+const EmailField = ({
   value,
   name,
   placeholder,
   handleChange,
   required,
   autoComplete,
-  pattern,
 }) => {
-  const inputId = `url-field-${name}`;
+  const inputId = `email-field-${name}`;
 
   return (
-    <div className={value.length > 0 ? 'url-field url-field--has-content' : 'url-field'}>
+    <div className={value.length > 0 ? 'email-field email-field--has-content' : 'email-field'}>
       <input
         autoComplete={autoComplete ? 'on' : 'off'}
         // React - state
@@ -25,17 +24,16 @@ const UrlField = ({
         onChange={handleChange}
         // infos de base
         id={inputId}
-        type="url"
-        className="url-field__input"
+        type="email"
+        className="email-field__input"
         placeholder={placeholder}
         name={name}
-        pattern={pattern}
         required={required}
       />
 
       <label
         htmlFor={inputId}
-        className="url-field__label"
+        className="email-field__label"
       >
         {placeholder}
       </label>
@@ -43,23 +41,21 @@ const UrlField = ({
   );
 };
 
-UrlField.propTypes = {
+EmailField.propTypes = {
   value: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
   autoComplete: PropTypes.bool,
-  pattern: PropTypes.string,
 };
 
 // Valeurs par défaut pour les props
-UrlField.defaultProps = {
+EmailField.defaultProps = {
   value: '',
   required: false,
   autoComplete: false,
-  pattern: 'https://.*',
 };
 
 // == Export
-export default UrlField;
+export default EmailField;
