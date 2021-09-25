@@ -29,29 +29,32 @@ export default (store) => (next) => (action) => {
 
       const { id } = store.getState().user;
 
-      console.log(title);
-      console.log(id);
+      const newCard = {
+        title: title,
+        slug: slug,
+        website: website,
+        description: description,
+        url_image: image,
+        url: url,
+        user_id: id,
+        level_id: level,
+        language_id: language,
+        type_id: type,
+        category_id: category,
+      };
+
+      console.log(newCard);
 
       axiosInstance.post(
         '/cards',
         {
-          title: title,
-          slug: slug,
-          website: website,
-          description: description,
-          imge_url: image,
-          url: url,
-          user_id: id,
-          level_id: level,
-          language_id: language,
-          type_id: type,
-          category_id: category,
+          ...newCard,
         },
       ).then(
         (response) => {
           console.log('il faut enregister ces informations', response);
 
-          // store.dispatch(fetchCards());
+          store.dispatch(fetchCards());
         },
       ).catch(
         () => console.log('error'),

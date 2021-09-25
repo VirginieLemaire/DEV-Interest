@@ -22,6 +22,7 @@ const SearchResults = () => {
     <div className="search-container">
       <div className="search-results">
         <Masonry
+          updateOnEachImageLoad
           breakpointCols={breakpoints}
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"

@@ -10,7 +10,9 @@ import { slugify } from '../../selectors/cards';
 
 import Button from '../GenericComponents/Button';
 import Field from '../GenericComponents/Field';
+import SubmitButton from '../GenericComponents/SubmitButton';
 import TextareaField from '../GenericComponents/TextareaField';
+import UrlField from '../GenericComponents/UrlField';
 
 import './add-card.scss';
 
@@ -90,8 +92,9 @@ const AddCard = () => {
     dispatch(changeNewCardField(slugify(e.target.value), 'slug'));
   };
 
-  const handleSubmitNewCard = (e) => {
+  const handleSubmitNewCard = () => {
     dispatch(addCard());
+    history.push('/');
   };
 
   return (
@@ -103,48 +106,50 @@ const AddCard = () => {
           value={title}
           type="text"
           name="title"
-          placeholder="Titre de la ressource..."
+          placeholder="Titre de la ressource"
           handleChange={handleNewCardTitleChange}
           required
+          minlength="10"
+          maxlength="120"
         />
         <TextareaField
           className="add-card__input-description"
           value={description}
           type="textarea"
           name="description"
-          placeholder="Description..."
+          placeholder="Description"
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'description'))}
           required
+          minLength="10"
+          maxLength="500"
         />
         <Field
-          className="add-card__input-image"
+          className="add-card__input-website"
           value={website}
           type="text"
           name="website"
-          placeholder="Nom du site..."
+          placeholder="Nom du site"
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'website'))}
           required
         />
-        <Field
+        <UrlField
           className="add-card__input-url"
           value={url}
-          type="url"
-          name="url"
-          placeholder="Lien Url de la ressource..."
+          name="urlSource"
+          placeholder="Lien Url de la ressource"
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
           required
         />
-        <Field
+        <UrlField
           className="add-card__input-image"
           value={image}
-          type="url"
-          name="newCardImage"
-          placeholder="Lien Url de l'image..."
+          name="urlImage"
+          placeholder="Lien Url de l'image"
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'image'))}
           required
         />
         <Select
-          placeholder="Type de ressource..."
+          placeholder="Type de ressource"
           closeMenuOnSelect
           components={animatedComponents}
           options={typeValues}
@@ -152,7 +157,7 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Technologies..."
+          placeholder="Technologies"
           closeMenuOnSelect={false}
           components={animatedComponents}
           isMulti
@@ -161,7 +166,7 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Catégorie..."
+          placeholder="Catégorie"
           closeMenuOnSelect
           components={animatedComponents}
           options={categoryValues}
@@ -169,7 +174,7 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Niveau..."
+          placeholder="Niveau"
           closeMenuOnSelect
           components={animatedComponents}
           options={levelValues}
@@ -177,7 +182,7 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Langue..."
+          placeholder="Langue"
           closeMenuOnSelect
           components={animatedComponents}
           options={languageOptions}
@@ -196,11 +201,9 @@ const AddCard = () => {
           Je certifie que la ressource partagée respecte les conditions d'utilisations
         </label>
         <div className="add-card__button">
-          <Button
-            submit
+          <SubmitButton
             color
             styling="full"
-            handleClick={handleSubmitNewCard}
             content="Partager !"
           />
         </div>

@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
 import { showAddCardModal, showConnexionModal } from '../../action/user';
 
-import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
 
 import './add-card-modal.scss';
 import { changeNewCardField } from '../../action/cards';
 import logoCourt from '../../assets/DI-logo-court.png';
+import SubmitButton from '../GenericComponents/SubmitButton';
+import UrlField from '../GenericComponents/UrlField';
 
 const AddCardModal = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const AddCardModal = () => {
 
   const url = useSelector((state) => state.cards.newCard.url);
 
-  const handleCloseModalAndRedirectClick = () => {
+  const handleModalAddCardUrlSubmit = () => {
     if (isLogged) {
       dispatch(showAddCardModal());
       history.push('/add-card');
@@ -31,13 +32,9 @@ const AddCardModal = () => {
     dispatch(showConnexionModal());
   };
 
-  const handleCloseModalClick = () => {
-    dispatch(showConnexionModal());
-  };
-
   const handleHomeRedirect = () => {
     history.push('/');
-    handleCloseModalClick();
+    dispatch(showConnexionModal());
   };
 
   if (!addCardModal) {
@@ -61,7 +58,7 @@ const AddCardModal = () => {
                 <GrFormClose className="close-icon" />
               </div>
             </div>
-            <h4 className="add-card-modal__title">Partager une nouvelle ressource</h4>
+            <h4 className="add-card-modal__title">Partage une nouvelle ressource</h4>
           </div>
           {
               (!isLogged) && (
@@ -86,9 +83,9 @@ const AddCardModal = () => {
             }
           {
               (isLogged) && (
-                <form autoComplete="off" onSubmit={(e) => e.preventDefault()}>
+                <form autoComplete="off" onSubmit={handleModalAddCardUrlSubmit}>
                   <div className="add-card-modal__body">
-                    <Field
+                    <UrlField
                       value={url}
                       type="url"
                       name="add-card-url"
@@ -98,10 +95,8 @@ const AddCardModal = () => {
                     />
                   </div>
                   <div className="add-card-modal__footer">
-                    <Button
-                      submit
+                    <SubmitButton
                       styling="full"
-                      handleClick={handleCloseModalAndRedirectClick}
                       content="Envoyer"
                       color
                     />

@@ -12,7 +12,6 @@ const UrlField = ({
   handleChange,
   required,
   autoComplete,
-  pattern,
 }) => {
   const inputId = `url-field-${name}`;
 
@@ -29,7 +28,6 @@ const UrlField = ({
         className="url-field__input"
         placeholder={placeholder}
         name={name}
-        pattern={pattern}
         required={required}
       />
 
@@ -50,7 +48,6 @@ UrlField.propTypes = {
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
   autoComplete: PropTypes.bool,
-  pattern: PropTypes.string,
 };
 
 // Valeurs par défaut pour les props
@@ -58,7 +55,6 @@ UrlField.defaultProps = {
   value: '',
   required: false,
   autoComplete: false,
-  pattern: 'https://.*',
 };
 
 // == Export
