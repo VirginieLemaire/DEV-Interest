@@ -102,16 +102,16 @@ class User {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-    // async deleteUserById() {
-    //     try {
-    //         const {rows} = await client.query('DELETE FROM "user" WHERE id $1;' [this.id])
-    //     } catch (error) {
-    //         //voir l'erreur en console
-    //         console.trace(error);
-    //         //renvoyer l'erreur au front
-    //         throw new Error(error.detail ? error.detail : error.message);
-    //     }
-    // }
+    async deleteUserById(id) {
+        try {
+            const {rows} = await client.query('DELETE FROM "user" WHERE id =$1', [id])
+        } catch (error) {
+            //voir l'erreur en console
+            console.trace(error);
+            //renvoyer l'erreur au front
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
 
 }
 

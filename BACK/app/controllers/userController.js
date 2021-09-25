@@ -42,21 +42,21 @@ const userController = {
            response.status(500).json(error.message);
         }
     },
-    // deleteUserById: async (request, response) => {
-    //     try {
-    //         const id = request.params.id
-    //         console.log(id);
-    //         const user = await new User(id).deleteUserById();
-    //         //response.setHeader('Authorization', jwt.makeToken(user.id));
-    //         response.status(201).send('success deleted');
+    deleteUserById: async (request, response) => {
+        try {
+            const id = parseInt(request.params.id,10);
+            console.log(id);
+            const user = await new User(id).deleteUserById(id);
+            response.setHeader('Authorization', jwt.makeToken(id));
+            response.status(201).json({success: true});
 
-    //     } catch(error) {
-    //        //lire l'erreur
-    //        console.trace(error);
-    //        //envoyer l'info au front
-    //        response.status(500).json(error.message);
-    //     }
-    // }
+        } catch(error) {
+           //lire l'erreur
+           console.trace(error);
+           //envoyer l'info au front
+           response.status(500).json(error.message);
+        }
+    }
 
 }
 
