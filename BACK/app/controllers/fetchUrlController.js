@@ -6,14 +6,13 @@ const fetchUrlController = {
             //lien url "input form url"
             const url = await await fetchOpengraph.fetch(request.body.url);
             //response.setHeader('Authorization', jwt.makeToken(id));
-            if(url === response.status(404)) {
-
-                console.log('vide');
+            if(url === {}) {
+                response.status(201).json('pas de contenu');
             }else {
-                response.json(url);
-                console.log(url);
+                var ogurl = url['og:url'];
+                    console.log(ogurl) ;
+                    response.json(url);
             }
-            
         } catch(error) {
             console.log(error);
             response.status(500).json(error.message);
