@@ -33,3 +33,17 @@ export const changeNewCardCertification = () => (
     type: CHANGE_NEW_CARD_CERTIFICATION,
   }
 );
+
+export const ADD_BOOKMARK = 'ADD_BOOKMARK';
+export const addBookmark = () => (
+  {
+    type: ADD_BOOKMARK,
+  }
+);
+
+export const REMOVE_BOOKMARK = 'REMOVE_BOOKMARK';
+export const removeBookmark = () => (
+  {
+    type: REMOVE_BOOKMARK,
+  }
+);

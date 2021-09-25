@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { BsBookmark } from '@react-icons/all-files/bs/BsBookmark';
 import { BsBookmarkFill } from '@react-icons/all-files/bs/BsBookmarkFill'
 import PropTypes from 'prop-types';
