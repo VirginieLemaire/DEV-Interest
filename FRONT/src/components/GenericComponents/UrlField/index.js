@@ -2,10 +2,10 @@
 import PropTypes from 'prop-types';
 
 // == Import : local
-import './field.scss';
+import './url-field.scss';
 
 // == Composant
-const Field = ({
+const UrlField = ({
   value,
   type,
   name,
@@ -13,11 +13,12 @@ const Field = ({
   handleChange,
   required,
   autoComplete,
+  pattern,
 }) => {
-  const inputId = `field-${name}`;
+  const inputId = `url-field-${name}`;
 
   return (
-    <div className={value.length > 0 ? 'field field--has-content' : 'field'}>
+    <div className={value.length > 0 ? 'url-field url-field--has-content' : 'url-field'}>
       <input
         autoComplete={autoComplete ? 'on' : 'off'}
         // React - state
@@ -26,9 +27,10 @@ const Field = ({
         // infos de base
         id={inputId}
         type={type}
-        className="field__input"
+        className="url-field__input"
         placeholder={placeholder}
         name={name}
+        pattern={pattern}
         required={required}
       />
 
@@ -42,7 +44,7 @@ const Field = ({
   );
 };
 
-Field.propTypes = {
+UrlField.propTypes = {
   value: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -50,10 +52,11 @@ Field.propTypes = {
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
   autoComplete: PropTypes.bool,
+  pattern: PropTypes.string,
 };
 
 // Valeurs par défaut pour les props
-Field.defaultProps = {
+UrlField.defaultProps = {
   value: '',
   type: 'text',
   required: false,
@@ -61,4 +64,4 @@ Field.defaultProps = {
 };
 
 // == Export
-export default Field;
+export default UrlField;

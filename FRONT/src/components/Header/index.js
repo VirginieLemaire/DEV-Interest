@@ -51,7 +51,7 @@ const Header = () => {
   };
 
   const handleBookmarksButtonClick = () => {
-    history.push(`${username}/bookmarks`);
+    history.push(`/${username.toLowerCase()}/bookmarks`);
   };
 
   const pathname = usePathname();

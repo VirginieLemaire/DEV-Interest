@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import { FETCH_CARDS, isLoading, saveCards } from '../action/cards';
+import {
+  ADD_CARD, fetchCards, FETCH_CARDS, isLoading, saveCards,
+} from '../action/cards';
 import { connectUser, LOGIN } from '../action/user';
 
 const axiosInstance = axios.create({
@@ -20,6 +22,42 @@ export default (store) => (next) => (action) => {
         );
       next(action);
       break;
+    case ADD_CARD: {
+      const {
+        title, slug, website, description, url, image, level, language, type, category,
+      } = store.getState().cards.newCard;
+
+      const { id } = store.getState().user;
+
+      console.log(title);
+      console.log(id);
+
+      axiosInstance.post(
+        '/cards',
+        {
+          title: title,
+          slug: slug,
+          website: website,
+          description: description,
+          imge_url: image,
+          url: url,
+          user_id: id,
+          level_id: level,
+          language_id: language,
+          type_id: type,
+          category_id: category,
+        },
+      ).then(
+        (response) => {
+          console.log('il faut enregister ces informations', response);
+
+          // store.dispatch(fetchCards());
+        },
+      ).catch(
+        () => console.log('error'),
+      );
+      break;
+    }
     case LOGIN: {
       const { email, password } = store.getState().user;
 
@@ -38,9 +76,10 @@ export default (store) => (next) => (action) => {
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
           store.dispatch(connectUser(response.data));
-
+          console.log(response.data.token);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
         },
       ).catch(
         () => console.log('error'),

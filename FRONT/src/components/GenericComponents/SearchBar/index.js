@@ -20,7 +20,7 @@ const SearchBar = ({
       {(loading === true) && <FontAwesomeIcon icon={faSpinner} className="search-bar__icon loading" />}
       <input
         className={`search-bar__input ${fontSize}`}
-        type="text"
+        type="search"
         placeholder={placeholder}
         onChange={handleChange}
         value={value}
