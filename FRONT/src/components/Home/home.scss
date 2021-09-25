@@ -4,17 +4,22 @@
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  margin-top: 4rem;
+  align-items: center;
   color: vars.$text-color;
 
   &__catch-title {
+    margin-top: 4rem;
     font-size: 2rem;
     font-style: italic;
     line-height: 2.5rem;
   }
 
+  &__searchbar-container {
+    width: 40%;
+  }
+
   &__break {
-    width: 50%;
+    width: 20%;
   }
 
   &__catch-phrase {
@@ -23,36 +28,58 @@
     line-height: 2rem;
   }
 
-  &__tags-container {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    color: vars.$light-color;
-    font-size: .8rem;
-    font-weight: bold;
+  &__tags-content-wraper {
 
-    &__tag {
-      border-radius: vars.$border-radius-input;
-      padding: .5rem;
-      white-space: nowrap;
+    &__tags-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      color: vars.$light-color;
+      font-size: .8rem;
+      font-weight: bold;
+
+      &__tag {
+        border-radius: vars.$border-radius-input;
+        padding: .5rem 1rem;
+        white-space: nowrap;
+      }
     }
+  }
+
+  &__cards-container {
+    gap: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+@media (max-width: 640px) {
   .home {
-    padding: 1rem;
+    width: 100%;
     gap: 3rem;
+    overflow-x: hidden;
 
-    &__tags-container {
-      gap: 0;
-      overflow-x: scroll;
-      justify-content: flex-start;
-      margin-right: -1rem;
-      margin-left: -1rem;
+    &__catch-title {
+      margin-top: 0;
+    }
 
-      &__tag {
+    &__searchbar-container {
+      width: 80%;
+    }
+
+    &__tags-content-wraper {
+      overflow: auto;
+
+      &__tags-container {
+        gap: 0;
+        justify-content: flex-start;
+        margin-right: -1rem;
         margin-left: 1rem;
+
+        &__tag {
+          margin-left: 1rem;
+        }
       }
     }
   }

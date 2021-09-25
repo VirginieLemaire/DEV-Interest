@@ -1,29 +1,28 @@
 @use '../../../styles/vars';
 
-.search-bar{
+.search-bar {
   background-color: vars.$light-color;
   color: vars.$text-color;
   padding: 0.5rem 1rem;
   border-radius: vars.$border-radius-input;
-  font-size: 1rem;
 
-  &.quarter{
+  &.quarter {
     width: 25%;
   }
 
-  &.half{
+  &.half {
     width: 50%;
   }
 
-  &.three-quarter{
+  &.three-quarter {
     width: 75%;
   }
 
-  &.full{
+  &.full {
     width: 100%;
   }
 
-  &__form{
+  &__form {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -31,28 +30,43 @@
     gap: 0.5rem;
   }
 
-  &__icon{
+  &__icon {
     color: vars.$text-color;
 
-    &.notloading{
+    &.notloading {
 
     }
 
-    &.loading{
+    &.loading {
       animation: spin 2s linear infinite;
     }
   }
 
-  &__input{
+  &__input {
     width: 100%;
     background-color: transparent;
     border: none;
   }
+}
 
+.normal {
+  font-size: 1rem;
+}
 
+.medium {
+  font-size: 1.5rem;
+}
+
+.big {
+  font-size: 2rem;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

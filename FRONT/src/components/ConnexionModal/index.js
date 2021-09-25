@@ -1,7 +1,11 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
 
-import { changeField, showConnexionModal } from '../../action/user';
+import {
+  changeField, login,
+  showConnexionModal,
+} from '../../action/user';
 
 import './connexion-modal.scss';
 
@@ -27,13 +31,24 @@ const ConnexionModal = () => {
     dispatch(changeField(event.target.value, 'password'));
   };
 
-  const handleClick = () => {
+  const handleCloseModalClick = () => {
     dispatch(showConnexionModal());
   };
 
-  const handleRedirect = () => {
+  const handleSignupClick = () => {
+    dispatch(showConnexionModal());
+    history.push('/signup');
+  };
+
+  const handleSubmitConnexion = (e) => {
+    e.preventDefault();
+    dispatch(showConnexionModal());
+    dispatch(login());
+  };
+
+  const handleHomeRedirect = () => {
     history.push('/');
-    handleClick();
+    handleCloseModalClick();
   };
 
   if (!connexionModal) {
@@ -41,10 +56,18 @@ const ConnexionModal = () => {
   }
 
   return (
-    <div className="connexion-modal" onClick={handleClick}>
+    <div className="connexion-modal" onClick={handleCloseModalClick}>
       <div className="connexion-modal__content" onClick={(e) => e.stopPropagation()}>
         <div className="connexion-modal__header">
-          <img className="connexion-modal__logo" src={logoCourt} alt="logo court" onClick={handleRedirect} />
+          <div className="connexion-modal__header-header">
+            <div className="connexion-modal__header-header--item" />
+            <div className="connexion-modal__header-header--item">
+              <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+            </div>
+            <div className="connexion-modal__header-header--item" onClick={handleCloseModalClick}>
+              <GrFormClose className="close-icon" />
+            </div>
+          </div>
           <h4 className="connexion-modal__title">Se connecter</h4>
         </div>
         <div className="connexion-modal__body">
@@ -54,6 +77,7 @@ const ConnexionModal = () => {
             name="email"
             placeholder="Email"
             handleChange={handleEmailChange}
+            required
           />
           <Field
             value={password}
@@ -61,18 +85,19 @@ const ConnexionModal = () => {
             name="password"
             placeholder="Mot de passe"
             handleChange={handlePasswordChange}
+            required
           />
         </div>
         <div className="connexion-modal__footer">
           <Button
-            styling="outline"
-            handleClick={handleClick}
+            styling="full"
+            handleClick={handleSubmitConnexion}
             content="Se connecter"
             color
           />
           <div className="connexion-modal__option">
             <div>Vous n'avez pas de compte ?</div>
-            <Link className="linky" to="/signup" onClick={handleClick}>S'inscrire</Link>
+            <Link className="linky" to="/signup" onClick={handleSignupClick}>S'inscrire</Link>
           </div>
         </div>
       </div>

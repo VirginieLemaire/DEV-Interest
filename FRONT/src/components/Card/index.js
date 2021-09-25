@@ -11,7 +11,7 @@ const Card = ({ card }) => (
       <img className="card__image" src={card.image} alt={card.title} />
     </Link>
     <div className="card__buttons-group">
-      <a className="card__button media" type="button" href={card.link}>{card.media}</a>
+      <a className="card__button media" type="button" href={card.url}>{card.type}</a>
       <div className="card__button bookmark" type="button"><BsBookmark /></div>
     </div>
     <Link className="card_link" to={`/cards/${card.slug}/${card.id}`}>
@@ -25,9 +25,9 @@ const Card = ({ card }) => (
         </div>
         <div className="card__tags-techno">
           {
-            card.technos.map(
-              (techno) => (
-                <aside key={techno} className={`card__tags-techno--item ${techno.toLowerCase()}`}>{techno}</aside>
+            card.techs.map(
+              (tech) => (
+                <aside key={`${card.id}-${tech}`} className={`card__tags-techno--item ${tech.toLowerCase()}`}>{tech}</aside>
               ),
             )
           }
@@ -44,16 +44,16 @@ Card.propTypes = {
   card: PropTypes.shape({
     id: PropTypes.number.isRequired,
     slug: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
-    technos: PropTypes.arrayOf(
+    techs: PropTypes.arrayOf(
       PropTypes.string.isRequired,
     ).isRequired,
     level: PropTypes.string.isRequired,
-    media: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
   }).isRequired,
 
 };

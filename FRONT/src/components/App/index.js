@@ -2,9 +2,6 @@ import { useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
 import './app.scss';
-import {
-  isConnected, categories, techs,
-} from '../../../public/fakeDatas';
 
 import Home from '../Home';
 import Footer from '../Footer';
@@ -12,7 +9,7 @@ import Header from '../Header';
 import ConnexionModal from '../ConnexionModal';
 import CardDetails from '../CardDetails';
 import Page404 from '../Page404';
-import UserBookmarks from '../UserBookmarks';
+import UserBookmarks from '../UserAccount/UserBookmarks';
 import AddCard from '../AddCard';
 import Legal from '../Legal';
 import TermsOfUse from '../TermsOfUse';
@@ -20,22 +17,20 @@ import About from '../About';
 import UserAccount from '../UserAccount';
 import SearchResults from '../SearchResults';
 import SignUp from '../SignUp';
+import AddCardModal from '../AddCardModal';
 
 const App = () => {
-  const connexionModal = useSelector((state) => state.user.connexionModal);
-  const cards = useSelector((state) => state.cards.cards);
-  const user = useSelector((state) => state.user);
+  const { cards } = useSelector((state) => state.cards);
+  const { username, addCardModal, connexionModal } = useSelector((state) => state.user);
   console.log(cards);
 
   return (
     <div className="app">
-      <div className={connexionModal ? 'main__page blur' : 'main__page'}>
+      <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''}`}>
         <div className="content-wrap">
           <Header />
           <Switch>
-            <Route exact path="/">
-              <Home isConnected={isConnected} categories={categories} techs={techs} />
-            </Route>
+            <Route component={Home} exact path="/" />
             <Route exac path="/search">
               <SearchResults />
             </Route>
@@ -52,10 +47,10 @@ const App = () => {
               <AddCard />
             </Route>
             <Route component={SignUp} path="/signup" exact />
-            <Route path={`${user.username.toLowerCase()}/bookmarks`} exact>
+            <Route path={`${username.toLowerCase()}/bookmarks`} exact>
               <UserBookmarks />
             </Route>
-            <Route path={`${user.username.toLowerCase()}/account`} exact>
+            <Route path={`${username.toLowerCase()}/account`} exact>
               <UserAccount />
             </Route>
             <Route component={Legal} path="/legal" exact />
@@ -66,6 +61,7 @@ const App = () => {
         </div>
         <Footer />
       </div>
+      <AddCardModal />
       <ConnexionModal />
     </div>
   );
