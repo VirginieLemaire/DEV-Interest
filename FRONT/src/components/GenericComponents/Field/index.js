@@ -21,7 +21,7 @@ const Field = ({
   return (
     <div className={value.length > 0 ? 'field field--has-content' : 'field'}>
       <input
-        autoComplete={autoComplete ? 'on' : 'off'}
+        autoComplete={autoComplete}
         // React - state
         value={value}
         onChange={handleChange}
@@ -53,7 +53,7 @@ Field.propTypes = {
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
-  autoComplete: PropTypes.bool,
+  autoComplete: PropTypes.string,
   minlength: PropTypes.string,
   maxlength: PropTypes.string,
 };
@@ -63,7 +63,7 @@ Field.defaultProps = {
   value: '',
   type: 'text',
   required: false,
-  autoComplete: false,
+  autoComplete: 'off',
   minlength: '',
   maxlength: '',
 };

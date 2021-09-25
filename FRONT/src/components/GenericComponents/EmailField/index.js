@@ -18,7 +18,7 @@ const EmailField = ({
   return (
     <div className={value.length > 0 ? 'email-field email-field--has-content' : 'email-field'}>
       <input
-        autoComplete={autoComplete ? 'on' : 'off'}
+        autoComplete={autoComplete}
         // React - state
         value={value}
         onChange={handleChange}
@@ -47,14 +47,14 @@ EmailField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
-  autoComplete: PropTypes.bool,
+  autoComplete: PropTypes.string,
 };
 
 // Valeurs par défaut pour les props
 EmailField.defaultProps = {
   value: '',
   required: false,
-  autoComplete: false,
+  autoComplete: 'off',
 };
 
 // == Export

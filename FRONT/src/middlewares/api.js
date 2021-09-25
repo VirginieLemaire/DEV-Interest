@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   ADD_CARD, fetchCards, FETCH_CARDS, isLoading, saveCards,
 } from '../action/cards';
-import { connectUser, LOGIN } from '../action/user';
+import { connectUser, LOGIN, SIGNUP } from '../action/user';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -70,6 +70,36 @@ export default (store) => (next) => (action) => {
       axiosInstance.post(
         '/login',
         {
+          email,
+          password,
+        },
+      ).then(
+        (response) => {
+          console.log('il faut enregister ces informations', response.data);
+          // 2 - l'api nous renvoie nos infos, dont notre token jwt
+          // c'est à a charge de le stocker - ici, nous avons choisi
+          // de le stocker dans le state, c'est donc le reducer qui s'en chargera
+          store.dispatch(connectUser(response.data));
+          console.log('Le token enregistré est :', response.data.token);
+          // autre possibilité, on stocke directement notre token dans l'objet axios
+          // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+        },
+      ).catch(
+        () => console.log('error'),
+      );
+      next(action);
+      break;
+    }
+    case SIGNUP: {
+      const { username, email, password } = store.getState().user.newUser;
+
+      // 1 - On conctace le point d'entrée de l'api pour s'authentifier
+      // On envoie ici nos identifiants de cnnection (email et password)
+      axiosInstance.post(
+        '/signup',
+        {
+          username,
           email,
           password,
         },

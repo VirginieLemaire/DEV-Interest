@@ -59,3 +59,10 @@ export const changeNewUserField = (value, fieldName) => (
     fieldName,
   }
 );
+
+export const SIGNUP = 'SIGNUP';
+export const signup = () => (
+  {
+    type: SIGNUP,
+  }
+);

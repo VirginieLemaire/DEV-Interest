@@ -14,9 +14,10 @@ export const initialState = {
   addCardLinkField: '',
   hasAnAccount: true,
   newUser: {
+    username: '',
     email: '',
     password: '',
-    passwordVerfication: '',
+    passwordVerification: '',
   },
 };
 
@@ -31,6 +32,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         connexionModal: !state.connexionModal,
+        hasAnAccount: !state.connexionModal,
       };
     case SHOW_ADD_CARD_MODAL:
       return {

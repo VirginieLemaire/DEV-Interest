@@ -19,7 +19,7 @@ const PasswordField = ({
   return (
     <div className={value.length > 0 ? 'password-field password-field--has-content' : 'password-field'}>
       <input
-        autoComplete={autoComplete ? 'on' : 'off'}
+        autoComplete={autoComplete}
         // React - state
         value={value}
         onChange={handleChange}
@@ -49,7 +49,7 @@ PasswordField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
-  autoComplete: PropTypes.bool,
+  autoComplete: PropTypes.string,
   minlength: PropTypes.string,
 };
 
@@ -57,7 +57,7 @@ PasswordField.propTypes = {
 PasswordField.defaultProps = {
   value: '',
   required: false,
-  autoComplete: false,
+  autoComplete: 'off',
   minlength: '4',
 };
 

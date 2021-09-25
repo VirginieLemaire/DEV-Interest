@@ -1,6 +1,7 @@
 @use '../../styles/vars';
 
 .connexion-modal{
+  perspective: 1000px;
   position: fixed;
   left: 0;
   top: 0;
@@ -12,6 +13,10 @@
   justify-content: center;
 
   &__content{
+    animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.5s;
     display: flex;
     flex-direction: column;
     width: 500px;
@@ -92,4 +97,20 @@
 .linky{
   font-weight: bold;
   color: vars.$primary-color
+}
+
+.modal_animation{
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.5s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
