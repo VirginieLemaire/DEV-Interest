@@ -3,7 +3,6 @@
 BEGIN;
 
 DROP FUNCTION new_card;
-DROP FUNCTION card_tech;
 DROP FUNCTION card_category;
 
 COMMIT;

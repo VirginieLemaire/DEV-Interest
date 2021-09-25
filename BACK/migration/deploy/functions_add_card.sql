@@ -21,14 +21,6 @@ CREATE OR REPLACE FUNCTION new_card(data json) RETURNS INT AS $$
 $$ LANGUAGE SQL STRICT;
 
 --pour les tables de liaison
-CREATE OR REPLACE FUNCTION card_tech(data json) RETURNS INT AS $$
-INSERT INTO card_has_tech (card_id, tech_id)
-	VALUES (
-	  (data->>'id')::INT,
-	  (data->>'tech_id')::INT    
-	)
-RETURNING id
-$$ LANGUAGE SQL STRICT;
 
 CREATE OR REPLACE FUNCTION card_category(data json) RETURNS INT AS $$
 INSERT INTO card_has_category (card_id, category_id)
