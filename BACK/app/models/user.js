@@ -113,6 +113,24 @@ class User {
         }
     }
 
+async update() {
+        try {
+            //bcrypt sur le password
+            const password = await bcrypt.hash(this.password, 10);
+            // date NOW avec formatage
+            const timeElapsed = Date.now();
+            const today = new Date(timeElapsed);
+            today.toISOString();
+            //updater l'enregistrement 
+            await client.query('UPDATE "user" SET email= $1, user_name = $2, password = $3, createat = $4 WHERE email =$1', [this.email,this.username, password,today]);
+             console.log(this);
+             
+        } catch (error) {
+            console.log('Erreur SQL', error.detail);
+            //relancer l'erreur pout que le controller puisse l'attrapper et la renvoyer au front
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
 }
 
 module.exports = User;

@@ -26,7 +26,7 @@ router.delete('users/:id/bookmarks/:id', checkJwt);
 router.get('/users/:id' , userController.findById);
 //DELETE USER BY ID
 router.delete('/user/:id' , userController.deleteUserById);
-
+router.put('/user/:id' , userController.update);
 //LOGIN - SIGNUP
 router.post('/login', userController.login);
 router.post('/signup', userController.signUp);

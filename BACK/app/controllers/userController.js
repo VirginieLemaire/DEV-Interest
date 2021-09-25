@@ -56,6 +56,21 @@ const userController = {
            //envoyer l'info au front
            response.status(500).json(error.message);
         }
+    },
+     //update a user
+     update : async (request, response) => {
+        try {
+            //UPDATE
+            const user = await new User(request.body).update();
+
+            response.status(204).json({success: true});
+            
+        } catch(error) {
+           //lire l'erreur
+           console.trace(error);
+           //envoyer l'info au front
+           response.status(500).json(error.message);
+        }
     }
 
 }
