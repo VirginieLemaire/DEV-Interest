@@ -3,6 +3,7 @@ const checkJwt = require('./middlewares/checkJwt');
 
 const cardController = require('./controllers/cardController');
 const userController = require('./controllers/userController');
+const bookmarksController = require('./controllers/userBookmarks');
 
 const router = Router();
 
@@ -15,7 +16,7 @@ router.post('/cards', cardController.save);
 router.post('/cards/?q=${keyword}&category=${category}&resource_language=${resource_language}&language=${language}&media=${type}&page=${askPage}',cardController.findQueryAllCards);
 
 // VOIR les cartes en favoris
-router.get('//users/:id/bookmarks', checkJwt);
+router.get('/users/:id/bookmarks', bookmarksController.findBookmarksByUserId);
 // Ajout d'une carte en favoris
 router.post('/cards/:id', checkJwt);
 //Delete une carte des favoris
