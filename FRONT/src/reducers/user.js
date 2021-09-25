@@ -1,5 +1,5 @@
 import {
-  CHANGE_FIELD, CONNECT_USER, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL, USER_LOGOUT,
+  CHANGE_FIELD, CHANGE_NEW_USER_FIELD, CONNECT_USER, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL, SHOW_SIGNUP_MODAL, USER_LOGOUT,
 } from '../action/user';
 
 export const initialState = {
@@ -12,6 +12,12 @@ export const initialState = {
   isLogged: false,
   bookmarks: [],
   addCardLinkField: '',
+  hasAnAccount: true,
+  newUser: {
+    email: '',
+    password: '',
+    passwordVerfication: '',
+  },
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -43,6 +49,19 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isLogged: false,
+      };
+    case SHOW_SIGNUP_MODAL:
+      return {
+        ...state,
+        hasAnAccount: !state.hasAnAccount,
+      };
+    case CHANGE_NEW_USER_FIELD:
+      return {
+        ...state,
+        newUser: {
+          ...state.newUser,
+          [action.fieldName]: action.value,
+        },
       };
     default:
       return state;

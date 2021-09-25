@@ -45,3 +45,17 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 export const userLogout = () => ({
   type: USER_LOGOUT,
 });
+
+export const SHOW_SIGNUP_MODAL = 'SHOW_SIGNUP_MODAL';
+export const showSingupModal = () => ({
+  type: SHOW_SIGNUP_MODAL,
+});
+
+export const CHANGE_NEW_USER_FIELD = 'CHANGE_NEW_USER_FIELD';
+export const changeNewUserField = (value, fieldName) => (
+  {
+    type: CHANGE_NEW_USER_FIELD,
+    value,
+    fieldName,
+  }
+);

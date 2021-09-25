@@ -24,7 +24,7 @@ export default (store) => (next) => (action) => {
       break;
     case ADD_CARD: {
       const {
-        title, slug, website, description, url, image, level, language, type, category,
+        title, slug, website, description, url, image, level, language, type, category, techs,
       } = store.getState().cards.newCard;
 
       const { id } = store.getState().user;
@@ -41,6 +41,7 @@ export default (store) => (next) => (action) => {
         language_id: language,
         type_id: type,
         category_id: category,
+        techs: techs,
       };
 
       console.log(newCard);
