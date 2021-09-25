@@ -2,6 +2,8 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP FUNCTION new_card;
+DROP FUNCTION card_tech;
+DROP FUNCTION card_category;
 
 COMMIT;
