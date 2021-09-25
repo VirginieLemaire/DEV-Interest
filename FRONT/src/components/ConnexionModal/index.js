@@ -43,6 +43,12 @@ const ConnexionModal = () => {
     dispatch(showConnexionModal());
   };
 
+  // const handleKeyPress = (e) => {
+  //   if (e.keyCode === 27) {
+  //     dispatch(showConnexionModal());
+  //   }
+  // };
+
   if (!connexionModal) {
     return null;
   }

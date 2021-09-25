@@ -13,6 +13,8 @@ const Field = ({
   handleChange,
   required,
   autoComplete,
+  minlength,
+  maxlength,
 }) => {
   const inputId = `field-${name}`;
 
@@ -30,6 +32,8 @@ const Field = ({
         placeholder={placeholder}
         name={name}
         required={required}
+        minLength={minlength}
+        maxLength={maxlength}
       />
 
       <label
@@ -50,6 +54,8 @@ Field.propTypes = {
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
   autoComplete: PropTypes.bool,
+  minlength: PropTypes.string,
+  maxlength: PropTypes.string,
 };
 
 // Valeurs par défaut pour les props
@@ -58,6 +64,8 @@ Field.defaultProps = {
   type: 'text',
   required: false,
   autoComplete: false,
+  minlength: '',
+  maxlength: '',
 };
 
 // == Export
