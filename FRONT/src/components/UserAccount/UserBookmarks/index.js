@@ -19,7 +19,7 @@ const UserBookmarks = () => {
         </div>
       </div>
       <div className="user-bookmarks__total-bookmarks">
-        {bookmarks.length}
+        {`${bookmarks.length} favoris`}
       </div>
       <div className="user-bookmarks__bookmarks-container">
         {
