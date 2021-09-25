@@ -70,7 +70,7 @@ const ConnexionModal = () => {
     <div className="connexion-modal" onClick={() => dispatch(showConnexionModal())}>
       {hasAnAccount && (
         <div className="connexion-modal__content" onClick={(e) => e.stopPropagation()}>
-          <form onSubmit={handleSubmitConnexion}>
+          <form autoComplete="on" onSubmit={handleSubmitConnexion}>
             <div className="connexion-modal__header">
               <div className="connexion-modal__header-header">
                 <div className="connexion-modal__header-header--item" />

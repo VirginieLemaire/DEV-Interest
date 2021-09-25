@@ -50,6 +50,8 @@ const reducer = (state = initialState, action = {}) => {
     case USER_LOGOUT:
       return {
         ...state,
+        email: '',
+        password: '',
         isLogged: false,
       };
     case SHOW_SIGNUP_MODAL:

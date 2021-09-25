@@ -1,4 +1,5 @@
 import {
+  ADD_CARD,
   CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD, CHANGE_NEW_CARD_TECHS, IS_LOADING, SAVE_CARDS,
 } from '../action/cards';
 
@@ -57,6 +58,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         certification: !state.certification,
+      };
+    case ADD_CARD:
+      return {
+        ...state,
+        newCard: {},
       };
     default:
       return state;
