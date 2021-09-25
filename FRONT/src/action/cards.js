@@ -47,3 +47,8 @@ export const ADD_CARD = 'ADD_CARD';
 export const addCard = () => ({
   type: ADD_CARD,
 });
+
+export const RESET_NEW_CARD = 'RESET_NEW_CARD';
+export const resetNewCard = () => ({
+  type: RESET_NEW_CARD,
+});

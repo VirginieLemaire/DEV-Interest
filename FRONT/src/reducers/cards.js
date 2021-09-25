@@ -1,6 +1,7 @@
 import {
-  ADD_CARD,
-  CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD, CHANGE_NEW_CARD_TECHS, IS_LOADING, SAVE_CARDS,
+  CHANGE_NEW_CARD_CERTIFICATION,
+  CHANGE_NEW_CARD_FIELD, CHANGE_NEW_CARD_TECHS,
+  IS_LOADING, RESET_NEW_CARD, SAVE_CARDS,
 } from '../action/cards';
 
 export const initialState = {
@@ -59,10 +60,23 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         certification: !state.certification,
       };
-    case ADD_CARD:
+    case RESET_NEW_CARD:
       return {
         ...state,
-        newCard: {},
+        newCard: {
+          ...state.newCard,
+          title: '',
+          slug: '',
+          website: '',
+          description: '',
+          url: '',
+          image: '',
+          type: '',
+          techs: [],
+          level: '',
+          language: '',
+          category: '',
+        },
       };
     default:
       return state;

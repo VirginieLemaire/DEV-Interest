@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 import {
-  ADD_CARD, fetchCards, FETCH_CARDS, isLoading, saveCards,
+  ADD_CARD, fetchCards, FETCH_CARDS,
+  isLoading, resetNewCard, saveCards,
 } from '../action/cards';
 import { connectUser, LOGIN, SIGNUP } from '../action/user';
 
@@ -54,7 +55,7 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('il faut enregister ces informations', response);
-
+          store.dispatch(resetNewCard());
           store.dispatch(fetchCards());
         },
       ).catch(
