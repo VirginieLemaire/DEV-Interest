@@ -79,7 +79,7 @@ export default (store) => (next) => (action) => {
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
           store.dispatch(connectUser(response.data));
-          console.log(response.data.token);
+          console.log('Le token enregistré est :', response.data.token);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;

@@ -8,7 +8,6 @@ import {
 } from '../../action/cards';
 import { slugify } from '../../selectors/cards';
 
-import Button from '../GenericComponents/Button';
 import Field from '../GenericComponents/Field';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import TextareaField from '../GenericComponents/TextareaField';
@@ -92,15 +91,16 @@ const AddCard = () => {
     dispatch(changeNewCardField(slugify(e.target.value), 'slug'));
   };
 
-  const handleSubmitNewCard = () => {
+  const handleSubmitNewCard = (e) => {
+    e.preventDefault();
     dispatch(addCard());
     history.push('/');
   };
 
   return (
     <div className="add-card">
-      <h2 className="add-card__title">Ajout d'une nouvelle ressource</h2>
       <form className="add-card__form" onSubmit={handleSubmitNewCard}>
+        <h2 className="add-card__title">Ajout d'une nouvelle ressource</h2>
         <Field
           className="add-card__input-title"
           value={title}
@@ -131,6 +131,7 @@ const AddCard = () => {
           placeholder="Nom du site"
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'website'))}
           required
+          maxlength="30"
         />
         <UrlField
           className="add-card__input-url"

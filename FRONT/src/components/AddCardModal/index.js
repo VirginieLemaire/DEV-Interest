@@ -20,7 +20,8 @@ const AddCardModal = () => {
 
   const url = useSelector((state) => state.cards.newCard.url);
 
-  const handleModalAddCardUrlSubmit = () => {
+  const handleModalAddCardUrlSubmit = (e) => {
+    e.preventDefault();
     if (isLogged) {
       dispatch(showAddCardModal());
       history.push('/add-card');
