@@ -90,9 +90,10 @@ const AddCardModal = () => {
                   <div className="add-card-modal__body">
                     <Field
                       value={url}
-                      type="text"
+                      type="url"
                       name="add-card-url"
                       placeholder="Lien URL de votre ressource..."
+                      required
                       handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
                     />
                   </div>

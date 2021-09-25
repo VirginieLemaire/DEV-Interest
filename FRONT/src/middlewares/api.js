@@ -28,21 +28,9 @@ export default (store) => (next) => (action) => {
       } = store.getState().cards.newCard;
 
       const { id } = store.getState().user;
-      const newAddCard = {
-        title: title,
-        slug: slug,
-        website: website,
-        description: description,
-        url: url,
-        imge_url: image,
-        user_id: id,
-        level_id: level,
-        language_id: language,
-        type_id: type,
-        category_id: category,
-      };
 
-      console.log(newAddCard);
+      console.log(title);
+      console.log(id);
 
       axiosInstance.post(
         '/cards',
@@ -51,8 +39,8 @@ export default (store) => (next) => (action) => {
           slug: slug,
           website: website,
           description: description,
-          url: url,
           imge_url: image,
+          url: url,
           user_id: id,
           level_id: level,
           language_id: language,
@@ -62,12 +50,8 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('il faut enregister ces informations', response);
-          // 2 - l'api nous renvoie nos infos, dont notre token jwt
-          // c'est à a charge de le stocker - ici, nous avons choisi
-          // de le stocker dans le state, c'est donc le reducer qui s'en chargera
-          store.dispatch(fetchCards());
-          // autre possibilité, on stocke directement notre token dans l'objet axios
-          // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+
+          // store.dispatch(fetchCards());
         },
       ).catch(
         () => console.log('error'),

@@ -126,20 +126,20 @@ const AddCard = () => {
           required
         />
         <Field
-          className="add-card__input-description"
+          className="add-card__input-url"
           value={url}
-          type="text"
+          type="url"
           name="url"
-          placeholder="Lien de la ressource..."
+          placeholder="Lien Url de la ressource..."
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
           required
         />
         <Field
           className="add-card__input-image"
           value={image}
-          type="text"
+          type="url"
           name="newCardImage"
-          placeholder="Url de l'image..."
+          placeholder="Lien Url de l'image..."
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'image'))}
           required
         />
