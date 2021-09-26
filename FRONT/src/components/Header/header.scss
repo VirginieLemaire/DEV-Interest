@@ -21,6 +21,9 @@
         margin-left: 2rem;
     }
 
+    &__user-icons{
+        display:flex;
+    }
     
     &__logo{
         height: 2rem;
@@ -39,11 +42,27 @@
     }
 }
 
-.user-button{
+.header__user-buttons{
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
     color: vars.$primary-color;
+
+}
+
+.header__user-icons{
+    font-size: 1.3rem;
+    &:hover{
+        color: vars.$primary-color-plus;
+        cursor: pointer;
+    }
+
+    &--logout{
+
+        &:hover{
+            color: rgb(170, 2, 2);
+        }
+    }
 }
 
 @media (max-width: 640px) {

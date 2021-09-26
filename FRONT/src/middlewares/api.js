@@ -4,7 +4,9 @@ import {
   ADD_CARD, fetchCards, FETCH_CARDS,
   isLoading, resetNewCard, saveCards,
 } from '../action/cards';
-import { connectUser, LOGIN, SIGNUP } from '../action/user';
+import {
+  ADD_TO_FAVORITES, connectUser, LOGIN, REMOVE_FROM_FAVORITES, SIGNUP,
+} from '../action/user';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -61,6 +63,17 @@ export default (store) => (next) => (action) => {
       ).catch(
         () => console.log('error'),
       );
+      break;
+    }
+    case ADD_TO_FAVORITES: {
+      const { id } = store.getState().user;
+
+      console.log(`je dois AJOUTER la carte ${action.cardId} à l'utilisateur ${id}`);
+      break;
+    }
+    case REMOVE_FROM_FAVORITES: {
+      const { id } = store.getState().user;
+      console.log(`je dois RETIRER la carte ${action.cardId} à l'utilisateur ${id}`);
       break;
     }
     case LOGIN: {

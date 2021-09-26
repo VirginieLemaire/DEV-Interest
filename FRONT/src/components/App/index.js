@@ -22,7 +22,7 @@ import AddCardModal from '../AddCardModal';
 const App = () => {
   const { cards } = useSelector((state) => state.cards);
   const {
-    darkMode, username, addCardModal, connexionModal,
+    darkMode, username, addCardModal, connexionModal, isLogged,
   } = useSelector((state) => state.user);
 
   return (

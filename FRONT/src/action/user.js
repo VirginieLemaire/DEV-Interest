@@ -73,3 +73,19 @@ export const darkModeToggle = () => (
     type: DARK_MODE_TOGGLE,
   }
 );
+
+export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
+export const addToFavorites = (cardId) => (
+  {
+    type: ADD_TO_FAVORITES,
+    cardId,
+  }
+);
+
+export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';
+export const removeFromFavorites = (cardId) => (
+  {
+    type: REMOVE_FROM_FAVORITES,
+    cardId,
+  }
+);

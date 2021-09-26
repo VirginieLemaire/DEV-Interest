@@ -1,6 +1,7 @@
 import './home.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import CgAddR from '@react-icons/all-files/cg/CgAddR';
 
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';

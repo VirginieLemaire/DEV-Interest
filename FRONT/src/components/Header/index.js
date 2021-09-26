@@ -1,8 +1,13 @@
+import { BsFillBookmarksFill } from '@react-icons/all-files/bs/BsFillBookmarksFill';
+import { CgAddR } from '@react-icons/all-files/cg/CgAddR';
+import { RiShutDownLine } from '@react-icons/all-files/ri/RiShutDownLine';
+
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   showConnexionModal, userLogin, userLogout,
   darkModeToggle,
+  showAddCardModal,
 } from '../../action/user';
 
 import './header.scss';
@@ -68,21 +73,9 @@ const Header = () => {
       </div>
       <div className="header__buttons-area">
         { isLogged && (
-        <div className="user-button">
-          <Button
-            className="header__button"
-            color
-            styling="text"
-            handleClick={handleBookmarksButtonClick}
-            content="Favoris"
-          />
-          <Button
-            className="header__button"
-            color
-            styling="text"
-            handleClick={handleLogoutButtonClick}
-            content="Déconnexion"
-          />
+        <div className="header__user-buttons">
+          <div className="header__user-icons" onClick={handleBookmarksButtonClick}><BsFillBookmarksFill /></div>
+          <div className="header__user-icons" onClick={() => dispatch(showAddCardModal())}><CgAddR /></div>
           <Button
             className="header__button"
             color
@@ -90,6 +83,7 @@ const Header = () => {
             handleClick={handleUserButtonClick}
             content={`Hello ${username}!`}
           />
+          <div className="header__user-icons header__user-icons--logout" onClick={handleLogoutButtonClick}><RiShutDownLine /></div>
           <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
         </div>
         )}

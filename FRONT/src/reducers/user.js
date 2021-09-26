@@ -5,6 +5,7 @@ import {
 } from '../action/user';
 
 export const initialState = {
+  id: '',
   search: '',
   connexionModal: false,
   addCardModal: false,
@@ -12,7 +13,7 @@ export const initialState = {
   password: '',
   username: 'Roger',
   isLogged: false,
-  bookmarks: [],
+  bookmarks: [1],
   addCardLinkField: '',
   hasAnAccount: true,
   darkMode: false,

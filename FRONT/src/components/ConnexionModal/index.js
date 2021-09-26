@@ -46,9 +46,11 @@ const ConnexionModal = () => {
 
   const handleSubmitSignup = (e) => {
     e.preventDefault();
-    dispatch(showConnexionModal());
-    dispatch(signup());
-    history.push('/');
+    if (newUserPassword === newUserPasswordVerif) {
+      dispatch(showConnexionModal());
+      dispatch(signup());
+      history.push('/');
+    }
   };
 
   const handleHomeRedirect = () => {
