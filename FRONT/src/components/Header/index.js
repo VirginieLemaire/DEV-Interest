@@ -5,7 +5,6 @@ import {
   changeField, showConnexionModal, userLogin, userLogout,
   darkModeToggle,
 } from '../../action/user';
-import { fetchCards } from '../../action/cards';
 
 import './header.scss';
 
@@ -23,11 +22,11 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { isLogged, username } = useSelector((state) => state.user);
+  const { darkMode, isLogged, username } = useSelector((state) => state.user);
 
-  const handleClickDarkModeToggle = () => {
-    dispatch(darkModeToggle());
-  };
+  // const handleClickDarkModeToggle = () => {
+  //   dispatch(darkModeToggle());
+  // };
 
   const handleConnexionButtonClick = () => {
     dispatch(showConnexionModal());
@@ -49,7 +48,7 @@ const Header = () => {
   const pathname = usePathname();
 
   return (
-    <div className="header">
+    <div className={darkMode ? 'header header--dark' : 'header'}>
       <Link className="header__home-link" to="/">
         <img className="header__logo" src={logo} alt="DEV Interest Logo" />
       </Link>

@@ -1,3 +1,14 @@
+@use '../../styles/vars';
+
+.app{
+  background-color: vars.$white-color;
+  &--dark{
+    background-color: vars.$dark-color;
+  }
+}
+
+
+
 .main__page {
   display: flex;
   flex-direction: column;
@@ -6,6 +17,7 @@
   &.blur {
     filter: blur(5px);
   }
+
 }
 
 .content-wrap {

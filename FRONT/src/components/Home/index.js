@@ -20,7 +20,7 @@ const Home = () => {
     dispatch(changeNewCardField('', 'url'));
   };
 
-  const { username, isLogged } = useSelector((state) => state.user);
+  const { darkMode, username, isLogged } = useSelector((state) => state.user);
   const cards = useSelector((state) => state.cards.cards);
 
   // Get categories from cards and remove doubles
@@ -41,7 +41,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="home">
+    <div className={darkMode ? 'home home--dark' : 'home'}>
       {
         isLogged ? <p className="home__catch-title">Salut {username}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
       }

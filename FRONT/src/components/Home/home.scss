@@ -7,6 +7,10 @@
   align-items: center;
   color: vars.$text-color;
 
+  &--dark{
+    color: vars.$white-color;
+  }
+
   &__catch-title {
     margin-top: 4rem;
     font-size: 2rem;

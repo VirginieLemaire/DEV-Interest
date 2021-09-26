@@ -22,20 +22,20 @@ import AddCardModal from '../AddCardModal';
 const App = () => {
   const { cards } = useSelector((state) => state.cards);
   const {
-    username, addCardModal, connexionModal,
+    darkMode, username, addCardModal, connexionModal,
   } = useSelector((state) => state.user);
 
   return (
-      <div className="app">
-        <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''}`}>
-          <div className="content-wrap">
-            <Header />
-            <Switch>
-              <Route component={Home} exact path="/" />
-              <Route exac path="/search">
-                <SearchResults />
-              </Route>
-              {
+    <div className={darkMode ? 'app--dark' : 'app'}>
+      <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''}`}>
+        <div className="content-wrap">
+          <Header />
+          <Switch>
+            <Route component={Home} exact path="/" />
+            <Route exac path="/search">
+              <SearchResults />
+            </Route>
+            {
               cards.map(
                 (card) => (
                   <Route key={card.id} path={`/cards/${card.slug}/${card.id}`} exact>
@@ -44,27 +44,27 @@ const App = () => {
                 ),
               )
             }
-              <Route path="/add-card" exact>
-                <AddCard />
-              </Route>
-              <Route component={SignUp} path="/signup" exact />
-              <Route path={`/${username.toLowerCase()}/bookmarks`} exact>
-                <UserBookmarks />
-              </Route>
-              <Route path={`/${username.toLowerCase()}/account`} exact>
-                <UserAccount />
-              </Route>
-              <Route component={Legal} path="/legal" exact />
-              <Route component={TermsOfUse} path="/terms-of-use" exact />
-              <Route component={About} path="/about" exact />
-              <Route component={Page404} />
-            </Switch>
-          </div>
-          <Footer />
+            <Route path="/add-card" exact>
+              <AddCard />
+            </Route>
+            <Route component={SignUp} path="/signup" exact />
+            <Route path={`/${username.toLowerCase()}/bookmarks`} exact>
+              <UserBookmarks />
+            </Route>
+            <Route path={`/${username.toLowerCase()}/account`} exact>
+              <UserAccount />
+            </Route>
+            <Route component={Legal} path="/legal" exact />
+            <Route component={TermsOfUse} path="/terms-of-use" exact />
+            <Route component={About} path="/about" exact />
+            <Route component={Page404} />
+          </Switch>
         </div>
-        <AddCardModal />
-        <ConnexionModal />
+        <Footer />
       </div>
+      <AddCardModal />
+      <ConnexionModal />
+    </div>
   );
 };
 
