@@ -44,7 +44,7 @@ const AddCardModal = () => {
   return (
     <div className="add-card-modal__container">
       <div className="add-card-modal" onClick={() => dispatch(showAddCardModal())}>
-        <div className={darkMode ? 'add-card-modal__content add-card-modal__content--dark' : 'add-card-modal__content'} onClick={(e) => e.stopPropagation()}>
+        <div className={darkMode ? 'add-card-modal__content modal_animation add-card-modal__content--dark' : 'add-card-modal__content modal_animation'} onClick={(e) => e.stopPropagation()}>
           <div className="add-card-modal__header">
             <div className="connexion-modal__header-header">
               <div className="connexion-modal__header-header--item" />

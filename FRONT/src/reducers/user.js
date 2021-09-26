@@ -15,7 +15,7 @@ export const initialState = {
   bookmarks: [],
   addCardLinkField: '',
   hasAnAccount: true,
-  darkMode: true,
+  darkMode: false,
   newUser: {
     username: '',
     email: '',

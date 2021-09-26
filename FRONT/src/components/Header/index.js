@@ -11,6 +11,7 @@ import './header.scss';
 import logo from '../../assets/DI-logo.png';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
+import ToggleButton from '../GenericComponents/ToggleButton';
 
 // custom hook to get the current pathname in React
 const usePathname = () => {
@@ -49,19 +50,24 @@ const Header = () => {
 
   return (
     <div className={darkMode ? 'header header--dark' : 'header'}>
-      <Link className="header__home-link" to="/">
-        <img className="header__logo" src={logo} alt="DEV Interest Logo" />
-      </Link>
-      {
+      <div className="header__logo-area">
+        <Link className="header__home-link" to="/">
+          <img className="header__logo" src={logo} alt="DEV Interest Logo" />
+        </Link>
+      </div>
+      <div className="header__search-bar-area">
+        {
         (pathname !== '/') && (
           <SearchBar
             className="header__search-bar"
             placeholder="Search..."
-            size="half"
+            size="full"
           />
         )
       }
-      { isLogged && (
+      </div>
+      <div className="header__buttons-area">
+        { isLogged && (
         <div className="user-button">
           <Button
             className="header__button"
@@ -84,10 +90,10 @@ const Header = () => {
             handleClick={handleUserButtonClick}
             content={`Hello ${username}!`}
           />
-          <IoIosArrowDown />
+          <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
         </div>
-      )}
-      { !isLogged && (
+        )}
+        { !isLogged && (
         <Button
           className="header__button"
           color
@@ -95,7 +101,8 @@ const Header = () => {
           handleClick={handleConnexionButtonClick}
           content="Se connecter"
         />
-      )}
+        )}
+      </div>
     </div>
   );
 };
