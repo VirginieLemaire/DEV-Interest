@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { BiSun } from '@react-icons/all-files/bi/BiSun';
+import { BiMoon } from '@react-icons/all-files/bi/BiMoon';
 
 import './toggle-button.scss';
 
@@ -15,7 +17,7 @@ const ToggleButton = ({ isOn, handleToggle }) => (
       className="react-switch-label"
       htmlFor="react-switch-new"
     >
-      <span className="react-switch-button">{isOn ? 'D' : 'L'}</span>
+      <span className="react-switch-button">{isOn ? (<BiMoon />) : (<BiSun />)}</span>
     </label>
   </div>
 );
