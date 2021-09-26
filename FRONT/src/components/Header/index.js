@@ -38,10 +38,6 @@ const Header = () => {
     dispatch(userLogin());
   };
 
-  const handleUserButtonClick = (e) => {
-    e.preventDefault();
-  };
-
   const handleLogoutButtonClick = () => {
     dispatch(userLogout());
     history.push('/');
@@ -74,13 +70,13 @@ const Header = () => {
       <div className="header__buttons-area">
         { isLogged && (
         <div className="header__user-buttons">
-          <div className="header__user-icons" onClick={handleBookmarksButtonClick}><BsFillBookmarksFill /></div>
           <div className="header__user-icons" onClick={() => dispatch(showAddCardModal())}><CgAddR /></div>
+          <div className="header__user-icons" onClick={() => history.push(`/${username.toLowerCase()}/bookmarks`)}><BsFillBookmarksFill /></div>
           <Button
             className="header__button"
             color
             styling="full"
-            handleClick={handleUserButtonClick}
+            handleClick={() => history.push(`/${username.toLowerCase()}/account`)}
             content={`Hello ${username}!`}
           />
           <div className="header__user-icons header__user-icons--logout" onClick={handleLogoutButtonClick}><RiShutDownLine /></div>
