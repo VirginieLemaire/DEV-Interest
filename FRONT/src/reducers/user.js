@@ -1,6 +1,6 @@
 import {
   CHANGE_FIELD, CHANGE_NEW_USER_FIELD,
-  CONNECT_USER, SHOW_ADD_CARD_MODAL,
+  CONNECT_USER, DARK_MODE_TOGGLE, SHOW_ADD_CARD_MODAL,
   SHOW_CONNEXION_MODAL, SHOW_SIGNUP_MODAL, USER_LOGOUT,
 } from '../action/user';
 
@@ -15,6 +15,7 @@ export const initialState = {
   bookmarks: [],
   addCardLinkField: '',
   hasAnAccount: true,
+  darkMode: true,
   newUser: {
     username: '',
     email: '',
@@ -68,6 +69,11 @@ const reducer = (state = initialState, action = {}) => {
           ...state.newUser,
           [action.fieldName]: action.value,
         },
+      };
+    case DARK_MODE_TOGGLE:
+      return {
+        ...state,
+        darkMode: !state.darkMode,
       };
     default:
       return state;

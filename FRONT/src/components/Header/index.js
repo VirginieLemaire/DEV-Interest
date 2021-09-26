@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';
 import {
   changeField, showConnexionModal, userLogin, userLogout,
+  darkModeToggle,
 } from '../../action/user';
 import { fetchCards } from '../../action/cards';
 
@@ -22,19 +23,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const search = useSelector((state) => state.user.search);
-  const loading = useSelector((state) => state.cards.loading);
-  const isLogged = useSelector((state) => state.user.isLogged);
-  const username = useSelector((state) => state.user.username);
+  const { isLogged, username } = useSelector((state) => state.user);
 
-  const handleSearchSubmit = (event) => {
-    event.preventDefault();
-    history.push('/search');
-    dispatch(fetchCards());
-  };
-
-  const handleSearchChange = (event) => {
-    dispatch(changeField(event.target.value, 'search'));
+  const handleClickDarkModeToggle = () => {
+    dispatch(darkModeToggle());
   };
 
   const handleConnexionButtonClick = () => {
@@ -64,13 +56,9 @@ const Header = () => {
       {
         (pathname !== '/') && (
           <SearchBar
-            loading={loading}
             className="header__search-bar"
             placeholder="Search..."
-            handleSubmit={handleSearchSubmit}
-            handleChange={handleSearchChange}
             size="half"
-            value={search}
           />
         )
       }
