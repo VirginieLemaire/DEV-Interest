@@ -39,6 +39,7 @@ const Header = () => {
 
   const handleLogoutButtonClick = () => {
     dispatch(userLogout());
+    history.push('/');
   };
 
   const handleBookmarksButtonClick = () => {
