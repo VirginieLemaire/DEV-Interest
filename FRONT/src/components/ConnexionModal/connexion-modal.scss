@@ -14,6 +14,7 @@
   &__content{
     display: flex;
     flex-direction: column;
+    gap:2rem;
     width: 500px;
     background-color: vars.$white-color;
     border-radius: vars.$border-radius-input;
@@ -32,26 +33,8 @@
     gap: 2rem;
     justify-content: center;
     align-items: center;
-    padding: 3rem 0;
+    padding-top: 3rem;
 
-    &-header{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      &--item{
-        display:flex;
-        justify-content: center;
-        width: 33%;
-        &:last-child{
-          font-size: 1.2rem;
-          cursor: pointer;
-          :hover{
-            font-size: 1.4rem;
-          }
-        }
-      }
-    }
   }
 
   &__footer{
@@ -61,7 +44,7 @@
     align-items: center;
     flex-direction: column;
     gap: 2rem;
-    padding: 3rem 0;
+    padding-bottom: 3rem;
   }
 
   &__title{
@@ -69,7 +52,7 @@
     text-align: center;
     font-weight: bold;
     font-size: 1.2rem;
-    color: vars.$text-color;
+    color: vars.$primary-color;
     padding-top: 10px;
   }
 

@@ -1,7 +1,7 @@
 import './signup.scss';
 
 const SignUp = () => (
-  <div className="signup">
+  <div className='signup'>
     Sign up!
   </div>
 );

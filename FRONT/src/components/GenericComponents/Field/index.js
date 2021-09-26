@@ -11,7 +11,6 @@ const Field = ({
   name,
   placeholder,
   handleChange,
-  required,
 }) => {
   const inputId = `field-${name}`;
 
@@ -27,7 +26,6 @@ const Field = ({
         className="field__input"
         placeholder={placeholder}
         name={name}
-        required={required}
       />
 
       <label
@@ -46,14 +44,12 @@ Field.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  required: PropTypes.bool,
 };
 
 // Valeurs par défaut pour les props
 Field.defaultProps = {
   value: '',
   type: 'text',
-  required: false,
 };
 
 // == Export
