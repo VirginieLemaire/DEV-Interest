@@ -56,6 +56,7 @@ const reducer = (state = initialState, action = {}) => {
         email: '',
         password: '',
         isLogged: false,
+        darkMode: false,
       };
     case SHOW_SIGNUP_MODAL:
       return {
