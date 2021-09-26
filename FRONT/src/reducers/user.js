@@ -97,6 +97,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         bookmarks: [...state.bookmarks, action.card],
+      };
+    case REMOVE_BOOKMARK:
+      return {
+        ...state,
+        bookmarks: state.bookmarks.filter((bookmark) => bookmark.id != action.card.id),
       }
     default:
       return state;
