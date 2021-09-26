@@ -1,17 +1,13 @@
-import {
-  CHANGE_FIELD, CONNECT_USER, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL, USER_LOGOUT,
-} from '../action/user';
+import { CHANGE_FIELD, SHOW_CONNEXION_MODAL } from '../action/user';
 
 export const initialState = {
   search: '',
   connexionModal: false,
-  addCardModal: false,
   email: '',
   password: '',
   username: 'Roger',
-  isLogged: false,
+  isLogged: true,
   bookmarks: [],
-  addCardLinkField: '',
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -25,24 +21,6 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         connexionModal: !state.connexionModal,
-      };
-    case SHOW_ADD_CARD_MODAL:
-      return {
-        ...state,
-        addCardModal: !state.addCardModal,
-      };
-    case CONNECT_USER:
-      return {
-        ...state,
-        ...action.data,
-        email: '',
-        password: '',
-        isLogged: true,
-      };
-    case USER_LOGOUT:
-      return {
-        ...state,
-        isLogged: false,
       };
     default:
       return state;

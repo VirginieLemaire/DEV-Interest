@@ -1,11 +1,16 @@
 @use '../../styles/vars';
 .search-container{
+  padding: 3rem 0;
   display: flex;
   justify-content: center;
 }
 
 .search-results{
-
+  margin: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .my-masonry-grid {
