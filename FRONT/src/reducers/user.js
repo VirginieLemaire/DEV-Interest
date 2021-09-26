@@ -96,7 +96,7 @@ const reducer = (state = initialState, action = {}) => {
     case ADD_BOOKMARK:
       return {
         ...state,
-        bookmarks: action.cards,
+        bookmarks: [...state.bookmarks, action.card],
       }
     default:
       return state;

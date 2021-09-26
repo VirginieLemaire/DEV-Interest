@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { addBookmark, removeBookmark } from '../../action/cards';
+import { addBookmark, removeBookmark } from '../../action/user';
 import { BsBookmark } from '@react-icons/all-files/bs/BsBookmark';
 import { BsBookmarkFill } from '@react-icons/all-files/bs/BsBookmarkFill'
 import PropTypes from 'prop-types';
