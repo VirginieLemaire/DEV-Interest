@@ -1,8 +1,7 @@
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';
 import {
-  changeField, showConnexionModal, userLogin, userLogout,
+  showConnexionModal, userLogin, userLogout,
   darkModeToggle,
 } from '../../action/user';
 

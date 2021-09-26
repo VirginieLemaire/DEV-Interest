@@ -8,17 +8,17 @@
     align-items: center;
 
     &__logo-area{
-        width: 25%;
+        margin-right: 2rem;
     }
 
     &__search-bar-area{
-        width: 100%;
+        width: 80%;
     }
         
     &__buttons-area{
         display: flex;
         justify-content: flex-end;
-        min-width: 15%;
+        margin-left: 2rem;
     }
 
     
