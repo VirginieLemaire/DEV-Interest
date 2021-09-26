@@ -35,15 +35,17 @@ export const changeNewCardCertification = () => (
 );
 
 export const ADD_BOOKMARK = 'ADD_BOOKMARK';
-export const addBookmark = () => (
+export const addBookmark = (card) => (
   {
+    card,
     type: ADD_BOOKMARK,
   }
 );
 
 export const REMOVE_BOOKMARK = 'REMOVE_BOOKMARK';
-export const removeBookmark = () => (
+export const removeBookmark = (card) => (
   {
+    card,
     type: REMOVE_BOOKMARK,
   }
 );

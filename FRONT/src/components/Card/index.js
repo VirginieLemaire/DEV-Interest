@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { addBookmark, removeBookmark } from '../../action/cards';
 import { BsBookmark } from '@react-icons/all-files/bs/BsBookmark';
 import { BsBookmarkFill } from '@react-icons/all-files/bs/BsBookmarkFill'
 import PropTypes from 'prop-types';
@@ -8,8 +9,15 @@ import './card.scss';
 
 // == Composant
 const Card = ({ card }) => {
+  const dispatch = useDispatch();
   const bookmarks = useSelector((state) => state.user.bookmarks);
-  const isBookmarked = bookmarks.find((bookmark) => bookmark.id === card.id)
+  const isBookmarked = bookmarks.find((bookmark) => bookmark.id === card.id);
+  const handleClick = () => {
+
+    console.log();
+    (!isBookmarked) && (dispatch(addBookmark(card)));
+    (isBookmarked) && (dispatch(removeBookmark(card)));
+  }
 
 
   return (
@@ -21,12 +29,12 @@ const Card = ({ card }) => {
         <a className="card__button media" type="button" href={card.url}>{card.type}</a>
         {
           (isBookmarked) && (
-            <div className="card__button bookmark" type="button"><BsBookmarkFill /></div>
+            <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmarkFill /></div>
           )
         }
         {
           (!isBookmarked) && (
-            <div className="card__button bookmark" type="button"><BsBookmark /></div>
+            <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmark /></div>
           )
         }
 

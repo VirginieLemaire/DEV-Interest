@@ -1,5 +1,5 @@
 import {
-  CHANGE_FIELD, CONNECT_USER, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL, USER_LOGOUT,
+  CHANGE_FIELD, CONNECT_USER, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL, USER_LOGOUT, ADD_BOOKMARK, REMOVE_BOOKMARK,
 } from '../action/user';
 
 export const initialState = {
@@ -93,6 +93,11 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         isLogged: false,
       };
+    case ADD_BOOKMARK:
+      return {
+        ...state,
+        bookmarks: action.cards,
+      }
     default:
       return state;
   }
