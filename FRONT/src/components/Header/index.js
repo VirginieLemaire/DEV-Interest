@@ -1,6 +1,7 @@
 import { BsFillBookmarksFill } from '@react-icons/all-files/bs/BsFillBookmarksFill';
 import { CgAddR } from '@react-icons/all-files/cg/CgAddR';
 import { RiShutDownLine } from '@react-icons/all-files/ri/RiShutDownLine';
+import {GiTechnoHeart} from '@react-icons/all-files/gi/GiTechnoHeart';
 
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +13,7 @@ import {
 
 import './header.scss';
 
-import logo from '../../assets/DI-logo.png';
+// import logo from '../../assets/DI-logo.png';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import ToggleButton from '../GenericComponents/ToggleButton';
@@ -53,7 +54,7 @@ const Header = () => {
     <div className={darkMode ? 'header header--dark' : 'header'}>
       <div className="header__logo-area">
         <Link className="header__home-link" to="/">
-          <img className="header__logo" src={logo} alt="DEV Interest Logo" />
+          <div className="header__home-link--DEV">DEV</div><div className="header__home-link--heart"><GiTechnoHeart /></div><div className="header__home-link--interest">Interest</div>
         </Link>
       </div>
       <div className="header__search-bar-area">
