@@ -109,16 +109,14 @@ const CardDetails = ({ card }) => {
 
           <div className="card-details__board__infos__buttons-container">
             <Link to={{ pathname: card.url }} target="_blank">
-              <div onMouseEnter={handleContentToggle} onMouseLeave={handleContentToggle}>
-                <Button 
-                  className="card-details__board__infos__buttons-container__card"
-                  styling="outline"
-                  color
-                  onClick={handleClick}
-                  content={!displayUrl ? "Consulter la source" : (getDomainName(card.url).capitalize()) }
-
-                />
-              </div>
+                <button 
+                  className="card-details__board__infos__buttons-container__button"
+                  type="button"
+                  onMouseEnter={handleContentToggle}
+                  onMouseLeave={handleContentToggle}
+                >
+                  {!displayUrl ? "Source" : (getDomainName(card.url).capitalize()) }
+                </button>
             </Link>
             <Button
               styling="full"
