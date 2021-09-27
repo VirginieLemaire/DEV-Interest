@@ -8,7 +8,6 @@ export const initialState = {
   id: '',
   search: '',
   connexionModal: false,
-  addCardModal: false,
   email: '',
   password: '',
   username: 'Roger',

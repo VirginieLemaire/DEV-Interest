@@ -2,6 +2,9 @@ import { useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
 import './app.scss';
+import {
+  isConnected, categories, techs,
+} from '../../../public/fakeDatas';
 
 import Home from '../Home';
 import Footer from '../Footer';
@@ -17,7 +20,6 @@ import About from '../About';
 import UserAccount from '../UserAccount';
 import SearchResults from '../SearchResults';
 import SignUp from '../SignUp';
-import AddCardModal from '../AddCardModal';
 
 const App = () => {
   const { cards } = useSelector((state) => state.cards);
@@ -31,7 +33,9 @@ const App = () => {
         <div className="content-wrap">
           <Header />
           <Switch>
-            <Route component={Home} exact path="/" />
+            <Route exact path="/">
+              <Home isConnected={isConnected} categories={categories} techs={techs} />
+            </Route>
             <Route exac path="/search">
               <SearchResults />
             </Route>
@@ -62,7 +66,6 @@ const App = () => {
         </div>
         <Footer />
       </div>
-      <AddCardModal />
       <ConnexionModal />
     </div>
   );

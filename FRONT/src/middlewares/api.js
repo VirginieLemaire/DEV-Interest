@@ -8,9 +8,7 @@ import {
   ADD_TO_FAVORITES, connectUser, LOGIN, REMOVE_FROM_FAVORITES, SIGNUP,
 } from '../action/user';
 
-const axiosInstance = axios.create({
-  baseURL: 'https://devinterest.herokuapp.com/',
-});
+import fakeData from '../data';
 
 export default (store) => (next) => (action) => {
   switch (action.type) {
@@ -134,7 +132,6 @@ export default (store) => (next) => (action) => {
       );
       next(action);
       break;
-    }
     default:
       next(action);
   }

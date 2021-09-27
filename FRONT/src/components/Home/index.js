@@ -12,8 +12,9 @@ import { changeNewCardField, fetchCards } from '../../action/cards';
 import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/user';
 
-const Home = () => {
-  const dispatch = useDispatch();
+const Home = ({
+  isConnected, categories, techs,
+}) => {
   const handleSubmit = () => console.log('Submit');
   const handleChange = () => console.log('Change');
   const handleClick = () => {
@@ -37,9 +38,7 @@ const Home = () => {
   // // Make tags array random
   // randomArrayShuffle(tags);
 
-  useEffect(() => {
-    dispatch(fetchCards());
-  }, []);
+  const username = useSelector((state) => state.user.username);
 
   return (
     <div className={darkMode ? 'home home--dark' : 'home'}>
@@ -61,12 +60,10 @@ const Home = () => {
       {!isLogged ? <p className="home__catch-phrase">...et partage tes bons plans que tu peux garder en favoris!</p> : null}
       <div className="home__button-container">
         <Button
-          className="home__button"
           color
           styling="full"
           handleClick={handleClick}
           content="Proposer une nouvelle ressource"
-          fontSize="medium"
         />
       </div>
       {
@@ -84,6 +81,24 @@ const Home = () => {
       <SearchResults />
     </div>
   );
+};
+
+Home.propTypes = {
+  isConnected: PropTypes.bool.isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+  techs: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      color: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
 };
 
 export default Home;
