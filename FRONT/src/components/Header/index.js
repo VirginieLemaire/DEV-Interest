@@ -44,17 +44,13 @@ const Header = () => {
     history.push('/');
   };
 
-  const handleBookmarksButtonClick = () => {
-    history.push(`/${username.toLowerCase()}/bookmarks`);
-  };
-
   const pathname = usePathname();
 
   return (
     <div className={darkMode ? 'header header--dark' : 'header'}>
       <div className="header__logo-area">
         <Link className="header__home-link" to="/">
-          <div className="header__home-link--DEV">DEV</div><div className="header__home-link--heart"><GiTechnoHeart /></div><div className="header__home-link--interest">Interest</div>
+          <div className="header__home-link--DEV">DEV</div><div className="header__home-link--heart"><GiTechnoHeart /></div><div className="header__home-link--interest">PPER</div>
         </Link>
       </div>
       <div className="header__search-bar-area">
