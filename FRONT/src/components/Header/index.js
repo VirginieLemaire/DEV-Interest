@@ -46,22 +46,54 @@ const Header = () => {
       <Link className="header__home-link" to="/">
         <img className="header__logo" src={logo} alt="DEV Interest Logo" />
       </Link>
-      <SearchBar
-        loading={loading}
-        className="header__search-bar"
-        placeholder="Search..."
-        handleSubmit={handleSearchSubmit}
-        handleChange={handleSearchChange}
-        size="half"
-        value={search}
-      />
-      <Button
-        className="header__button"
-        color
-        styling="full"
-        handleClick={handleConnexionButtonClick}
-        content="Se connecter"
-      />
+      {
+        (pathname !== '/') && (
+          <SearchBar
+            loading={loading}
+            className="header__search-bar"
+            placeholder="Search..."
+            handleSubmit={handleSearchSubmit}
+            handleChange={handleSearchChange}
+            size="half"
+            value={search}
+          />
+        )
+      }
+      {isLogged && (
+        <div className="user-button">
+          <Button
+            className="header__button"
+            color
+            styling="text"
+            handleClick={handleBookmarksButtonClick}
+            content="Favoris"
+          />
+          <Button
+            className="header__button"
+            color
+            styling="text"
+            handleClick={handleLogoutButtonClick}
+            content="Déconnexion"
+          />
+          <Button
+            className="header__button"
+            color
+            styling="full"
+            handleClick={handleUserButtonClick}
+            content={`Hello ${username}!`}
+          />
+          <IoIosArrowDown />
+        </div>
+      )}
+      {!isLogged && (
+        <Button
+          className="header__button"
+          color
+          styling="full"
+          handleClick={handleConnexionButtonClick}
+          content="Se connecter"
+        />
+      )}
     </div>
   );
 };

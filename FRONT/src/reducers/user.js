@@ -1,7 +1,5 @@
 import {
-  CHANGE_FIELD, CHANGE_NEW_USER_FIELD,
-  CONNECT_USER, SHOW_ADD_CARD_MODAL,
-  SHOW_CONNEXION_MODAL, SHOW_SIGNUP_MODAL, USER_LOGOUT,
+  CHANGE_FIELD, CONNECT_USER, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL, USER_LOGOUT, ADD_BOOKMARK, REMOVE_BOOKMARK,
 } from '../action/user';
 
 export const initialState = {
@@ -55,19 +53,16 @@ const reducer = (state = initialState, action = {}) => {
         password: '',
         isLogged: false,
       };
-    case SHOW_SIGNUP_MODAL:
+    case ADD_BOOKMARK:
       return {
         ...state,
-        hasAnAccount: !state.hasAnAccount,
+        bookmarks: [...state.bookmarks, action.card],
       };
-    case CHANGE_NEW_USER_FIELD:
+    case REMOVE_BOOKMARK:
       return {
         ...state,
-        newUser: {
-          ...state.newUser,
-          [action.fieldName]: action.value,
-        },
-      };
+        bookmarks: state.bookmarks.filter((bookmark) => bookmark.id != action.card.id),
+      }
     default:
       return state;
   }
