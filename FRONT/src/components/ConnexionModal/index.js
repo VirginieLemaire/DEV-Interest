@@ -23,7 +23,7 @@ const ConnexionModal = () => {
 
   const connexionModal = useSelector((state) => state.user.connexionModal);
 
-  const { email, password } = useSelector((state) => state.user);
+  const { darkMode, email, password } = useSelector((state) => state.user);
 
   const hasAnAccount = useSelector((state) => state.user.hasAnAccount);
 
@@ -45,9 +45,11 @@ const ConnexionModal = () => {
 
   const handleSubmitSignup = (e) => {
     e.preventDefault();
-    dispatch(showConnexionModal());
-    dispatch(signup());
-    history.push('/');
+    if (newUserPassword === newUserPasswordVerif) {
+      dispatch(showConnexionModal());
+      dispatch(signup());
+      history.push('/');
+    }
   };
 
   const handleHomeRedirect = () => {
@@ -68,7 +70,7 @@ const ConnexionModal = () => {
   return (
     <div className="connexion-modal" onClick={() => dispatch(showConnexionModal())}>
       {hasAnAccount && (
-        <div className="connexion-modal__content" onClick={(e) => e.stopPropagation()}>
+        <div className={darkMode ? 'connexion-modal__content modal_animation connexion-modal__content--dark' : 'connexion-modal__content modal_animation'} onClick={(e) => e.stopPropagation()}>
           <form autoComplete="on" onSubmit={handleSubmitConnexion}>
             <div className="connexion-modal__header">
               <div className="connexion-modal__header-header">
@@ -76,7 +78,7 @@ const ConnexionModal = () => {
                 <div className="connexion-modal__header-header--item">
                   <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
                 </div>
-                <div className="connexion-modal__header-header--item" onClick={() => dispatch(showConnexionModal())}>
+                <div className={darkMode ? 'connexion-modal__header-header--item connexion-modal__header-header--item--dark' : 'connexion-modal__header-header--item'} onClick={() => dispatch(showConnexionModal())}>
                   <GrFormClose className="close-icon" />
                 </div>
               </div>
@@ -117,7 +119,7 @@ const ConnexionModal = () => {
       )}
 
       {!hasAnAccount && (
-        <div className="connexion-modal__content modal_animation" onClick={(e) => e.stopPropagation()}>
+        <div className={darkMode ? 'connexion-modal__content modal_animation connexion-modal__content--dark' : 'connexion-modal__content modal_animation'} onClick={(e) => e.stopPropagation()}>
           <form autoComplete="off" onSubmit={handleSubmitSignup}>
             <div className="connexion-modal__header">
               <div className="connexion-modal__header-header">
@@ -126,7 +128,7 @@ const ConnexionModal = () => {
                   <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
                 </div>
                 <div className="connexion-modal__header-header--item" onClick={() => dispatch(showConnexionModal())}>
-                  <GrFormClose className="close-icon" />
+                  <GrFormClose />
                 </div>
               </div>
               <h4 className="connexion-modal__title">S'inscrire</h4>

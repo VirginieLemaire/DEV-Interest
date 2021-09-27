@@ -1,10 +1,22 @@
-.main__page{
+@use '../../styles/vars';
+
+.app{
+  background-color: vars.$white-color;
+  &--dark{
+    background-color: vars.$dark-color;
+  }
+}
+
+
+
+.main__page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   &.blur{
     filter: blur(5px);
   }
+
 }
 
 .content-wrap{

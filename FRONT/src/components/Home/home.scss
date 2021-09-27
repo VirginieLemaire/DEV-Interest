@@ -7,6 +7,10 @@
   margin-top: 4rem;
   color: vars.$text-color;
 
+  &--dark{
+    color: vars.$white-color;
+  }
+
   &__catch-title {
     font-size: 2rem;
     font-style: italic;

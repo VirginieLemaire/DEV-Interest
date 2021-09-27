@@ -15,10 +15,9 @@ const AddCardModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const addCardModal = useSelector((state) => state.user.addCardModal);
-  const isLogged = useSelector((state) => state.user.isLogged);
+  const { addCardModal, isLogged, darkMode } = useSelector((state) => state.user);
 
-  const url = useSelector((state) => state.cards.newCard.url);
+  const { url } = useSelector((state) => state.cards.newCard);
 
   const handleModalAddCardUrlSubmit = (e) => {
     e.preventDefault();
@@ -44,11 +43,8 @@ const AddCardModal = () => {
 
   return (
     <div className="add-card-modal__container">
-      <div className="add-card-modal__close">
-        Close
-      </div>
       <div className="add-card-modal" onClick={() => dispatch(showAddCardModal())}>
-        <div className="add-card-modal__content" onClick={(e) => e.stopPropagation()}>
+        <div className={darkMode ? 'add-card-modal__content modal_animation add-card-modal__content--dark' : 'add-card-modal__content modal_animation'} onClick={(e) => e.stopPropagation()}>
           <div className="add-card-modal__header">
             <div className="connexion-modal__header-header">
               <div className="connexion-modal__header-header--item" />

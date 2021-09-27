@@ -10,11 +10,11 @@
   &.full{
 
     &.color{
-      background-color: vars.$primary-color;
+      background: vars.$primary-color-gradient;
       color: vars.$white-color;
 
       &:hover{
-        background-color: vars.$primary-color-plus;
+        background: vars.$primary-color-plus-gradient;
         color: vars.$white-color;
       }
     }

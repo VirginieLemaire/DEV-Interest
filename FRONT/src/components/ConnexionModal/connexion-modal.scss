@@ -23,6 +23,11 @@
     width: 500px;
     background-color: vars.$white-color;
     border-radius: vars.$border-radius-input;
+
+    &--dark{
+      background-color: vars.$text-color;
+      color: vars.$white-color;
+    }
   }
 
   &__logo{
@@ -95,6 +100,7 @@
   }
 }
 
+
 .linky{
   font-weight: bold;
   color: vars.$primary-color
@@ -104,7 +110,7 @@
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
-	animation-duration: 0.5s;
+	animation-duration: 0.2s;
 }
 
 @keyframes fadeInOpacity {

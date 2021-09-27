@@ -1,6 +1,8 @@
 import './home.scss';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import CgAddR from '@react-icons/all-files/cg/CgAddR';
+
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
@@ -20,7 +22,7 @@ const Home = ({
     dispatch(changeNewCardField('', 'url'));
   };
 
-  const { username, isLogged } = useSelector((state) => state.user);
+  const { darkMode, username, isLogged } = useSelector((state) => state.user);
   const cards = useSelector((state) => state.cards.cards);
 
   // // Get categories from cards and remove doubles
@@ -39,7 +41,7 @@ const Home = ({
   const username = useSelector((state) => state.user.username);
 
   return (
-    <div className="home">
+    <div className={darkMode ? 'home home--dark' : 'home'}>
       {
         isLogged ? <p className="home__catch-title">Salut {username}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
       }

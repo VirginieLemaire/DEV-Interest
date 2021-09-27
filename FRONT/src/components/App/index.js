@@ -23,11 +23,13 @@ import SignUp from '../SignUp';
 
 const App = () => {
   const { cards } = useSelector((state) => state.cards);
-  const { username, addCardModal, connexionModal } = useSelector((state) => state.user);
+  const {
+    darkMode, username, addCardModal, connexionModal, isLogged,
+  } = useSelector((state) => state.user);
 
   return (
-    <div className="app">
-      <div className={connexionModal ? 'main__page blur' : 'main__page'}>
+    <div className={darkMode ? 'app--dark' : 'app'}>
+      <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''}`}>
         <div className="content-wrap">
           <Header />
           <Switch>

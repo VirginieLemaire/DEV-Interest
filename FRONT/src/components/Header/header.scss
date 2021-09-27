@@ -1,9 +1,60 @@
+@use '../../styles/vars';
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+
 .header{
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-    margin: 2rem;
+    padding: 2rem;
     align-items: center;
+
+    &__logo-area{
+        margin-right: 2rem;
+    }
+
+    &__home-link{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: vars.$primary-color;
+        font-size: 1.5rem;
+        padding: 0.3rem;
+        font-family: 'Goldman', cursive;
+        
+        &--DEV{
+            color: vars.$white-color;
+            font-weight: bold;
+            border-radius: vars.$border-radius-input;
+            background: vars.$primary-color-gradient;
+            padding: 0.2rem;
+        }
+
+        &--heart{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin: 0 0 0 0.1rem;
+        }
+
+        &--interest{
+            font-weight: bold;
+        }
+    }
+
+    &__search-bar-area{
+        width: 80%;
+    }
+        
+    &__buttons-area{
+        display: flex;
+        justify-content: flex-end;
+        margin-left: 2rem;
+    }
+
+    &__user-icons{
+        display:flex;
+    }
     
     &__logo{
         height: 2rem;
@@ -15,6 +66,33 @@
 
     &__button{
 
+    }
+
+    &--dark{
+
+    }
+}
+
+.header__user-buttons{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: vars.$primary-color;
+
+}
+
+.header__user-icons{
+    font-size: 1.3rem;
+    &:hover{
+        color: vars.$primary-color-plus;
+        cursor: pointer;
+    }
+
+    &--logout{
+
+        &:hover{
+            color: rgb(170, 2, 2);
+        }
     }
 }
 

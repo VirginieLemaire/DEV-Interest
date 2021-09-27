@@ -17,6 +17,11 @@
     width: 500px;
     background-color: vars.$white-color;
     border-radius: vars.$border-radius-input;
+
+    &--dark{
+      background-color: vars.$text-color;
+      color: vars.$white-color;
+    }
   }
 
   &__logo{
