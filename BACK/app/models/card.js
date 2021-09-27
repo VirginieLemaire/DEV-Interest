@@ -22,7 +22,7 @@ class Cards {
     static async findQueryAllCards(limit,skip) {
         try {
             
-            const {rows} = await client.query(`SELECT * FROM cards ORDER BY createdAT LIMIT ${limit} OFFSET ${skip}`);
+            const {rows} = await client.query(`SELECT * FROM cards ORDER BY createdAt LIMIT ${limit} OFFSET ${skip}`);
            
                 return rows.map(row => new Cards(row));
             
