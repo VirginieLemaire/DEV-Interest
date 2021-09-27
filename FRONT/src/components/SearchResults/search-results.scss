@@ -57,9 +57,21 @@
   }
 }
 
-.search-loading-heart
-{
-  color: vars.$primary-color;
-  font-size: 4rem;
-  animation: heartbeat 1s infinite;
+.search-loading{
+  width: 100%;
+  
+  &-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+  }
+
+  &-heart{
+    height: 100px;
+    width: 100px;
+    color: vars.$primary-color;
+    font-size: 4rem;
+    animation: heartbeat 1s infinite;
+  }
 }

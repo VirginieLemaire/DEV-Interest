@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
-import { GiTechnoHeart } from '@react-icons/all-files/gi/GiTechnoHeart';
+import logoDevLovePper from '../../../public/LogoDEVLovePPER.svg';
+// import { GiTechnoHeart } from '@react-icons/all-files/gi/GiTechnoHeart';
 
 import './search-results.scss';
 
@@ -25,7 +26,7 @@ const SearchResults = () => {
         (loading) && (
           <div className="search-loading-container">
             <div className="search-loading-heart">
-              <GiTechnoHeart />
+              <img src={logoDevLovePper} alt="DEVLovePPER Logo" />
             </div>
           </div>
         )
