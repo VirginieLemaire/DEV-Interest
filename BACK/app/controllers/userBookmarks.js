@@ -10,7 +10,7 @@ const bookmarksController = {
                 response.status(200).json('Pas de contenu !');
             }else {
                 response.json(bookmarks);
-                return this.id
+                return this.id;
             }
             
         } catch(error) {
@@ -20,9 +20,9 @@ const bookmarksController = {
     },
     addBookmarkById: async (request, response) => {
         try {
-            const body = request.body
+            const body = request.body;
             
-            const id = request.params.id
+            const id = request.params.id;
             const bookmark = await new Bookmarks().addBookmarkById(id,body);
             
             response.status(201).json(bookmark);
