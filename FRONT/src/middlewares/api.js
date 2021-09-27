@@ -21,6 +21,7 @@ export default (store) => (next) => (action) => {
         .then(
           (response) => {
             store.dispatch(saveCards(response.data.data));
+            console.log(response.data.data);
           },
         );
       next(action);

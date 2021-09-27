@@ -6,7 +6,7 @@ import './search-results.scss';
 import Card from '../Card';
 
 const SearchResults = () => {
-  const cards = useSelector((state) => state.cards.cards);
+  const { cards } = useSelector((state) => state.cards);
 
   const breakpointsColumnsObj = {
     default: 7,
