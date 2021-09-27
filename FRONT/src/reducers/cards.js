@@ -1,6 +1,6 @@
 import {
   CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD,
-  CHANGE_NEW_CARD_TECHS, IS_LOADING, RESET_NEW_CARD, SAVE_CARDS,
+  CHANGE_NEW_CARD_TECHS, IS_LOADING, RESET_NEW_CARD, SAVE_CARDS, TOGGLE_DISPLAY_URL,
 } from '../action/cards';
 
 export const initialState = {
@@ -20,6 +20,7 @@ export const initialState = {
     category: '',
   },
   certification: false,
+  displayUrl: false,
 
 };
 
@@ -77,6 +78,11 @@ const reducer = (state = initialState, action = {}) => {
           category: '',
         },
       };
+      case TOGGLE_DISPLAY_URL:
+        return {
+          ...state,
+          displayUrl: !state.displayUrl,
+        };
     default:
       return state;
   }

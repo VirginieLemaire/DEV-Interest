@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleDisplayUrl } from '../../action/cards';
 import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
 import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
 import { FaThermometerThreeQuarters } from '@react-icons/all-files/fa/FaThermometerThreeQuarters';
@@ -19,7 +21,11 @@ String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
+
 const CardDetails = ({ card }) => {
+  const dispatch = useDispatch();
+  const displayUrl = useSelector((state) => state.cards.displayUrl);
+
   const handleClick = (event) => {
     console.log(event);
   };
@@ -28,6 +34,13 @@ const CardDetails = ({ card }) => {
     month: 'long',
     day: 'numeric',
   });
+
+
+  const handleContentToggle = () => {
+    dispatch(toggleDisplayUrl());
+  };
+
+
 
   return (
     <div className="card-details">
@@ -71,7 +84,7 @@ const CardDetails = ({ card }) => {
               <div className="card-details__board__infos__tags-section__tags-container__techs-container">
                 {
                   card.techs.map((tech) => (
-                    <Tag name={tech.capitalize()} />
+                    <Tag id={tech} name={tech.capitalize()} />
                   ))
                 }
               </div>
@@ -96,12 +109,16 @@ const CardDetails = ({ card }) => {
 
           <div className="card-details__board__infos__buttons-container">
             <Link to={{ pathname: card.url }} target="_blank">
-              <Button
-                styling="outline"
-                color
-                handleClick={handleClick}
-                content={getDomainName(card.url).capitalize()}
-              />
+              <div onMouseEnter={handleContentToggle} onMouseLeave={handleContentToggle}>
+                <Button 
+                  className="card-details__board__infos__buttons-container__card"
+                  styling="outline"
+                  color
+                  onClick={handleClick}
+                  content={!displayUrl ? "Consulter la source" : "url" }
+
+                />
+              </div>
             </Link>
             <Button
               styling="full"
