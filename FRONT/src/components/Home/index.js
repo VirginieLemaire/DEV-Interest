@@ -50,6 +50,7 @@ const Home = () => {
       {!isLogged ? <p className="home__catch-phrase">...et partage tes bons plans que tu peux garder en favoris!</p> : null}
       <div className="home__button-container">
         <Button
+          fontSize="medium"
           color
           styling="full"
           handleClick={() => dispatch(showAddCardModal())}

@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import Card from '../Card';
 
 const UserBookmarks = () => {
-  const { username, bookmarksCards, darkMode } = useSelector((state) => state.user);
+  const { username, bookmarksCards } = useSelector((state) => state.user);
   console.log(bookmarksCards);
 
   return (
-    <div className={darkMode ? "user-bookmarks user-bookmarks--dark": "user-bookmarks"}>
+    <div className="user-bookmarks">
       <div className="user-bookmarks__user-container">
         <div className="user-bookmarks__user-container__initials">
           {username.charAt(0)}

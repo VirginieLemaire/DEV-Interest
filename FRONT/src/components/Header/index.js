@@ -18,6 +18,12 @@ import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import ToggleButton from '../GenericComponents/ToggleButton';
 
+// custom hook to get the current pathname in React
+const usePathname = () => {
+  const location = useLocation();
+  return location.pathname;
+};
+
 const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -38,7 +44,7 @@ const Header = () => {
     history.push('/');
   };
 
-  const pathname = useLocation();
+  const pathname = usePathname();
 
   return (
     <div className={darkMode ? 'header header--dark' : 'header'}>

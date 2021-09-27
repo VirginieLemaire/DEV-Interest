@@ -43,7 +43,7 @@ const CardDetails = ({ card }) => {
                 <GrLanguage />
               </div>
               <div className="card-details__board__infos__tags-section__tags-container__type">
-                <p>{card.language.capitalize()}</p>
+                <p>{card.lang.capitalize()}</p>
               </div>
             </div>
           </div>
@@ -136,7 +136,7 @@ CardDetails.propTypes = {
     ).isRequired,
     level: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    language: PropTypes.string.isRequired,
+    lang: PropTypes.string.isRequired,
   }).isRequired,
 
 };

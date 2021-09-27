@@ -16,6 +16,7 @@ import TermsOfUse from '../TermsOfUse';
 import About from '../About';
 import UserAccount from '../UserAccount';
 import SearchResults from '../SearchResults';
+import AddCardModal from '../AddCardModal';
 
 const App = () => {
   const { cards } = useSelector((state) => state.cards);
@@ -51,6 +52,7 @@ const App = () => {
         </div>
         <Footer />
       </div>
+      <AddCardModal />
       <ConnexionModal />
     </div>
   );
