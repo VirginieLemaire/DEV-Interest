@@ -1,5 +1,5 @@
 @use '../../../styles/vars';
-.field {
+.email-field {
   position: relative;
 
   &__input {
@@ -13,7 +13,7 @@
     &:focus {
       border: 2px solid vars.$primary-color;
 
-      & + .field-label {
+      & + .email-field-label {
         color: vars.$primary-color;
       }
     }
@@ -31,10 +31,10 @@
   }
 
   &--has-content {
-    .field__label {
+    .email-field__label {
       display: block;
     }
-    .field__input {
+    .email-field__input {
       padding: 1.4em 1.2em .4em;
     }
   }
