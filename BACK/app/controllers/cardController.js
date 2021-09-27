@@ -31,11 +31,15 @@ const cardsController = {
             res.status(500).json(error.message);
         }
     },
-
+    //réponse à une requête dans la barre de recherche
     findQueryAllCards: async (request, response) => {
         try {
+            console.log('query',request.query);
+            let {keyword} = request.params;
+            console.log(keyword);
+            
             // pagination
-            let {page, size} = req.query;
+            let {page, size} = request.query;
             if (!page) {
                 page =1;
             }
@@ -46,7 +50,9 @@ const cardsController = {
             const limit = parseInt(size);
             const skip = (page - 1) * size;
 
-            const card = await Cards.findQueryAllCards(limit,skip);
+            const card = await Cards.findQueryAllCards(keyword,limit,skip);
+            console.log(card);
+            
             response.setHeader('Authorization', jwt.makeToken(request.userId));
             if(card === "") {
                 response.status(200).json('Pas de contenu !');

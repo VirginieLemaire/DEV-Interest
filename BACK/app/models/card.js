@@ -19,12 +19,26 @@ class Cards {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-    static async findQueryAllCards(limit,skip) {
+    static async findQueryAllCards(keyword,limit,skip) {
         try {
+            console.log(keyword, limit, skip);
             
-            const {rows} = await client.query(`SELECT * FROM cards ORDER BY createdAt LIMIT ${limit} OFFSET ${skip}`);
-           
-                return rows.map(row => new Cards(row));
+            //chercher dans toutes les colonnes sauf slug et URLs
+            const {rows} = await client.query(`SELECT cards.*, tech.name FROM cards
+            JOIN card_has_tech ON cards.id = card_has_tech.card_id
+            JOIN tech ON card_has_tech.tech_id = tech.id
+                WHERE title ILIKE '%${keyword}%'
+                OR website ILIKE '%${keyword}%'
+                OR description ILIKE '%${keyword}%'
+                OR category ILIKE '%${keyword}%'
+                OR "level" ILIKE '%${keyword}%'
+                OR "type" ILIKE '%${keyword}%'
+                OR contributor ILIKE '%${keyword}%'
+                OR lang ILIKE '%${keyword}%'
+                OR tech.name ILIKE '%${keyword}%' ORDER BY createdAt LIMIT ${limit} OFFSET ${skip}`);
+            console.log(rows);
+            //renvoyer au front           
+            return rows.map(row => new Cards(row));
             
                 
         }catch(error) {
