@@ -7,7 +7,7 @@ const UserBookmarks = () => {
   console.log(bookmarksCards);
 
   return (
-    <div className={darkMode ? "user-bookmarks user-bookmarks--dark": "user-bookmarks"}>
+    <div className={darkMode ? 'user-bookmarks user-bookmarks--dark' : 'user-bookmarks'}>
       <div className="user-bookmarks__user-container">
         <div className="user-bookmarks__user-container__initials">
           {username.charAt(0)}

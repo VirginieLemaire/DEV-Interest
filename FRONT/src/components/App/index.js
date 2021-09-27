@@ -31,7 +31,7 @@ const App = () => {
           <Header />
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/search" exact componenent={SearchResults} />
+            <Route path="/search" exact component={SearchResults} />
             {
               cards.map(
                 (card) => (
