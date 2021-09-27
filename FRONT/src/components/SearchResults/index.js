@@ -1,12 +1,14 @@
 import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
+import logoDevLovePper from '../../../public/LogoDEVLovePPER.svg';
+// import { GiTechnoHeart } from '@react-icons/all-files/gi/GiTechnoHeart';
 
 import './search-results.scss';
 
 import Card from '../Card';
 
 const SearchResults = () => {
-  const cards = useSelector((state) => state.cards.cards);
+  const { cards, loading } = useSelector((state) => state.cards);
 
   const breakpointsColumnsObj = {
     default: 7,
@@ -20,24 +22,37 @@ const SearchResults = () => {
 
   return (
     <div className="search-container">
-      <div className="search-results">
-        <Masonry
-          breakpointCols={breakpointsColumnsObj}
-          className="masonry-grid"
-          columnClassName="masonry-grid_column"
-          // imagesLoadedOptions={imagesLoadedOptions}
-        >
-          {
-          cards.map(
-            (card) => (
-              <div className="masonry-div" key={card.id}>
-                <Card key={card.id} card={card} />
-              </div>
-            ),
-          )
-        }
-        </Masonry>
-      </div>
+      {
+        (loading) && (
+          <div className="search-loading-container">
+            <div className="search-loading-heart">
+              <img src={logoDevLovePper} alt="DEVLovePPER Logo" />
+            </div>
+          </div>
+        )
+      }
+      {
+        (!loading) && (
+          <div className="search-results">
+            <Masonry
+              breakpointCols={breakpointsColumnsObj}
+              className="masonry-grid"
+              columnClassName="masonry-grid_column"
+            >
+              {
+            cards.map(
+              (card) => (
+                <div className="masonry-div" key={card.id}>
+                  <Card key={card.id} card={card} />
+                </div>
+              ),
+            )
+          }
+            </Masonry>
+          </div>
+        )
+      }
+
     </div>
   );
 };
