@@ -1,6 +1,7 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-
+import { fetchCards } from '../../action/cards';
 import './app.scss';
 
 import Home from '../Home';
@@ -20,10 +21,21 @@ import AddCardModal from '../AddCardModal';
 import ScrollTop from '../ScrollTop';
 
 const App = () => {
-  const { cards } = useSelector((state) => state.cards);
+  const { cards, loading } = useSelector((state) => state.cards);
   const {
     darkMode, username, addCardModal, connexionModal,
   } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCards());
+  }, []);
+
+
+  if(loading) {
+    return "Loading..."
+  }
 
   return (
     <div className={darkMode ? 'app--dark' : 'app'}>

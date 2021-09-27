@@ -5,7 +5,7 @@ import {
 
 export const initialState = {
   cards: [],
-  loading: false,
+  loading: true,
   newCard: {
     title: '',
     slug: '',

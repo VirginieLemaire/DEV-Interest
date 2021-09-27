@@ -1,6 +1,5 @@
 import './home.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 // import CgAddR from '@react-icons/all-files/cg/CgAddR';
 
 import SearchBar from '../GenericComponents/SearchBar';
@@ -10,10 +9,8 @@ import Button from '../GenericComponents/Button';
 // import { changeNewCardField, fetchCards } from '../../action/cards';
 import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/user';
-import { fetchCards } from '../../action/cards';
 
 const Home = () => {
-  const dispatch = useDispatch();
 
   const { darkMode, username, isLogged } = useSelector((state) => state.user);
 
@@ -29,9 +26,6 @@ const Home = () => {
   // const tags = groupCategoriesAndTechnos.flat(1);
   // // Make tags array random
   // randomArrayShuffle(tags);
-  useEffect(() => {
-    dispatch(fetchCards());
-  }, []);
 
   return (
     <div className={darkMode ? 'home home--dark' : 'home'}>
