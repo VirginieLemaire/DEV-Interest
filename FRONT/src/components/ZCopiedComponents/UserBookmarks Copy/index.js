@@ -1,6 +1,6 @@
 import './user-bookmarks.scss';
 import { useSelector } from 'react-redux';
-import Card from '../Card';
+import Card from '../../Card';
 
 const UserBookmarks = () => {
   const { username, bookmarksCards } = useSelector((state) => state.user);
