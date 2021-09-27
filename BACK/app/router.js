@@ -28,8 +28,9 @@ router.post('/cards/fetch', fetchUrlController.findUrl);
 //USERS by id
 router.get('/users/:id' , userController.findById);
 //DELETE USER BY ID
-router.delete('/user/:id' , userController.deleteUserById);
-router.put('/user/:id' , userController.update);
+router.delete('/users/:id' , userController.deleteUserById);
+router.put('/users/:id' , userController.update);
+
 //LOGIN - SIGNUP
 router.post('/login', userController.login);
 router.post('/signup', userController.signUp);
