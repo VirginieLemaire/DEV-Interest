@@ -19,8 +19,10 @@ const userController = {
             const login = request.body
             //authentification
             const user = await new User(login).findUser();
-            response.setHeader('Authorization', jwt.makeToken(user.id));
+            //response.cookie('email', user.email, { maxAge: 900000});
+            response.setHeader('Authorization' , jwt.makeToken(user.id));
             response.status(200).json(user);
+            
         } catch (error) {
             //lire l'erreur
             console.trace(error);

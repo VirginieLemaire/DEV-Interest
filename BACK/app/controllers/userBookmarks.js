@@ -4,7 +4,7 @@ const bookmarksController = {
     findBookmarksByUserId: async (request, response) => {
         try {
             const id = request.params.id;
-            console.log(id);
+            console.log('controller', id);
             const bookmarks = await Bookmarks.BookmarksByUserId(id);
             if(bookmarks === "") {
                 response.status(200).json('Pas de contenu !');
@@ -21,6 +21,7 @@ const bookmarksController = {
     addBookmarkById: async (request, response) => {
         try {
             const body = request.body
+            
             const id = request.params.id
             const bookmark = await new Bookmarks().addBookmarkById(id,body);
             
