@@ -1,5 +1,9 @@
 import { BsBookmarkPlus } from '@react-icons/all-files/bs/BsBookmarkPlus';
 import { BsFillBookmarkFill } from '@react-icons/all-files/bs/BsFillBookmarkFill';
+import { useSelector, useDispatch } from 'react-redux';
+import { addBookmark, removeBookmark } from '../../action/user';
+import { BsBookmark } from '@react-icons/all-files/bs/BsBookmark';
+import { BsBookmarkFill } from '@react-icons/all-files/bs/BsBookmarkFill'
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -26,6 +30,17 @@ const Card = ({ card }) => {
     else dispatch(showAddCardModal());
   };
 
+
+  const bookmarks = useSelector((state) => state.user.bookmarks);
+  const isBookmarked = bookmarks.find((bookmark) => bookmark.id === card.id);
+  const handleClick = () => {
+
+    console.log();
+    (!isBookmarked) && (dispatch(addBookmark(card)));
+    (isBookmarked) && (dispatch(removeBookmark(card)));
+  }
+
+
   return (
     <div className={darkMode ? 'card card--dark' : 'card'}>
       <Link className="card_link" to={`/cards/${card.slug}/${card.id}`}>
@@ -34,6 +49,17 @@ const Card = ({ card }) => {
       <div className="card__buttons-group">
         <a className="card__button media" type="button" href={card.url}>{card.type}</a>
         <div className="card__button bookmark" type="button" onClick={handleBookmarkClick}>{isBookmarked > 0 ? (<BsFillBookmarkFill />) : (<BsBookmarkPlus />)}</div>
+        {
+          (isBookmarked) && (
+            <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmarkFill /></div>
+          )
+        }
+        {
+          (!isBookmarked) && (
+            <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmark /></div>
+          )
+        }
+
       </div>
       <Link className="card_link" to={`/cards/${card.slug}/${card.id}`}>
         <h2 className="card__title">{card.title}</h2>
