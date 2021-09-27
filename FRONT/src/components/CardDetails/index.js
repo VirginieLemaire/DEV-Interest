@@ -115,7 +115,7 @@ const CardDetails = ({ card }) => {
                   styling="outline"
                   color
                   onClick={handleClick}
-                  content={!displayUrl ? "Consulter la source" : "url" }
+                  content={!displayUrl ? "Consulter la source" : (getDomainName(card.url).capitalize()) }
 
                 />
               </div>
