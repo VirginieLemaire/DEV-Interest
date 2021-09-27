@@ -4,17 +4,20 @@ import { useEffect } from 'react';
 
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
-import Tag from './Tag';
+import Tag from '../GenericComponents/Tag';
 import Card from '../Card';
 import { randomArrayShuffle } from '../../selectors/utils';
 import { fetchCards } from '../../action/cards';
 import SearchResults from '../SearchResults';
+import { showAddCardModal } from '../../action/user';
 
 const Home = () => {
   const dispatch = useDispatch();
   const handleSubmit = () => console.log('Submit');
   const handleChange = () => console.log('Change');
-  const handleClick = () => console.log('Click');
+  const handleClick = () => {
+    dispatch(showAddCardModal());
+  };
 
   const { username, isConnected } = useSelector((state) => state.user);
   const cards = useSelector((state) => state.cards.cards);

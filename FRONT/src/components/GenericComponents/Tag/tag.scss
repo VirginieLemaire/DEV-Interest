@@ -1,0 +1,10 @@
+@use '../../../styles/vars';
+
+.tag {
+  font-size: .8rem;
+  font-weight: bold;
+  color: vars.$light-color;
+  border-radius: vars.$border-radius-input;
+  padding: .2rem .5rem;
+  white-space: nowrap;
+}

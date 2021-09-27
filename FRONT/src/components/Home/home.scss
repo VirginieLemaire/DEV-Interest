@@ -37,12 +37,6 @@
       color: vars.$light-color;
       font-size: .8rem;
       font-weight: bold;
-
-      &__tag {
-        border-radius: vars.$border-radius-input;
-        padding: .5rem 1rem;
-        white-space: nowrap;
-      }
     }
   }
 

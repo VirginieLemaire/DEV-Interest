@@ -9,7 +9,13 @@ import './button.scss';
 const Button = ({
   color, styling, submit, handleClick, content, fontSize,
 }) => (
-  <button className={color ? `button color ${styling} ${fontSize}` : `button no-color ${styling} ${fontSize}`} type={submit ? 'submit' : 'button'} onClick={handleClick}>{content}</button>
+  <button
+    className={color ? `button color ${styling} ${fontSize}` : `button no-color ${styling} ${fontSize}`}
+    type={submit ? 'submit' : 'button'}
+    onClick={handleClick}
+  >
+    {content}
+  </button>
 );
 
 Button.propTypes = {

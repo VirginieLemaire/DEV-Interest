@@ -1,6 +1,6 @@
 @use '../../styles/vars';
 
-.connexion-modal{
+.add-card-modal{
   position: fixed;
   left: 0;
   top: 0;
@@ -34,24 +34,6 @@
     align-items: center;
     padding: 3rem 0;
 
-    &-header{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      &--item{
-        display:flex;
-        justify-content: center;
-        width: 33%;
-        &:last-child{
-          font-size: 1.2rem;
-          cursor: pointer;
-          :hover{
-            font-size: 1.4rem;
-          }
-        }
-      }
-    }
   }
 
   &__footer{
@@ -69,7 +51,7 @@
     text-align: center;
     font-weight: bold;
     font-size: 1.2rem;
-    color: vars.$text-color;
+    color: vars.$primary-color;
     padding-top: 10px;
   }
 
@@ -84,6 +66,10 @@
   &__option{
     display: flex;
     gap: 0.5rem
+  }
+
+  &__close{
+    font-size: 30rem;
   }
 }
 
