@@ -7,9 +7,15 @@ import './button.scss';
 // submit (true or false): si tu indique submit, le bouton sera submit
 // sinon par défaut sans le précisé, le bouton est de type button
 const Button = ({
-  color, styling, submit, handleClick, content,
+  color, styling, submit, handleClick, content, fontSize,
 }) => (
-  <button className={color ? `button color ${styling}` : `button no-color ${styling}`} type={submit ? 'submit' : 'button'} onClick={handleClick}>{content}</button>
+  <button
+    className={color ? `button color ${styling} ${fontSize}` : `button no-color ${styling} ${fontSize}`}
+    type={submit ? 'submit' : 'button'}
+    onClick={handleClick}
+  >
+    {content}
+  </button>
 );
 
 Button.propTypes = {
@@ -18,11 +24,13 @@ Button.propTypes = {
   submit: PropTypes.bool,
   handleClick: PropTypes.func.isRequired,
   content: PropTypes.string.isRequired,
+  fontSize: PropTypes.string,
 };
 
 Button.defaultProps = {
   color: false,
   submit: false,
+  fontSize: 'normal',
 };
 
 // == Export

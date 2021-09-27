@@ -2,18 +2,19 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
 import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
-import { FaThermometerThreeQuarters } from '@react-icons/all-files/fa/FaThermometerThreeQuarters'
+import { FaThermometerThreeQuarters } from '@react-icons/all-files/fa/FaThermometerThreeQuarters';
 import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
 import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
-import { GrLanguage } from '@react-icons/all-files/gr/GrLanguage'
+import { GrLanguage } from '@react-icons/all-files/gr/GrLanguage';
 import { getDomainName } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
 import './card-details.scss';
 
+// eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
@@ -114,7 +115,7 @@ const CardDetails = ({ card }) => {
       <div className="card-details__suggestion-title-container">
         <h2 className="card-details__suggestion-title-container__title">D'autres cartes pourraient t'intéresser</h2>
       </div>
-      {/* <SearchResults /> */}
+      <SearchResults />
     </div>
   );
 };
@@ -135,6 +136,7 @@ CardDetails.propTypes = {
     ).isRequired,
     level: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
+    lang: PropTypes.string.isRequired,
   }).isRequired,
 
 };
