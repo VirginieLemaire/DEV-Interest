@@ -14,6 +14,11 @@ export const showConnexionModal = () => (
   }
 );
 
+export const SHOW_SIGNUP_MODAL = 'SHOW_SIGNUP_MODAL';
+export const showSingupModal = () => ({
+  type: SHOW_SIGNUP_MODAL,
+});
+
 export const SHOW_ADD_CARD_MODAL = 'SHOW_ADD_CARD_MODAL';
 export const showAddCardModal = () => (
   {
@@ -46,7 +51,6 @@ export const userLogout = () => ({
   type: USER_LOGOUT,
 });
 
-
 export const ADD_BOOKMARK = 'ADD_BOOKMARK';
 export const addBookmark = (card) => (
   {
@@ -63,25 +67,41 @@ export const removeBookmark = (card) => (
   }
 );
 
+// export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
+// export const addToFavorites = (cardId) => (
+//   {
+//     type: ADD_TO_FAVORITES,
+//     cardId,
+//   }
+// );
+
+// export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';
+// export const removeFromFavorites = (cardId) => (
+//   {
+//     type: REMOVE_FROM_FAVORITES,
+//     cardId,
+//   }
+// );
+
+export const CHANGE_NEW_USER_FIELD = 'CHANGE_NEW_USER_FIELD';
+export const changeNewUserField = (value, fieldName) => (
+  {
+    type: CHANGE_NEW_USER_FIELD,
+    value,
+    fieldName,
+  }
+);
+
+export const SIGNUP = 'SIGNUP';
+export const signup = () => (
+  {
+    type: SIGNUP,
+  }
+);
+
 export const DARK_MODE_TOGGLE = 'DARK_MODE_TOGGLE';
 export const darkModeToggle = () => (
   {
     type: DARK_MODE_TOGGLE,
-  }
-);
-
-export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
-export const addToFavorites = (cardId) => (
-  {
-    type: ADD_TO_FAVORITES,
-    cardId,
-  }
-);
-
-export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';
-export const removeFromFavorites = (cardId) => (
-  {
-    type: REMOVE_FROM_FAVORITES,
-    cardId,
   }
 );

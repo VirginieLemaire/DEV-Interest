@@ -1,15 +1,15 @@
 export const FETCH_CARDS = 'FETCH_CARDS';
 export const fetchCards = () => (
-  { 
-    type: FETCH_CARDS 
+  {
+    type: FETCH_CARDS,
   }
 );
 
 export const SAVE_CARDS = 'SAVE_CARDS';
 export const saveCards = (cards) => (
-  { 
-    type: SAVE_CARDS, 
-    cards 
+  {
+    type: SAVE_CARDS,
+    cards,
   }
 );
 
@@ -43,3 +43,14 @@ export const changeNewCardCertification = () => (
   }
 );
 
+export const RESET_NEW_CARD = 'RESET_NEW_CARD';
+export const resetNewCard = () => ({
+  type: RESET_NEW_CARD,
+});
+
+export const ADD_CARD = 'ADD_CARD';
+export const addCard = () => (
+  {
+    type: ADD_CARD,
+  }
+);
