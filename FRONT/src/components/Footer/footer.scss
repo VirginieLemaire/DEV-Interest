@@ -8,7 +8,7 @@
   position: relative;
   bottom: 0;
   width: 100%;
-  margin-top: 3rem;
+  margin-top: 4rem;
 
   &__social-links{
     display: flex;
@@ -22,6 +22,12 @@
     &>a:hover{
       color: vars.$primary-color;
     }
+
+    &--dark{
+      border-top: none;
+      background-color: vars.$text-color;
+      color: vars.$white-color;
+    }
   }
 
   &__compulsory-links{
@@ -33,6 +39,10 @@
     background-color: vars.$light-color;
     width: 100%;
     font-size: 0.8rem;
+    &--dark{
+      background-color: vars.$dark-color;
+      color: vars.$white-color;
+    }
   }
 }
 

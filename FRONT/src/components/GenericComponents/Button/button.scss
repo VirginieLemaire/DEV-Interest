@@ -10,11 +10,11 @@
   &.full{
 
     &.color{
-      background-color: vars.$primary-color;
+      background: vars.$primary-color-gradient;
       color: vars.$white-color;
 
       &:hover{
-        background-color: vars.$primary-color-plus;
+        background: vars.$primary-color-plus-gradient;
         color: vars.$white-color;
       }
     }
@@ -49,26 +49,6 @@
       &:hover{
         background-color: vars.$light-color-plus;
         color: vars.$text-color;
-      }
-    }
-  }
-
-  &.text{
-
-    &.color{
-      background-color: transparent;
-      color: vars.$primary-color;
-
-      &:hover{
-        text-decoration: underline;
-      }
-    }
-
-    &.no-color{
-      background-color: transparent;
-      color: vars.$light-color-plus;
-      &:hover{
-        text-decoration: underline;
       }
     }
   }

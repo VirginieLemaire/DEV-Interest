@@ -12,12 +12,16 @@ const Field = ({
   placeholder,
   handleChange,
   required,
+  autoComplete,
+  minlength,
+  maxlength,
 }) => {
   const inputId = `field-${name}`;
 
   return (
     <div className={value.length > 0 ? 'field field--has-content' : 'field'}>
       <input
+        autoComplete={autoComplete}
         // React - state
         value={value}
         onChange={handleChange}
@@ -28,6 +32,8 @@ const Field = ({
         placeholder={placeholder}
         name={name}
         required={required}
+        minLength={minlength}
+        maxLength={maxlength}
       />
 
       <label
@@ -47,6 +53,9 @@ Field.propTypes = {
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
+  autoComplete: PropTypes.string,
+  minlength: PropTypes.string,
+  maxlength: PropTypes.string,
 };
 
 // Valeurs par défaut pour les props
@@ -54,6 +63,9 @@ Field.defaultProps = {
   value: '',
   type: 'text',
   required: false,
+  autoComplete: 'off',
+  minlength: '',
+  maxlength: '',
 };
 
 // == Export

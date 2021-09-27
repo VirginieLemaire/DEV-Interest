@@ -3,9 +3,13 @@
 .home {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 6rem;
   align-items: center;
   color: vars.$text-color;
+
+  &--dark{
+    color: vars.$white-color;
+  }
 
   &__catch-title {
     margin-top: 4rem;

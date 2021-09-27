@@ -1,4 +1,4 @@
--- Verify devinterest:view_cards on pg
+-- Verify devinterest:correction-vue on pg
 
 BEGIN;
 

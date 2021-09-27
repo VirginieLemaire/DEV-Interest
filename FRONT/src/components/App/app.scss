@@ -1,21 +1,31 @@
+@use '../../styles/vars';
+
+.app{
+  background-color: vars.$white-color;
+  &--dark{
+    background-color: vars.$dark-color;
+  }
+}
+
+
+
 .main__page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-
-  &.blur {
+  &.blur{
     filter: blur(5px);
   }
+
 }
 
-.content-wrap {
+.content-wrap{
   flex: 1;
 
 }
 
 @media (max-width: 640px) {
-
-  .content-wrap {
+  .content-wrap{
     padding: 0rem;
     margin: 0rem;
     border-radius: none;
