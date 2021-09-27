@@ -2,39 +2,38 @@
 import PropTypes from 'prop-types';
 
 // == Import : local
-import './textarea-field.scss';
+import './url-field.scss';
 
 // == Composant
-const TextareaField = ({
+const UrlField = ({
   value,
   name,
   placeholder,
   handleChange,
   required,
-  minLength,
-  maxLength,
+  autoComplete,
 }) => {
-  const inputId = `textarea-field-${name}`;
+  const inputId = `url-field-${name}`;
 
   return (
-    <div className={value.length > 0 ? 'textarea-field textarea-field--has-content' : 'textarea-field'}>
-      <textarea
+    <div className={value.length > 0 ? 'url-field url-field--has-content' : 'url-field'}>
+      <input
+        autoComplete={autoComplete ? 'on' : 'off'}
         // React - state
         value={value}
         onChange={handleChange}
         // infos de base
         id={inputId}
-        className="textarea-field__input"
+        type="url"
+        className="url-field__input"
         placeholder={placeholder}
         name={name}
         required={required}
-        minLength={minLength}
-        maxLength={maxLength}
       />
 
       <label
         htmlFor={inputId}
-        className="textarea-field__label"
+        className="url-field__label"
       >
         {placeholder}
       </label>
@@ -42,23 +41,21 @@ const TextareaField = ({
   );
 };
 
-TextareaField.propTypes = {
+UrlField.propTypes = {
   value: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
-  minLength: PropTypes.string,
-  maxLength: PropTypes.string,
+  autoComplete: PropTypes.bool,
 };
 
 // Valeurs par défaut pour les props
-TextareaField.defaultProps = {
+UrlField.defaultProps = {
   value: '',
   required: false,
-  minLength: '',
-  maxLength: '',
+  autoComplete: false,
 };
 
 // == Export
-export default TextareaField;
+export default UrlField;

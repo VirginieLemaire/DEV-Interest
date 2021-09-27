@@ -1,29 +1,33 @@
 import PropTypes from 'prop-types';
 
-import './button.scss';
+import './submit-button.scss';
 
 // color (true or false) : permet d'utiliser soit la couleur principale ou en false un gris clair
 // styling ("full" or "outline"): permet d'avoir le fond du bouton rempli ou juste les contours
 // submit (true or false): si tu indique submit, le bouton sera submit
 // sinon par défaut sans le précisé, le bouton est de type button
-const Button = ({
-  color, styling, submit, handleClick, content,
+const SubmitButton = ({
+  color, styling, content, fontSize,
 }) => (
-  <button className={color ? `button color ${styling}` : `button no-color ${styling}`} type={submit ? 'submit' : 'button'} onClick={handleClick}>{content}</button>
+  <button
+    className={color ? `submit-button color ${styling} ${fontSize}` : `submit-button no-color ${styling} ${fontSize}`}
+    type="submit"
+  >
+    {content}
+  </button>
 );
 
-Button.propTypes = {
+SubmitButton.propTypes = {
   styling: PropTypes.string.isRequired,
   color: PropTypes.bool,
-  submit: PropTypes.bool,
-  handleClick: PropTypes.func.isRequired,
   content: PropTypes.string.isRequired,
+  fontSize: PropTypes.string,
 };
 
-Button.defaultProps = {
+SubmitButton.defaultProps = {
   color: false,
-  submit: false,
+  fontSize: 'normal',
 };
 
 // == Export
-export default Button;
+export default SubmitButton;

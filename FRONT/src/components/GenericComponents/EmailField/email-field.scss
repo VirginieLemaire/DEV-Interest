@@ -1,5 +1,5 @@
 @use '../../../styles/vars';
-.textarea-field {
+.email-field {
   position: relative;
 
   &__input {
@@ -8,15 +8,12 @@
     font-size: 1em;
     border: 1px solid vars.$light-color;
     border-radius: vars.$border-radius-input;
-    height: 10em;
-    font-family: 'Roboto';
-    outline: none;
-    resize: none;
+    height: 2.5em;
 
     &:focus {
       border: 2px solid vars.$primary-color;
 
-      & + .textarea-field-label {
+      & + .email-field-label {
         color: vars.$primary-color;
       }
     }
@@ -27,17 +24,17 @@
     position: absolute;
     top: .2rem;
     left: 1.2rem;
-    color: #999;
+    color: vars.$text-color;
     font-size: .7em;
     text-transform: uppercase;
     animation: labelSlideUpAndShow .3s;
   }
 
   &--has-content {
-    .textarea-field__label {
+    .email-field__label {
       display: block;
     }
-    .textarea-field__input {
+    .email-field__input {
       padding: 1.4em 1.2em .4em;
     }
   }

@@ -3,7 +3,14 @@
 .card{
   width: 300px;
   background-color: vars.$white-color;
+  border-radius: vars.$border-radius-input;
   // box-shadow: 4px 24px 60px rgba(0,0,0, 0.15);
+  box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
+
+  &--dark{
+    background-color: vars.$dark-color;
+    color: vars.$white-color;
+  }
 
   &__link{
 
@@ -20,9 +27,6 @@
   &__title{
     padding: 0.5rem 0.5rem 0 0.5rem;
     font-size: 1.1rem;
-    max-height: 3.8rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   &__website{
@@ -69,6 +73,9 @@
         background-color: vars.$light-color;
         padding: 0.3rem;
         border-radius: vars.$border-radius-input;
+        &--dark{
+          background-color: vars.$text-color;
+        }
       }
     }
   }
@@ -76,12 +83,16 @@
   &__level{
     background-color: vars.$light-color;
     color: rgba(vars.$primary-color, 0.5);
+    border-radius: 0 0 vars.$border-radius-input vars.$border-radius-input;
     padding: 0.5rem;
     margin-top: 0.5rem;
     text-align: center;
     font-size: 0.8rem;
     font-weight: bold;
     text-transform:uppercase;
+    &--dark{
+      background-color: vars.$text-color;
+    }
   }
 
   &__buttons-group{

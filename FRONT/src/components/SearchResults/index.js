@@ -8,7 +8,7 @@ import Card from '../Card';
 const SearchResults = () => {
   const cards = useSelector((state) => state.cards.cards);
 
-  const breakpoints = {
+  const breakpointsColumnsObj = {
     default: 7,
     2500: 6,
     2050: 5,
@@ -22,9 +22,10 @@ const SearchResults = () => {
     <div className="search-container">
       <div className="search-results">
         <Masonry
-          breakpointCols={breakpoints}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
+          breakpointCols={breakpointsColumnsObj}
+          className="masonry-grid"
+          columnClassName="masonry-grid_column"
+          // imagesLoadedOptions={imagesLoadedOptions}
         >
           {
           cards.map(

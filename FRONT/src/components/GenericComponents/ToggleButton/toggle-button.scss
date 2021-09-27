@@ -1,0 +1,60 @@
+@use '../../../styles/vars';
+
+.react-switch-checkbox__container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.react-switch-checkbox {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.react-switch-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 40px;
+  height: 20px;
+  background: vars.$light-color;
+  border-radius: 100px;
+  position: relative;
+  transition: background-color .2s;
+  &:hover{
+    background: vars.$light-color-plus;
+  }
+
+}
+
+.react-switch-label .react-switch-button {
+  content: '';
+  position: absolute;
+  top: 2.4px;
+  left: 3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 45px;
+  transition: 0.2s;
+  background: vars.$primary-color;
+  box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+}
+
+.react-switch-checkbox:checked + .react-switch-label .react-switch-button {
+  left: calc(100% - 2px);
+  transform: translateX(-100%);
+  background-color: vars.$text-color;
+}
+
+.react-switch-label:active .react-switch-button {
+  width: 25px;
+}
+
+.react-switch-label>span{
+  color: vars.$white-color;
+  font-size: 0.6rem;
+  text-align: center;
+  padding-top: 0.2rem;
+}

@@ -17,6 +17,11 @@
     width: 500px;
     background-color: vars.$white-color;
     border-radius: vars.$border-radius-input;
+
+    &--dark{
+      background-color: vars.$text-color;
+      color: vars.$white-color;
+    }
   }
 
   &__logo{
@@ -32,7 +37,7 @@
     gap: 2rem;
     justify-content: center;
     align-items: center;
-    padding: 3rem 0;
+    padding: 2rem 0;
 
   }
 
@@ -43,7 +48,7 @@
     align-items: center;
     flex-direction: column;
     gap: 2rem;
-    padding: 3rem 0;
+    padding: 2rem 0;
   }
 
   &__title{
@@ -71,9 +76,22 @@
   &__close{
     font-size: 30rem;
   }
+  &__connexion-warning{
+    color: red;
+    &__container{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      font-size: 0.8rem;
+    }
+  }
 }
 
 .linky{
   font-weight: bold;
-  color: vars.$primary-color
+  color: vars.$primary-color;
+  cursor: pointer;
 }

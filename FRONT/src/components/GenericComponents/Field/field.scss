@@ -1,6 +1,5 @@
 @use '../../../styles/vars';
 .field {
-  margin: .4em .4em .4em 0;
   position: relative;
 
   &__input {
@@ -12,7 +11,7 @@
     height: 2.5em;
 
     &:focus {
-      border: 2px solid vars.$primary-color;
+      border-color: vars.$primary-color;
 
       & + .field-label {
         color: vars.$primary-color;
@@ -25,7 +24,7 @@
     position: absolute;
     top: .2rem;
     left: 1.2rem;
-    color: vars.$text-color;
+    color: #999;
     font-size: .7em;
     text-transform: uppercase;
     animation: labelSlideUpAndShow .3s;

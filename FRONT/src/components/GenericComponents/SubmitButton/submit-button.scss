@@ -1,6 +1,6 @@
 @use '../../../styles/vars';
 
-.button{
+.submit-button{
   font-weight: 700;
   padding: 0.5rem 1rem;
   border-radius: vars.$border-radius-input;
@@ -49,6 +49,26 @@
       &:hover{
         background-color: vars.$light-color-plus;
         color: vars.$text-color;
+      }
+    }
+  }
+
+  &.text{
+
+    &.color{
+      background-color: transparent;
+      color: vars.$primary-color;
+
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+
+    &.no-color{
+      background-color: transparent;
+      color: vars.$light-color-plus;
+      &:hover{
+        text-decoration: underline;
       }
     }
   }
