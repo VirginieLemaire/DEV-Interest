@@ -11,3 +11,8 @@ export const randomArrayShuffle = (array) => {
   }
   return array;
 };
+
+export const getDomainName = (url) => {
+  let domain = (new URL(url));
+  return domain.hostname.replace('www.', '');
+}

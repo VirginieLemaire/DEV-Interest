@@ -5,6 +5,7 @@ import {
 } from '../action/cards';
 
 export const initialState = {
+
   loading: false,
   cards: [],
   newCard: {

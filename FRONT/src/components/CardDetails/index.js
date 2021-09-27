@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
 import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
+import { FaThermometerThreeQuarters } from '@react-icons/all-files/fa/FaThermometerThreeQuarters'
 import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
+import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
+import { GrLanguage } from '@react-icons/all-files/gr/GrLanguage'
+import { getDomainName } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
@@ -25,6 +29,7 @@ const CardDetails = ({ card }) => {
     month: 'long',
     day: 'numeric',
   });
+
   return (
     <div className="card-details">
       <div className="card-details__board">
@@ -32,49 +37,71 @@ const CardDetails = ({ card }) => {
           <img className="card-details__board__image-container__image" src={card.image} alt={card.title} />
         </div>
         <div className="card-details__board__infos">
-          <h1 className="card-details__board__infos__title"><strong>{card.title}</strong></h1>
+          <div className="card-details__board__infos__title-container">
+            <h1 className="card-details__board__infos__title-container__title"><strong>{card.title}</strong></h1>
+            <div className="card-details__board__infos__title-container__lang-container">
+              <div className="card-details__board__infos__title-container__lang-container__icon">
+                <GrLanguage />
+              </div>
+              <div className="card-details__board__infos__tags-section__tags-container__type">
+                <p>{card.lang.capitalize()}</p>
+              </div>
+            </div>
+          </div>
           <p className="card-details__board__infos__description">{card.description}</p>
           <div className="card-details__board__infos__contributor-container">
             <p className="card-details__board__infos__contributor">Proposé par: <strong>{card.contributor}</strong></p>
             <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
-          <div className="card-details__board__infos__tags-container">
-            <div className="card-details__board__infos__tags-container__icon">
-              {(card.level === 'facile') && (<FaThermometerEmpty />)}
-              {(card.level === 'intermédiaire') && (<FaThermometerHalf />)}
-              {(card.level === 'difficile') && (<FaThermometerFull />)}
+          <div className="card-details__board__infos__tags-section">
+            <div className="card-details__board__infos__tags-section__tags-container">
+              <div className="card-details__board__infos__tags-section__tags-container__icon">
+                {(card.level === 'débutant') && (<FaThermometerEmpty />)}
+                {(card.level === 'intermédiaire') && (<FaThermometerHalf />)}
+                {(card.level === 'avancé') && (<FaThermometerThreeQuarters />)}
+                {(card.level === 'expert') && (<FaThermometerFull />)}
+              </div>
+              <div className="card-details__board__infos__tags-section__tags-container__level">
+                <Tag name={card.level.capitalize()} />
+              </div>
             </div>
-            <div className="card-details__board__infos__tags-container__level">
-              <Tag name={card.level.capitalize()} />
+            <div className="card-details__board__infos__tags-section__tags-container">
+              <div className="card-details__board__infos__tags-section__tags-container__icon">
+                <CgScreen />
+              </div>
+              <div className="card-details__board__infos__tags-section__tags-container__techs-container">
+                {
+                  card.techs.map((tech) => (
+                    <Tag name={tech.capitalize()} />
+                  ))
+                }
+              </div>
+            </div>
+            <div className="card-details__board__infos__tags-section__tags-container">
+              <div className="card-details__board__infos__tags-section__tags-container__icon">
+                <FaTags />
+              </div>
+              <div className="card-details__board__infos__tags-section__tags-container__category">
+                <Tag name={card.category.capitalize()} />
+              </div>
+            </div>
+            <div className="card-details__board__infos__tags-section__tags-container">
+              <div className="card-details__board__infos__tags-section__tags-container__icon">
+                <MdPermMedia />
+              </div>
+              <div className="card-details__board__infos__tags-section__tags-container__type">
+                <Tag name={card.type.capitalize()} />
+              </div>
             </div>
           </div>
-          <div className="card-details__board__infos__tags-container">
-            <div className="card-details__board__infos__tags-container__icon">
-              <CgScreen />
-            </div>
-            <div className="card-details__board__infos__tags-container__techs-container">
-              {
-                card.techs.map((tech) => (
-                  <Tag name={tech.capitalize()} />
-                ))
-              }
-            </div>
-          </div>
-          <div className="card-details__board__infos__tags-container">
-            <div className="card-details__board__infos__tags-container__icon">
-              <FaTags />
-            </div>
-            <div className="card-details__board__infos__tags-container__category">
-              <Tag name={card.category.capitalize()} />
-            </div>
-          </div>
+
           <div className="card-details__board__infos__buttons-container">
-            <Link to="">
+            <Link to={{ pathname: card.url }} target="_blank">
               <Button
                 styling="outline"
                 color
                 handleClick={handleClick}
-                content={card.type.capitalize()}
+                content={getDomainName(card.url).capitalize()}
               />
             </Link>
             <Button
@@ -86,7 +113,9 @@ const CardDetails = ({ card }) => {
           </div>
         </div>
       </div>
-      <h2 className="card-details__suggestion-title">D'autres cartes pourraient t'intéresser</h2>
+      <div className="card-details__suggestion-title-container">
+        <h2 className="card-details__suggestion-title-container__title">D'autres cartes pourraient t'intéresser</h2>
+      </div>
       {/* <SearchResults /> */}
     </div>
   );
@@ -95,7 +124,7 @@ const CardDetails = ({ card }) => {
 CardDetails.propTypes = {
   card: PropTypes.shape({
     slug: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
