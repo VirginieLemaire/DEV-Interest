@@ -19,11 +19,11 @@ router.post('/cards/?q=${keyword}&category=${category}&resource_language=${resou
 // VOIR les cartes en favoris
 router.get('/users/:id/bookmarks', bookmarksController.findBookmarksByUserId);
 // Ajout d'une carte en favoris
-router.post('/cards/:id', checkJwt);
+router.post('/cards/:id', bookmarksController.addBookmarkById);
 //Delete une carte des favoris
 router.delete('users/:id/bookmarks/:id', checkJwt);
 //URL open graph pour une carte
-router.get('/cards/fetch', fetchUrlController.findUrl); 
+router.post('/cards/fetch', fetchUrlController.findUrl); 
 
 //USERS by id
 router.get('/users/:id' , userController.findById);

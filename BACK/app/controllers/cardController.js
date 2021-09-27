@@ -1,9 +1,10 @@
 const Cards = require('../models/card');
+const jwt = require('../services/jwt');
 
 const cardsController = {
-    findAllCards: async (req, res) => {
+    findAllCards: async (request, response) => {
         try {
-            let {page, size} = req.query;
+            let {page, size} = request.query;
             if (!page) {
                 page =1;
             }
@@ -14,10 +15,11 @@ const cardsController = {
             const limit = parseInt(size);
             const skip = (page - 1) * size;
             const card = await Cards.findAllCards(limit, skip);
+            response.setHeader('Authorization', jwt.makeToken(request.userId));
             if(card === "") {
-                res.status(200).json('Pas de contenu !');
+                response.status(200).json('Pas de contenu !');
             }else {
-                res.json({
+                response.json({
                     page,
                     size,
                     data: card
@@ -30,7 +32,7 @@ const cardsController = {
         }
     },
 
-    findQueryAllCards: async (req, res) => {
+    findQueryAllCards: async (request, response) => {
         try {
             // pagination
             let {page, size} = req.query;
@@ -45,10 +47,11 @@ const cardsController = {
             const skip = (page - 1) * size;
 
             const card = await Cards.findQueryAllCards(limit,skip);
+            response.setHeader('Authorization', jwt.makeToken(request.userId));
             if(card === "") {
-                res.status(200).json('Pas de contenu !');
+                response.status(200).json('Pas de contenu !');
             }else {
-                res.json({
+                response.json({
                     page,
                     size,
                     data: card
@@ -57,7 +60,7 @@ const cardsController = {
             
         } catch(error) {
             console.log(error);
-            res.status(500).json(error.message);
+            response.status(500).json(error.message);
         }
     },
     //update or insert a card
