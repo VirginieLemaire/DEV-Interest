@@ -46,23 +46,19 @@ export const userLogout = () => ({
   type: USER_LOGOUT,
 });
 
-export const SHOW_SIGNUP_MODAL = 'SHOW_SIGNUP_MODAL';
-export const showSingupModal = () => ({
-  type: SHOW_SIGNUP_MODAL,
-});
 
-export const CHANGE_NEW_USER_FIELD = 'CHANGE_NEW_USER_FIELD';
-export const changeNewUserField = (value, fieldName) => (
+export const ADD_BOOKMARK = 'ADD_BOOKMARK';
+export const addBookmark = (card) => (
   {
-    type: CHANGE_NEW_USER_FIELD,
-    value,
-    fieldName,
+    type: ADD_BOOKMARK,
+    card,
   }
 );
 
-export const SIGNUP = 'SIGNUP';
-export const signup = () => (
+export const REMOVE_BOOKMARK = 'REMOVE_BOOKMARK';
+export const removeBookmark = (card) => (
   {
-    type: SIGNUP,
+    type: REMOVE_BOOKMARK,
+    card,
   }
 );

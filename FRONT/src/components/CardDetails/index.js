@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
@@ -20,7 +19,6 @@ String.prototype.capitalize = function () {
 };
 
 const CardDetails = ({ card }) => {
-  // const card = useSelector((state) => state.cards.cards[0]);
   const handleClick = (event) => {
     console.log(event);
   };
@@ -56,10 +54,10 @@ const CardDetails = ({ card }) => {
           <div className="card-details__board__infos__tags-section">
             <div className="card-details__board__infos__tags-section__tags-container">
               <div className="card-details__board__infos__tags-section__tags-container__icon">
-                {(card.level === 'débutant') && (<FaThermometerEmpty />)}
-                {(card.level === 'intermédiaire') && (<FaThermometerHalf />)}
-                {(card.level === 'avancé') && (<FaThermometerThreeQuarters />)}
-                {(card.level === 'expert') && (<FaThermometerFull />)}
+                {(card.level === 'Débutant') && (<FaThermometerEmpty />)}
+                {(card.level === 'Intermédiaire') && (<FaThermometerHalf />)}
+                {(card.level === 'Avancé') && (<FaThermometerThreeQuarters />)}
+                {(card.level === 'Expert') && (<FaThermometerFull />)}
               </div>
               <div className="card-details__board__infos__tags-section__tags-container__level">
                 <Tag name={card.level.capitalize()} />

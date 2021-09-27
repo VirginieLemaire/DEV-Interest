@@ -1,11 +1,9 @@
 import {
-  CHANGE_NEW_CARD_CERTIFICATION,
-  CHANGE_NEW_CARD_FIELD, CHANGE_NEW_CARD_TECHS,
-  IS_LOADING, RESET_NEW_CARD, SAVE_CARDS,
+  CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD, IS_LOADING, SAVE_CARDS
 } from '../action/cards';
 
 export const initialState = {
-
+  cards: [],
   loading: false,
   cards: [],
   newCard: {
