@@ -1,11 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
 import './app.scss';
-import {
-  categories, techs,
-} from '../../../public/fakeDatas';
 
 import Home from '../Home';
 import Footer from '../Footer';
@@ -20,17 +16,12 @@ import TermsOfUse from '../TermsOfUse';
 import About from '../About';
 import UserAccount from '../UserAccount';
 import SearchResults from '../SearchResults';
-import SignUp from '../SignUp';
-import { fetchCards } from '../../action/cards';
 
 const App = () => {
-
   const { cards } = useSelector((state) => state.cards);
   const {
-    darkMode, username, addCardModal, connexionModal, isLogged,
+    darkMode, username, addCardModal, connexionModal,
   } = useSelector((state) => state.user);
-
-
 
   return (
     <div className={darkMode ? 'app--dark' : 'app'}>
@@ -38,12 +29,8 @@ const App = () => {
         <div className="content-wrap">
           <Header />
           <Switch>
-            <Route exact path="/">
-              <Home isConnected={isLogged} categories={categories} techs={techs} />
-            </Route>
-            <Route exac path="/search">
-              <SearchResults />
-            </Route>
+            <Route path="/" exact component={Home} />
+            <Route path="/search" exact componenent={SearchResults} />
             {
               cards.map(
                 (card) => (
@@ -53,19 +40,12 @@ const App = () => {
                 ),
               )
             }
-            <Route path="/add-card" exact>
-              <AddCard />
-            </Route>
-            <Route component={SignUp} path="/signup" exact />
-            <Route path={`/${username.toLowerCase()}/bookmarks`} exact>
-              <UserBookmarks />
-            </Route>
-            <Route path={`/${username.toLowerCase()}/account`} exact>
-              <UserAccount />
-            </Route>
-            <Route component={Legal} path="/legal" exact />
-            <Route component={TermsOfUse} path="/terms-of-use" exact />
-            <Route component={About} path="/about" exact />
+            <Route path="/add-card" exact component={AddCard} />
+            <Route path={`/${username.toLowerCase()}/bookmarks`} exact component={UserBookmarks} />
+            <Route path={`/${username.toLowerCase()}/account`} exact component={UserAccount} />
+            <Route path="/legal" exact component={Legal} />
+            <Route path="/terms-of-use" exact component={TermsOfUse} />
+            <Route path="/about" exact component={About} />
             <Route component={Page404} />
           </Switch>
         </div>

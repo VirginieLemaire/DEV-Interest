@@ -1,47 +1,10 @@
 import './user-bookmarks.scss';
-import { useDispatch, useSelector } from 'react-redux';
-
-
-const UserBookmarks = () => {
-  // const user = useSelector((state) => state.user);
-  // console.log(user)
-
-  return (
-    <div className="user-bookmarks">
-      coucou
-      {/* <div className="user-bookmarks__user-container">
-        <div className="user-bookmarks__user-container__initials">
-
-        </div>
-        <div className="user-bookmarks__user-container__username">
-          {user.username}
-        </div>
-      </div>
-      <div className="user-bookmarks__total-bookmarks">
-
-      </div>
-      <div className="user-bookmarks__bookmarks-container">
-
-      </div> */}
-
-    </div>
-  );
-}
-=======
-import Card from '../../Card';
-
-<<<<<<<< HEAD:FRONT/src/components/UserBookmarks/index.js
-const UserBookmarks = () => (
-  <div className="user-bookmarks">
-    Favoris
-  </div>
-);
-========
-
+import { useSelector } from 'react-redux';
+import Card from '../Card';
 
 const UserBookmarks = () => {
   const { username, bookmarks } = useSelector((state) => state.user);
-  console.log(bookmarks)
+  console.log(bookmarks);
 
   return (
     <div className="user-bookmarks">
@@ -65,6 +28,6 @@ const UserBookmarks = () => {
       </div>
     </div>
   );
-}
+};
 
 export default UserBookmarks;

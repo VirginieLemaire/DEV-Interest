@@ -1,7 +1,7 @@
 import { BsFillBookmarksFill } from '@react-icons/all-files/bs/BsFillBookmarksFill';
 import { CgAddR } from '@react-icons/all-files/cg/CgAddR';
 import { RiShutDownLine } from '@react-icons/all-files/ri/RiShutDownLine';
-import {GiTechnoHeart} from '@react-icons/all-files/gi/GiTechnoHeart';
+import { GiTechnoHeart } from '@react-icons/all-files/gi/GiTechnoHeart';
 
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,7 +38,7 @@ const Header = () => {
     history.push('/');
   };
 
-  const pathname = usePathname();
+  const pathname = useLocation();
 
   return (
     <div className={darkMode ? 'header header--dark' : 'header'}>

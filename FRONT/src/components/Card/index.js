@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
-  addBookmark, removeBookmark, addToFavorites, removeFromFavorites, showAddCardModal,
+  addBookmark, removeBookmark,
+  // addToFavorites, removeFromFavorites, showAddCardModal,
 } from '../../action/user';
 
 import './card.scss';
@@ -14,7 +15,7 @@ import './card.scss';
 // == Composant
 const Card = ({ card }) => {
   const dispatch = useDispatch();
-  const { darkMode, isLogged } = useSelector((state) => state.user);
+  const { darkMode } = useSelector((state) => state.user);
 
   const { bookmarks } = useSelector((state) => state.user);
 
@@ -31,9 +32,10 @@ const Card = ({ card }) => {
   // };
 
   const handleClick = () => {
-    console.log();
-    (!isBookmarked) && (dispatch(addBookmark(card)));
-    (isBookmarked) && (dispatch(removeBookmark(card)));
+    if (!isBookmarked) {
+      dispatch(addBookmark(card));
+    }
+    else if (isBookmarked) dispatch(removeBookmark(card));
   };
 
   return (

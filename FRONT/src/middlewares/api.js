@@ -5,7 +5,7 @@ import {
   isLoading, resetNewCard, saveCards,
 } from '../action/cards';
 import {
-  ADD_TO_FAVORITES, connectUser, LOGIN, REMOVE_FROM_FAVORITES, SIGNUP,
+  connectUser, LOGIN, SIGNUP,
 } from '../action/user';
 
 const axiosInstance = axios.create({
@@ -124,17 +124,17 @@ export default (store) => (next) => (action) => {
       next(action);
       break;
     }
-    case ADD_TO_FAVORITES: {
-      const { id } = store.getState().user;
+    // case ADD_TO_FAVORITES: {
+    //   const { id } = store.getState().user;
 
-      console.log(`je dois AJOUTER la carte ${action.cardId} à l'utilisateur ${id}`);
-      break;
-    }
-    case REMOVE_FROM_FAVORITES: {
-      const { id } = store.getState().user;
-      console.log(`je dois RETIRER la carte ${action.cardId} à l'utilisateur ${id}`);
-      break;
-    }
+    //   console.log(`je dois AJOUTER la carte ${action.cardId} à l'utilisateur ${id}`);
+    //   break;
+    // }
+    // case REMOVE_FROM_FAVORITES: {
+    //   const { id } = store.getState().user;
+    //   console.log(`je dois RETIRER la carte ${action.cardId} à l'utilisateur ${id}`);
+    //   break;
+    // }
     default:
       next(action);
   }
