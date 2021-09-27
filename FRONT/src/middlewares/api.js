@@ -8,7 +8,9 @@ import {
   ADD_TO_FAVORITES, connectUser, LOGIN, REMOVE_FROM_FAVORITES, SIGNUP,
 } from '../action/user';
 
-import fakeData from '../data';
+const axiosInstance = axios.create({
+  baseURL: 'https://devinterest.herokuapp.com/',
+});
 
 export default (store) => (next) => (action) => {
   switch (action.type) {
@@ -61,17 +63,6 @@ export default (store) => (next) => (action) => {
       ).catch(
         () => console.log('error'),
       );
-      break;
-    }
-    case ADD_TO_FAVORITES: {
-      const { id } = store.getState().user;
-
-      console.log(`je dois AJOUTER la carte ${action.cardId} à l'utilisateur ${id}`);
-      break;
-    }
-    case REMOVE_FROM_FAVORITES: {
-      const { id } = store.getState().user;
-      console.log(`je dois RETIRER la carte ${action.cardId} à l'utilisateur ${id}`);
       break;
     }
     case LOGIN: {
@@ -132,6 +123,18 @@ export default (store) => (next) => (action) => {
       );
       next(action);
       break;
+    }
+    case ADD_TO_FAVORITES: {
+      const { id } = store.getState().user;
+
+      console.log(`je dois AJOUTER la carte ${action.cardId} à l'utilisateur ${id}`);
+      break;
+    }
+    case REMOVE_FROM_FAVORITES: {
+      const { id } = store.getState().user;
+      console.log(`je dois RETIRER la carte ${action.cardId} à l'utilisateur ${id}`);
+      break;
+    }
     default:
       next(action);
   }

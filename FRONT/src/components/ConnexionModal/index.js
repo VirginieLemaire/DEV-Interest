@@ -1,6 +1,8 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import GrFormClose from '@react-icons/all-files/gr/GrFormClose';
+
 import {
   changeField, changeNewUserField, login,
   showConnexionModal,

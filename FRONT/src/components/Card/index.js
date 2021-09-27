@@ -1,13 +1,13 @@
 import { BsBookmarkPlus } from '@react-icons/all-files/bs/BsBookmarkPlus';
 import { BsFillBookmarkFill } from '@react-icons/all-files/bs/BsFillBookmarkFill';
 import { useSelector, useDispatch } from 'react-redux';
-import { addBookmark, removeBookmark } from '../../action/user';
-import { BsBookmark } from '@react-icons/all-files/bs/BsBookmark';
-import { BsBookmarkFill } from '@react-icons/all-files/bs/BsBookmarkFill'
+// import { BsBookmark } from '@react-icons/all-files/bs/BsBookmark';
+// import { BsBookmarkFill } from '@react-icons/all-files/bs/BsBookmarkFill';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addToFavorites, removeFromFavorites, showAddCardModal } from '../../action/user';
+import {
+  addBookmark, removeBookmark, addToFavorites, removeFromFavorites, showAddCardModal,
+} from '../../action/user';
 
 import './card.scss';
 
@@ -18,28 +18,23 @@ const Card = ({ card }) => {
 
   const { bookmarks } = useSelector((state) => state.user);
 
-  const isBookmarked = bookmarks.filter((bookmark) => bookmark === card.id);
+  const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
 
-  const handleBookmarkClick = () => {
-    if (isLogged) {
-      if (isBookmarked > 0) {
-        dispatch(removeFromFavorites(card.id));
-      }
-      else dispatch(addToFavorites(card.id));
-    }
-    else dispatch(showAddCardModal());
-  };
+  // const handleBookmarkClick = () => {
+  //   if (isLogged) {
+  //     if (isBookmarked > 0) {
+  //       dispatch(removeFromFavorites(card.id));
+  //     }
+  //     else dispatch(addToFavorites(card.id));
+  //   }
+  //   else dispatch(showAddCardModal());
+  // };
 
-
-  const bookmarks = useSelector((state) => state.user.bookmarks);
-  const isBookmarked = bookmarks.find((bookmark) => bookmark.id === card.id);
   const handleClick = () => {
-
     console.log();
     (!isBookmarked) && (dispatch(addBookmark(card)));
     (isBookmarked) && (dispatch(removeBookmark(card)));
-  }
-
+  };
 
   return (
     <div className={darkMode ? 'card card--dark' : 'card'}>
@@ -48,18 +43,7 @@ const Card = ({ card }) => {
       </Link>
       <div className="card__buttons-group">
         <a className="card__button media" type="button" href={card.url}>{card.type}</a>
-        <div className="card__button bookmark" type="button" onClick={handleBookmarkClick}>{isBookmarked > 0 ? (<BsFillBookmarkFill />) : (<BsBookmarkPlus />)}</div>
-        {
-          (isBookmarked) && (
-            <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmarkFill /></div>
-          )
-        }
-        {
-          (!isBookmarked) && (
-            <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmark /></div>
-          )
-        }
-
+        <div className="card__button bookmark" type="button" onClick={handleClick}>{isBookmarked ? (<BsFillBookmarkFill />) : (<BsBookmarkPlus />)}</div>
       </div>
       <Link className="card_link" to={`/cards/${card.slug}/${card.id}`}>
         <h2 className="card__title">{card.title}</h2>
@@ -92,18 +76,17 @@ Card.propTypes = {
   card: PropTypes.shape({
     id: PropTypes.number.isRequired,
     slug: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
-    technos: PropTypes.arrayOf(
+    techs: PropTypes.arrayOf(
       PropTypes.string.isRequired,
     ).isRequired,
     level: PropTypes.string.isRequired,
-    media: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
   }).isRequired,
-
 };
 
 // == Export

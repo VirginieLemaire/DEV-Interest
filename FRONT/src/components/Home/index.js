@@ -1,29 +1,21 @@
 import './home.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import CgAddR from '@react-icons/all-files/cg/CgAddR';
+// import CgAddR from '@react-icons/all-files/cg/CgAddR';
 
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
-import Tag from '../GenericComponents/Tag';
-import Card from '../Card';
-import { randomArrayShuffle } from '../../selectors/utils';
-import { changeNewCardField, fetchCards } from '../../action/cards';
+// import Tag from '../GenericComponents/Tag';
+// import { randomArrayShuffle } from '../../selectors/utils';
+// import { changeNewCardField, fetchCards } from '../../action/cards';
 import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/user';
+import { fetchCards } from '../../action/cards';
 
-const Home = ({
-  isConnected, categories, techs,
-}) => {
-  const handleSubmit = () => console.log('Submit');
-  const handleChange = () => console.log('Change');
-  const handleClick = () => {
-    dispatch(showAddCardModal());
-    dispatch(changeNewCardField('', 'url'));
-  };
+const Home = () => {
+  const dispatch = useDispatch();
 
   const { darkMode, username, isLogged } = useSelector((state) => state.user);
-  const cards = useSelector((state) => state.cards.cards);
 
   // // Get categories from cards and remove doubles
   // const mapCategories = cards.map((card) => card.category);
@@ -37,8 +29,9 @@ const Home = ({
   // const tags = groupCategoriesAndTechnos.flat(1);
   // // Make tags array random
   // randomArrayShuffle(tags);
-
-  const username = useSelector((state) => state.user.username);
+  useEffect(() => {
+    dispatch(fetchCards());
+  }, []);
 
   return (
     <div className={darkMode ? 'home home--dark' : 'home'}>
@@ -49,10 +42,7 @@ const Home = ({
         <SearchBar
           fontSize="medium"
           // size="half"
-          loading={false}
           placeholder={isLogged ? 'Découvre de nouvelles choses' : 'Saisis un mot clé...'}
-          handleSubmit={handleSubmit}
-          handleChange={handleChange}
           value=""
         />
       </div>
@@ -62,7 +52,7 @@ const Home = ({
         <Button
           color
           styling="full"
-          handleClick={handleClick}
+          handleClick={() => dispatch(showAddCardModal())}
           content="Proposer une nouvelle ressource"
         />
       </div>
@@ -81,24 +71,6 @@ const Home = ({
       <SearchResults />
     </div>
   );
-};
-
-Home.propTypes = {
-  isConnected: PropTypes.bool.isRequired,
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
-  techs: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      color: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
 };
 
 export default Home;

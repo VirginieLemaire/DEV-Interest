@@ -1,9 +1,10 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import './app.scss';
 import {
-  isConnected, categories, techs,
+  categories, techs,
 } from '../../../public/fakeDatas';
 
 import Home from '../Home';
@@ -20,12 +21,16 @@ import About from '../About';
 import UserAccount from '../UserAccount';
 import SearchResults from '../SearchResults';
 import SignUp from '../SignUp';
+import { fetchCards } from '../../action/cards';
 
 const App = () => {
+
   const { cards } = useSelector((state) => state.cards);
   const {
     darkMode, username, addCardModal, connexionModal, isLogged,
   } = useSelector((state) => state.user);
+
+
 
   return (
     <div className={darkMode ? 'app--dark' : 'app'}>
@@ -34,7 +39,7 @@ const App = () => {
           <Header />
           <Switch>
             <Route exact path="/">
-              <Home isConnected={isConnected} categories={categories} techs={techs} />
+              <Home isConnected={isLogged} categories={categories} techs={techs} />
             </Route>
             <Route exac path="/search">
               <SearchResults />
