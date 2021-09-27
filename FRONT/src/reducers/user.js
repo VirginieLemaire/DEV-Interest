@@ -7,11 +7,10 @@ import {
 export const initialState = {
   search: '',
   connexionModal: false,
-  addCardModal: false,
   email: '',
   password: '',
   username: 'Roger',
-  isLogged: false,
+  isLogged: true,
   bookmarks: [],
   addCardLinkField: '',
   hasAnAccount: true,

@@ -6,9 +6,7 @@ import {
 } from '../action/cards';
 import { connectUser, LOGIN, SIGNUP } from '../action/user';
 
-const axiosInstance = axios.create({
-  baseURL: 'https://devinterest.herokuapp.com/',
-});
+import fakeData from '../data';
 
 export default (store) => (next) => (action) => {
   switch (action.type) {
@@ -121,7 +119,6 @@ export default (store) => (next) => (action) => {
       );
       next(action);
       break;
-    }
     default:
       next(action);
   }
