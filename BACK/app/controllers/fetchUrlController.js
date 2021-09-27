@@ -4,7 +4,7 @@ const fetchUrlController = {
     findUrl: async (request, response) => {
         try {
             //lien url "input form url"
-            const url = await await fetchOpengraph.fetch(request.body.url);
+            const url = await fetchOpengraph.fetch(request.body.url);
             //response.setHeader('Authorization', jwt.makeToken(id));
             if(url === {}) {
                 response.status(201).json('pas de contenu');

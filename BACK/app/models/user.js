@@ -104,7 +104,14 @@ class User {
     }
     async deleteUserById(id) {
         try {
-            const {rows} = await client.query('DELETE FROM "user" WHERE id =$1', [id])
+            // verifie l'utilisateur
+            const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]); //this vient du constructeur
+
+            //si pas de correspondance on renvoie une erreur
+            if (!rows[0]) {
+                throw new Error('Identification failed');
+            }
+            await client.query('DELETE FROM "user" WHERE id =$1', [id])
         } catch (error) {
             //voir l'erreur en console
             console.trace(error);
@@ -120,7 +127,7 @@ async update() {
             // date NOW avec formatage
             const timeElapsed = Date.now();
             const today = new Date(timeElapsed);
-            today.toISOString();
+            today = today.toISOString();
             //updater l'enregistrement 
             await client.query('UPDATE "user" SET email= $1, user_name = $2, password = $3, createat = $4 WHERE email =$1', [this.email,this.username, password,today]);
              console.log(this);
