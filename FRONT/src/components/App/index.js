@@ -17,6 +17,7 @@ import About from '../About';
 import UserAccount from '../UserAccount';
 import SearchResults from '../SearchResults';
 import AddCardModal from '../AddCardModal';
+import ScrollTop from '../ScrollTop';
 
 const App = () => {
   const { cards } = useSelector((state) => state.cards);
@@ -28,6 +29,7 @@ const App = () => {
     <div className={darkMode ? 'app--dark' : 'app'}>
       <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''}`}>
         <div className="content-wrap">
+          <ScrollTop />
           <Header />
           <Switch>
             <Route path="/" exact component={Home} />
