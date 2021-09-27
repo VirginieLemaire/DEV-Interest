@@ -70,16 +70,16 @@ Card.propTypes = {
   card: PropTypes.shape({
     id: PropTypes.number.isRequired,
     slug: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
-    techs: PropTypes.arrayOf(
+    technos: PropTypes.arrayOf(
       PropTypes.string.isRequired,
     ).isRequired,
     level: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
+    media: PropTypes.string.isRequired,
   }).isRequired,
 
 };
