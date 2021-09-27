@@ -5,18 +5,22 @@ import {
 export const initialState = {
   cards: [],
   loading: false,
-  newCardTitle: '',
-  newCardWebsite: '',
-  newCardImage: '',
-  newCardDescription: '',
-  newCardCategory: '',
-  newCardLevel: '',
-  newCardType: '',
-  newCardUrl: '',
-  newCardContributor: '',
-  newCardLanguage: '',
-  newCardTechs: [],
-  newCardCertification: false,
+  cards: [],
+  newCard: {
+    title: '',
+    slug: '',
+    website: '',
+    description: '',
+    url: '',
+    image: '',
+    type: '',
+    techs: [],
+    level: '',
+    language: '',
+    category: '',
+  },
+  certification: false,
+
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -37,12 +41,41 @@ const reducer = (state = initialState, action = {}) => {
     case CHANGE_NEW_CARD_FIELD:
       return {
         ...state,
-        [action.fieldName]: action.value,
+        newCard: {
+          ...state.newCard,
+          [action.fieldName]: action.value,
+        },
+      };
+    case CHANGE_NEW_CARD_TECHS:
+      return {
+        ...state,
+        newCard: {
+          ...state.newCard,
+          [action.fieldName]: action.value.map((element) => element.value),
+        },
       };
     case CHANGE_NEW_CARD_CERTIFICATION:
       return {
         ...state,
-        newCardCertification: !state.newCardCertification,
+        certification: !state.certification,
+      };
+    case RESET_NEW_CARD:
+      return {
+        ...state,
+        newCard: {
+          ...state.newCard,
+          title: '',
+          slug: '',
+          website: '',
+          description: '',
+          url: '',
+          image: '',
+          type: '',
+          techs: [],
+          level: '',
+          language: '',
+          category: '',
+        },
       };
     default:
       return state;

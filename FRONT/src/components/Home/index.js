@@ -7,7 +7,7 @@ import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import Card from '../Card';
 import { randomArrayShuffle } from '../../selectors/utils';
-import { fetchCards } from '../../action/cards';
+import { changeNewCardField, fetchCards } from '../../action/cards';
 import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/user';
 
@@ -17,6 +17,7 @@ const Home = () => {
   const handleChange = () => console.log('Change');
   const handleClick = () => {
     dispatch(showAddCardModal());
+    dispatch(changeNewCardField('', 'url'));
   };
 
   const { username, isLogged } = useSelector((state) => state.user);

@@ -1,6 +1,7 @@
 @use '../../styles/vars';
 
 .connexion-modal{
+  perspective: 1000px;
   position: fixed;
   left: 0;
   top: 0;
@@ -12,6 +13,10 @@
   justify-content: center;
 
   &__content{
+    animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.5s;
     display: flex;
     flex-direction: column;
     width: 500px;
@@ -48,6 +53,8 @@
           cursor: pointer;
           :hover{
             font-size: 1.4rem;
+            background-color: vars.$light-color;
+            border-radius: 50%;
           }
         }
       }
@@ -76,18 +83,34 @@
   &__body{
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
     padding: 0 60px;
 
   }
 
   &__option{
     display: flex;
-    gap: 0.5rem
+    gap: 1rem
   }
 }
 
 .linky{
   font-weight: bold;
   color: vars.$primary-color
+}
+
+.modal_animation{
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.5s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -61,6 +61,13 @@ export const initialState = {
     },
   ],
   addCardLinkField: '',
+  hasAnAccount: true,
+  newUser: {
+    username: '',
+    email: '',
+    password: '',
+    passwordVerification: '',
+  },
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -74,6 +81,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         connexionModal: !state.connexionModal,
+        hasAnAccount: !state.connexionModal,
       };
     case SHOW_ADD_CARD_MODAL:
       return {
@@ -91,6 +99,8 @@ const reducer = (state = initialState, action = {}) => {
     case USER_LOGOUT:
       return {
         ...state,
+        email: '',
+        password: '',
         isLogged: false,
       };
     case ADD_BOOKMARK:

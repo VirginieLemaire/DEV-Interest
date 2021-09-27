@@ -9,7 +9,7 @@ import Header from '../Header';
 import ConnexionModal from '../ConnexionModal';
 import CardDetails from '../CardDetails';
 import Page404 from '../Page404';
-import UserBookmarks from '../UserAccount/UserBookmarks';
+import UserBookmarks from '../UserBookmarks';
 import AddCard from '../AddCard';
 import Legal from '../Legal';
 import TermsOfUse from '../TermsOfUse';
@@ -22,7 +22,6 @@ import AddCardModal from '../AddCardModal';
 const App = () => {
   const { cards } = useSelector((state) => state.cards);
   const { username, addCardModal, connexionModal } = useSelector((state) => state.user);
-  console.log(cards);
 
   return (
     <div className="app">

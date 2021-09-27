@@ -1,6 +1,5 @@
 @use '../../../styles/vars';
 .textarea-field {
-  margin: .4em .4em .4em 0;
   position: relative;
 
   &__input {
@@ -17,7 +16,7 @@
     &:focus {
       border: 2px solid vars.$primary-color;
 
-      & + .field-label {
+      & + .textarea-field-label {
         color: vars.$primary-color;
       }
     }
