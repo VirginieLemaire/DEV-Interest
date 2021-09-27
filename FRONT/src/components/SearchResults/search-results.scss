@@ -37,6 +37,7 @@
     margin: auto;
   }
 
+<<<<<<< HEAD
   &-heart{
     height: 100px;
     width: 100px;
@@ -44,6 +45,8 @@
   }
 }
 
+=======
+>>>>>>> 93e767ac64d9ae0d53b8aba957238041eeae45f9
 @keyframes heartbeat
 {
   0%
@@ -71,3 +74,25 @@
     transform: scale( .75 );
   }
 }
+<<<<<<< HEAD
+=======
+
+.search-loading{
+  width: 100%;
+  
+  &-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+  }
+
+  &-heart{
+    height: 100px;
+    width: 100px;
+    color: vars.$primary-color;
+    font-size: 4rem;
+    animation: heartbeat 1s infinite;
+  }
+}
+>>>>>>> 93e767ac64d9ae0d53b8aba957238041eeae45f9
