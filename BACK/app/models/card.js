@@ -21,22 +21,24 @@ class Cards {
     }
     static async findQueryAllCards(keyword,limit,skip) {
         try {
-            console.log(keyword, limit, skip);
-            
+            console.log({keyword}, {limit}, {skip});
+
             //chercher dans toutes les colonnes sauf slug et URLs
             const {rows} = await client.query(`SELECT cards.*, tech.name FROM cards
             JOIN card_has_tech ON cards.id = card_has_tech.card_id
             JOIN tech ON card_has_tech.tech_id = tech.id
-                WHERE title ILIKE '%${keyword}%'
-                OR website ILIKE '%${keyword}%'
-                OR description ILIKE '%${keyword}%'
-                OR category ILIKE '%${keyword}%'
-                OR "level" ILIKE '%${keyword}%'
-                OR "type" ILIKE '%${keyword}%'
-                OR contributor ILIKE '%${keyword}%'
-                OR lang ILIKE '%${keyword}%'
-                OR tech.name ILIKE '%${keyword}%' ORDER BY createdAt LIMIT ${limit} OFFSET ${skip}`);
-            console.log(rows);
+            --vectorise la colonne et la compare au parsage en query de la recherche
+                WHERE to_tsvector('french',title) @@websearch_to_tsquery('french', '${keyword}')
+                OR to_tsvector('french',website) @@websearch_to_tsquery('french', '${keyword}')
+                OR to_tsvector('french',description) @@websearch_to_tsquery('french', '${keyword}')
+                OR to_tsvector('french',category) @@websearch_to_tsquery('french', '${keyword}')
+                OR to_tsvector('french',"level") @@websearch_to_tsquery('french', '${keyword}')
+                OR to_tsvector('french',"type") @@websearch_to_tsquery('french', '${keyword}')
+                OR to_tsvector('french',contributor) @@websearch_to_tsquery('french', '${keyword}')
+                OR to_tsvector('french',lang) @@websearch_to_tsquery('french', '${keyword}')
+                OR to_tsvector('french',tech.name) @@websearch_to_tsquery('french', '${keyword}') 
+                ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`);
+            //console.log(rows);
             //renvoyer au front           
             return rows.map(row => new Cards(row));
             
