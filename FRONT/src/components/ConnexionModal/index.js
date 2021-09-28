@@ -1,6 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
+import LogoDEVLovePPER from '../../assets/LogoDEVLovePPER.svg';
 
 import {
   changeField, changeNewUserField, login,
@@ -77,7 +78,7 @@ const ConnexionModal = () => {
               <div className="connexion-modal__header-header">
                 <div className="connexion-modal__header-header--item" />
                 <div className="connexion-modal__header-header--item">
-                  <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+                  <img className="connexion-modal__logo" src={LogoDEVLovePPER} alt="logo court" onClick={handleHomeRedirect} />
                 </div>
                 <div className={darkMode ? 'connexion-modal__header-header--item connexion-modal__header-header--item--dark' : 'connexion-modal__header-header--item'} onClick={() => dispatch(showConnexionModal())}>
                   <GrFormClose className="close-icon" />
@@ -126,7 +127,7 @@ const ConnexionModal = () => {
               <div className="connexion-modal__header-header">
                 <div className="connexion-modal__header-header--item" />
                 <div className="connexion-modal__header-header--item">
-                  <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+                  <img className="connexion-modal__logo" src={LogoDEVLovePPER} alt="logo court" onClick={handleHomeRedirect} />
                 </div>
                 <div className="connexion-modal__header-header--item" onClick={() => dispatch(showConnexionModal())}>
                   <GrFormClose />

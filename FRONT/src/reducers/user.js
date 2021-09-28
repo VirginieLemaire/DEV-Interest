@@ -11,7 +11,7 @@ export const initialState = {
   connexionModal: false,
   email: '',
   password: '',
-  username: 'Roger',
+  username: '',
   isLogged: false,
   bookmarks: [1],
   bookmarksCards: [],
