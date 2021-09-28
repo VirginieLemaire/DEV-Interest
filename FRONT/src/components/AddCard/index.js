@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-
 import {
   addCard, changeNewCardCertification, changeNewCardField, changeNewCardTechs,
-} from '../../action/cards';
+} from '../../action/cardNew';
+
 import { slugify } from '../../selectors/cards';
 
 import Field from '../GenericComponents/Field';
@@ -21,13 +21,9 @@ const AddCard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // const isLogged = useSelector((state) => state.user.isLogged);
-
-  const title = useSelector((state) => state.cards.newCard.title);
-  const description = useSelector((state) => state.cards.newCard.description);
-  const url = useSelector((state) => state.cards.newCard.url);
-  const image = useSelector((state) => state.cards.newCard.image);
-  const website = useSelector((state) => state.cards.newCard.website);
+  const {
+    title, description, url, image, website, certification,
+  } = useSelector((state) => state.cardNew);
 
   const customTheme = (theme) => ({
     ...theme,
@@ -92,9 +88,11 @@ const AddCard = () => {
   };
 
   const handleSubmitNewCard = (e) => {
-    e.preventDefault();
-    dispatch(addCard());
-    history.push('/');
+    if (certification) {
+      e.preventDefault();
+      dispatch(addCard());
+      history.push('/');
+    }
   };
 
   return (
@@ -187,7 +185,7 @@ const AddCard = () => {
           closeMenuOnSelect
           components={animatedComponents}
           options={languageOptions}
-          onChange={(value) => dispatch(changeNewCardField(value.value, 'language'))}
+          onChange={(value) => dispatch(changeNewCardField(value.value, 'lang'))}
           theme={customTheme}
         />
         <label className="add-card__input-certified" htmlFor="certify-add-card">

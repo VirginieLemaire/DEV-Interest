@@ -8,8 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './search-bar.scss';
-import { fetchCards, searchCards } from '../../../action/cards';
-import { changeField } from '../../../action/user';
+import { changeSearchField, fetchCardsSearch } from '../../../action/cardsSearch';
 
 // la propriété loading est a false par défaut et si passée à vrai affiche un spinner
 // la propriété "size" est facultative et a comme valeur par défaut une width de 100%,
@@ -20,13 +19,13 @@ const SearchBar = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { search } = useSelector((state) => state.user);
-  const { loading } = useSelector((state) => state.cards);
+  const { searchQuery } = useSelector((state) => state.cardsSearch);
+  const { loading } = useSelector((state) => state.displayOptions);
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     history.push('/search');
-    dispatch(searchCards());
+    dispatch(fetchCardsSearch());
   };
 
   return (
@@ -38,8 +37,8 @@ const SearchBar = ({
           className={`search-bar__input ${fontSize}`}
           type="search"
           placeholder={placeholder}
-          onChange={(e) => dispatch(changeField(e.target.value, 'search'))}
-          value={search}
+          onChange={(e) => dispatch(changeSearchField(e.target.value, 'searchQuery'))}
+          value={searchQuery}
         />
       </form>
     </div>

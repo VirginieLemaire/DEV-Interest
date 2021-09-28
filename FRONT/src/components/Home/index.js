@@ -8,13 +8,15 @@ import Button from '../GenericComponents/Button';
 // import { randomArrayShuffle } from '../../selectors/utils';
 // import { changeNewCardField, fetchCards } from '../../action/cards';
 import SearchResults from '../SearchResults';
-import { showAddCardModal } from '../../action/user';
+import { showAddCardModal } from '../../action/displayOptions';
+import HomeCards from '../HomeCards';
 
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { darkMode, username, isLogged } = useSelector((state) => state.user);
+  const { username, isLogged } = useSelector((state) => state.userCurrent);
 
+  const { darkMode } = useSelector((state) => state.displayOptions);
   // // Get categories from cards and remove doubles
   // const mapCategories = cards.map((card) => card.category);
   // const categories = [...new Set(mapCategories)];
@@ -64,7 +66,7 @@ const Home = () => {
         // </div>
       }
 
-      <SearchResults />
+      <HomeCards />
     </div>
   );
 };

@@ -1,23 +1,23 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
-import { showAddCardModal, showConnexionModal } from '../../action/user';
 import LogoDEVLovePPER from '../../assets/LogoDEVLovePPER.svg';
 
 import Button from '../GenericComponents/Button';
 
 import './add-card-modal.scss';
-import { changeNewCardField } from '../../action/cards';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import UrlField from '../GenericComponents/UrlField';
+import { changeNewCardField } from '../../action/cardNew';
+import { showAddCardModal, showConnexionModal } from '../../action/displayOptions';
 
 const AddCardModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { addCardModal, isLogged, darkMode } = useSelector((state) => state.user);
-
-  const { url } = useSelector((state) => state.cards.newCard);
+  const { url } = useSelector((state) => state.cardNew);
+  const { darkMode, addCardModal } = useSelector((state) => state.displayOptions);
+  const { isLogged } = useSelector((state) => state.userCurrent);
 
   const handleModalAddCardUrlSubmit = (e) => {
     e.preventDefault();
