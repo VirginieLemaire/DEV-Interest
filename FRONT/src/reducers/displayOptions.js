@@ -1,5 +1,5 @@
-import {
-
+import { 
+  TOGGLE_DISPLAY_URL,
 } from '../action/displayOptions';
 
 export const initialState = {
@@ -14,7 +14,11 @@ export const initialState = {
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-
+    case TOGGLE_DISPLAY_URL:
+      return {
+        ...state,
+        displayUrl: !state.displayUrl,
+      };
     default:
       return state;
   }
