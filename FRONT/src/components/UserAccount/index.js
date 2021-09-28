@@ -2,10 +2,14 @@ import './user-account.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
+import SubmitButton from '../GenericComponents/SubmitButton';
 import { changeCurrentUserField } from '../../action/userCurrent';
+import EmailField from '../GenericComponents/EmailField';
+import PasswordField from '../GenericComponents/PasswordField';
 
 const UserAccount = () => {
   const dispatch = useDispatch();
+  const { password,newUsername, newEmail, newPassword, newPasswordVerification } = useSelector((state) => state.userCurrent);
 
   const handleClick = () => (
     console.log("click")
@@ -18,10 +22,10 @@ const UserAccount = () => {
         <h2 className="user-account__form__title">Modifier le nom d'utilisation</h2>
         <Field
           autoComplete="off"
-          value={newUserUsername}
-          name="new-user_username"
+          value={newUsername}
+          name="newUsername"
           placeholder="Nom d'utilisateur"
-          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'username'))}
+          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'newUsername'))}
           minlength="4"
           maxlength="20"
           required
@@ -29,17 +33,17 @@ const UserAccount = () => {
         <h2 className="user-account__form__title">Modifier l'email de compte'</h2>
         <EmailField
           autoComplete="off"
-          value={newUserEmail}
-          name="new-user_email"
+          value={newEmail}
+          name="newEmail"
           placeholder="Email"
-          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'email'))}
+          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'newEmail'))}
           required
         />
         <h2 className="user-account__form__title">Modifier le mot de passe</h2>
         <PasswordField
           autoComplete="new-password"
-          value={newUserPassword}
-          name="new-user_password"
+          value={password}
+          name="password"
           placeholder="Mot de passe"
           handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'password'))}
           required
@@ -48,19 +52,19 @@ const UserAccount = () => {
         <div className="user-account__form__new-password-container">
         <PasswordField
           autoComplete="new-password"
-          value={newUserPasswordVerif}
-          name="new-user_verification_password"
-          placeholder="Vérification du mot de passe"
-          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'passwordVerification'))}
+          value={newPassword}
+          name="newPassword"
+          placeholder="Nouveau mot de passe"
+          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'newPassword'))}
           required
           minlength="4"
         />
         <PasswordField
           autoComplete="new-password"
-          value={newUserPasswordVerif}
-          name="new-user_verification_password"
+          value={newPasswordVerification}
+          name="newPasswordVerification"
           placeholder="Vérification du mot de passe"
-          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'passwordVerification'))}
+          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'newPasswordVerification'))}
           required
           minlength="4"
         />
@@ -72,7 +76,6 @@ const UserAccount = () => {
           styling="full"
           handleClick={handleClick}
           content="Supprimer le compte"
-          fontSize="medium"
           />
         <div className="user-account__form__validation-buttons-container">
         <Button 
@@ -80,14 +83,12 @@ const UserAccount = () => {
           styling="full"
           handleClick={handleClick}
           content="Annuler"
-          fontSize="medium"
         />
         <Button
           color
           styling="full"
           handleClick={handleClick}
           content="Valider"
-          fontSize="medium"
         />
         </div>
       </form>
