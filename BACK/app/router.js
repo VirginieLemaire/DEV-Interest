@@ -14,7 +14,7 @@ router.get('/cards', cardController.findAllCards);
 //ajout ou modification de carte
 router.post('/cards', cardController.save);
 //résultat de recherche
-router.post('/cards/?q=${keyword}&category=${category}&resource_language=${resource_language}&language=${language}&media=${type}&page=${askPage}',cardController.findQueryAllCards);
+router.get('/cards/search?',cardController.findQueryAllCards);
 
 // VOIR les cartes en favoris
 router.get('/users/:id/bookmarks', bookmarksController.findBookmarksByUserId);
@@ -23,13 +23,14 @@ router.post('/cards/:id', bookmarksController.addBookmarkById);
 //Delete une carte des favoris
 router.delete('users/:id/bookmarks/:id', checkJwt);
 //URL open graph pour une carte
-router.post('/cards/fetch', fetchUrlController.findUrl); 
+router.get('/cards/fetch', fetchUrlController.findUrl); 
 
 //USERS by id
 router.get('/users/:id' , userController.findById);
 //DELETE USER BY ID
-router.delete('/user/:id' , userController.deleteUserById);
-router.put('/user/:id' , userController.update);
+router.delete('/users/:id' , userController.deleteUserById);
+router.put('/users/:id' , userController.update);
+
 //LOGIN - SIGNUP
 router.post('/login', userController.login);
 router.post('/signup', userController.signUp);

@@ -32,9 +32,8 @@ const App = () => {
     dispatch(fetchCards());
   }, []);
 
-
-  if(loading) {
-    return "Loading..."
+  if (loading) {
+    return 'Loading...';
   }
 
   return (

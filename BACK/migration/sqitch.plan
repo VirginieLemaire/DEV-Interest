@@ -7,3 +7,4 @@ view_cards_all_tech 2021-09-23T08:57:05Z Virginie <student@teleporter> # add vie
 bookmarks 2021-09-23T13:28:32Z fred <frederic.botella@gmail.com> # ajout de id user pour les bookmarks
 functions_cards 2021-09-24T13:42:18Z Virginie <student@teleporter> # add functions to create and update cards
 functions_add_card 2021-09-25T14:07:42Z Virginie <student@teleporter> # upgrade the add card function by adding relationship tables
+correction-vue 2021-09-27T13:22:31Z Virginie <student@teleporter> # enlever les doublons

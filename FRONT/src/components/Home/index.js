@@ -1,5 +1,5 @@
 import './home.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import CgAddR from '@react-icons/all-files/cg/CgAddR';
 
 import SearchBar from '../GenericComponents/SearchBar';
@@ -11,6 +11,7 @@ import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/user';
 
 const Home = () => {
+  const dispatch = useDispatch();
 
   const { darkMode, username, isLogged } = useSelector((state) => state.user);
 

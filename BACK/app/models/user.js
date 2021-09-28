@@ -104,13 +104,13 @@ class User {
     }
     async deleteUserById(id) {
         try {
-            // verifie l'utilisateur
-            const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]); //this vient du constructeur
+            // TODO verifier si l'utilisateur connecté est celui qui peut supprimer
+            //const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]); //this vient du constructeur
 
             //si pas de correspondance on renvoie une erreur
-            if (!rows[0]) {
-                throw new Error('Identification failed');
-            }
+            //if (!rows[0]) {
+                //throw new Error('Identification failed');
+            //}
             await client.query('DELETE FROM "user" WHERE id =$1', [id])
         } catch (error) {
             //voir l'erreur en console

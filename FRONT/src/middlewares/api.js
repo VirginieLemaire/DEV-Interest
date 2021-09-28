@@ -5,6 +5,7 @@ import {
   isLoading, resetNewCard, saveCards, SEARCH_CARDS,
 } from '../action/cards';
 import {
+  changeField,
   connectUser, LOGIN, SIGNUP,
 } from '../action/user';
 
@@ -30,11 +31,12 @@ export default (store) => (next) => (action) => {
       const { search } = store.getState().user;
       store.dispatch(isLoading());
       axiosInstance
-        .get(`/cards/search?keyword=${search}`)
+        .get(`/cards/search?keyword=${search}&page=${1}&size=${30}`)
         .then(
           (response) => {
             store.dispatch(saveCards(response.data.data));
             console.log(`la résultat de la recherche avec le mot clé ${search} est:`, response.data.data);
+            store.dispatch(changeField('', 'search'));
           },
         );
       next(action);
@@ -93,12 +95,12 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('il faut enregister ces informations', response.data);
+          console.log('response.data', response.data);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
           store.dispatch(connectUser(response.data));
-          console.log('Le token enregistré est :', response.data.token);
+          console.log('response.headers :', response.headers);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;

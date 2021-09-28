@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,6 +16,7 @@
     "express": "^4.17.1",
     "fetch-opengraph": "^1.0.30",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "sanitizer": "^0.1.3"
   }
 }
