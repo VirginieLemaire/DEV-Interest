@@ -18,8 +18,14 @@ const userController = {
             //récupérer les infos de login
             const login = request.body
             //authentification
+        
             const user = await new User(login).findUser();
-            //response.cookie('email', user.email, { maxAge: 900000});
+            //console.log({user});
+            response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+            response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+            response.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+            //response.cookie('Authorization' , jwt.makeToken(user.id), { maxAge: 1800});
+            //response.setHeader(`id = ${user.id}`);
             response.setHeader('Authorization' , jwt.makeToken(user.id));
             response.status(200).json(user);
             
@@ -72,6 +78,25 @@ const userController = {
            console.trace(error);
            //envoyer l'info au front
            response.status(500).json(error.message);
+        }
+    },
+    //tester la validation de ce token (qui fait la requête)
+    getInfos: (request, response,next) => {
+        try {
+            console.log(request.userId);
+            const infos = {
+                message: "Ceci est un message obtenu après avoir vérifié qui a fait la requête",
+            }
+            //créer un nouveau token
+            // pour avoir l'id il faut qu'il soit stocké quelque part -> dans la request grâce au middleware
+            response.setHeader('Authorization', jwt.makeToken(request.userId));
+            response.status(200).json(infos);
+            next();
+            
+        } catch (error) {
+            console.trace(error);
+            //renvoyer l'info au front
+            response.status(500).json(error.message);
         }
     }
 
