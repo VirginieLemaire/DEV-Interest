@@ -5,20 +5,23 @@ POST {{baseurl}}/login
 Content-Type: application/json
 
 {
-    "email": "fred@mail.io",
+    "email": "virginie@mail.io",
     "password": "1234",
-    "username": "Fred"
+    "username": "Virginie"
 }
 
 ### --- Afficher les cartes
 GET {{baseurl}}/cards
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMjcyNDU2NiwiZXhwIjoxNjMyNzI2MzY2fQ.tdbJC5nh7y8nkWi8N6Zv5nbIjbd5ipBIDZYHkwj7evo
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMjgxNTIzMSwiZXhwIjoxNjMyODE3MDMxfQ.8Dgp65KsU208HzMIn0qohH8Tu2ynvGF484c7XHzRsuA
 
 ### --- Afficher les favoris par l'id
 GET {{baseurl}}/users/5/bookmarks
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMjY3NDMzNywiZXhwIjoxNjMyNjc2MTM3fQ.OWIzWn5bFNxBpBacsmRLQ_C_UFTfmCiZ9d04yFRWJQQ
 
-### - Ajouter un favori avec l'id de la carte
+### - afficher le compte utilisateur
+GET {{baseurl}}/users/4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMjgxNDYxNSwiZXhwIjoxNjMyODE2NDE1fQ.IsHi91sj0XJy1L5DuvsKPIqdittUXdCLQjyLH6vMjzg
 
-POST {{baseurl}}/cards/1
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMjY3NDMzNywiZXhwIjoxNjMyNjc2MTM3fQ.OWIzWn5bFNxBpBacsmRLQ_C_UFTfmCiZ9d04yFRWJQQ
+### - ajoute un favori
+POST {{baseurl}}/cards/65/bookmarks
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMjg0Mjk0OSwiZXhwIjoxNjMyODQ0NzQ5fQ.AYxggILyTMqo4Qi1HN4xIpGYbYMzRtHunNV2c9C2Ic4
