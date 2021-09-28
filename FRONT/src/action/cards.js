@@ -54,3 +54,18 @@ export const addCard = () => (
     type: ADD_CARD,
   }
 );
+
+
+export const SEARCH_CARDS = 'SEARCH_CARDS';
+export const searchCards = () => (
+  {
+    type: SEARCH_CARDS,
+  }
+ )
+
+export const TOGGLE_DISPLAY_URL = 'TOGGLE_DISPLAY_URL';
+export const toggleDisplayUrl = () => (
+  {
+    type: TOGGLE_DISPLAY_URL,
+  }
+);

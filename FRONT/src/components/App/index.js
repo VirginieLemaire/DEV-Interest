@@ -1,6 +1,7 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-
+import { fetchCards } from '../../action/cards';
 import './app.scss';
 
 import Home from '../Home';
@@ -17,21 +18,34 @@ import About from '../About';
 import UserAccount from '../UserAccount';
 import SearchResults from '../SearchResults';
 import AddCardModal from '../AddCardModal';
+import ScrollTop from '../ScrollTop';
 
 const App = () => {
-  const { cards } = useSelector((state) => state.cards);
+  const { cards, loading } = useSelector((state) => state.cards);
   const {
     darkMode, username, addCardModal, connexionModal,
   } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCards());
+  }, []);
+
+
+  if(loading) {
+    return "Loading..."
+  }
 
   return (
     <div className={darkMode ? 'app--dark' : 'app'}>
       <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''}`}>
         <div className="content-wrap">
+          <ScrollTop />
           <Header />
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/search" exact componenent={SearchResults} />
+            <Route path="/search" exact component={SearchResults} />
             {
               cards.map(
                 (card) => (

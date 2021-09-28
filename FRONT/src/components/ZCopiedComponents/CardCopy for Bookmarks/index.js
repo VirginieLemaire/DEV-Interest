@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import {
   addBookmark, removeBookmark,
   // addToFavorites, removeFromFavorites, showAddCardModal,
-} from '../../action/user';
+} from '../../../action/user';
 
 import './card.scss';
 

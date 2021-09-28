@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {
   ADD_CARD, fetchCards, FETCH_CARDS,
-  isLoading, resetNewCard, saveCards,
+  isLoading, resetNewCard, saveCards, SEARCH_CARDS,
 } from '../action/cards';
 import {
   connectUser, LOGIN, SIGNUP,
@@ -21,10 +21,25 @@ export default (store) => (next) => (action) => {
         .then(
           (response) => {
             store.dispatch(saveCards(response.data.data));
+            console.log(response.data.data);
           },
         );
       next(action);
       break;
+    case SEARCH_CARDS: {
+      const { search } = store.getState().user;
+      store.dispatch(isLoading());
+      axiosInstance
+        .get(`/cards/search?keyword=${search}`)
+        .then(
+          (response) => {
+            store.dispatch(saveCards(response.data.data));
+            console.log(`la résultat de la recherche avec le mot clé ${search} est:`, response.data.data);
+          },
+        );
+      next(action);
+      break;
+    }
     case ADD_CARD: {
       const {
         title, slug, website, description, url, image, level, language, type, category, techs,
