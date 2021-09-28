@@ -1,28 +1,15 @@
 import './user-account.scss';
-
-const UserAccount = () => (
-  <div className="user-account">
-    UserAccount
-  </div>
-);
-
-export default UserAccount;
-import './user-account.scss';
-export default UserAccount;
-import './user-account.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
-import { changeField } from '../../action/user';
-
-
+import { changeCurrentUserField } from '../../action/userCurrent';
 
 const UserAccount = () => {
   const dispatch = useDispatch();
 
-  const changeUsername = useSelector((state) => state.user.changeUsername);
-  const changeEmail = useSelector((state) => state.user.changeEmail);
-  const changePassword = useSelector((state) => state.user.changePassword);
+  const handleClick = () => (
+    console.log("click")
+  )
 
   return (
     <div className="user-account">
@@ -30,47 +17,52 @@ const UserAccount = () => {
       <form className="user-account__form">
         <h2 className="user-account__form__title">Modifier le nom d'utilisation</h2>
         <Field
-          value={changeUsername}
-          type="text"
-          name="changeUsername"
+          autoComplete="off"
+          value={newUserUsername}
+          name="new-user_username"
           placeholder="Nom d'utilisateur"
-          handleChange={(event) => dispatch(changeField(event.target.value, 'changeUsername'))}
+          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'username'))}
+          minlength="4"
+          maxlength="20"
           required
         />
         <h2 className="user-account__form__title">Modifier l'email de compte'</h2>
-        <Field
-          value={changeEmail}
-          type="email"
-          name="changeEmail"
+        <EmailField
+          autoComplete="off"
+          value={newUserEmail}
+          name="new-user_email"
           placeholder="Email"
-          handleChange={(event) => dispatch(changeField(event.target.value, 'changeEmail'))}
+          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'email'))}
           required
         />
         <h2 className="user-account__form__title">Modifier le mot de passe</h2>
-        <Field
-          value={changePassword}
-          type="text"
-          name="changePassword"
-          placeholder="Nouveau mot de passe"
-          handleChange={(event) => dispatch(changeField(event.target.value, 'changePassword'))}
+        <PasswordField
+          autoComplete="new-password"
+          value={newUserPassword}
+          name="new-user_password"
+          placeholder="Mot de passe"
+          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'password'))}
           required
+          minlength="4"
         />
         <div className="user-account__form__new-password-container">
-        <Field
-          value={changePassword}
-          type="text"
-          name="changePassword"
-          placeholder="Nouveau mot de passe"
-          handleChange={(event) => dispatch(changeField(event.target.value, 'changePassword'))}
+        <PasswordField
+          autoComplete="new-password"
+          value={newUserPasswordVerif}
+          name="new-user_verification_password"
+          placeholder="Vérification du mot de passe"
+          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'passwordVerification'))}
           required
+          minlength="4"
         />
-        <Field
-          value={changePassword}
-          type="text"
-          name="changePassword"
-          placeholder="Nouveau mot de passe"
-          handleChange={(event) => dispatch(changeField(event.target.value, 'changePassword'))}
+        <PasswordField
+          autoComplete="new-password"
+          value={newUserPasswordVerif}
+          name="new-user_verification_password"
+          placeholder="Vérification du mot de passe"
+          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'passwordVerification'))}
           required
+          minlength="4"
         />
         </div>
         <h2 className="user-account__form__title"></h2>
@@ -78,12 +70,30 @@ const UserAccount = () => {
         <Button 
           color
           styling="full"
-          submit={handleSupressionSubmit}
-          handleClick
-          content
-          fontSize
+          handleClick={handleClick}
+          content="Supprimer le compte"
+          fontSize="medium"
           />
         <div className="user-account__form__validation-buttons-container">
-        <Button />
-        <Button />
+        <Button 
+          color
+          styling="full"
+          handleClick={handleClick}
+          content="Annuler"
+          fontSize="medium"
+        />
+        <Button
+          color
+          styling="full"
+          handleClick={handleClick}
+          content="Valider"
+          fontSize="medium"
+        />
         </div>
+      </form>
+    </div>
+  )
+}
+
+export default UserAccount;
+
