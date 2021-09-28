@@ -98,6 +98,27 @@ strong {
         display: flex;
         justify-content: center;
         gap: 2rem;
+
+        &__button {
+          font-weight: 700;
+          font-size: 1rem;
+          padding: 0.5rem 1rem;
+          border-radius: vars.$border-radius-input;
+          border: none;
+          white-space: nowrap;
+          width: 10rem;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          background-color: transparent;
+          color: vars.$primary-color;
+          border: 2px solid vars.$primary-color;
+    
+          &:hover{
+            background-color: vars.$primary-color;
+            color: vars.$white-color;
+          }
+        }
       }
     }
   }

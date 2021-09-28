@@ -34,10 +34,8 @@ const cardsController = {
     //réponse à une requête dans la barre de recherche
     findQueryAllCards: async (request, response) => {
         try {
-            console.log('query',request.query);
-            let {keyword} = request.params;
-            console.log(keyword);
-            
+            //mots-clefs recherchés
+            const keyword = request.query.keyword;
             // pagination
             let {page, size} = request.query;
             if (!page) {
@@ -46,10 +44,10 @@ const cardsController = {
             if (!size) {
                 size = 30;
             }
-
+            //stocker la pagination dans des variables
             const limit = parseInt(size);
             const skip = (page - 1) * size;
-
+            //envoyer les infos à la DB pour trouver les cartes
             const card = await Cards.findQueryAllCards(keyword,limit,skip);
             console.log(card);
             

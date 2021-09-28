@@ -1,1 +1,75 @@
 @use '../../styles/vars';
+.terms-of-use{
+  display: flex;
+  flex-direction: column;
+  margin: 3rem 0;
+
+  &--selected{
+    color: vars.$primary-color;
+  }
+
+  &__links{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__nav{
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    background-color: vars.$white-color;
+    padding: 1rem 0;
+    box-shadow: 0px 24px 35px rgba(124, 81, 81, 0.10);
+
+    &--icon{
+      font-size: 3rem;
+    }
+
+    &--title{
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+
+  &__policies{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem;
+  }
+
+  &__article{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 2rem 0;
+    &--title{
+      font-size: 2.5rem;
+      color: vars.$light-color-plus;
+      width: 50%;
+    }
+
+    &--content{
+      line-height: 1.8rem;
+      width: 50%;
+    }
+  }
+}
+
+.link-terms{
+  position:sticky;
+  top:0;
+}
+
+.div-test{
+  height: 300px;
+}
