@@ -24,11 +24,10 @@ router.get('/cards/search?',cardController.findQueryAllCards);
 
 // VOIR les cartes en favoris
 router.get('/users/:id/bookmarks', bookmarksController.findBookmarksByUserId);
-// Ajout d'une carte en favoris
+// Ajout d'une carte du catalogue en favoris
 router.post('/cards/:id/bookmarks', bookmarksController.addBookmarkById);
 //Delete une carte des favoris
-router.delete('users/:id/bookmarks/:id', checkJwt);
-
+router.delete('users/:id/bookmarks/:bookmark_id', checkJwt);
 
 //USERS by id
 router.get('/users/:id' , userController.findById);
