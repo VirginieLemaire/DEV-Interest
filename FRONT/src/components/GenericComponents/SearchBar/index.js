@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './search-bar.scss';
-import { fetchCards } from '../../../action/cards';
+import { fetchCards, searchCards } from '../../../action/cards';
 import { changeField } from '../../../action/user';
 
 // la propriété loading est a false par défaut et si passée à vrai affiche un spinner
@@ -26,7 +26,7 @@ const SearchBar = ({
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     history.push('/search');
-    dispatch(fetchCards());
+    dispatch(searchCards());
   };
 
   return (
