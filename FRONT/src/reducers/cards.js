@@ -78,11 +78,7 @@ const reducer = (state = initialState, action = {}) => {
           category: '',
         },
       };
-    case TOGGLE_DISPLAY_URL:
-      return {
-        ...state,
-        displayUrl: !state.displayUrl,
-      };
+
     default:
       return state;
   }

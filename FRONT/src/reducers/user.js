@@ -64,17 +64,7 @@ const reducer = (state = initialState, action = {}) => {
         isLogged: false,
         darkMode: false,
       };
-    case ADD_BOOKMARK:
-      return {
-        ...state,
-        bookmarksCards: [...state.bookmarksCards, action.card],
-      };
 
-    case REMOVE_BOOKMARK:
-      return {
-        ...state,
-        bookmarksCards: state.bookmarksCards.filter((bookmark) => bookmark.id !== action.card.id),
-      };
     case CHANGE_NEW_USER_FIELD:
       return {
         ...state,

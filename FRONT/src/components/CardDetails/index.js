@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleDisplayUrl } from '../../action/cards';
+import { toggleDisplayUrl } from '../../action/displayOptions';
 import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
 import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
 import { FaThermometerThreeQuarters } from '@react-icons/all-files/fa/FaThermometerThreeQuarters';
@@ -24,7 +24,7 @@ String.prototype.capitalize = function () {
 
 const CardDetails = ({ card }) => {
   const dispatch = useDispatch();
-  const displayUrl = useSelector((state) => state.cards.displayUrl);
+  const displayUrl = useSelector((state) => state.displayOptions.displayUrl);
 
   const handleClick = (event) => {
     console.log(event);
@@ -39,8 +39,6 @@ const CardDetails = ({ card }) => {
   const handleContentToggle = () => {
     dispatch(toggleDisplayUrl());
   };
-
-
 
   return (
     <div className="card-details">

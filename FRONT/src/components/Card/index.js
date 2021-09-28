@@ -4,17 +4,16 @@ import { BsBookmarkFill } from '@react-icons/all-files/bs/BsBookmarkFill';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
-  addBookmark, removeBookmark, showAddCardModal,
-  // showConnexionModal,
-} from '../../action/user';
+  addBookmark, removeBookmark
+} from '../../action/userCurrent';
 
 import './card.scss';
 
 // == Composant
 const Card = ({ card }) => {
   const dispatch = useDispatch();
-  const bookmarks = useSelector((state) => state.user.bookmarksCards);
-  const { isLogged, darkMode } = useSelector((state) => state.user);
+  const bookmarks = useSelector((state) => state.userCurrent.bookmarkedCards);
+  const { isLogged, darkMode } = useSelector((state) => state.displayOptions);
   const isBookmarked = bookmarks.find((bookmark) => bookmark.id === card.id);
   const handleClick = () => {
     if (isLogged) {
