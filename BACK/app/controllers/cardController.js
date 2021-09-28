@@ -34,9 +34,7 @@ const cardsController = {
     //réponse à une requête dans la barre de recherche
     findQueryAllCards: async (request, response) => {
         try {
-            console.log('query',request.query);
-            let {keyword} = request.params;
-            console.log(keyword);
+            const keyword = request.query.keyword;
             
             // pagination
             let {page, size} = request.query;
