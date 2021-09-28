@@ -9,9 +9,8 @@ class Cards {
     static async findAllCards(limit, skip) {
         try {
             
-            const {rows} = await client.query(`SELECT * FROM cards ORDER BY createdAT LIMIT ${limit} OFFSET ${skip}`);
-           
-                return rows.map(row => new Cards(row));
+            const {rows} = await client.query(`SELECT * FROM cards ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`);
+            return rows.map(row => new Cards(row));
             
                 
         }catch(error) {
@@ -24,6 +23,7 @@ class Cards {
             console.log({keyword}, {limit}, {skip});
 
             //chercher dans toutes les colonnes sauf slug et URLs
+            //il faut passer aussi les technos pour pouvoir chercher sur ses valeurs
             const {rows} = await client.query(`SELECT cards.*, tech.name FROM cards
             JOIN card_has_tech ON cards.id = card_has_tech.card_id
             JOIN tech ON card_has_tech.tech_id = tech.id
