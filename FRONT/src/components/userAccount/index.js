@@ -6,13 +6,12 @@ import Button from '../GenericComponents/Button';
 
 const UserAccount = () => {
   const dispatch = useDispatch();
-  const { username, email } = useSelector((state) => state.userCurrent);
-  console.log(username)
+  const history = useHistory();
 
-  const handleSubmitUpdateForm = (event) => {
-    event.preventDefault();
-    // insérer vérifs
-    updateCurrentUser();
+  const { username, email } = useSelector((state) => state.userCurrent);
+
+  const handleModifyClick = () => {
+    history.push(`/${username.toLowerCase()}/account/update`);
   }
 
   return (
@@ -38,7 +37,7 @@ const UserAccount = () => {
             <Button 
               color
               styling="full"
-              handleClick={() => null}
+              handleClick={handleModifyClick}
               content="Modifier le compte"
             />
       </div>
