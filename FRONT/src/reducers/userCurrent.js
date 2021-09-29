@@ -4,7 +4,7 @@ import {
 
 export const initialState = {
   id: '',
-  email: '',
+  email: 'romain@mail.io',
   username: 'Romain',
   password: '',
   newEmail: '',

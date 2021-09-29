@@ -17,7 +17,8 @@ import AddCard from '../AddCard';
 import Legal from '../Legal';
 import TermsOfUse from '../TermsOfUse';
 import About from '../About';
-import UserAccount from '../UserAccount';
+import UserAccount from '../userAccount';
+import UserAccountUpdate from '../UserAccountUpdate';
 import SearchResults from '../SearchResults';
 import AddCardModal from '../AddCardModal';
 import ScrollTop from '../ScrollTop';
@@ -66,6 +67,7 @@ const App = () => {
             <Route path="/add-card" exact component={AddCard} />
             <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact component={UserBookmarks} />
             <Route path={`/${username.toLowerCase()}/account`} exact component={UserAccount} />
+            <Route path={`/${username.toLowerCase()}/account/update`} exact component={UserAccountUpdate} />
             <Route path="/legal" exact component={Legal} />
             <Route path="/terms-of-use" exact component={TermsOfUse} />
             <Route path="/about" exact component={About} />

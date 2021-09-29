@@ -1,4 +1,4 @@
-import './user-account.scss';
+import './user-account-update.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
@@ -8,7 +8,7 @@ import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
 import { changeUpdateUserField, updateCurrentUser, resetUpdateUserFields } from '../../action/userUpdate';
 
-const UserAccount = () => {
+const UserAccountUpdate = () => {
   const dispatch = useDispatch();
   const { username, email, passwordCurrent, passwordNew, passwordNewVerification } = useSelector((state) => state.userUpdate);
 
@@ -23,10 +23,10 @@ const UserAccount = () => {
   }
 
   return (
-    <div className="user-account">
-      <form className="user-account__form" onSubmit={handleSubmitUpdateForm}>
-        <h1 className="user-account__form__title">Modification du compte</h1>
-        <h2 className="user-account__form__subtitle">Modifier le nom d'utilisation</h2>
+    <div className="user-account-update">
+      <form className="user-account-update__form" onSubmit={handleSubmitUpdateForm}>
+        <h1 className="user-account-update__form__title">Modification du compte</h1>
+        <h2 className="user-account-update__form__subtitle">Modifier le nom d'utilisation</h2>
         <Field
           autoComplete="off"
           value={username}
@@ -37,7 +37,7 @@ const UserAccount = () => {
           maxlength="20"
           required
         />
-        <h2 className="user-account__form__subtitle">Modifier l'email de compte</h2>
+        <h2 className="user-account-update__form__subtitle">Modifier l'email de compte</h2>
         <EmailField
           autoComplete="off"
           value={email}
@@ -46,7 +46,7 @@ const UserAccount = () => {
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}
           required
         />
-        <h2 className="user-account__form__subtitle">Modifier le mot de passe</h2>
+        <h2 className="user-account-update__form__subtitle">Modifier le mot de passe</h2>
         <PasswordField
           autoComplete="password"
           value={passwordCurrent}
@@ -56,7 +56,7 @@ const UserAccount = () => {
           required
           minlength="4"
         />
-        <div className="user-account__form__new-password-container">
+        <div className="user-account-update__form__new-password-container">
         <PasswordField
           autoComplete="new-password"
           value={passwordNew}
@@ -88,7 +88,7 @@ const UserAccount = () => {
             content="Supprimer le compte"
             />
         </div> */}
-        <div className="user-account__form__validation-buttons-container">
+        <div className="user-account-update__form__validation-buttons-container">
         <Button 
           color
           styling="full"
@@ -106,5 +106,5 @@ const UserAccount = () => {
   )
 }
 
-export default UserAccount;
+export default UserAccountUpdate;
 
