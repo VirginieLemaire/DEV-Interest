@@ -21,6 +21,8 @@ const AddCard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const { loading } = useSelector((state) => state.displayOptions);
+
   const {
     title, description, url, image, website, certification,
   } = useSelector((state) => state.cardNew);
@@ -91,6 +93,8 @@ const AddCard = () => {
       history.push('/');
     }
   };
+
+  if (loading) return null;
 
   return (
     <div className="add-card">

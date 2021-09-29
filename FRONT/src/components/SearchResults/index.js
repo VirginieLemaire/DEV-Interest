@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
-import logoDevLovePper from '../../assets/LogoDEVLovePPER.svg';
 
 import './search-results.scss';
 
 import Card from '../Card';
+import Loader from '../GenericComponents/Loader';
 
 const SearchResults = () => {
   const { cards } = useSelector((state) => state.cardsSearch);
@@ -20,26 +20,18 @@ const SearchResults = () => {
     700: 1,
   };
 
+  if (loading) return null;
+
   return (
     <div className="search-container">
-      {
-        (loading) && (
-        <div className="search-loading-container">
-          <div className="search-loading-heart">
-            <img src={logoDevLovePper} alt="DEVLovePPER Logo" />
-          </div>
-        </div>
-        )
-      }
-      {
-        (!loading) && (
-          <div className="search-results">
-            <Masonry
-              breakpointCols={breakpointsColumnsObj}
-              className="masonry-grid"
-              columnClassName="masonry-grid_column"
-            >
-              {
+      <Loader />
+      <div className="search-results">
+        <Masonry
+          breakpointCols={breakpointsColumnsObj}
+          className="masonry-grid"
+          columnClassName="masonry-grid_column"
+        >
+          {
                 cards.map(
                   (card) => (
                     <div className="masonry-div" key={card.id}>
@@ -48,11 +40,8 @@ const SearchResults = () => {
                   ),
                 )
               }
-            </Masonry>
-          </div>
-        )
-      }
-
+        </Masonry>
+      </div>
     </div>
   );
 };

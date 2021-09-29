@@ -21,6 +21,7 @@ import UserAccount from '../UserAccount';
 import SearchResults from '../SearchResults';
 import AddCardModal from '../AddCardModal';
 import ScrollTop from '../ScrollTop';
+import Loader from '../GenericComponents/Loader';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -53,7 +54,10 @@ const App = () => {
           <Header />
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/search" exact component={SearchResults} />
+            <Route path="/search" exact>
+              <Loader />
+              <SearchResults />
+            </Route>
             {
               mergedCards.map(
                 (card) => (
@@ -63,7 +67,10 @@ const App = () => {
                 ),
               )
             }
-            <Route path="/add-card" exact component={AddCard} />
+            <Route path="/add-card" exact>
+              <Loader />
+              <AddCard />
+            </Route>
             <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact component={UserBookmarks} />
             <Route path={`/${username.toLowerCase()}/account`} exact component={UserAccount} />
             <Route path="/legal" exact component={Legal} />

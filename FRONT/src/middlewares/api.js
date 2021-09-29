@@ -57,7 +57,7 @@ export default (store) => (next) => (action) => {
       const { url } = store.getState().cardNew;
 
       console.log('je vais utiliser l url', url, 'pour récupérer les info opengraph');
-
+      store.dispatch(isLoading());
       axiosInstance.post(
         '/cards',
         {
@@ -82,6 +82,7 @@ export default (store) => (next) => (action) => {
           if (response.data['og:image']) {
             store.dispatch(changeNewCardField(response.data['og:image'], 'image'));
           }
+          store.dispatch(isLoading());
         },
       ).catch(
         (error) => console.log('Error Opengraph', error),

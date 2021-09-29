@@ -5,6 +5,7 @@ import logoDevLovePper from '../../assets/LogoDEVLovePPER.svg';
 import './home-cards.scss';
 
 import Card from '../Card';
+import Loader from '../GenericComponents/Loader';
 
 const HomeCards = () => {
   const { cards } = useSelector((state) => state.cardsHome);
@@ -22,26 +23,17 @@ const HomeCards = () => {
     700: 1,
   };
 
+  if (loading) return null;
+
   return (
     <div className="search-container">
-      {
-        (loading) && (
-        <div className="search-loading-container">
-          <div className="search-loading-heart">
-            <img src={logoDevLovePper} alt="DEVLovePPER Logo" />
-          </div>
-        </div>
-        )
-      }
-      {
-        (!loading) && (
-          <div className="search-results">
-            <Masonry
-              breakpointCols={breakpointsColumnsObj}
-              className="masonry-grid"
-              columnClassName="masonry-grid_column"
-            >
-              {
+      <div className="search-results">
+        <Masonry
+          breakpointCols={breakpointsColumnsObj}
+          className="masonry-grid"
+          columnClassName="masonry-grid_column"
+        >
+          {
                 cards.map(
                   (card) => (
                     <div className="masonry-div" key={card.id}>
@@ -50,11 +42,8 @@ const HomeCards = () => {
                   ),
                 )
               }
-            </Masonry>
-          </div>
-        )
-      }
-
+        </Masonry>
+      </div>
     </div>
   );
 };

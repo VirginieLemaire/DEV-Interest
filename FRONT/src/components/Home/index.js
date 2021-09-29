@@ -12,6 +12,7 @@ import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/displayOptions';
 import HomeCards from '../HomeCards';
 import { fetchCardsHome } from '../../action/cardsHome';
+import Loader from '../GenericComponents/Loader';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ const Home = () => {
         //   </div>
         // </div>
       }
-
+      <Loader />
       <HomeCards />
     </div>
   );
