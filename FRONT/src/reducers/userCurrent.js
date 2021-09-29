@@ -3,7 +3,7 @@ import {
 } from '../action/userCurrent';
 
 export const initialState = {
-  id: '',
+  id: '2',
   email: 'romain@mail.io',
   username: 'Romain',
   password: '',
@@ -32,6 +32,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         id: '',
         email: '',
+        username: '',
         password: '',
         bookmarksId: [],
         bookmarkedCards: [],

@@ -10,10 +10,12 @@ import {
   changeSearchField, FETCH_CARDS_SEARCH, saveCardsSearch,
 } from '../action/cardsSearch';
 
+import { DELETE_USER_CURRENT } from '../action/userUpdate';
+
 import { isLoading } from '../action/displayOptions';
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
-import { toggleLogged } from '../action/userCurrent';
+import { toggleLogged, userLogout } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { getDomainName } from '../selectors/utils';
 
@@ -152,7 +154,7 @@ export default (store) => (next) => (action) => {
       break;
     }
     case SIGNUP: {
-      const { username, email, password } = store.getState().user.newUser;
+      const { username, email, password } = store.getState().userCreate;
 
       // 1 - On conctace le point d'entrée de l'api pour s'authentifier
       // On envoie ici nos identifiants de cnnection (email et password)
@@ -179,6 +181,22 @@ export default (store) => (next) => (action) => {
         },
       ).catch(
         () => console.log('error'),
+      );
+      next(action);
+      break;
+    }
+    case DELETE_USER_CURRENT: {
+      const { id } = store.getState().userCurrent;
+
+      console.log (`Je veux supprimer l'user ayant pour id ${id}`);
+
+      axiosInstance.delete(
+        `/users/${id}`
+      ).then(
+        response => console.log(response.data),
+        store.dispatch(userLogout()),
+      ).catch(
+        (error) => console.log(error),
       );
       next(action);
       break;

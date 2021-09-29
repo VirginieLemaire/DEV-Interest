@@ -1,8 +1,9 @@
 import './user-account.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
+import { deleteUserCurrent } from '../../action/userUpdate';
 
 const UserAccount = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,10 @@ const UserAccount = () => {
 
   const handleModifyClick = () => {
     history.push(`/${username.toLowerCase()}/account/update`);
+  }
+
+  const handleDeleteButtonClick = () => {
+    dispatch(deleteUserCurrent());
   }
 
   return (
@@ -50,7 +55,7 @@ const UserAccount = () => {
           <Button 
             color
             styling="full"
-            handleClick={() => null}
+            handleClick={handleDeleteButtonClick}
             content="Supprimer le compte"
           />
       </div>
