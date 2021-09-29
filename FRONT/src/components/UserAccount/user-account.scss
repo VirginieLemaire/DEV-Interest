@@ -1,0 +1,50 @@
+@use '../../styles/vars';
+
+.user-account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: vars.$text-color;
+  font-size: 1rem;
+  margin-top: 2rem;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    &__title {
+      font-weight: bold;
+      font-size:1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    &__subtitle {
+      font-weight: bold;
+    }
+
+    &__new-password-container {
+      display: flex;
+      gap: 1rem;
+    }
+
+    
+    &__warning {
+      font-size: .8rem;
+      width: 50%;
+      margin-top: -.5rem;
+    }
+    
+    &__supress-button {
+      width:43%;
+      margin: auto;
+    }
+    
+    &__validation-buttons-container{
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+  }
+}

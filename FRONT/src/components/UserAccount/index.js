@@ -17,9 +17,9 @@ const UserAccount = () => {
 
   return (
     <div className="user-account">
-      <h1 className="user-account__title">Modification du compte</h1>
       <form className="user-account__form">
-        <h2 className="user-account__form__title">Modifier le nom d'utilisation</h2>
+        <h1 className="user-account__form__title">Modification du compte</h1>
+        <h2 className="user-account__form__subtitle">Modifier le nom d'utilisation</h2>
         <Field
           autoComplete="off"
           value={newUsername}
@@ -30,7 +30,7 @@ const UserAccount = () => {
           maxlength="20"
           required
         />
-        <h2 className="user-account__form__title">Modifier l'email de compte'</h2>
+        <h2 className="user-account__form__subtitle">Modifier l'email de compte</h2>
         <EmailField
           autoComplete="off"
           value={newEmail}
@@ -39,12 +39,12 @@ const UserAccount = () => {
           handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'newEmail'))}
           required
         />
-        <h2 className="user-account__form__title">Modifier le mot de passe</h2>
+        <h2 className="user-account__form__subtitle">Modifier le mot de passe</h2>
         <PasswordField
           autoComplete="new-password"
           value={password}
           name="password"
-          placeholder="Mot de passe"
+          placeholder="Mot de passe actuel"
           handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'password'))}
           required
           minlength="4"
@@ -69,14 +69,16 @@ const UserAccount = () => {
           minlength="4"
         />
         </div>
-        <h2 className="user-account__form__title"></h2>
-        <p className="user-account__form__subtitle">Supprimer le compte et les données qui y sont associées</p>
-        <Button 
-          color
-          styling="full"
-          handleClick={handleClick}
-          content="Supprimer le compte"
-          />
+        <h2 className="user-account__form__subtitle">Supprimer le compte</h2>
+        <p className="user-account__form__warning">Supprimer le compte et les données qui y sont associées</p>
+        <div className="user-account__form__supress-button">
+          <Button 
+            color
+            styling="full"
+            handleClick={handleClick}
+            content="Supprimer le compte"
+            />
+        </div>
         <div className="user-account__form__validation-buttons-container">
         <Button 
           color
