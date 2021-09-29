@@ -24,7 +24,7 @@ const bookmarksController = {
         try {
             // params id de la carte
             const idcard = parseInt(request.params.id, 10);
-            const iduser = request.userId;
+            const iduser = request.body.userId;
             console.log({idcard}, {iduser});
             // id de l'user dans le cookie
             //response.setHeader('Authorization', jwt.makeToken(request.userId));

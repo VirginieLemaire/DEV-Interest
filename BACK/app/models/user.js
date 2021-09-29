@@ -123,15 +123,13 @@ class User {
 async update() {
         try {
             //bcrypt sur le password
-            const password = await bcrypt.hash(this.password, 10);
-            // date NOW avec formatage
-            const timeElapsed = Date.now();
-            const today = new Date(timeElapsed);
-            today = today.toISOString();
+            const passwordCrypted = await bcrypt.hash(this.password, 10);
+            this.password = passwordCrypted;
+            console.log('nouveau this: ',this);
+            
             //updater l'enregistrement 
-            await client.query('UPDATE "user" SET email= $1, user_name = $2, password = $3, createat = $4 WHERE email =$1', [this.email,this.username, password,today]);
-             console.log(this);
-             
+            await client.query('SELECT update_user($1)', [this]);
+
         } catch (error) {
             console.log('Erreur SQL', error.detail);
             //relancer l'erreur pout que le controller puisse l'attrapper et la renvoyer au front

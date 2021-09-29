@@ -25,7 +25,7 @@ router.get('/cards/search?',cardController.findQueryAllCards);
 // VOIR les cartes en favoris
 router.get('/users/:id/bookmarks', bookmarksController.findBookmarksByUserId);
 // Ajout d'une carte en favoris
-router.post('/cards/:id/bookmarks', checkJwt, userController.getInfos,bookmarksController.addBookmarkById);
+router.post('/cards/:id/bookmarks', bookmarksController.addBookmarkById);
 //Delete une carte des favoris
 router.delete('users/:id/bookmarks/:id', checkJwt);
 
@@ -33,6 +33,7 @@ router.delete('users/:id/bookmarks/:id', checkJwt);
 router.get('/users/:id' , userController.findById);
 //DELETE USER BY ID
 router.delete('/users/:id' , userController.deleteUserById);
+//modifier un user
 router.put('/users/:id' , userController.update);
 
 //LOGIN - SIGNUP

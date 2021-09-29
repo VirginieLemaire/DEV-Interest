@@ -22,7 +22,6 @@ const userController = {
             const user = await new User(login).findUser();
             //console.log({user});
             //response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-            response.header('Access-Control-Expose-Headers: Access-Token, Uid');
             response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
             response.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
             //response.cookie('Authorization' , jwt.makeToken(user.id), { maxAge: 1800});
@@ -69,9 +68,16 @@ const userController = {
      //update a user
      update : async (request, response) => {
         try {
+            //créer un objet avec toutes les données user à envoyer
+            let userDatas = {
+                id : request.params.id,
+                email : request.body.email,
+                password : request.body.password,
+                username : request.body.username
+            };
+ 
             //UPDATE
-            const user = await new User(request.body).update();
-
+            const user = await new User(userDatas).update();
             response.status(204).json({success: true});
             
         } catch(error) {
