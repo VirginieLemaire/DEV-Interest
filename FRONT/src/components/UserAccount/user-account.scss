@@ -16,11 +16,11 @@
     &__title {
       font-weight: bold;
       font-size:1.2rem;
-      margin-bottom: 1rem;
     }
 
     &__subtitle {
       font-weight: bold;
+      margin-top: 1rem;
     }
 
     &__new-password-container {
@@ -28,18 +28,6 @@
       gap: 1rem;
     }
 
-    
-    &__warning {
-      font-size: .8rem;
-      width: 50%;
-      margin-top: -.5rem;
-    }
-    
-    &__supress-button {
-      width:43%;
-      margin: auto;
-    }
-    
     &__validation-buttons-container{
       display: flex;
       gap: 1rem;

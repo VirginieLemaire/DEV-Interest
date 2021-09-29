@@ -6,26 +6,33 @@ import SubmitButton from '../GenericComponents/SubmitButton';
 import { changeCurrentUserField } from '../../action/userCurrent';
 import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
+import { changeUpdateUserField, updateCurrentUser } from '../../action/userUpdate';
 
 const UserAccount = () => {
   const dispatch = useDispatch();
-  const { password,newUsername, newEmail, newPassword, newPasswordVerification } = useSelector((state) => state.userCurrent);
+  const { username, email, passwordCurrent, passwordNew, passwordNewVerification } = useSelector((state) => state.userUpdate);
 
   const handleClick = () => (
     console.log("click")
   )
 
+  const handleSubmitUpdateForm = (event) => {
+    event.preventDefault();
+    // insérer vérifs
+    updateCurrentUser();
+  }
+
   return (
     <div className="user-account">
-      <form className="user-account__form">
+      <form className="user-account__form" onSubmit={handleSubmitUpdateForm}>
         <h1 className="user-account__form__title">Modification du compte</h1>
         <h2 className="user-account__form__subtitle">Modifier le nom d'utilisation</h2>
         <Field
           autoComplete="off"
-          value={newUsername}
-          name="newUsername"
+          value={username}
+          name="username"
           placeholder="Nom d'utilisateur"
-          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'newUsername'))}
+          handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'username'))}
           minlength="4"
           maxlength="20"
           required
@@ -33,52 +40,54 @@ const UserAccount = () => {
         <h2 className="user-account__form__subtitle">Modifier l'email de compte</h2>
         <EmailField
           autoComplete="off"
-          value={newEmail}
-          name="newEmail"
+          value={email}
+          name="email"
           placeholder="Email"
-          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'newEmail'))}
+          handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}
           required
         />
         <h2 className="user-account__form__subtitle">Modifier le mot de passe</h2>
         <PasswordField
-          autoComplete="new-password"
-          value={password}
-          name="password"
+          autoComplete="password"
+          value={passwordCurrent}
+          name="passwordCurrent"
           placeholder="Mot de passe actuel"
-          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'password'))}
+          handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordCurrent'))}
           required
           minlength="4"
         />
         <div className="user-account__form__new-password-container">
         <PasswordField
           autoComplete="new-password"
-          value={newPassword}
-          name="newPassword"
+          value={passwordNew}
+          name="passwordNew"
           placeholder="Nouveau mot de passe"
-          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'newPassword'))}
+          handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNew'))}
           required
           minlength="4"
         />
         <PasswordField
-          autoComplete="new-password"
-          value={newPasswordVerification}
-          name="newPasswordVerification"
-          placeholder="Vérification du mot de passe"
-          handleChange={(e) => dispatch(changeCurrentUserField(e.target.value, 'newPasswordVerification'))}
+          autoComplete="new-password-verification"
+          value={passwordNewVerification}
+          name="passwordNewVerification"
+          placeholder="Vérifier mot de passe"
+          handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNewVerification'))}
           required
           minlength="4"
         />
         </div>
-        <h2 className="user-account__form__subtitle">Supprimer le compte</h2>
-        <p className="user-account__form__warning">Supprimer le compte et les données qui y sont associées</p>
-        <div className="user-account__form__supress-button">
+        {/* <div className="user-account__form__supress-container">
+        <div className="user-account__form__supress-container__text">
+          <h2 className="user-account__form__supress-container__text__subtitle">Supprimer le compte</h2>
+          <p className="user-account__form__supress-container__text__warning">Supprimer le compte et les données qui y sont associées</p>
+        </div>
           <Button 
             color
             styling="full"
             handleClick={handleClick}
             content="Supprimer le compte"
             />
-        </div>
+        </div> */}
         <div className="user-account__form__validation-buttons-container">
         <Button 
           color
@@ -86,10 +95,9 @@ const UserAccount = () => {
           handleClick={handleClick}
           content="Annuler"
         />
-        <Button
+        <SubmitButton
           color
           styling="full"
-          handleClick={handleClick}
           content="Valider"
         />
         </div>
