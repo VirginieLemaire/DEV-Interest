@@ -1,14 +1,18 @@
 import {
-  ADD_BOOKMARK, CONNECT_USER, REMOVE_BOOKMARK, TOGGLE_LOGGED, USER_LOGOUT,
+  ADD_BOOKMARK, CONNECT_USER, REMOVE_BOOKMARK, TOGGLE_LOGGED, USER_LOGOUT, CHANGE_CURRENT_USER_FIELD
 } from '../action/userCurrent';
 
 export const initialState = {
   id: '',
   email: '',
-  username: '',
+  username: 'Romain',
+  password: '',
+  newEmail: '',
+  newPassword: '',
+  newPasswordVerification: '',
   bookarmksId: [],
   bookmarkedCards: [],
-  isLogged: false,
+  isLogged: true,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -43,6 +47,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         bookmarkedCards: state.bookmarkedCards.filter((bookmark) => bookmark.id !== action.card.id),
+      };
+    case CHANGE_CURRENT_USER_FIELD:
+      return {
+        ...state,
+        [action.fieldName]: action.value,
       };
     default:
       return state;
