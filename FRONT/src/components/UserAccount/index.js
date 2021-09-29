@@ -6,14 +6,14 @@ import SubmitButton from '../GenericComponents/SubmitButton';
 import { changeCurrentUserField } from '../../action/userCurrent';
 import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
-import { changeUpdateUserField, updateCurrentUser } from '../../action/userUpdate';
+import { changeUpdateUserField, updateCurrentUser, resetUpdateUserFields } from '../../action/userUpdate';
 
 const UserAccount = () => {
   const dispatch = useDispatch();
   const { username, email, passwordCurrent, passwordNew, passwordNewVerification } = useSelector((state) => state.userUpdate);
 
   const handleClick = () => (
-    console.log("click")
+    dispatch(resetUpdateUserFields())
   )
 
   const handleSubmitUpdateForm = (event) => {
