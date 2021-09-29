@@ -1,6 +1,7 @@
-export const IS_LOADING = 'IS_LOADING';
-export const isLoading = () => ({
-  type: IS_LOADING,
+export const SET_LOADING = 'SET_LOADING';
+export const setLoading = (loading) => ({
+  type: SET_LOADING,
+  loading,
 });
 
 export const SHOW_CONNEXION_MODAL = 'SHOW_CONNEXION_MODAL';

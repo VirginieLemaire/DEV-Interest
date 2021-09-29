@@ -1,5 +1,9 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
 import Masonry from 'react-masonry-css';
+
+import { LoadMoreResults, NextPage } from '../../action/cardsSearch';
 
 import './search-results.scss';
 
@@ -7,6 +11,8 @@ import Card from '../Card';
 import Loader from '../GenericComponents/Loader';
 
 const SearchResults = () => {
+  // const dispatch = useDispatch();
+
   const { cards } = useSelector((state) => state.cardsSearch);
   const { loading } = useSelector((state) => state.displayOptions);
 
@@ -20,11 +26,22 @@ const SearchResults = () => {
     700: 1,
   };
 
-  if (loading) return null;
+  // const handleScroll = (e) => {
+  //   const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+
+  //   if (scrollHeight - scrollTop === clientHeight) {
+  //     dispatch(NextPage());
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   dispatch(LoadMoreResults());
+  // }, [page]);
+
+  if (loading) return <Loader />;
 
   return (
     <div className="search-container">
-      <Loader />
       <div className="search-results">
         <Masonry
           breakpointCols={breakpointsColumnsObj}

@@ -7,10 +7,10 @@ import {
 import { fetchCardsHome, FETCH_CARDS_HOME, saveCardsHome } from '../action/cardsHome';
 
 import {
-  changeSearchField, FETCH_CARDS_SEARCH, saveCardsSearch,
+  changeSearchField, FETCH_CARDS_SEARCH, LOAD_MORE_RESULTS, saveCardsSearch, saveMoreCards,
 } from '../action/cardsSearch';
+import { setLoading } from '../action/displayOptions';
 
-import { isLoading } from '../action/displayOptions';
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import { FETCH_BOOKMARKED_CARDS, saveBookmarkedCards, toggleLogged } from '../action/userCurrent';
@@ -24,53 +24,69 @@ const axiosInstance = axios.create({
 export default (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_CARDS_HOME:
-      store.dispatch(isLoading());
+      store.dispatch(setLoading(true));
       axiosInstance
         .get('/cards')
         .then(
           (response) => {
             store.dispatch(saveCardsHome(response.data.data));
             // console.log(response.data.data);
-            store.dispatch(isLoading());
+            store.dispatch(setLoading(false));
           },
         );
       next(action);
       break;
     case FETCH_CARDS_SEARCH: {
-      const { searchQuery } = store.getState().cardsSearch;
-      store.dispatch(isLoading());
+      const { searchQuery, page } = store.getState().cardsSearch;
+      store.dispatch(setLoading(true));
       if (searchQuery) {
         axiosInstance
-          .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${30}`)
+          .get(`/cards/search?keyword=${searchQuery}&page=${page}&size=${30}`)
           .then(
             (response) => {
               store.dispatch(saveCardsSearch(response.data.data));
               console.log(`la résultat de la recherche avec le mot clé ${searchQuery} est:`, response.data.data);
               store.dispatch(changeSearchField('', 'search'));
-              store.dispatch(isLoading());
+              store.dispatch(setLoading(false));
             },
           );
       }
       if (!searchQuery) {
+        store.dispatch(setLoading(true));
         axiosInstance
           .get('/cards')
           .then(
             (response) => {
               store.dispatch(saveCardsSearch(response.data.data));
               // console.log(response.data.data);
-              store.dispatch(isLoading());
+              store.dispatch(setLoading(false));
             },
           );
       }
       next(action);
       break;
     }
-
+    case LOAD_MORE_RESULTS: {
+      const { page, currentSearch } = store.getState().cardsSearch;
+      store.dispatch(setLoading(true));
+      axiosInstance
+        .get(`/cards/search?keyword=${currentSearch}&page=${page}&size=${5}`)
+        .then(
+          (response) => {
+            store.dispatch(saveMoreCards(response.data.data));
+            console.log(`la résultat suivant page ${page} de la recherche avec le mot clé ${currentSearch} est:`, response.data.data);
+            store.dispatch(changeSearchField('', 'search'));
+            store.dispatch(setLoading(false));
+          },
+        );
+      next(action);
+      break;
+    }
     case GET_OPENGRAPH_DATA: {
       const { url } = store.getState().cardNew;
 
       console.log('je vais utiliser l url', url, 'pour récupérer les info opengraph');
-      store.dispatch(isLoading());
+      store.dispatch(setLoading(true));
       axiosInstance.post(
         '/cards',
         {
@@ -95,11 +111,12 @@ export default (store) => (next) => (action) => {
           if (response.data['og:image']) {
             store.dispatch(changeNewCardField(response.data['og:image'], 'image'));
           }
-          store.dispatch(isLoading());
+          store.dispatch(setLoading(false));
         },
       ).catch(
         (error) => console.log('Error Opengraph', error),
       );
+      next(action);
       break;
     }
     case ADD_CARD: {
@@ -140,6 +157,7 @@ export default (store) => (next) => (action) => {
       ).catch(
         () => console.log('error'),
       );
+      next(action);
       break;
     }
     case LOGIN: {
@@ -174,14 +192,14 @@ export default (store) => (next) => (action) => {
       break;
     }
     case FETCH_BOOKMARKED_CARDS: {
-      store.dispatch(isLoading());
+      store.dispatch(setLoading(true));
       const { id } = store.getState().userCurrent;
       console.log('je veux les favoris du user ', id);
       axiosInstance
         .get(`/users/${id}/bookmarks`)
         .then(
           (response) => {
-            store.dispatch(isLoading());
+            store.dispatch(setLoading(false));
             console.log('mes cartes favories sont ', response.data);
             store.dispatch(saveBookmarkedCards(response.data));
             // console.log(response.data.data);

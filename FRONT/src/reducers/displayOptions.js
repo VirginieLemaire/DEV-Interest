@@ -1,6 +1,6 @@
 import {
   DARK_MODE_OFF,
-  DARK_MODE_TOGGLE, IS_LOADING, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL,
+  DARK_MODE_TOGGLE, IS_LOADING, SET_LOADING, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL,
   SHOW_SIGNUP_MODAL, TOGGLE_DISPLAY_URL,
 } from '../action/displayOptions';
 
@@ -46,7 +46,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         displayUrl: !state.displayUrl,
       };
-    case IS_LOADING:
+    case SET_LOADING:
       return {
         ...state,
         loading: !state.loading,
