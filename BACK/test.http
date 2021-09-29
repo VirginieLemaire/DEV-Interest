@@ -24,4 +24,4 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYz
 
 ### - ajoute un favori
 POST {{baseurl}}/cards/65/bookmarks
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMjg0Mjk0OSwiZXhwIjoxNjMyODQ0NzQ5fQ.AYxggILyTMqo4Qi1HN4xIpGYbYMzRtHunNV2c9C2Ic4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTYzMjg0OTMxMiwiZXhwIjoxNjMyODUxMTEyfQ.H2_zECnqSH7QlvAMwN5f3VSwWvyB4LSCZYMYPLYRyFI

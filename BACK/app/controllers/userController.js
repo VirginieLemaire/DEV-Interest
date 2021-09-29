@@ -21,7 +21,7 @@ const userController = {
         
             const user = await new User(login).findUser();
             //console.log({user});
-            response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+            //response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
             response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
             response.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
             //response.cookie('Authorization' , jwt.makeToken(user.id), { maxAge: 1800});
