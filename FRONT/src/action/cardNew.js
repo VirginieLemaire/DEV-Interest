@@ -42,3 +42,10 @@ export const saveNewCards = (cards) => (
     cards,
   }
 );
+
+export const GET_OPENGRAPH_DATA = 'GET_OPENGRAPHE_DATA';
+export const getOpengraphData = () => (
+  {
+    type: GET_OPENGRAPH_DATA,
+  }
+);

@@ -1,6 +1,10 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
+
+import { changeNewCardField, getOpengraphData } from '../../action/cardNew';
+import { showAddCardModal, showConnexionModal } from '../../action/displayOptions';
+
 import LogoDEVLovePPER from '../../assets/LogoDEVLovePPER.svg';
 
 import Button from '../GenericComponents/Button';
@@ -8,8 +12,6 @@ import Button from '../GenericComponents/Button';
 import './add-card-modal.scss';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import UrlField from '../GenericComponents/UrlField';
-import { changeNewCardField } from '../../action/cardNew';
-import { showAddCardModal, showConnexionModal } from '../../action/displayOptions';
 
 const AddCardModal = () => {
   const dispatch = useDispatch();
@@ -23,6 +25,7 @@ const AddCardModal = () => {
     e.preventDefault();
     if (isLogged) {
       dispatch(showAddCardModal());
+      dispatch(getOpengraphData());
       history.push('/add-card');
     }
   };

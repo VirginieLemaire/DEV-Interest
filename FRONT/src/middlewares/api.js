@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import { ADD_CARD, resetNewCard } from '../action/cardNew';
+import {
+  ADD_CARD, changeNewCardField, GET_OPENGRAPH_DATA, insertOpengraphDataIntoNewCardForm, resetNewCard,
+} from '../action/cardNew';
 
 import { fetchCardsHome, FETCH_CARDS_HOME, saveCardsHome } from '../action/cardsHome';
 
@@ -12,6 +14,8 @@ import { isLoading } from '../action/displayOptions';
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import { toggleLogged } from '../action/userCurrent';
+import { slugify } from '../selectors/cards';
+import { getDomainName } from '../selectors/utils';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -49,6 +53,33 @@ export default (store) => (next) => (action) => {
       break;
     }
 
+    case GET_OPENGRAPH_DATA: {
+      const { url } = store.getState().cardNew;
+
+      console.log('je vais utiliser l url', url, 'pour récupérer les info opengraph');
+
+      axiosInstance.post(
+        '/cards',
+        {
+          url,
+        },
+      ).then(
+        (response) => {
+          console.log('les données retournées par OpenGraph', response.data);
+          const sluggedTitle = slugify(response.data['og:title']);
+          const websiteDomain = getDomainName(response.data['og:url']);
+          store.dispatch(changeNewCardField(sluggedTitle, 'slug'));
+          store.dispatch(changeNewCardField(websiteDomain, 'website'));
+          store.dispatch(changeNewCardField(response.data['og:description'], 'description'));
+          store.dispatch(changeNewCardField(response.data['og:title'], 'title'));
+          store.dispatch(changeNewCardField(response.data['og:image'], 'image'));
+          store.dispatch(changeNewCardField(response.data['og:url'], 'url'));
+        },
+      ).catch(
+        (error) => console.log('Error Opengraph', error),
+      );
+      break;
+    }
     case ADD_CARD: {
       const {
         title, slug, website, description, url, image, level, lang, type, category, techs,
@@ -74,7 +105,7 @@ export default (store) => (next) => (action) => {
       console.log('la carte a enregistrer', newCard);
 
       axiosInstance.post(
-        '/cards',
+        '/cards/save',
         {
           ...newCard,
         },

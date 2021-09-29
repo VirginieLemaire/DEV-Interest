@@ -39,7 +39,7 @@ const reducer = (state = initialState, action = {}) => {
     case DARK_MODE_OFF:
       return {
         ...state,
-        darkMode: !state.darkMode,
+        darkMode: false,
       };
     case TOGGLE_DISPLAY_URL:
       return {

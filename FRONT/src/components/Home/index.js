@@ -1,5 +1,6 @@
 import './home.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 // import CgAddR from '@react-icons/all-files/cg/CgAddR';
 
 import SearchBar from '../GenericComponents/SearchBar';
@@ -10,6 +11,7 @@ import Button from '../GenericComponents/Button';
 import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/displayOptions';
 import HomeCards from '../HomeCards';
+import { fetchCardsHome } from '../../action/cardsHome';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -29,6 +31,10 @@ const Home = () => {
   // const tags = groupCategoriesAndTechnos.flat(1);
   // // Make tags array random
   // randomArrayShuffle(tags);
+
+  useEffect(() => {
+    dispatch(fetchCardsHome());
+  }, []);
 
   return (
     <div className={darkMode ? 'home home--dark' : 'home'}>

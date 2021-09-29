@@ -13,6 +13,6 @@ export const randomArrayShuffle = (array) => {
 };
 
 export const getDomainName = (url) => {
-  let domain = (new URL(url));
+  const domain = (new URL(url));
   return domain.hostname.replace('www.', '');
-}
+};

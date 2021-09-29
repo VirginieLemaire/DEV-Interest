@@ -39,19 +39,16 @@ const AddCard = () => {
   const languageOptions = [
     { value: 1, label: 'Français' },
     { value: 2, label: 'Anglais' },
-    { value: 3, label: 'Autre' },
   ];
 
   const typeValues = [
     { value: 1, label: 'Article' },
-    { value: 2, label: 'Site Web' },
-    { value: 3, label: 'Vidéo' },
-    { value: 4, label: 'Image' },
-    { value: 5, label: 'Site de challenge' },
-    { value: 6, label: 'Repo Github' },
-    { value: 7, label: 'Repo Bitbucket' },
-    { value: 8, label: 'Package' },
-    { value: 9, label: 'Autre' },
+    { value: 2, label: 'Vidéo' },
+    { value: 3, label: 'Image' },
+    { value: 4, label: 'Site Web' },
+    { value: 5, label: 'Repository' },
+    { value: 6, label: 'Package' },
+    { value: 7, label: 'Autre' },
   ];
 
   const levelValues = [
@@ -78,7 +75,7 @@ const AddCard = () => {
   const categoryValues = [
     { value: 1, label: 'Apprendre' },
     { value: 2, label: 'Approfondir' },
-    { value: 3, label: 'Challenges et tutoriels' },
+    { value: 3, label: 'Entrainement' },
     { value: 4, label: 'Autre' },
   ];
 

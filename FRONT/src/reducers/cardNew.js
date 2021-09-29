@@ -1,6 +1,9 @@
 import {
-  CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD, CHANGE_NEW_CARD_TECHS, RESET_NEW_CARD,
+  CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD,
+  CHANGE_NEW_CARD_TECHS, INSERT_OPENGRAPH_DATA_INTO_NEW_CARD_FORM, RESET_NEW_CARD,
 } from '../action/cardNew';
+import { slugify } from '../selectors/cards';
+import { getDomainName } from '../selectors/utils';
 
 export const initialState = {
   title: '',
@@ -28,7 +31,7 @@ const reducer = (state = initialState, action = {}) => {
     case CHANGE_NEW_CARD_TECHS:
       return {
         ...state,
-        [action.fieldName]: action.value.map((element) => element.value),
+        [action.fieldName]: [action.value.map((element) => element.value)],
       };
     case CHANGE_NEW_CARD_CERTIFICATION:
       return {
