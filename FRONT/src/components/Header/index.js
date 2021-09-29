@@ -5,11 +5,6 @@ import { GiTechnoHeart } from '@react-icons/all-files/gi/GiTechnoHeart';
 
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  showConnexionModal, userLogin, userLogout,
-  darkModeToggle,
-  showAddCardModal,
-} from '../../action/user';
 
 import './header.scss';
 
@@ -17,6 +12,8 @@ import './header.scss';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import ToggleButton from '../GenericComponents/ToggleButton';
+import { darkModeOff, darkModeToggle, showAddCardModal, showConnexionModal } from '../../action/displayOptions';
+import { userLogout } from '../../action/userCurrent';
 
 // custom hook to get the current pathname in React
 const usePathname = () => {
@@ -28,18 +25,19 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { darkMode, isLogged, username } = useSelector((state) => state.user);
+  const { isLogged, username, id } = useSelector((state) => state.userCurrent);
 
+  const { darkMode } = useSelector((state) => state.displayOptions);
   // const handleClickDarkModeToggle = () => {
   //   dispatch(darkModeToggle());
   // };
 
   const handleConnexionButtonClick = () => {
     dispatch(showConnexionModal());
-    dispatch(userLogin());
   };
 
   const handleLogoutButtonClick = () => {
+    dispatch(darkModeOff());
     dispatch(userLogout());
     history.push('/');
   };
@@ -68,7 +66,7 @@ const Header = () => {
         { isLogged && (
         <div className="header__user-buttons">
           <div className="header__user-icons" onClick={() => dispatch(showAddCardModal())}><CgAddR /></div>
-          <div className="header__user-icons" onClick={() => history.push(`/${username.toLowerCase()}/bookmarks`)}><BsFillBookmarksFill /></div>
+          <div className="header__user-icons" onClick={() => history.push(`/${username.toLowerCase()}/${id}/bookmarks`)}><BsFillBookmarksFill /></div>
           <Button
             className="header__button"
             color

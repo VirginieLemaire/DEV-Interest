@@ -1,0 +1,61 @@
+import {
+  ADD_BOOKMARK, CONNECT_USER, REMOVE_BOOKMARK, TOGGLE_LOGGED, USER_LOGOUT, CHANGE_CURRENT_USER_FIELD
+} from '../action/userCurrent';
+
+export const initialState = {
+  id: '',
+  email: '',
+  username: 'Romain',
+  password: '',
+  newEmail: '',
+  newPassword: '',
+  newPasswordVerification: '',
+  bookarmksId: [],
+  bookmarkedCards: [],
+  isLogged: true,
+};
+
+const reducer = (state = initialState, action = {}) => {
+  switch (action.type) {
+    case CONNECT_USER:
+      return {
+        ...state,
+        ...action.data,
+      };
+    case TOGGLE_LOGGED:
+      return {
+        ...state,
+        isLogged: !state.isLogged,
+      };
+    case USER_LOGOUT:
+      return {
+        ...state,
+        id: '',
+        email: '',
+        password: '',
+        bookmarksId: [],
+        bookmarkedCards: [],
+        isLogged: false,
+      };
+    case ADD_BOOKMARK:
+      return {
+        ...state,
+        bookmarkedCards: [...state.bookmarkedCards, action.card],
+      };
+
+    case REMOVE_BOOKMARK:
+      return {
+        ...state,
+        bookmarkedCards: state.bookmarkedCards.filter((bookmark) => bookmark.id !== action.card.id),
+      };
+    case CHANGE_CURRENT_USER_FIELD:
+      return {
+        ...state,
+        [action.fieldName]: action.value,
+      };
+    default:
+      return state;
+  }
+};
+
+export default reducer;

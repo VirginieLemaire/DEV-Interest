@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleDisplayUrl } from '../../action/cards';
 import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
 import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
 import { FaThermometerThreeQuarters } from '@react-icons/all-files/fa/FaThermometerThreeQuarters';
@@ -15,16 +14,17 @@ import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
 import './card-details.scss';
+import { toggleDisplayUrl } from '../../action/displayOptions';
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-
 const CardDetails = ({ card }) => {
   const dispatch = useDispatch();
-  const displayUrl = useSelector((state) => state.cards.displayUrl);
+
+  const { displayUrl } = useSelector((state) => state.displayOptions);
 
   const handleClick = (event) => {
     console.log(event);
@@ -35,12 +35,9 @@ const CardDetails = ({ card }) => {
     day: 'numeric',
   });
 
-
   const handleContentToggle = () => {
     dispatch(toggleDisplayUrl());
   };
-
-
 
   return (
     <div className="card-details">
@@ -109,14 +106,14 @@ const CardDetails = ({ card }) => {
 
           <div className="card-details__board__infos__buttons-container">
             <Link to={{ pathname: card.url }} target="_blank">
-                <button 
-                  className="card-details__board__infos__buttons-container__button"
-                  type="button"
-                  onMouseEnter={handleContentToggle}
-                  onMouseLeave={handleContentToggle}
-                >
-                  {!displayUrl ? "Source" : (getDomainName(card.url).capitalize()) }
-                </button>
+              <button
+                className="card-details__board__infos__buttons-container__button"
+                type="button"
+                onMouseEnter={handleContentToggle}
+                onMouseLeave={handleContentToggle}
+              >
+                {!displayUrl ? 'Source' : (getDomainName(card.url).capitalize()) }
+              </button>
             </Link>
             <Button
               styling="full"

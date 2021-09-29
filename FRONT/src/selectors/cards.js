@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-export function slugify(str) {
+export const slugify = (str) => {
   // eslint-disable-next-line no-param-reassign
   str = str.replace(/^\s+|\s+$/g, ''); // trim
   // eslint-disable-next-line no-param-reassign

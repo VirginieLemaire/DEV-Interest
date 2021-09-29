@@ -1,22 +1,9 @@
-export const FETCH_CARDS = 'FETCH_CARDS';
-export const fetchCards = () => (
+export const ADD_CARD = 'ADD_CARD';
+export const addCard = () => (
   {
-    type: FETCH_CARDS,
+    type: ADD_CARD,
   }
 );
-
-export const SAVE_CARDS = 'SAVE_CARDS';
-export const saveCards = (cards) => (
-  {
-    type: SAVE_CARDS,
-    cards,
-  }
-);
-
-export const IS_LOADING = 'IS_LOADING';
-export const isLoading = () => ({
-  type: IS_LOADING,
-});
 
 export const CHANGE_NEW_CARD_FIELD = 'CHANGE_NEW_CARD_FIELD';
 export const changeNewCardField = (value, fieldName) => (
@@ -48,24 +35,17 @@ export const resetNewCard = () => ({
   type: RESET_NEW_CARD,
 });
 
-export const ADD_CARD = 'ADD_CARD';
-export const addCard = () => (
+export const SAVE_NEW_CARDS = 'SAVE_NEW_CARDS';
+export const saveNewCards = (cards) => (
   {
-    type: ADD_CARD,
+    type: SAVE_NEW_CARDS,
+    cards,
   }
 );
 
-
-export const SEARCH_CARDS = 'SEARCH_CARDS';
-export const searchCards = () => (
+export const GET_OPENGRAPH_DATA = 'GET_OPENGRAPHE_DATA';
+export const getOpengraphData = () => (
   {
-    type: SEARCH_CARDS,
-  }
- )
-
-export const TOGGLE_DISPLAY_URL = 'TOGGLE_DISPLAY_URL';
-export const toggleDisplayUrl = () => (
-  {
-    type: TOGGLE_DISPLAY_URL,
+    type: GET_OPENGRAPH_DATA,
   }
 );

@@ -1,5 +1,6 @@
 import './home.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 // import CgAddR from '@react-icons/all-files/cg/CgAddR';
 
 import SearchBar from '../GenericComponents/SearchBar';
@@ -8,13 +9,16 @@ import Button from '../GenericComponents/Button';
 // import { randomArrayShuffle } from '../../selectors/utils';
 // import { changeNewCardField, fetchCards } from '../../action/cards';
 import SearchResults from '../SearchResults';
-import { showAddCardModal } from '../../action/user';
+import { showAddCardModal } from '../../action/displayOptions';
+import HomeCards from '../HomeCards';
+import { fetchCardsHome } from '../../action/cardsHome';
 
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { darkMode, username, isLogged } = useSelector((state) => state.user);
+  const { username, isLogged } = useSelector((state) => state.userCurrent);
 
+  const { darkMode } = useSelector((state) => state.displayOptions);
   // // Get categories from cards and remove doubles
   // const mapCategories = cards.map((card) => card.category);
   // const categories = [...new Set(mapCategories)];
@@ -27,6 +31,10 @@ const Home = () => {
   // const tags = groupCategoriesAndTechnos.flat(1);
   // // Make tags array random
   // randomArrayShuffle(tags);
+
+  useEffect(() => {
+    dispatch(fetchCardsHome());
+  }, []);
 
   return (
     <div className={darkMode ? 'home home--dark' : 'home'}>
@@ -64,7 +72,7 @@ const Home = () => {
         // </div>
       }
 
-      <SearchResults />
+      <HomeCards />
     </div>
   );
 };

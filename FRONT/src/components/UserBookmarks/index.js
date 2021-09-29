@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import Card from '../Card';
 
 const UserBookmarks = () => {
-  const { username, bookmarksCards, darkMode } = useSelector((state) => state.user);
-  console.log(bookmarksCards);
+  const { darkMode } = useSelector((state) => state.displayOptions);
+  const { bookmarkedCards, username } = useSelector((state) => state.userCurrent);
+  console.log(bookmarkedCards);
 
   return (
     <div className={darkMode ? 'user-bookmarks user-bookmarks--dark' : 'user-bookmarks'}>
@@ -17,11 +18,11 @@ const UserBookmarks = () => {
         </div>
       </div>
       <div className="user-bookmarks__total-bookmarks">
-        {`${bookmarksCards.length} favoris`}
+        {`${bookmarkedCards.length} favoris`}
       </div>
       <div className="user-bookmarks__bookmarks-container">
         {
-          bookmarksCards.map((bookmark) => (
+          bookmarkedCards.map((bookmark) => (
             <Card key={bookmark.id} card={bookmark} />
           ))
         }

@@ -1,11 +1,23 @@
 import { combineReducers } from 'redux';
 
-import cardsReducer from './cards';
-import userReducer from './user';
+import displayOptionsReducer from './displayOptions';
+
+import userCurrentReducer from './userCurrent';
+import userConnectReducer from './userConnect';
+import userCreateReducer from './userCreate';
+
+import cardNewReducer from './cardNew';
+import cardsSearchReducer from './cardsSearch';
+import cardsHomeReducer from './cardsHome';
 
 const rootReducer = combineReducers({
-  cards: cardsReducer,
-  user: userReducer,
+  cardsSearch: cardsSearchReducer,
+  cardsHome: cardsHomeReducer,
+  cardNew: cardNewReducer,
+  displayOptions: displayOptionsReducer,
+  userCreate: userCreateReducer,
+  userCurrent: userCurrentReducer,
+  userConnect: userConnectReducer,
 });
 
 export default rootReducer;

@@ -8,7 +8,7 @@ import './footer.scss';
 import { useSelector } from 'react-redux';
 
 const Footer = () => {
-  const { darkMode } = useSelector((state) => state.user);
+  const { darkMode } = useSelector((state) => state.displayOptions);
   return (
     <div className="footer">
       <div className={darkMode ? 'footer__social-links footer__social-links--dark' : 'footer__social-links'}>

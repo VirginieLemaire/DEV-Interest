@@ -1,13 +1,15 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
-import { showAddCardModal, showConnexionModal } from '../../action/user';
+
+import { changeNewCardField, getOpengraphData } from '../../action/cardNew';
+import { showAddCardModal, showConnexionModal } from '../../action/displayOptions';
+
+import LogoDEVLovePPER from '../../assets/LogoDEVLovePPER.svg';
 
 import Button from '../GenericComponents/Button';
 
 import './add-card-modal.scss';
-import { changeNewCardField } from '../../action/cards';
-import logoCourt from '../../assets/DI-logo-court.png';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import UrlField from '../GenericComponents/UrlField';
 
@@ -15,14 +17,15 @@ const AddCardModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { addCardModal, isLogged, darkMode } = useSelector((state) => state.user);
-
-  const { url } = useSelector((state) => state.cards.newCard);
+  const { url } = useSelector((state) => state.cardNew);
+  const { darkMode, addCardModal } = useSelector((state) => state.displayOptions);
+  const { isLogged } = useSelector((state) => state.userCurrent);
 
   const handleModalAddCardUrlSubmit = (e) => {
     e.preventDefault();
     if (isLogged) {
       dispatch(showAddCardModal());
+      dispatch(getOpengraphData());
       history.push('/add-card');
     }
   };
@@ -49,7 +52,7 @@ const AddCardModal = () => {
             <div className="connexion-modal__header-header">
               <div className="connexion-modal__header-header--item" />
               <div className="connexion-modal__header-header--item">
-                <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+                <img className="connexion-modal__logo" src={LogoDEVLovePPER} alt="logo court" onClick={handleHomeRedirect} />
               </div>
               <div className="connexion-modal__header-header--item" onClick={() => dispatch(showAddCardModal())}>
                 <GrFormClose className="close-icon" />

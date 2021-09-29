@@ -2,13 +2,15 @@ import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
 import logoDevLovePper from '../../assets/LogoDEVLovePPER.svg';
 
-import './search-results.scss';
+import './home-cards.scss';
 
 import Card from '../Card';
 
-const SearchResults = () => {
-  const { cards } = useSelector((state) => state.cardsSearch);
+const HomeCards = () => {
+  const { cards } = useSelector((state) => state.cardsHome);
   const { loading } = useSelector((state) => state.displayOptions);
+
+  console.log('home cards', cards);
 
   const breakpointsColumnsObj = {
     default: 7,
@@ -56,4 +58,4 @@ const SearchResults = () => {
     </div>
   );
 };
-export default SearchResults;
+export default HomeCards;

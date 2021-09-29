@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { fetchCards } from '../../action/cards';
+
+import { fetchCardsHome } from '../../action/cardsHome';
+
 import './app.scss';
 
 import Home from '../Home';
@@ -21,21 +23,27 @@ import AddCardModal from '../AddCardModal';
 import ScrollTop from '../ScrollTop';
 
 const App = () => {
-  const { cards, loading } = useSelector((state) => state.cards);
-  const {
-    darkMode, username, addCardModal, connexionModal,
-  } = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
 
+  const {
+    darkMode, loading, addCardModal, connexionModal,
+  } = useSelector((state) => state.displayOptions);
+
+  const { username, id } = useSelector((state) => state.userCurrent);
+
   useEffect(() => {
-    dispatch(fetchCards());
+    dispatch(fetchCardsHome());
   }, []);
 
+  const cardsHome = useSelector((state) => state.cardsHome.cards);
 
-  if(loading) {
-    return "Loading..."
-  }
+  const cardsSearch = useSelector((state) => state.cardsSearch.cards);
+
+  const mergedCards = [...cardsHome, ...cardsSearch];
+
+  // if (loading) {
+  //   return 'Loading...';
+  // }
 
   return (
     <div className={darkMode ? 'app--dark' : 'app'}>
@@ -47,7 +55,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <Route path="/search" exact component={SearchResults} />
             {
-              cards.map(
+              mergedCards.map(
                 (card) => (
                   <Route key={card.id} path={`/cards/${card.slug}/${card.id}`} exact>
                     <CardDetails key={card.id} card={card} />
@@ -56,7 +64,7 @@ const App = () => {
               )
             }
             <Route path="/add-card" exact component={AddCard} />
-            <Route path={`/${username.toLowerCase()}/bookmarks`} exact component={UserBookmarks} />
+            <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact component={UserBookmarks} />
             <Route path={`/${username.toLowerCase()}/account`} exact component={UserAccount} />
             <Route path="/legal" exact component={Legal} />
             <Route path="/terms-of-use" exact component={TermsOfUse} />

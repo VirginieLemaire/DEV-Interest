@@ -2,36 +2,32 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
 
-import {
-  changeField, changeNewUserField, login,
-  showConnexionModal,
-  showSingupModal,
-  signup,
-} from '../../action/user';
+import { showConnexionModal, showSingupModal } from '../../action/displayOptions';
+import { changeConnectingUserField, login } from '../../action/userConnect';
+
+import LogoDEVLovePPER from '../../assets/LogoDEVLovePPER.svg';
 
 import './connexion-modal.scss';
-
-import logoCourt from '../../assets/DI-logo-court.png';
 
 import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import Field from '../GenericComponents/Field';
+import { changeNewUserField, signup } from '../../action/userCreate';
 
 const ConnexionModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const connexionModal = useSelector((state) => state.user.connexionModal);
+  const { darkMode, hasAnAccount, connexionModal } = useSelector((state) => state.displayOptions);
+  const { isLogged } = useSelector((state) => state.userCurrent);
 
-  const { darkMode, email, password } = useSelector((state) => state.user);
+  const { email, password } = useSelector((state) => state.userConnect);
 
-  const hasAnAccount = useSelector((state) => state.user.hasAnAccount);
-
-  const newUserUsername = useSelector((state) => state.user.newUser.username);
-  const newUserEmail = useSelector((state) => state.user.newUser.email);
-  const newUserPassword = useSelector((state) => state.user.newUser.password);
-  const newUserPasswordVerif = useSelector((state) => state.user.newUser.passwordVerification);
+  const newUserUsername = useSelector((state) => state.userCreate.username);
+  const newUserEmail = useSelector((state) => state.userCreate.email);
+  const newUserPassword = useSelector((state) => state.userCreate.password);
+  const newUserPasswordVerif = useSelector((state) => state.userCreate.passwordVerification);
 
   const handleSignupClick = () => {
     dispatch(showSingupModal());
@@ -77,7 +73,7 @@ const ConnexionModal = () => {
               <div className="connexion-modal__header-header">
                 <div className="connexion-modal__header-header--item" />
                 <div className="connexion-modal__header-header--item">
-                  <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+                  <img className="connexion-modal__logo" src={LogoDEVLovePPER} alt="logo court" onClick={handleHomeRedirect} />
                 </div>
                 <div className={darkMode ? 'connexion-modal__header-header--item connexion-modal__header-header--item--dark' : 'connexion-modal__header-header--item'} onClick={() => dispatch(showConnexionModal())}>
                   <GrFormClose className="close-icon" />
@@ -91,7 +87,7 @@ const ConnexionModal = () => {
                 value={email}
                 name="email"
                 placeholder="Email"
-                handleChange={(e) => dispatch(changeField(e.target.value, 'email'))}
+                handleChange={(e) => dispatch(changeConnectingUserField(e.target.value, 'email'))}
                 required
               />
               <PasswordField
@@ -99,7 +95,7 @@ const ConnexionModal = () => {
                 value={password}
                 name="password"
                 placeholder="Mot de passe"
-                handleChange={(e) => dispatch(changeField(e.target.value, 'password'))}
+                handleChange={(e) => dispatch(changeConnectingUserField(e.target.value, 'password'))}
                 required
                 minlength="4"
               />
@@ -126,7 +122,7 @@ const ConnexionModal = () => {
               <div className="connexion-modal__header-header">
                 <div className="connexion-modal__header-header--item" />
                 <div className="connexion-modal__header-header--item">
-                  <img className="connexion-modal__logo " src={logoCourt} alt="logo court" onClick={handleHomeRedirect} />
+                  <img className="connexion-modal__logo" src={LogoDEVLovePPER} alt="logo court" onClick={handleHomeRedirect} />
                 </div>
                 <div className="connexion-modal__header-header--item" onClick={() => dispatch(showConnexionModal())}>
                   <GrFormClose />
