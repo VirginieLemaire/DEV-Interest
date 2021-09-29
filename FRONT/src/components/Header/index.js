@@ -39,7 +39,7 @@ const Header = () => {
   };
 
   const handleLogoutButtonClick = () => {
-    dispatch(darkModeOff());
+    // dispatch(darkModeOff());
     dispatch(userLogout());
     history.push('/');
   };
