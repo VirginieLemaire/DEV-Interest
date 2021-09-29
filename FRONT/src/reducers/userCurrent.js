@@ -5,14 +5,14 @@ import {
 export const initialState = {
   id: '',
   email: '',
-  username: 'Romain',
+  username: '',
   password: '',
   newEmail: '',
   newPassword: '',
   newPasswordVerification: '',
   bookarmksId: [],
   bookmarkedCards: [],
-  isLogged: true,
+  isLogged: false,
 };
 
 const reducer = (state = initialState, action = {}) => {

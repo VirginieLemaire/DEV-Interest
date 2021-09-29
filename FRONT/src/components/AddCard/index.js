@@ -127,6 +127,7 @@ const AddCard = () => {
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'website'))}
           required
           maxlength="30"
+          readOnly
         />
         <UrlField
           className="add-card__input-url"
@@ -135,6 +136,7 @@ const AddCard = () => {
           placeholder="Lien Url de la ressource"
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
           required
+          readOnly
         />
         <UrlField
           className="add-card__input-image"

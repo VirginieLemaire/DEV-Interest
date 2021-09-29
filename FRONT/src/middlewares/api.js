@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import {
-  ADD_CARD, changeNewCardField, GET_OPENGRAPH_DATA, insertOpengraphDataIntoNewCardForm, resetNewCard,
+  ADD_CARD, changeNewCardField, GET_OPENGRAPH_DATA, resetNewCard,
 } from '../action/cardNew';
 
 import { fetchCardsHome, FETCH_CARDS_HOME, saveCardsHome } from '../action/cardsHome';
@@ -15,7 +15,7 @@ import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import { toggleLogged } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
-import { getDomainName } from '../selectors/utils';
+import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -66,14 +66,22 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('les données retournées par OpenGraph', response.data);
-          const sluggedTitle = slugify(response.data['og:title']);
-          const websiteDomain = getDomainName(response.data['og:url']);
-          store.dispatch(changeNewCardField(sluggedTitle, 'slug'));
-          store.dispatch(changeNewCardField(websiteDomain, 'website'));
-          store.dispatch(changeNewCardField(response.data['og:description'], 'description'));
-          store.dispatch(changeNewCardField(response.data['og:title'], 'title'));
-          store.dispatch(changeNewCardField(response.data['og:image'], 'image'));
-          store.dispatch(changeNewCardField(response.data['og:url'], 'url'));
+          if (response.data['og:description']) {
+            store.dispatch(changeNewCardField(response.data['og:description'], 'description'));
+          }
+          if (response.data['og:title']) {
+            const sluggedTitle = slugify(response.data['og:title']);
+            store.dispatch(changeNewCardField(response.data['og:title'], 'title'));
+            store.dispatch(changeNewCardField(sluggedTitle, 'slug'));
+          }
+          if (response.data['og:url']) {
+            const websiteDomain = capitalizeFirstLetter(getDomainName(response.data['og:url']));
+            store.dispatch(changeNewCardField(response.data['og:url'], 'url'));
+            store.dispatch(changeNewCardField(websiteDomain, 'website'));
+          }
+          if (response.data['og:image']) {
+            store.dispatch(changeNewCardField(response.data['og:image'], 'image'));
+          }
         },
       ).catch(
         (error) => console.log('Error Opengraph', error),

@@ -12,6 +12,8 @@ const UrlField = ({
   handleChange,
   required,
   autoComplete,
+  readOnly,
+
 }) => {
   const inputId = `url-field-${name}`;
 
@@ -29,6 +31,7 @@ const UrlField = ({
         placeholder={placeholder}
         name={name}
         required={required}
+        readOnly={readOnly}
       />
 
       <label
@@ -48,6 +51,7 @@ UrlField.propTypes = {
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
   autoComplete: PropTypes.bool,
+  readOnly: PropTypes.bool,
 };
 
 // Valeurs par défaut pour les props
@@ -55,6 +59,7 @@ UrlField.defaultProps = {
   value: '',
   required: false,
   autoComplete: false,
+  readOnly: false,
 };
 
 // == Export
