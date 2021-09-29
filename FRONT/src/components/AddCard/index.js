@@ -21,7 +21,7 @@ const AddCard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { loading } = useSelector((state) => state.displayOptions);
+  const { loading, darkMode } = useSelector((state) => state.displayOptions);
 
   const {
     title, description, url, image, website, certification,
@@ -97,9 +97,9 @@ const AddCard = () => {
   if (loading) return null;
 
   return (
-    <div className="add-card">
+    <div className={darkMode ? 'add-card add-card--dark' : 'add-card'}>
       <form className="add-card__form" onSubmit={handleSubmitNewCard}>
-        <h2 className="add-card__title">Ajout d'une nouvelle ressource</h2>
+        <h2 className={darkMode ? 'add-card__title add-card__title--dark' : 'add-card__title'}>Ajout d'une nouvelle ressource</h2>
         <Field
           className="add-card__input-title"
           value={title}

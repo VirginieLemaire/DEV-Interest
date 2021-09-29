@@ -69,6 +69,7 @@
     "react-select": "^4.3.1",
     "redux": "^4.1.1",
     "remove": "^0.1.5",
-    "styled-components": "^5.3.1"
+    "styled-components": "^5.3.1",
+    "surge": "^0.23.0"
   }
 }

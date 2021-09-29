@@ -1,17 +1,15 @@
 import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
-import logoDevLovePper from '../../assets/LogoDEVLovePPER.svg';
 
 import './home-cards.scss';
 
 import Card from '../Card';
-import Loader from '../GenericComponents/Loader';
 
 const HomeCards = () => {
   const { cards } = useSelector((state) => state.cardsHome);
   const { loading } = useSelector((state) => state.displayOptions);
 
-  console.log('home cards', cards);
+  // console.log('home cards', cards);
 
   const breakpointsColumnsObj = {
     default: 7,

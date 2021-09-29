@@ -39,16 +39,29 @@ export default (store) => (next) => (action) => {
     case FETCH_CARDS_SEARCH: {
       const { searchQuery } = store.getState().cardsSearch;
       store.dispatch(isLoading());
-      axiosInstance
-        .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${30}`)
-        .then(
-          (response) => {
-            store.dispatch(saveCardsSearch(response.data.data));
-            console.log(`la résultat de la recherche avec le mot clé ${searchQuery} est:`, response.data.data);
-            store.dispatch(changeSearchField('', 'search'));
-            store.dispatch(isLoading());
-          },
-        );
+      if (searchQuery) {
+        axiosInstance
+          .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${30}`)
+          .then(
+            (response) => {
+              store.dispatch(saveCardsSearch(response.data.data));
+              console.log(`la résultat de la recherche avec le mot clé ${searchQuery} est:`, response.data.data);
+              store.dispatch(changeSearchField('', 'search'));
+              store.dispatch(isLoading());
+            },
+          );
+      }
+      if (!searchQuery) {
+        axiosInstance
+          .get('/cards')
+          .then(
+            (response) => {
+              store.dispatch(saveCardsSearch(response.data.data));
+              // console.log(response.data.data);
+              store.dispatch(isLoading());
+            },
+          );
+      }
       next(action);
       break;
     }
