@@ -65,10 +65,11 @@ class Cards {
                 this.id = rows[0].id;
                 //insérer les valeurs dans les tables de liaison
                 await client.query('SELECT card_category($1) AS id', [this]);
+                //technos : avec sanitize, la liste des technos n'est plus au bon format, il faut le repasser en array
+                let techsList = this.techs;
+                let techsToArray = techsList.split(",");
                 //boucler sur toutes les technos
-                console.log(this.techs);
-                
-                for (let tech of this.techs) {  
+                for (let tech of techsToArray) {  
                     await client.query('INSERT INTO card_has_tech (card_id,tech_id) VALUES ($1,$2) RETURNING id', [this.id, tech]);
                 }
                 //TODO ajouter la carte en favori utilisateur
