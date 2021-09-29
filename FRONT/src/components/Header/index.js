@@ -77,7 +77,6 @@ const Header = () => {
             content={`Hello ${username}!`}
           />
           <div className="header__user-icons header__user-icons--logout" onClick={handleLogoutButtonClick}><RiShutDownLine /></div>
-          <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
         </div>
         )}
         { !isLogged && (
@@ -89,6 +88,8 @@ const Header = () => {
           content="Se connecter"
         />
         )}
+        <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
+
       </div>
     </div>
   );

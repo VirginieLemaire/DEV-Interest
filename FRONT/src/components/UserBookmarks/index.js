@@ -1,7 +1,6 @@
 import './user-bookmarks.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import Card from '../Card';
 import BookmarkedCards from '../BookmarkedCards';
 import { fetchBookmarkedCards } from '../../action/userCurrent';
 
@@ -10,7 +9,6 @@ const UserBookmarks = () => {
 
   const { darkMode, loading } = useSelector((state) => state.displayOptions);
   const { username, bookmarkedCards } = useSelector((state) => state.userCurrent);
-  console.log('je lis bien les cartes favorites dans le composant userBookmarks', bookmarkedCards);
 
   useEffect(() => {
     dispatch(fetchBookmarkedCards());

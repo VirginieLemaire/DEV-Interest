@@ -1,18 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
 
 import './bookmarked-cards.scss';
 
-import { useEffect } from 'react';
 import Card from '../Card';
-import { fetchBookmarkedCards } from '../../action/userCurrent';
 
 const BookmarkedCards = () => {
   const { bookmarkedCards } = useSelector((state) => state.userCurrent);
   const { loading } = useSelector((state) => state.displayOptions);
-
-  console.log('les bookmarkedcards dans le compoentn bookmarkedCards sont ', bookmarkedCards);
-  // console.log('home cards', cards);
 
   const breakpointsColumnsObj = {
     default: 7,
