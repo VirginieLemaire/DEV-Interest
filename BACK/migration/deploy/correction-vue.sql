@@ -17,6 +17,7 @@ SELECT DISTINCT
 	type.type, 
 	url, 
 	user_name AS contributor,
+	"user".id AS user_id,
 	"language".name AS lang,
 	card.createat AS createdAt,
 	card_id_techs.techs AS techs
