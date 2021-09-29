@@ -12,7 +12,9 @@ import './header.scss';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import ToggleButton from '../GenericComponents/ToggleButton';
-import { darkModeOff, darkModeToggle, showAddCardModal, showConnexionModal } from '../../action/displayOptions';
+import {
+  darkModeOff, darkModeToggle, showAddCardModal, showConnexionModal,
+} from '../../action/displayOptions';
 import { userLogout } from '../../action/userCurrent';
 
 // custom hook to get the current pathname in React

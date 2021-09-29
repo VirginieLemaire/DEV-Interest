@@ -13,7 +13,7 @@ import {
 import { isLoading } from '../action/displayOptions';
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
-import { toggleLogged } from '../action/userCurrent';
+import { FETCH_BOOKMARKED_CARDS, saveBookmarkedCards, toggleLogged } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
 
@@ -170,6 +170,23 @@ export default (store) => (next) => (action) => {
       ).catch(
         () => console.log('error'),
       );
+      next(action);
+      break;
+    }
+    case FETCH_BOOKMARKED_CARDS: {
+      store.dispatch(isLoading());
+      const { id } = store.getState().userCurrent;
+      console.log('je veux les favoris du user ', id);
+      axiosInstance
+        .get(`/users/${id}/bookmarks`)
+        .then(
+          (response) => {
+            store.dispatch(isLoading());
+            console.log('mes cartes favories sont ', response.data);
+            store.dispatch(saveBookmarkedCards(response.data));
+            // console.log(response.data.data);
+          },
+        );
       next(action);
       break;
     }

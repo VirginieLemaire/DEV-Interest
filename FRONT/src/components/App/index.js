@@ -71,7 +71,10 @@ const App = () => {
               <Loader />
               <AddCard />
             </Route>
-            <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact component={UserBookmarks} />
+            <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact>
+              <Loader />
+              <UserBookmarks />
+            </Route>
             <Route path={`/${username.toLowerCase()}/account`} exact component={UserAccount} />
             <Route path="/legal" exact component={Legal} />
             <Route path="/terms-of-use" exact component={TermsOfUse} />

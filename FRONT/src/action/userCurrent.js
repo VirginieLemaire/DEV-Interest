@@ -36,7 +36,24 @@ export const removeBookmark = (card) => (
 );
 
 export const CONNECT_USER = 'CONNECT_USER';
-export const connectUser = (data) => ({
-  type: CONNECT_USER,
-  data,
-});
+export const connectUser = (data) => (
+  {
+    type: CONNECT_USER,
+    data,
+  }
+);
+
+export const FETCH_BOOKMARKED_CARDS = 'FETCH_BOOKMARKED_CARDS';
+export const fetchBookmarkedCards = () => (
+  {
+    type: FETCH_BOOKMARKED_CARDS,
+  }
+);
+
+export const SAVE_BOOKMARKED_CARDS = 'SAVE_BOOKMARKED_CARDS';
+export const saveBookmarkedCards = (data) => (
+  {
+    type: SAVE_BOOKMARKED_CARDS,
+    data,
+  }
+);

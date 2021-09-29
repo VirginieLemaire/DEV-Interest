@@ -16,16 +16,20 @@ const Card = ({ card }) => {
   const { darkMode } = useSelector((state) => state.displayOptions);
   const { isLogged } = useSelector((state) => state.userCurrent);
 
-  const isBookmarked = bookmarkedCards.find((bookmark) => bookmark.id === card.id);
+  // const isBookmarked = bookmarkedCards.find((bookmark) => bookmark.id === card.id);
 
-  const handleClick = () => {
-    if (isLogged) {
-      // eslint-disable-next-line no-unused-expressions
-      (!isBookmarked) && (dispatch(addBookmark(card)));
-      // eslint-disable-next-line no-unused-expressions
-      (isBookmarked) && (dispatch(removeBookmark(card)));
-    }
-    else dispatch(showAddCardModal());
+  // const handleClick = () => {
+  //   if (isLogged) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     (!isBookmarked) && (dispatch(addBookmark(card)));
+  //     // eslint-disable-next-line no-unused-expressions
+  //     (isBookmarked) && (dispatch(removeBookmark(card)));
+  //   }
+  //   else dispatch(showAddCardModal());
+  // };
+
+  const handleClick = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -35,15 +39,13 @@ const Card = ({ card }) => {
       </Link>
       <div className="card__buttons-group">
         <a className="card__button media" type="button" href={card.url}>{card.type}</a>
+
+        <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmarkFill /></div>
+
         {
-          (isBookmarked) && (
-            <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmarkFill /></div>
-          )
-        }
-        {
-          (!isBookmarked) && (
-            <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmark /></div>
-          )
+          // (!isBookmarked) && (
+          //   <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmark /></div>
+          // )
         }
 
       </div>

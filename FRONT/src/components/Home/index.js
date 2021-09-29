@@ -8,7 +8,6 @@ import Button from '../GenericComponents/Button';
 // import Tag from '../GenericComponents/Tag';
 // import { randomArrayShuffle } from '../../selectors/utils';
 // import { changeNewCardField, fetchCards } from '../../action/cards';
-import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/displayOptions';
 import HomeCards from '../HomeCards';
 import { fetchCardsHome } from '../../action/cardsHome';
