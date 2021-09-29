@@ -6,11 +6,12 @@ import SubmitButton from '../GenericComponents/SubmitButton';
 import { changeCurrentUserField } from '../../action/userCurrent';
 import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
-import { changeUpdateUserField, updateCurrentUser, resetUpdateUserFields } from '../../action/userUpdate';
+import { changeUpdateUserField, resetUpdateUserFields, updateUserCurrent } from '../../action/userUpdate';
 
 const UserAccountUpdate = () => {
   const dispatch = useDispatch();
   const { username, email, passwordCurrent, passwordNew, passwordNewVerification } = useSelector((state) => state.userUpdate);
+  const { darkMode } = useSelector((state) => state.displayOptions);
 
   const handleClick = () => (
     dispatch(resetUpdateUserFields())
@@ -19,11 +20,11 @@ const UserAccountUpdate = () => {
   const handleSubmitUpdateForm = (event) => {
     event.preventDefault();
     // insérer vérifs
-    updateCurrentUser();
+    updateUserCurrent();
   }
 
   return (
-    <div className="user-account-update">
+    <div className={darkMode ? 'user-account user-account--dark' : 'user-account'}>
       <form className="user-account-update__form" onSubmit={handleSubmitUpdateForm}>
         <h1 className="user-account-update__form__title">Modification du compte</h1>
         <h2 className="user-account-update__form__subtitle">Modifier le nom d'utilisation</h2>

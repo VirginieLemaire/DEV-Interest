@@ -8,6 +8,10 @@
   font-size: 1rem;
   margin-top: 4rem;
 
+  &--dark{
+    color: vars.$white-color;
+  }
+
   &__form {
     display: flex;
     flex-direction: column;

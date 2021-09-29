@@ -9,13 +9,14 @@ const UserAccount = () => {
   const history = useHistory();
 
   const { username, email } = useSelector((state) => state.userCurrent);
+  const { darkMode } = useSelector((state) => state.displayOptions);
 
   const handleModifyClick = () => {
     history.push(`/${username.toLowerCase()}/account/update`);
   }
 
   return (
-    <div className="user-account">
+    <div className={darkMode ? 'user-account user-account--dark' : 'user-account'}>
       <h1 className="user-account__title">Information de compte</h1>
       <h2 className="user-account__subtitle">Nom d'utilisateur</h2>
       <Field
