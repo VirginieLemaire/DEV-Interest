@@ -20,6 +20,7 @@ const userController = {
             //authentification
         
             const user = await new User(login).findUser();
+            
             //console.log({user});
             //response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
             //response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
