@@ -14,10 +14,12 @@ const UserAccountUpdate = () => {
   const history = useHistory();
 
   const { username, email, passwordCurrent, passwordNew, passwordNewVerification } = useSelector((state) => state.userUpdate);
+  const { username : userCurrentUsername, email: userCurrentEmail } = useSelector((state) => state.userCurrent);
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const handleClick = () => {
     dispatch(resetUpdateUserFields());
+    history.push(`/${userCurrentUsername.toLowerCase()}/account`);
   };
 
   const handleSubmitUpdateForm = (event) => {
