@@ -174,6 +174,8 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
+          console.log('message au login de response tout court', response);
+
           console.log('response.data', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
@@ -223,6 +225,7 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
+          console.log('message au sign up de response tout court', response);
           console.log('il faut enregister ces informations', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
