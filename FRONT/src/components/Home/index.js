@@ -12,6 +12,7 @@ import { showAddCardModal } from '../../action/displayOptions';
 import HomeCards from '../HomeCards';
 import { fetchCardsHome } from '../../action/cardsHome';
 import Loader from '../GenericComponents/Loader';
+import Slider from '../Slider';
 
 const Home = () => {
 
@@ -34,6 +35,7 @@ const Home = () => {
   // randomArrayShuffle(tags);
 
   return (
+    <Slider />
     <div className={darkMode ? 'home home--dark' : 'home'}>
       {
         isLogged ? <p className="home__catch-title">Salut {username}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
