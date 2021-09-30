@@ -1,6 +1,6 @@
 import {
   DARK_MODE_OFF,
-  DARK_MODE_TOGGLE, IS_LOADING, SET_LOADING, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL,
+  DARK_MODE_TOGGLE, SET_APP_LOADING, SET_LOADING, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL,
   SHOW_SIGNUP_MODAL, TOGGLE_DISPLAY_URL,
 } from '../action/displayOptions';
 
@@ -9,6 +9,7 @@ export const initialState = {
   addCardModal: false,
   addCardSuccessModal: false,
   loading: false,
+  appLoading: true,
   hasAnAccount: true,
   displayUrl: false,
   darkMode: false,
@@ -49,7 +50,12 @@ const reducer = (state = initialState, action = {}) => {
     case SET_LOADING:
       return {
         ...state,
-        loading: !state.loading,
+        loading: action.loading,
+      };
+    case SET_APP_LOADING:
+      return {
+        ...state,
+        appLoading: action.loading,
       };
     default:
       return state;

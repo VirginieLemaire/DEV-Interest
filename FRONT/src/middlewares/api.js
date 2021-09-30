@@ -9,7 +9,7 @@ import { fetchCardsHome, FETCH_CARDS_HOME, saveCardsHome } from '../action/cards
 import {
   changeSearchField, FETCH_CARDS_SEARCH, LOAD_MORE_RESULTS, saveCardsSearch, saveMoreCards,
 } from '../action/cardsSearch';
-import { setLoading } from '../action/displayOptions';
+import { setAppLoading, setLoading } from '../action/displayOptions';
 
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
@@ -30,6 +30,7 @@ export default (store) => (next) => (action) => {
         .then(
           (response) => {
             store.dispatch(saveCardsHome(response.data.data));
+            store.dispatch(setAppLoading(false));
             // console.log(response.data.data);
             store.dispatch(setLoading(false));
           },
@@ -37,11 +38,11 @@ export default (store) => (next) => (action) => {
       next(action);
       break;
     case FETCH_CARDS_SEARCH: {
-      const { searchQuery, page } = store.getState().cardsSearch;
+      const { searchQuery } = store.getState().cardsSearch;
       store.dispatch(setLoading(true));
       if (searchQuery) {
         axiosInstance
-          .get(`/cards/search?keyword=${searchQuery}&page=${page}&size=${30}`)
+          .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${30}`)
           .then(
             (response) => {
               store.dispatch(saveCardsSearch(response.data.data));
@@ -173,17 +174,17 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('response.data', response.data);
+          console.log('response.data', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
-          store.dispatch(connectUser(response.data));
+          store.dispatch(connectUser(response.data.user));
           store.dispatch(resteConnectingFields());
           store.dispatch(toggleLogged());
-          console.log('response.headers :', response.headers);
+          console.log('Le Token :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
         () => console.log('error'),
@@ -222,17 +223,17 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('il faut enregister ces informations', response.data);
+          console.log('il faut enregister ces informations', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
-          store.dispatch(connectUser(response.data));
+          store.dispatch(connectUser(response.data.user));
           store.dispatch(resetNewUserFields());
           store.dispatch(toggleLogged());
-          console.log('Le token enregistré est :', response.data.token);
+          console.log('Le token enregistré est :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
         () => console.log('error'),

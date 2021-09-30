@@ -4,6 +4,12 @@ export const setLoading = (loading) => ({
   loading,
 });
 
+export const SET_APP_LOADING = 'SET_APP_LOADING';
+export const setAppLoading = (loading) => ({
+  type: SET_APP_LOADING,
+  loading,
+});
+
 export const SHOW_CONNEXION_MODAL = 'SHOW_CONNEXION_MODAL';
 export const showConnexionModal = () => (
   {

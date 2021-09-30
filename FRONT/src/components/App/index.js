@@ -21,20 +21,17 @@ import UserAccount from '../UserAccount';
 import SearchResults from '../SearchResults';
 import AddCardModal from '../AddCardModal';
 import ScrollTop from '../ScrollTop';
+import AppLoader from '../GenericComponents/AppLoader';
 import Loader from '../GenericComponents/Loader';
 
 const App = () => {
   const dispatch = useDispatch();
 
   const {
-    darkMode, loading, addCardModal, connexionModal,
+    darkMode, appLoading, addCardModal, connexionModal,
   } = useSelector((state) => state.displayOptions);
 
   const { username, id } = useSelector((state) => state.userCurrent);
-
-  useEffect(() => {
-    dispatch(fetchCardsHome());
-  }, []);
 
   const cardsHome = useSelector((state) => state.cardsHome.cards);
 
@@ -42,9 +39,11 @@ const App = () => {
 
   const mergedCards = [...cardsHome, ...cardsSearch];
 
-  // if (loading) {
-  //   return 'Loading...';
-  // }
+  useEffect(() => {
+    dispatch(fetchCardsHome());
+  }, []);
+
+  if (appLoading) return <AppLoader />;
 
   return (
     <div className={darkMode ? 'app--dark' : 'app'}>

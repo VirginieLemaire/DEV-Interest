@@ -32,10 +32,6 @@ const Home = () => {
   // // Make tags array random
   // randomArrayShuffle(tags);
 
-  useEffect(() => {
-    dispatch(fetchCardsHome());
-  }, []);
-
   return (
     <div className={darkMode ? 'home home--dark' : 'home'}>
       {

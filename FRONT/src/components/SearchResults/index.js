@@ -8,7 +8,6 @@ import { LoadMoreResults, NextPage } from '../../action/cardsSearch';
 import './search-results.scss';
 
 import Card from '../Card';
-import Loader from '../GenericComponents/Loader';
 
 const SearchResults = () => {
   // const dispatch = useDispatch();
@@ -38,7 +37,7 @@ const SearchResults = () => {
   //   dispatch(LoadMoreResults());
   // }, [page]);
 
-  if (loading) return <Loader />;
+  if (loading) return null;
 
   return (
     <div className="search-container">
