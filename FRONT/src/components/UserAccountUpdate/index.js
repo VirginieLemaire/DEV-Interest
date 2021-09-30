@@ -1,5 +1,6 @@
 import './user-account-update.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
 import SubmitButton from '../GenericComponents/SubmitButton';
@@ -10,19 +11,22 @@ import { changeUpdateUserField, resetUpdateUserFields, updateUserCurrent } from 
 
 const UserAccountUpdate = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const { username, email, passwordCurrent, passwordNew, passwordNewVerification } = useSelector((state) => state.userUpdate);
   const { darkMode } = useSelector((state) => state.displayOptions);
 
-  const handleClick = () => (
-    dispatch(resetUpdateUserFields())
-  )
+  const handleClick = () => {
+    dispatch(resetUpdateUserFields());
+  };
 
   const handleSubmitUpdateForm = (event) => {
     event.preventDefault();
     if(passwordNew === passwordNewVerification) {
       dispatch(updateUserCurrent());
-    }
-  }
+      history.push(`/${username.toLowerCase()}/account`);
+    };
+  };
 
   return (
     <div className={darkMode ? 'user-account user-account--dark' : 'user-account'}>
@@ -37,7 +41,6 @@ const UserAccountUpdate = () => {
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'username'))}
           minlength="4"
           maxlength="20"
-          required
         />
         <h2 className="user-account-update__form__subtitle">Modifier l'email de compte</h2>
         <EmailField
@@ -46,7 +49,6 @@ const UserAccountUpdate = () => {
           name="email"
           placeholder="Email"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}
-          required
         />
         <h2 className="user-account-update__form__subtitle">Modifier le mot de passe</h2>
         <PasswordField
@@ -65,7 +67,6 @@ const UserAccountUpdate = () => {
           name="passwordNew"
           placeholder="Nouveau mot de passe"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNew'))}
-          required
           minlength="4"
         />
         <PasswordField
@@ -74,7 +75,6 @@ const UserAccountUpdate = () => {
           name="passwordNewVerification"
           placeholder="Vérifier mot de passe"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNewVerification'))}
-          required
           minlength="4"
         />
         </div>

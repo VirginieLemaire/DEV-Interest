@@ -11,7 +11,7 @@ import {
 } from '../action/cardsSearch';
 import { setAppLoading, setLoading } from '../action/displayOptions';
 
-import { DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields } from '../action/userUpdate';
+import { DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields, updateUserCurrent } from '../action/userUpdate';
 
 import { isLoading } from '../action/displayOptions';
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
@@ -259,9 +259,9 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('il faut enregister ces informations', response.data);
+          console.log('il faut enregister ces informations', response.data.user);
           axiosInstance.defaults.headers.common.Authorization = response.data.accessToken,
-          store.dispatch(connectUser(response.data.user));
+          store.dispatch(connectUser({ email, username }));
           store.dispatch(resetUpdateUserFields());
         } 
       ).catch(
