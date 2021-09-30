@@ -13,6 +13,7 @@ const UserBookmarks = () => {
   useEffect(() => {
     dispatch(fetchBookmarkedCards());
   }, []);
+  
   if (loading) return null;
 
   return (

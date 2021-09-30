@@ -18,6 +18,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         cards: action.data,
+        page: 1,
       };
     case NEXT_PAGE_HOME:
       return {

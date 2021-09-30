@@ -15,7 +15,6 @@ import {
 } from '../action/cardsSearch';
 import {
   setAppLoading, setLoading, setMore, setMoreHome,
-  isLoading,
 } from '../action/displayOptions';
 
 import {
@@ -25,7 +24,8 @@ import {
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
-  FETCH_BOOKMARKED_CARDS, saveBookmarkedCards, toggleLogged, userLogout,
+  ADD_TO_BOOKMARKS,
+  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, userLogout,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
@@ -45,6 +45,7 @@ export default (store) => (next) => (action) => {
         .get(`/cards?page=${firstPage}&size=${size}`)
         .then(
           (response) => {
+            console.log('la page daccueil charge les résultats suivants : ', response.data.data);
             store.dispatch(saveCardsHome(response.data.data));
             store.dispatch(NextPageHome());
             store.dispatch(setAppLoading(false));
@@ -63,7 +64,7 @@ export default (store) => (next) => (action) => {
           (response) => {
             store.dispatch(saveMoreHomeCards(response.data.data));
             store.dispatch(NextPageHome());
-            console.log(`la résultat suivant page ${page} Home de la recherche avec le mot clé est:`, response.data.data);
+            console.log(`la résultat de la page ${page} sur la Home sont:`, response.data.data);
             if (response.data.data.length < size) {
               store.dispatch(setMoreHome(false));
             }
@@ -323,18 +324,59 @@ export default (store) => (next) => (action) => {
       next(action);
       break;
     }
-    // case ADD_TO_FAVORITES: {
-    //   const { id } = store.getState().user;
+    case ADD_TO_BOOKMARKS: {
+      const { id } = store.getState().userCurrent;
 
-    //   console.log(`je dois AJOUTER la carte ${action.cardId} à l'utilisateur ${id}`);
-    //   break;
-    // }
-    // case REMOVE_FROM_FAVORITES: {
-    //   const { id } = store.getState().user;
-    //   console.log(`je dois RETIRER la carte ${action.cardId} à l'utilisateur ${id}`);
-    //   break;
-    // }
+      console.log(`je dois AJOUTER la carte ${action.cardId} à l'utilisateur ${id}`);
+
+      axiosInstance.post(
+        `/cards/${action.cardId}/bookmarks`,
+        {
+          id,
+        },
+      ).then(
+        (response) => {
+          console.log(`La réponse positive retourné par le serveur après avoir demandé à AJOUTE la carte ${action.cardId} au user ${id}`, response);
+          store.dispatch(readUserCurrentData());
+        },
+      ).catch(
+        (error) => console.log(`Erreur retourné par le serveur en cas d'AJOUT de la carte ${action.cardId} dans les favoris au user ${id}`, error.response),
+      );
+      next(action);
+      break;
+    }
+    case REMOVE_FROM_BOOKMARKS: {
+      const { id } = store.getState().userCurrent;
+      console.log(`je dois RETIRER la carte ${action.cardId} à l'utilisateur ${id}`);
+      axiosInstance.delete(
+        `/users/${id}/bookmarks/${action.cardId}`,
+      ).then(
+        (response) => {
+          console.log(`Réponse positive retourné par le serveur après avoir demandé à RETIRE la carte ${action.cardId} au user ${id}`, response);
+          store.dispatch(readUserCurrentData());
+        },
+      ).catch(
+        (error) => console.log(`Erreur retourné par le serveur en cas de RETRAIT de la carte ${action.cardId} dans les favoris au user ${id}`, error.response),
+      );
+      next(action);
+      break;
+    }
+    case READ_USER_CURRENT_DATA: {
+      const { id } = store.getState().userCurrent;
+      axiosInstance.get(
+        `/users/${id}`,
+      ).then(
+        (response) => {
+          console.log(`Les données consultées du user ${id} sont`, response.data);
+        },
+      ).catch(
+        (error) => console.log(`Erreur retourné par le serveur en cas de lecture des données du user à l'id ${id}`, error.response),
+      );
+      next(action);
+      break;
+    }
     default:
       next(action);
+      break;
   }
 };
