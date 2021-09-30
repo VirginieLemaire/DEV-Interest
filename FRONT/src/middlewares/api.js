@@ -5,14 +5,17 @@ import {
 } from '../action/cardNew';
 
 import {
-  fetchCardsHome, FETCH_CARDS_HOME, LOAD_MORE_HOME_CARDS, NextPageHome, saveCardsHome, saveMoreHomeCards,
+  fetchCardsHome, FETCH_CARDS_HOME, LOAD_MORE_HOME_CARDS,
+  NextPageHome, saveCardsHome, saveMoreHomeCards,
 } from '../action/cardsHome';
 
 import {
   changeSearchField, FETCH_CARDS_SEARCH, LOAD_MORE_RESULTS,
   NextPage, saveCardsSearch, saveMoreCards,
 } from '../action/cardsSearch';
-import { setAppLoading, setLoading, setMore, setMoreHome } from '../action/displayOptions';
+import {
+  setAppLoading, setLoading, setMore, setMoreHome,
+} from '../action/displayOptions';
 
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
@@ -27,13 +30,16 @@ const axiosInstance = axios.create({
 export default (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_CARDS_HOME: {
+      const { size } = store.getState().cardsHome;
+      store.dispatch(setMoreHome(true));
       store.dispatch(setLoading(true));
       const firstPage = 1;
       axiosInstance
-        .get(`/cards?page=${firstPage}&size=${30}`)
+        .get(`/cards?page=${firstPage}&size=${size}`)
         .then(
           (response) => {
             store.dispatch(saveCardsHome(response.data.data));
+            store.dispatch(NextPageHome());
             store.dispatch(setAppLoading(false));
             // console.log(response.data.data);
             store.dispatch(setLoading(false));
@@ -211,7 +217,7 @@ export default (store) => (next) => (action) => {
           console.log('Le Token :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
         () => console.log('error'),
@@ -260,7 +266,7 @@ export default (store) => (next) => (action) => {
           console.log('Le token enregistré est :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
         () => console.log('error'),

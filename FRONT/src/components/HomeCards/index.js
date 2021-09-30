@@ -13,8 +13,8 @@ import AppLoader from '../GenericComponents/AppLoader';
 const HomeCards = () => {
   const dispatch = useDispatch();
 
-  const { cards, moreHome } = useSelector((state) => state.cardsHome);
-  const { loading } = useSelector((state) => state.displayOptions);
+  const { cards } = useSelector((state) => state.cardsHome);
+  const { loading, moreHome } = useSelector((state) => state.displayOptions);
 
   // console.log('home cards', cards);
 
