@@ -30,6 +30,9 @@ router.post('/cards/:id/bookmarks',checkJwt, bookmarksController.addBookmarkById
 //Delete une carte des favoris
 router.delete('/users/:id/bookmarks/:id',checkJwt, bookmarksController.deleteBookmarkById);
 
+// voir les cartes crées
+router.get('/mycards', checkJwt, userController.findByContributor);
+
 //USERS by id
 router.get('/users/:id' ,checkJwt, userController.findById);
 //DELETE USER BY ID

@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const jwt = require('../services/jwt');
 
+
 const userController = {
     //Trouver une user (nécessite un id)
     findById: async (request, response) => {
@@ -115,7 +116,16 @@ const userController = {
             //renvoyer l'info au front
             response.status(500).json(error.message);
         }
-    }
+    },
+    findByContributor: async (request, response) => {
+        try {
+            const id = request.userId;
+            const user = await User.findContributor(id);
+            response.json(user);
+        } catch(error) {
+            console.log(error);
+        }
+    },
 
 }
 
