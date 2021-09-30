@@ -189,7 +189,7 @@ export default (store) => (next) => (action) => {
           axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
         },
       ).catch(
-        (error) => console.log('error.message login', error.message),
+        (error) => console.log('error.response login', error.response),
       );
       next(action);
       break;
@@ -239,7 +239,7 @@ export default (store) => (next) => (action) => {
           axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
         },
       ).catch(
-        (error) => console.log('error.message signup', error.message),
+        (error) => console.log('error.response signup', error.response),
       );
       next(action);
       break;
