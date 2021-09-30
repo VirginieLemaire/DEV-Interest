@@ -34,3 +34,6 @@ export const getDomainName = (url) => {
 //   console.log('IsJavascript');
 //   return addTech
 // }
+
+export const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+

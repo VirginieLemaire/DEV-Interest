@@ -9,8 +9,11 @@ import { BiCookie } from '@react-icons/all-files/bi/BiCookie';
 
 import './terms-of-use.scss';
 import { createRef } from 'react';
+import { useSelector } from 'react-redux';
 
 const TermsOfUse = () => {
+  const { darkMode } = useSelector((state) => state.displayOptions);
+
   const scrollWithOffset = (el, offset) => {
     const elementPosition = el.offsetTop - offset;
     window.scroll({
@@ -21,8 +24,8 @@ const TermsOfUse = () => {
   };
 
   return (
-    <div className="terms-of-use">
-      <div className="terms-of-use__nav">
+    <div className={darkMode ? 'terms-of-use terms-of-use--dark' : 'terms-of-use'}>
+      <div className={darkMode ? 'terms-of-use__nav terms-of-use__nav--dark' : 'terms-of-use__nav'}>
         <NavHashLink
           scroll={(el) => scrollWithOffset(el, 270)}
           to="#terms-of-use"

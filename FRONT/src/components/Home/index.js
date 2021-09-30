@@ -8,10 +8,10 @@ import Button from '../GenericComponents/Button';
 // import Tag from '../GenericComponents/Tag';
 // import { randomArrayShuffle } from '../../selectors/utils';
 // import { changeNewCardField, fetchCards } from '../../action/cards';
-import SearchResults from '../SearchResults';
 import { showAddCardModal } from '../../action/displayOptions';
 import HomeCards from '../HomeCards';
 import { fetchCardsHome } from '../../action/cardsHome';
+import Loader from '../GenericComponents/Loader';
 
 const Home = () => {
 
@@ -32,10 +32,6 @@ const Home = () => {
   // const tags = groupCategoriesAndTechnos.flat(1);
   // // Make tags array random
   // randomArrayShuffle(tags);
-
-  useEffect(() => {
-    dispatch(fetchCardsHome());
-  }, []);
 
   return (
     <div className={darkMode ? 'home home--dark' : 'home'}>
@@ -72,7 +68,7 @@ const Home = () => {
         //   </div>
         // </div>
       }
-
+      <Loader />
       <HomeCards />
     </div>
   );
