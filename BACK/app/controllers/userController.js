@@ -33,7 +33,7 @@ const userController = {
             //     accessToken: accessToken,
             // });
             // response.status(200).json(user);
-            
+
         } catch (error) {
             //lire l'erreur
             console.trace(error);

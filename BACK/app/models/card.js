@@ -21,7 +21,7 @@ class Cards {
     static async findQueryAllCards(keyword,limit,skip) {
         try {
             console.log({keyword}, {limit}, {skip});
-
+            //TODO  voir ARRAY searching https://docs.postgresql.fr/11/arrays.html#ARRAYS-SEARCHING
             //chercher dans toutes les colonnes sauf slug et URLs
             //il faut passer aussi les technos pour pouvoir chercher sur ses valeurs
             const {rows} = await client.query(`SELECT cards.*, tech.name FROM cards
@@ -53,7 +53,7 @@ class Cards {
         try {
             //si les datas envoyées du front possèdent un id alors on faitun update, sinon un ajout
             if (this.id) {
-                //aller chercher les différents id dans la table card_has_tech pour checker quelle asociation a potentiellement été modifiée.
+                //aller chercher les différents id dans la table card_has_tech pour checker quelle association a potentiellement été modifiée.
                 const association = await client.query('SELECT id FROM card_has_tech WHERE card_id = $1', [this.id]);
                 console.log(association);
                 //TODO : comparer l'existant DB et this pour mettre à jour seulement celui qu'on ne trouve pas
