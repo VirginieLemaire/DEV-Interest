@@ -1,7 +1,7 @@
 import {
   DARK_MODE_OFF,
-  DARK_MODE_TOGGLE, SET_APP_LOADING, SET_LOADING, SHOW_ADD_CARD_MODAL, SHOW_CONNEXION_MODAL,
-  SHOW_SIGNUP_MODAL, TOGGLE_DISPLAY_URL,
+  DARK_MODE_TOGGLE, SET_APP_LOADING, SET_LOADING, SET_MORE, SET_MORE_HOME, SHOW_ADD_CARD_MODAL,
+  SHOW_CONNEXION_MODAL, SHOW_SIGNUP_MODAL, TOGGLE_DISPLAY_URL,
 } from '../action/displayOptions';
 
 export const initialState = {
@@ -13,6 +13,8 @@ export const initialState = {
   hasAnAccount: true,
   displayUrl: false,
   darkMode: false,
+  more: true,
+  moreHome: true,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -56,6 +58,16 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         appLoading: action.loading,
+      };
+    case SET_MORE:
+      return {
+        ...state,
+        more: action.more,
+      };
+    case SET_MORE_HOME:
+      return {
+        ...state,
+        more: action.more,
       };
     default:
       return state;

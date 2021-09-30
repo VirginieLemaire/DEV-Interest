@@ -33,6 +33,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         id: '',
         email: '',
+        username: '',
         password: '',
         bookmarksId: [],
         bookmarkedCards: [],

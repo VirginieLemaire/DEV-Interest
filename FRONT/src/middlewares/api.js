@@ -4,16 +4,25 @@ import {
   ADD_CARD, changeNewCardField, GET_OPENGRAPH_DATA, resetNewCard,
 } from '../action/cardNew';
 
-import { fetchCardsHome, FETCH_CARDS_HOME, saveCardsHome } from '../action/cardsHome';
+import {
+  fetchCardsHome, FETCH_CARDS_HOME, LOAD_MORE_HOME_CARDS,
+  NextPageHome, saveCardsHome, saveMoreHomeCards,
+} from '../action/cardsHome';
 
 import {
-  changeSearchField, FETCH_CARDS_SEARCH, LOAD_MORE_RESULTS, saveCardsSearch, saveMoreCards,
+  changeSearchField, FETCH_CARDS_SEARCH, LOAD_MORE_RESULTS,
+  NextPage, saveCardsSearch, saveMoreCards,
 } from '../action/cardsSearch';
-import { setAppLoading, setLoading } from '../action/displayOptions';
+import {
+  setAppLoading, setLoading, setMore, setMoreHome,
+} from '../action/displayOptions';
 
+import { DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields, updateUserCurrent } from '../action/userUpdate';
+
+import { isLoading } from '../action/displayOptions';
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
-import { FETCH_BOOKMARKED_CARDS, saveBookmarkedCards, toggleLogged } from '../action/userCurrent';
+import { FETCH_BOOKMARKED_CARDS, saveBookmarkedCards, toggleLogged, userLogout } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
 
@@ -23,13 +32,17 @@ const axiosInstance = axios.create({
 
 export default (store) => (next) => (action) => {
   switch (action.type) {
-    case FETCH_CARDS_HOME:
+    case FETCH_CARDS_HOME: {
+      const { size } = store.getState().cardsHome;
+      store.dispatch(setMoreHome(true));
       store.dispatch(setLoading(true));
+      const firstPage = 1;
       axiosInstance
-        .get('/cards')
+        .get(`/cards?page=${firstPage}&size=${size}`)
         .then(
           (response) => {
             store.dispatch(saveCardsHome(response.data.data));
+            store.dispatch(NextPageHome());
             store.dispatch(setAppLoading(false));
             // console.log(response.data.data);
             store.dispatch(setLoading(false));
@@ -37,15 +50,36 @@ export default (store) => (next) => (action) => {
         );
       next(action);
       break;
+    }
+    case LOAD_MORE_HOME_CARDS: {
+      const { page, size } = store.getState().cardsHome;
+      axiosInstance
+        .get(`/cards?page=${page}&size=${size}`)
+        .then(
+          (response) => {
+            store.dispatch(saveMoreHomeCards(response.data.data));
+            store.dispatch(NextPageHome());
+            console.log(`la résultat suivant page ${page} Home de la recherche avec le mot clé est:`, response.data.data);
+            if (response.data.data.length < size) {
+              store.dispatch(setMoreHome(false));
+            }
+          },
+        );
+      next(action);
+      break;
+    }
     case FETCH_CARDS_SEARCH: {
-      const { searchQuery } = store.getState().cardsSearch;
+      const { searchQuery, size } = store.getState().cardsSearch;
+      store.dispatch(setMore(true));
       store.dispatch(setLoading(true));
+      const firstPage = 1;
       if (searchQuery) {
         axiosInstance
-          .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${30}`)
+          .get(`/cards/search?keyword=${searchQuery}&page=${firstPage}&size=${size}`)
           .then(
             (response) => {
               store.dispatch(saveCardsSearch(response.data.data));
+              store.dispatch(NextPage());
               console.log(`la résultat de la recherche avec le mot clé ${searchQuery} est:`, response.data.data);
               store.dispatch(changeSearchField('', 'search'));
               store.dispatch(setLoading(false));
@@ -68,16 +102,18 @@ export default (store) => (next) => (action) => {
       break;
     }
     case LOAD_MORE_RESULTS: {
-      const { page, currentSearch } = store.getState().cardsSearch;
-      store.dispatch(setLoading(true));
+      const { page, currentSearch, size } = store.getState().cardsSearch;
       axiosInstance
-        .get(`/cards/search?keyword=${currentSearch}&page=${page}&size=${5}`)
+        .get(`/cards/search?keyword=${currentSearch}&page=${page}&size=${size}`)
         .then(
           (response) => {
             store.dispatch(saveMoreCards(response.data.data));
+            store.dispatch(NextPage());
             console.log(`la résultat suivant page ${page} de la recherche avec le mot clé ${currentSearch} est:`, response.data.data);
             store.dispatch(changeSearchField('', 'search'));
-            store.dispatch(setLoading(false));
+            if (response.data.data.length < 15) {
+              store.dispatch(setMore(false));
+            }
           },
         );
       next(action);
@@ -184,7 +220,7 @@ export default (store) => (next) => (action) => {
           console.log('Le Token :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
         () => console.log('error'),
@@ -223,7 +259,7 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('il faut enregister ces informations', response.data.user);
+          console.log('il faut enregister ces informations après le signup', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
@@ -233,10 +269,52 @@ export default (store) => (next) => (action) => {
           console.log('Le token enregistré est :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
         () => console.log('error'),
+      );
+      next(action);
+      break;
+    }
+    case UPDATE_USER_CURRENT: {
+      const { id } = store.getState().userCurrent;
+      const { email, username, passwordNew: password } = store.getState().userUpdate;
+
+      console.log (`Je veux mettre à jour l'user ayant pour id ${id}`);
+
+      axiosInstance.put(
+        `/users/${id}`,
+        {
+          email,
+          username,
+          password,
+        },
+      ).then(
+        (response) => {
+          console.log('il faut enregister ces informations', response.data.user);
+          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken,
+          store.dispatch(connectUser({ email, username }));
+          store.dispatch(resetUpdateUserFields());
+        } 
+      ).catch(
+        (error) => console.log(error),
+      );
+      next(action);
+      break;
+    }
+    case DELETE_USER_CURRENT: {
+      const { id } = store.getState().userCurrent;
+
+      console.log (`Je veux supprimer l'user ayant pour id ${id}`);
+
+      axiosInstance.delete(
+        `/users/${id}`
+      ).then(
+        response => console.log(response.data),
+        store.dispatch(userLogout()),
+      ).catch(
+        (error) => console.log(error),
       );
       next(action);
       break;
