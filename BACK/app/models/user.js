@@ -61,7 +61,7 @@ class User {
                 id: rows[0].id,
                 username: rows[0].user_name,
                 email: rows[0].email,
-                bookmarks: rows[0].email
+                bookmarks: rows[0].bookmarks
             }
             console.log(userSecure);
             //renvoyer le user
