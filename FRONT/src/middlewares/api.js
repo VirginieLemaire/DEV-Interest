@@ -183,13 +183,13 @@ export default (store) => (next) => (action) => {
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resteConnectingFields());
           store.dispatch(toggleLogged());
-          console.log('Le Token :', response.data.accessToken);
+          console.log('Le Token (response.data.accessToken):', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
         },
       ).catch(
-        () => console.log('error'),
+        (error) => console.log('error login', error),
       );
       next(action);
       break;
@@ -226,20 +226,20 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('message au sign up de response tout court', response);
-          console.log('il faut enregister ces informations', response.data.user);
+          console.log('il faut enregister ces informations (response.data.user)', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resetNewUserFields());
           store.dispatch(toggleLogged());
-          console.log('Le token enregistré est :', response.data.accessToken);
+          console.log('Le token enregistré est (response.data.accessToken):', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
         },
       ).catch(
-        () => console.log('error'),
+        (error) => console.log('error signup', error),
       );
       next(action);
       break;
