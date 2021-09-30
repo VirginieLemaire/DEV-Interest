@@ -11,7 +11,7 @@ import {
 } from '../action/cardsSearch';
 import { setAppLoading, setLoading } from '../action/displayOptions';
 
-import { DELETE_USER_CURRENT, UPDATE_USER_CURRENT } from '../action/userUpdate';
+import { DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields, updateUserCurrent } from '../action/userUpdate';
 
 import { isLoading } from '../action/displayOptions';
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
@@ -246,7 +246,7 @@ export default (store) => (next) => (action) => {
     }
     case UPDATE_USER_CURRENT: {
       const { id } = store.getState().userCurrent;
-      const { email, username, password } = store.getState().userUpdate;
+      const { email, username, passwordNew: password } = store.getState().userUpdate;
 
       console.log (`Je veux mettre à jour l'user ayant pour id ${id}`);
 
@@ -259,9 +259,9 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log(response.data.user),
+          console.log('il faut enregister ces informations', response.data.user);
           axiosInstance.defaults.headers.common.Authorization = response.data.accessToken,
-          store.dispatch(connectUser(response.data.user));
+          store.dispatch(connectUser({ email, username }));
           store.dispatch(resetUpdateUserFields());
         } 
       ).catch(
