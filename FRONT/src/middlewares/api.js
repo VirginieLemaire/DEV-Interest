@@ -256,7 +256,7 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('il faut enregister ces informations', response.data.user);
+          console.log('il faut enregister ces informations après le signup', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
