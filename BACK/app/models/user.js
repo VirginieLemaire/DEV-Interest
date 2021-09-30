@@ -80,6 +80,7 @@ class User {
     async signUp() {
         try {
             //hasher le mot de passe
+            //console.log('jes suis dans le model', user);
             const password = await bcrypt.hash(this.password, 10);
             const {rows} = await client.query('INSERT INTO "user" (email, password, user_name, role_id) VALUES ($1, $2, $3, $4) RETURNING id', [
                 this.email,
