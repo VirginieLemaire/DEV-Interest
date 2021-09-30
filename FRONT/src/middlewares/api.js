@@ -184,7 +184,7 @@ export default (store) => (next) => (action) => {
           console.log('Le Token :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
+          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
         },
       ).catch(
         () => console.log('error'),
@@ -233,7 +233,7 @@ export default (store) => (next) => (action) => {
           console.log('Le token enregistré est :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
+          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
         },
       ).catch(
         () => console.log('error'),
