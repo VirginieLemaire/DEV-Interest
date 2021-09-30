@@ -24,7 +24,7 @@ const bookmarksController = {
         try {
             // params id de la carte
             const idcard = parseInt(request.params.id, 10);
-            const iduser = request.body.userId;
+            const iduser = request.userId;
             console.log({idcard}, {iduser});
             // id de l'user dans le cookie
             //response.setHeader('Authorization', jwt.makeToken(request.userId));
@@ -40,7 +40,21 @@ const bookmarksController = {
             console.log(error);
             response.status(500).json(error.message);
         }
+    },
+    deleteBookmarkById : async (request, response) => {
+        try {
+            const id_bookmark = request.params.id;
+            const iduser = request.userId;
+            console.log('je suis dans le controller', id_bookmark);
+            console.log('je suis dans le controller', iduser);
+            await new Bookmarks(id_bookmark,iduser).deleteBoomarkById(id_bookmark,iduser);
+            response.status(201).json({success: true});
+        }catch (error) {
+            console.log(error);
+            response.status(500).json(error.message);
+        }
     }
+
 }
 
 module.exports = bookmarksController;

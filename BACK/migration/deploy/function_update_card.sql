@@ -1,4 +1,4 @@
--- Deploy devinterest:function_update_user to pg
+-- Deploy devinterest:function_update_card to pg
 
 BEGIN;
 
@@ -15,5 +15,6 @@ $$ LANGUAGE SQL STRICT;
 --SET DEFAULT sur role_id
 ALTER TABLE "user" ALTER COLUMN role_id
 SET DEFAULT 1;
+
 
 COMMIT;

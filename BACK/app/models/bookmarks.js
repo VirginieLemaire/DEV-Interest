@@ -45,6 +45,18 @@ class Bookmarks {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
+    async deleteBoomarkById(id_bookmark,iduser) {
+        try {
+            console.log('je suis dans le model', id_bookmark)
+            await client.query('DELETE FROM "user_prefer_card" WHERE card_id =$1 AND user_id=$2', [id_bookmark, iduser]);
+            
+        } catch (error) {
+            //voir l'erreur en console
+            console.trace(error);
+            //renvoyer l'erreur au front
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
 
 }
 module.exports = Bookmarks;  
