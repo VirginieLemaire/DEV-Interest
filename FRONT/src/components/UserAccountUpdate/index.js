@@ -37,7 +37,7 @@ const UserAccountUpdate = () => {
         <h2 className="user-account-update__form__subtitle">Modifier le nom d'utilisation</h2>
         <Field
           autoComplete="off"
-          value={username}
+          value={!username ? userCurrentUsername : username}
           name="username"
           placeholder="Nom d'utilisateur"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'username'))}
@@ -47,7 +47,7 @@ const UserAccountUpdate = () => {
         <h2 className="user-account-update__form__subtitle">Modifier l'email de compte</h2>
         <EmailField
           autoComplete="off"
-          value={email}
+          value={!email ? userCurrentEmail : email}
           name="email"
           placeholder="Email"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}
