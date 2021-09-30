@@ -210,7 +210,7 @@ export default (store) => (next) => (action) => {
       break;
     }
     case SIGNUP: {
-      const { username, email, password } = store.getState().user.newUser;
+      const { username, email, password } = store.getState().userCreate;
 
       // 1 - On conctace le point d'entrée de l'api pour s'authentifier
       // On envoie ici nos identifiants de cnnection (email et password)
