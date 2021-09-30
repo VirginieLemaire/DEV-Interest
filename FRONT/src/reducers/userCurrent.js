@@ -1,18 +1,19 @@
 import {
-  ADD_BOOKMARK, CONNECT_USER, REMOVE_BOOKMARK, TOGGLE_LOGGED, USER_LOGOUT, CHANGE_CURRENT_USER_FIELD
+  ADD_BOOKMARK, CONNECT_USER, REMOVE_BOOKMARK, TOGGLE_LOGGED,
+  USER_LOGOUT, CHANGE_CURRENT_USER_FIELD, SAVE_BOOKMARKED_CARDS,
 } from '../action/userCurrent';
 
 export const initialState = {
   id: '',
   email: '',
-  username: 'Romain',
+  username: '',
   password: '',
   newEmail: '',
   newPassword: '',
   newPasswordVerification: '',
   bookarmksId: [],
   bookmarkedCards: [],
-  isLogged: true,
+  isLogged: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -52,6 +53,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         [action.fieldName]: action.value,
+      };
+    case SAVE_BOOKMARKED_CARDS:
+      return {
+        ...state,
+        bookmarkedCards: action.data,
       };
     default:
       return state;

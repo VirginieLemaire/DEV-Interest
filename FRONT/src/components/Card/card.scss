@@ -7,6 +7,11 @@
   // box-shadow: 4px 24px 60px rgba(0,0,0, 0.15);
   box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
 
+  &:hover{
+    box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.2);
+    transition: box-shadow 0.35s;
+  }
+
   &--dark{
     background-color: vars.$dark-color;
     color: vars.$white-color;

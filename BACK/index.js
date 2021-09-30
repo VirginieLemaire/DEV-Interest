@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const router = require('./app/router');
+
 //sécurité:
 const cors = require('cors');//protéger l'accès à notre API
 const bodySanitizer = require('./app/middlewares/body-sanitizer');//éviter attaques XSS

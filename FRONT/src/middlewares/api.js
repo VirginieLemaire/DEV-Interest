@@ -1,21 +1,21 @@
 import axios from 'axios';
 
 import {
-  ADD_CARD, changeNewCardField, GET_OPENGRAPH_DATA, insertOpengraphDataIntoNewCardForm, resetNewCard,
+  ADD_CARD, changeNewCardField, GET_OPENGRAPH_DATA, resetNewCard,
 } from '../action/cardNew';
 
 import { fetchCardsHome, FETCH_CARDS_HOME, saveCardsHome } from '../action/cardsHome';
 
 import {
-  changeSearchField, FETCH_CARDS_SEARCH, saveCardsSearch,
+  changeSearchField, FETCH_CARDS_SEARCH, LOAD_MORE_RESULTS, saveCardsSearch, saveMoreCards,
 } from '../action/cardsSearch';
+import { setAppLoading, setLoading } from '../action/displayOptions';
 
-import { isLoading } from '../action/displayOptions';
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
-import { toggleLogged } from '../action/userCurrent';
+import { FETCH_BOOKMARKED_CARDS, saveBookmarkedCards, toggleLogged } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
-import { getDomainName } from '../selectors/utils';
+import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -24,40 +24,70 @@ const axiosInstance = axios.create({
 export default (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_CARDS_HOME:
-      store.dispatch(isLoading());
+      store.dispatch(setLoading(true));
       axiosInstance
         .get('/cards')
         .then(
           (response) => {
             store.dispatch(saveCardsHome(response.data.data));
+            store.dispatch(setAppLoading(false));
             // console.log(response.data.data);
-            store.dispatch(isLoading());
+            store.dispatch(setLoading(false));
           },
         );
       next(action);
       break;
     case FETCH_CARDS_SEARCH: {
       const { searchQuery } = store.getState().cardsSearch;
-      store.dispatch(isLoading());
+      store.dispatch(setLoading(true));
+      if (searchQuery) {
+        axiosInstance
+          .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${30}`)
+          .then(
+            (response) => {
+              store.dispatch(saveCardsSearch(response.data.data));
+              console.log(`la résultat de la recherche avec le mot clé ${searchQuery} est:`, response.data.data);
+              store.dispatch(changeSearchField('', 'search'));
+              store.dispatch(setLoading(false));
+            },
+          );
+      }
+      if (!searchQuery) {
+        store.dispatch(setLoading(true));
+        axiosInstance
+          .get('/cards')
+          .then(
+            (response) => {
+              store.dispatch(saveCardsSearch(response.data.data));
+              // console.log(response.data.data);
+              store.dispatch(setLoading(false));
+            },
+          );
+      }
+      next(action);
+      break;
+    }
+    case LOAD_MORE_RESULTS: {
+      const { page, currentSearch } = store.getState().cardsSearch;
+      store.dispatch(setLoading(true));
       axiosInstance
-        .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${30}`)
+        .get(`/cards/search?keyword=${currentSearch}&page=${page}&size=${5}`)
         .then(
           (response) => {
-            store.dispatch(saveCardsSearch(response.data.data));
-            console.log(`la résultat de la recherche avec le mot clé ${searchQuery} est:`, response.data.data);
+            store.dispatch(saveMoreCards(response.data.data));
+            console.log(`la résultat suivant page ${page} de la recherche avec le mot clé ${currentSearch} est:`, response.data.data);
             store.dispatch(changeSearchField('', 'search'));
-            store.dispatch(isLoading());
+            store.dispatch(setLoading(false));
           },
         );
       next(action);
       break;
     }
-
     case GET_OPENGRAPH_DATA: {
       const { url } = store.getState().cardNew;
 
       console.log('je vais utiliser l url', url, 'pour récupérer les info opengraph');
-
+      store.dispatch(setLoading(true));
       axiosInstance.post(
         '/cards',
         {
@@ -66,18 +96,28 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('les données retournées par OpenGraph', response.data);
-          const sluggedTitle = slugify(response.data['og:title']);
-          const websiteDomain = getDomainName(response.data['og:url']);
-          store.dispatch(changeNewCardField(sluggedTitle, 'slug'));
-          store.dispatch(changeNewCardField(websiteDomain, 'website'));
-          store.dispatch(changeNewCardField(response.data['og:description'], 'description'));
-          store.dispatch(changeNewCardField(response.data['og:title'], 'title'));
-          store.dispatch(changeNewCardField(response.data['og:image'], 'image'));
-          store.dispatch(changeNewCardField(response.data['og:url'], 'url'));
+          if (response.data['og:description']) {
+            store.dispatch(changeNewCardField(response.data['og:description'], 'description'));
+          }
+          if (response.data['og:title']) {
+            const sluggedTitle = slugify(response.data['og:title']);
+            store.dispatch(changeNewCardField(response.data['og:title'], 'title'));
+            store.dispatch(changeNewCardField(sluggedTitle, 'slug'));
+          }
+          if (response.data['og:url']) {
+            const websiteDomain = capitalizeFirstLetter(getDomainName(response.data['og:url']));
+            store.dispatch(changeNewCardField(response.data['og:url'], 'url'));
+            store.dispatch(changeNewCardField(websiteDomain, 'website'));
+          }
+          if (response.data['og:image']) {
+            store.dispatch(changeNewCardField(response.data['og:image'], 'image'));
+          }
+          store.dispatch(setLoading(false));
         },
       ).catch(
         (error) => console.log('Error Opengraph', error),
       );
+      next(action);
       break;
     }
     case ADD_CARD: {
@@ -118,6 +158,7 @@ export default (store) => (next) => (action) => {
       ).catch(
         () => console.log('error'),
       );
+      next(action);
       break;
     }
     case LOGIN: {
@@ -133,21 +174,38 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('response.data', response.data);
+          console.log('response.data', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
-          store.dispatch(connectUser(response.data));
+          store.dispatch(connectUser(response.data.user));
           store.dispatch(resteConnectingFields());
           store.dispatch(toggleLogged());
-          console.log('response.headers :', response.headers);
+          console.log('Le Token :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
         },
       ).catch(
         () => console.log('error'),
       );
+      next(action);
+      break;
+    }
+    case FETCH_BOOKMARKED_CARDS: {
+      store.dispatch(setLoading(true));
+      const { id } = store.getState().userCurrent;
+      console.log('je veux les favoris du user ', id);
+      axiosInstance
+        .get(`/users/${id}/bookmarks`)
+        .then(
+          (response) => {
+            store.dispatch(setLoading(false));
+            console.log('mes cartes favories sont ', response.data);
+            store.dispatch(saveBookmarkedCards(response.data));
+            // console.log(response.data.data);
+          },
+        );
       next(action);
       break;
     }
@@ -165,17 +223,17 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('il faut enregister ces informations', response.data);
+          console.log('il faut enregister ces informations', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
-          store.dispatch(connectUser(response.data));
+          store.dispatch(connectUser(response.data.user));
           store.dispatch(resetNewUserFields());
           store.dispatch(toggleLogged());
-          console.log('Le token enregistré est :', response.data.token);
+          console.log('Le token enregistré est :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
         },
       ).catch(
         () => console.log('error'),

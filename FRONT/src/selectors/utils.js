@@ -16,3 +16,5 @@ export const getDomainName = (url) => {
   const domain = (new URL(url));
   return domain.hostname.replace('www.', '');
 };
+
+export const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
