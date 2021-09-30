@@ -18,6 +18,7 @@ router.get('/cards', cardController.findAllCards);
     router.post('/cards/save',checkJwt, cardController.save);
 //modification d'une carte
 router.post('/cards/:id',checkJwt, cardController.save);
+router.delete('/cards/:id/users', checkJwt, cardController.deleteCardById);
 
 //résultat de recherche
 router.get('/cards/search?',cardController.findQueryAllCards);

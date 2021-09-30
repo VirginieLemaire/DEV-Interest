@@ -15,7 +15,7 @@ const cardsController = {
             const limit = parseInt(size);
             const skip = (page - 1) * size;
             const card = await Cards.findAllCards(limit, skip);
-            response.setHeader('Authorization', jwt.makeToken(request.userId));
+            //response.setHeader('Authorization', jwt.makeToken(request.userId));
             if(card === "") {
                 response.status(200).json('Pas de contenu !');
             }else {
@@ -51,7 +51,7 @@ const cardsController = {
             const card = await Cards.findQueryAllCards(keyword,limit,skip);
             console.log(card);
             
-            response.setHeader('Authorization', jwt.makeToken(request.userId));
+            //response.setHeader('Authorization', jwt.makeToken(request.userId));
             if(card === "") {
                 response.status(200).json('Pas de contenu !');
             }else {
@@ -85,6 +85,20 @@ const cardsController = {
            //envoyer l'info au front
            response.status(500).json(error.message);
         }
-    }
+    },
+    deleteCardById: async (request, response) => {
+        try {
+            const id_card = parseInt(request.params.id,10);
+            console.log(id_card);
+            const card = await new Cards().deleteCard(id_card);
+            response.status(201).json({success: true});
+
+        } catch(error) {
+           //lire l'erreur
+           console.trace(error);
+           //envoyer l'info au front
+           response.status(500).json(error.message);
+        }
+    },
 }
 module.exports = cardsController;

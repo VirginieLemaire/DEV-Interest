@@ -85,5 +85,20 @@ class Cards {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
+    async deleteCard(id_card) {
+        try {
+            
+            //si l'utilisateur n'est pas le contributeur
+            if (!this.id === id_card) {
+                throw new Error('Identification failed');
+            }
+            await client.query('DELETE FROM "card" WHERE id =$1', [id_card])
+        } catch (error) {
+            //voir l'erreur en console
+            console.trace(error);
+            //renvoyer l'erreur au front
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
 }
 module.exports = Cards;    
