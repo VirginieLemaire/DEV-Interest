@@ -49,3 +49,19 @@ export const toggleDisplayUrl = () => (
     type: TOGGLE_DISPLAY_URL,
   }
 );
+
+export const SET_MORE = 'SET_MORE';
+export const setMore = (more) => (
+  {
+    type: SET_MORE,
+    more,
+  }
+);
+
+export const SET_MORE_HOME = 'SET_MORE_HOME';
+export const setMoreHome = (more) => (
+  {
+    type: SET_MORE_HOME,
+    more,
+  }
+);

@@ -67,7 +67,6 @@ const Home = () => {
         //   </div>
         // </div>
       }
-      <Loader />
       <HomeCards />
     </div>
   );
