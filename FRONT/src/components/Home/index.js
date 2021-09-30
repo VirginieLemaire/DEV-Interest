@@ -35,8 +35,8 @@ const Home = () => {
   // randomArrayShuffle(tags);
 
   return (
-    <Slider />
     <div className={darkMode ? 'home home--dark' : 'home'}>
+    <Slider />
       {
         isLogged ? <p className="home__catch-title">Salut {username}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
       }
