@@ -44,9 +44,13 @@ const userController = {
     //S'enregistrer
     signUp: async (request, response) => {
         try {
+            
             const user = await new User(request.body).signUp();
-            response.setHeader('Authorization', jwt.makeToken(user.id));
-            response.status(201).json(user);
+            console.log('jes suis dans le controller', user);
+            const accessToken = jwt.makeToken(user.id);
+            response.send({user});
+            //response.status(201).json(user);
+            
 
         } catch(error) {
            //lire l'erreur
