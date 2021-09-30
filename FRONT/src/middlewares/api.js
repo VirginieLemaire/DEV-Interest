@@ -15,14 +15,18 @@ import {
 } from '../action/cardsSearch';
 import {
   setAppLoading, setLoading, setMore, setMoreHome,
+  isLoading,
 } from '../action/displayOptions';
 
-import { DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields, updateUserCurrent } from '../action/userUpdate';
+import {
+  DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields, updateUserCurrent,
+} from '../action/userUpdate';
 
-import { isLoading } from '../action/displayOptions';
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
-import { FETCH_BOOKMARKED_CARDS, saveBookmarkedCards, toggleLogged, userLogout } from '../action/userCurrent';
+import {
+  FETCH_BOOKMARKED_CARDS, saveBookmarkedCards, toggleLogged, userLogout,
+} from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
 
@@ -210,20 +214,20 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('response.data', response.data.user);
+          console.log('lors du login, je reçois ces données (response.data.user)', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resteConnectingFields());
           store.dispatch(toggleLogged());
-          console.log('Le Token :', response.data.accessToken);
+          console.log('Le Token reçu lors du login (response.data.accessToken) :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
-        () => console.log('error'),
+        (error) => console.log('Erreur lors du login et voici le error.response: ', error.response),
       );
       next(action);
       break;
@@ -259,20 +263,20 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('il faut enregister ces informations après le signup', response.data.user);
+          console.log('il faut enregister ces informations après le signup (response.data)', response.data.user);
           // 2 - l'api nous renvoie nos infos, dont notre token jwt
           // c'est à a charge de le stocker - ici, nous avons choisi
           // de le stocker dans le state, c'est donc le reducer qui s'en chargera
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resetNewUserFields());
           store.dispatch(toggleLogged());
-          console.log('Le token enregistré est :', response.data.accessToken);
+          console.log('Le token enregistré lors du signup est :', response.data.accessToken);
           // autre possibilité, on stocke directement notre token dans l'objet axios
           // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
-        () => console.log('error'),
+        (error) => console.log('Erreur lors du signup et voici le error.response: ', error.response),
       );
       next(action);
       break;
@@ -281,7 +285,7 @@ export default (store) => (next) => (action) => {
       const { id } = store.getState().userCurrent;
       const { email, username, passwordNew: password } = store.getState().userUpdate;
 
-      console.log (`Je veux mettre à jour l'user ayant pour id ${id}`);
+      console.log(`Je veux mettre à jour l'user ayant pour id ${id}`);
 
       axiosInstance.put(
         `/users/${id}`,
@@ -293,12 +297,12 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('il faut enregister ces informations', response.data.user);
-          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken,
-          store.dispatch(connectUser({ email, username }));
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
+          store.dispatch(connectUser(email, username));
           store.dispatch(resetUpdateUserFields());
-        } 
+        },
       ).catch(
-        (error) => console.log(error),
+        (error) => console.log('Erreur lors de l update du user (error.response) ', error.response),
       );
       next(action);
       break;
@@ -306,12 +310,12 @@ export default (store) => (next) => (action) => {
     case DELETE_USER_CURRENT: {
       const { id } = store.getState().userCurrent;
 
-      console.log (`Je veux supprimer l'user ayant pour id ${id}`);
+      console.log(`Je veux supprimer l'user ayant pour id ${id}`);
 
       axiosInstance.delete(
-        `/users/${id}`
+        `/users/${id}`,
       ).then(
-        response => console.log(response.data),
+        (response) => console.log(response.data),
         store.dispatch(userLogout()),
       ).catch(
         (error) => console.log(error),
