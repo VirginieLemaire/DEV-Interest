@@ -14,6 +14,7 @@ import { fetchCardsHome } from '../../action/cardsHome';
 import Loader from '../GenericComponents/Loader';
 
 const Home = () => {
+
   const dispatch = useDispatch();
 
   const { username, isLogged } = useSelector((state) => state.userCurrent);
