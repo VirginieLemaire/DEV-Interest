@@ -1,5 +1,8 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
+
+import { fetchCardsHome } from '../../action/cardsHome';
 
 import './app.scss';
 
@@ -9,53 +12,72 @@ import Header from '../Header';
 import ConnexionModal from '../ConnexionModal';
 import CardDetails from '../CardDetails';
 import Page404 from '../Page404';
-import UserBookmarks from '../UserAccount/UserBookmarks';
+import UserBookmarks from '../UserBookmarks';
 import AddCard from '../AddCard';
 import Legal from '../Legal';
 import TermsOfUse from '../TermsOfUse';
 import About from '../About';
 import UserAccount from '../UserAccount';
 import SearchResults from '../SearchResults';
-import SignUp from '../SignUp';
 import AddCardModal from '../AddCardModal';
+import ScrollTop from '../ScrollTop';
+import AppLoader from '../GenericComponents/AppLoader';
+import Loader from '../GenericComponents/Loader';
 
 const App = () => {
-  const { cards } = useSelector((state) => state.cards);
-  const { username, addCardModal, connexionModal } = useSelector((state) => state.user);
-  console.log(cards);
+  const dispatch = useDispatch();
+
+  const {
+    darkMode, appLoading, addCardModal, connexionModal,
+  } = useSelector((state) => state.displayOptions);
+
+  const { username, id } = useSelector((state) => state.userCurrent);
+
+  const cardsHome = useSelector((state) => state.cardsHome.cards);
+
+  const cardsSearch = useSelector((state) => state.cardsSearch.cards);
+
+  const mergedCards = [...cardsHome, ...cardsSearch];
+
+  useEffect(() => {
+    dispatch(fetchCardsHome());
+  }, []);
+
+  if (appLoading) return <AppLoader />;
 
   return (
-    <div className="app">
+    <div className={darkMode ? 'app--dark' : 'app'}>
       <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''}`}>
         <div className="content-wrap">
+          <ScrollTop />
           <Header />
           <Switch>
-            <Route component={Home} exact path="/" />
-            <Route exac path="/search">
+            <Route path="/" exact component={Home} />
+            <Route path="/search" exact>
+              <Loader />
               <SearchResults />
             </Route>
             {
-                cards.map(
-                  (card) => (
-                    <Route key={card.id} path={`/card/${card.slug}/${card.id}`} exact>
-                      <CardDetails />
-                    </Route>
-                  ),
-                )
-              }
+              mergedCards.map(
+                (card) => (
+                  <Route key={card.id} path={`/cards/${card.slug}/${card.id}`} exact>
+                    <CardDetails key={card.id} card={card} />
+                  </Route>
+                ),
+              )
+            }
             <Route path="/add-card" exact>
+              <Loader />
               <AddCard />
             </Route>
-            <Route component={SignUp} path="/signup" exact />
-            <Route path={`${username.toLowerCase()}/bookmarks`} exact>
+            <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact>
+              <Loader />
               <UserBookmarks />
             </Route>
-            <Route path={`${username.toLowerCase()}/account`} exact>
-              <UserAccount />
-            </Route>
-            <Route component={Legal} path="/legal" exact />
-            <Route component={TermsOfUse} path="/terms-of-use" exact />
-            <Route component={About} path="/about" exact />
+            <Route path={`/${username.toLowerCase()}/account`} exact component={UserAccount} />
+            <Route path="/legal" exact component={Legal} />
+            <Route path="/terms-of-use" exact component={TermsOfUse} />
+            <Route path="/about" exact component={About} />
             <Route component={Page404} />
           </Switch>
         </div>

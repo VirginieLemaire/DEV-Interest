@@ -1,29 +1,73 @@
 @use '../../styles/vars';
 .search-container{
+  padding: 3rem 0;
   display: flex;
   justify-content: center;
 }
 
 .search-results{
-
+  padding: 0 3rem;
+ width: 100vw;
 }
 
-.my-masonry-grid {
+.masonry-grid {
   display: -webkit-box; /* Not needed if autoprefixing */
   display: -ms-flexbox; /* Not needed if autoprefixing */
   display: flex;
   margin-left: -30px; /* gutter size offset */
   width: auto;
 }
-.my-masonry-grid_column {
+.masonry-grid_column {
   padding-left: 50px; /* gutter size */
   background-clip: padding-box;
 }
 
 /* Style your items */
-.my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
+.masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
   background: transparent;
   margin-bottom: 50px;
 }
 
+.search-loading{
+  &-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+  }
 
+  &-heart{
+    height: 100px;
+    width: 100px;
+    animation: heartbeat 1s infinite;
+  }
+}
+
+@keyframes heartbeat
+{
+  0%
+  {
+    transform: scale( .75 );
+  }
+  20%
+  {
+    transform: scale( 1 );
+  }
+  40%
+  {
+    transform: scale( .75 );
+  }
+  60%
+  {
+    transform: scale( 1 );
+  }
+  80%
+  {
+    transform: scale( .75 );
+  }
+  100%
+  {
+    transform: scale( .75 );
+  }
+}

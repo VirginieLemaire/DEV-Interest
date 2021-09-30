@@ -10,9 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "pg": "^8.7.1"
+    "fetch-opengraph": "^1.0.30",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.7.1",
+    "sanitizer": "^0.1.3"
   }
 }

@@ -1,36 +1,43 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { showAddCardModal } from '../../action/user';
+import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
 
-import Field from '../GenericComponents/Field';
+import { changeNewCardField, getOpengraphData } from '../../action/cardNew';
+import { showAddCardModal, showConnexionModal } from '../../action/displayOptions';
+
+import LogoDEVLovePPER from '../../assets/LogoDEVLovePPER.svg';
+
 import Button from '../GenericComponents/Button';
 
 import './add-card-modal.scss';
-import { changeNewCardField } from '../../action/cards';
+import SubmitButton from '../GenericComponents/SubmitButton';
+import UrlField from '../GenericComponents/UrlField';
 
 const AddCardModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const addCardModal = useSelector((state) => state.user.addCardModal);
+  const { url } = useSelector((state) => state.cardNew);
+  const { darkMode, addCardModal } = useSelector((state) => state.displayOptions);
+  const { isLogged } = useSelector((state) => state.userCurrent);
 
-  const newCardUrl = useSelector((state) => state.cards.newCardUrl);
-
-  const handleAddCardLinkChange = (event) => {
-    dispatch(changeNewCardField(event.target.value, 'newCardUrl'));
-  };
-
-  const handleCloseModalClick = () => {
-    dispatch(showAddCardModal());
-  };
-
-  const handleCloseModalAndRedirectClick = () => {
-    dispatch(showAddCardModal());
-    history.push('/add-card');
-  };
-
-  const handleSubmitAddCardLink = (e) => {
+  const handleModalAddCardUrlSubmit = (e) => {
     e.preventDefault();
+    if (isLogged) {
+      dispatch(showAddCardModal());
+      dispatch(getOpengraphData());
+      history.push('/add-card');
+    }
+  };
+
+  const handleConnexionClick = () => {
+    dispatch(showAddCardModal());
+    dispatch(showConnexionModal());
+  };
+
+  const handleHomeRedirect = () => {
+    history.push('/');
+    dispatch(showConnexionModal());
   };
 
   if (!addCardModal) {
@@ -39,34 +46,64 @@ const AddCardModal = () => {
 
   return (
     <div className="add-card-modal__container">
-      <div className="add-card-modal__close">
-        Close
-      </div>
-      <div className="add-card-modal" onClick={handleCloseModalClick}>
-        <div className="add-card-modal__content" onClick={(e) => e.stopPropagation()}>
+      <div className="add-card-modal" onClick={() => dispatch(showAddCardModal())}>
+        <div className={darkMode ? 'add-card-modal__content modal_animation add-card-modal__content--dark' : 'add-card-modal__content modal_animation'} onClick={(e) => e.stopPropagation()}>
           <div className="add-card-modal__header">
-            <h4 className="add-card-modal__title">Partager une nouvelle ressource</h4>
+            <div className="connexion-modal__header-header">
+              <div className="connexion-modal__header-header--item" />
+              <div className="connexion-modal__header-header--item">
+                <img className="connexion-modal__logo" src={LogoDEVLovePPER} alt="logo court" onClick={handleHomeRedirect} />
+              </div>
+              <div className="connexion-modal__header-header--item" onClick={() => dispatch(showAddCardModal())}>
+                <GrFormClose className="close-icon" />
+              </div>
+            </div>
+            <h4 className="add-card-modal__title">Partage une nouvelle ressource</h4>
           </div>
-          <form autoComplete="off" onSubmit={handleSubmitAddCardLink}>
-            <div className="add-card-modal__body">
-              <Field
-                value={newCardUrl}
-                type="text"
-                name="add-card-url"
-                placeholder="Lien URL de votre ressource..."
-                handleChange={handleAddCardLinkChange}
-              />
-            </div>
-            <div className="add-card-modal__footer">
-              <Button
-                submit
-                styling="full"
-                handleClick={handleCloseModalAndRedirectClick}
-                content="Envoyer"
-                color
-              />
-            </div>
-          </form>
+          {
+              (!isLogged) && (
+                <div className="add-card-modal__connexion-warning__container">
+                  <div
+                    className="add-card-modal__connexion-warning"
+                  >
+                    Il faut être connecter pour pouvoir ajouter une nouvelle ressource !
+                  </div>
+                  <div className="add-card-modal__footer">
+
+                    <Button
+                      submit
+                      styling="full"
+                      handleClick={handleConnexionClick}
+                      content="Se connecter"
+                      color
+                    />
+                  </div>
+                </div>
+              )
+            }
+          {
+              (isLogged) && (
+                <form autoComplete="off" onSubmit={handleModalAddCardUrlSubmit}>
+                  <div className="add-card-modal__body">
+                    <UrlField
+                      value={url}
+                      type="url"
+                      name="add-card-url"
+                      placeholder="Lien URL de votre ressource..."
+                      required
+                      handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'url'))}
+                    />
+                  </div>
+                  <div className="add-card-modal__footer">
+                    <SubmitButton
+                      styling="full"
+                      content="Envoyer"
+                      color
+                    />
+                  </div>
+                </form>
+              )
+            }
         </div>
       </div>
     </div>

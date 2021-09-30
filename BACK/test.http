@@ -1,0 +1,27 @@
+@baseurl=http://localhost:3000
+
+### --- login
+POST {{baseurl}}/login
+Content-Type: application/json
+
+{
+    "email": "virginie@mail.io",
+    "password": "1234",
+    "username": "Virginie"
+}
+
+### --- Afficher les cartes
+GET {{baseurl}}/cards
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMjgxNTIzMSwiZXhwIjoxNjMyODE3MDMxfQ.8Dgp65KsU208HzMIn0qohH8Tu2ynvGF484c7XHzRsuA
+
+### --- Afficher les favoris par l'id
+GET {{baseurl}}/users/5/bookmarks
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMjY3NDMzNywiZXhwIjoxNjMyNjc2MTM3fQ.OWIzWn5bFNxBpBacsmRLQ_C_UFTfmCiZ9d04yFRWJQQ
+
+### - afficher le compte utilisateur
+GET {{baseurl}}/users/4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMjgxNDYxNSwiZXhwIjoxNjMyODE2NDE1fQ.IsHi91sj0XJy1L5DuvsKPIqdittUXdCLQjyLH6vMjzg
+
+### - ajoute un favori
+POST {{baseurl}}/cards/65/bookmarks
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTYzMjg0OTMxMiwiZXhwIjoxNjMyODUxMTEyfQ.H2_zECnqSH7QlvAMwN5f3VSwWvyB4LSCZYMYPLYRyFI

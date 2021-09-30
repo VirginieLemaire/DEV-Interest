@@ -1,14 +1,20 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Masonry from 'react-masonry-css';
+import { LoadMoreResults } from '../../action/cardsSearch';
 
 import './search-results.scss';
 
 import Card from '../Card';
+import AppLoader from '../GenericComponents/AppLoader';
 
 const SearchResults = () => {
-  const cards = useSelector((state) => state.cards.cards);
+  const dispatch = useDispatch();
 
-  const breakpoints = {
+  const { cards } = useSelector((state) => state.cardsSearch);
+  const { loading, more } = useSelector((state) => state.displayOptions);
+
+  const breakpointsColumnsObj = {
     default: 7,
     2500: 6,
     2050: 5,
@@ -18,24 +24,33 @@ const SearchResults = () => {
     700: 1,
   };
 
+  if (loading) return null;
+
   return (
     <div className="search-container">
       <div className="search-results">
-        <Masonry
-          breakpointCols={breakpoints}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
+        <InfiniteScroll
+          dataLength={cards.length}
+          next={() => dispatch(LoadMoreResults())}
+          hasMore={more}
+          loader={more ? null : (<AppLoader />)}
         >
-          {
-          cards.map(
-            (card) => (
-              <div className="masonry-div" key={card.id}>
-                <Card key={card.id} card={card} />
-              </div>
-            ),
-          )
-        }
-        </Masonry>
+          <Masonry
+            breakpointCols={breakpointsColumnsObj}
+            className="masonry-grid"
+            columnClassName="masonry-grid_column"
+          >
+            {
+                cards.map(
+                  (card) => (
+                    <div className="masonry-div" key={card.id}>
+                      <Card key={card.id} card={card} />
+                    </div>
+                  ),
+                )
+              }
+          </Masonry>
+        </InfiniteScroll>
       </div>
     </div>
   );

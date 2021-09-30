@@ -3,9 +3,13 @@
 .home {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 6rem;
   align-items: center;
   color: vars.$text-color;
+
+  &--dark{
+    color: vars.$white-color;
+  }
 
   &__catch-title {
     margin-top: 4rem;
@@ -37,12 +41,6 @@
       color: vars.$light-color;
       font-size: .8rem;
       font-weight: bold;
-
-      &__tag {
-        border-radius: vars.$border-radius-input;
-        padding: .5rem 1rem;
-        white-space: nowrap;
-      }
     }
   }
 

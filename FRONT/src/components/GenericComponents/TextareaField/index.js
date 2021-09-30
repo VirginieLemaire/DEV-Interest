@@ -11,6 +11,8 @@ const TextareaField = ({
   placeholder,
   handleChange,
   required,
+  minLength,
+  maxLength,
 }) => {
   const inputId = `textarea-field-${name}`;
 
@@ -26,6 +28,8 @@ const TextareaField = ({
         placeholder={placeholder}
         name={name}
         required={required}
+        minLength={minLength}
+        maxLength={maxLength}
       />
 
       <label
@@ -44,12 +48,16 @@ TextareaField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
+  minLength: PropTypes.string,
+  maxLength: PropTypes.string,
 };
 
 // Valeurs par défaut pour les props
 TextareaField.defaultProps = {
   value: '',
   required: false,
+  minLength: '',
+  maxLength: '',
 };
 
 // == Export

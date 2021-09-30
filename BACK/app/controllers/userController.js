@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const jwt = require('../services/jwt');
 
 const userController = {
     //Trouver une user (nécessite un id)
@@ -11,6 +12,94 @@ const userController = {
             console.log(error);
         }
     },
+    //Renvoyer les infos user suite au login - ou une erreur
+    login: async (request, response) => {
+        try {
+            //récupérer les infos de login
+            const login = request.body
+            //authentification
+        
+            const user = await new User(login).findUser();
+            //console.log({user});
+            //response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+            response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+            response.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+            //response.cookie('Authorization' , jwt.makeToken(user.id), { maxAge: 1800});
+            //response.setHeader(`id = ${user.id}`);
+            response.setHeader('Authorization' , jwt.makeToken(user.id));
+            response.status(200).json(user);
+            
+        } catch (error) {
+            //lire l'erreur
+            console.trace(error);
+            //envoyer l'info au front
+            response.status(500).json(error.message);
+        }
+    },
+    //S'enregistrer
+    signUp: async (request, response) => {
+        try {
+            const user = await new User(request.body).signUp();
+            response.setHeader('Authorization', jwt.makeToken(user.id));
+            response.status(201).json(user);
+
+        } catch(error) {
+           //lire l'erreur
+           console.trace(error);
+           //envoyer l'info au front
+           response.status(500).json(error.message);
+        }
+    },
+    deleteUserById: async (request, response) => {
+        try {
+            const id = parseInt(request.params.id,10);
+            console.log(id);
+            const user = await new User(id).deleteUserById(id);
+            response.setHeader('Authorization', jwt.makeToken(id));
+            response.status(201).json({success: true});
+
+        } catch(error) {
+           //lire l'erreur
+           console.trace(error);
+           //envoyer l'info au front
+           response.status(500).json(error.message);
+        }
+    },
+     //update a user
+     update : async (request, response) => {
+        try {
+            //UPDATE
+            const user = await new User(request.body).update();
+
+            response.status(204).json({success: true});
+            
+        } catch(error) {
+           //lire l'erreur
+           console.trace(error);
+           //envoyer l'info au front
+           response.status(500).json(error.message);
+        }
+    },
+    //tester la validation de ce token (qui fait la requête)
+    getInfos: (request, response,next) => {
+        try {
+            console.log(request.userId);
+            const infos = {
+                message: "Ceci est un message obtenu après avoir vérifié qui a fait la requête",
+            }
+            //créer un nouveau token
+            // pour avoir l'id il faut qu'il soit stocké quelque part -> dans la request grâce au middleware
+            response.setHeader('Authorization', jwt.makeToken(request.userId));
+            response.status(200).json(infos);
+            next();
+            
+        } catch (error) {
+            console.trace(error);
+            //renvoyer l'info au front
+            response.status(500).json(error.message);
+        }
+    }
+
 }
 
 module.exports = userController;
