@@ -12,7 +12,9 @@ import './header.scss';
 import SearchBar from '../GenericComponents/SearchBar';
 import Button from '../GenericComponents/Button';
 import ToggleButton from '../GenericComponents/ToggleButton';
-import { darkModeOff, darkModeToggle, showAddCardModal, showConnexionModal } from '../../action/displayOptions';
+import {
+  darkModeOff, darkModeToggle, showAddCardModal, showConnexionModal,
+} from '../../action/displayOptions';
 import { userLogout } from '../../action/userCurrent';
 
 // custom hook to get the current pathname in React
@@ -37,7 +39,7 @@ const Header = () => {
   };
 
   const handleLogoutButtonClick = () => {
-    dispatch(darkModeOff());
+    // dispatch(darkModeOff());
     dispatch(userLogout());
     history.push('/');
   };
@@ -75,7 +77,6 @@ const Header = () => {
             content={`Hello ${username}!`}
           />
           <div className="header__user-icons header__user-icons--logout" onClick={handleLogoutButtonClick}><RiShutDownLine /></div>
-          <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
         </div>
         )}
         { !isLogged && (
@@ -87,6 +88,8 @@ const Header = () => {
           content="Se connecter"
         />
         )}
+        <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
+
       </div>
     </div>
   );

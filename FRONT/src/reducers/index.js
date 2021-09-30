@@ -5,6 +5,7 @@ import displayOptionsReducer from './displayOptions';
 import userCurrentReducer from './userCurrent';
 import userConnectReducer from './userConnect';
 import userCreateReducer from './userCreate';
+import userUpdateReducer from './userUpdate';
 
 import cardNewReducer from './cardNew';
 import cardsSearchReducer from './cardsSearch';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   userCreate: userCreateReducer,
   userCurrent: userCurrentReducer,
   userConnect: userConnectReducer,
+  userUpdate: userUpdateReducer,
 });
 
 export default rootReducer;

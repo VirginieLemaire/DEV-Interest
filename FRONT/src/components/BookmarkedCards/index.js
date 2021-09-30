@@ -1,18 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-
+import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
 
-import { LoadMoreResults, NextPage } from '../../action/cardsSearch';
-
-import './search-results.scss';
+import './bookmarked-cards.scss';
 
 import Card from '../Card';
 
-const SearchResults = () => {
-  // const dispatch = useDispatch();
-
-  const { cards } = useSelector((state) => state.cardsSearch);
+const BookmarkedCards = () => {
+  const { bookmarkedCards } = useSelector((state) => state.userCurrent);
   const { loading } = useSelector((state) => state.displayOptions);
 
   const breakpointsColumnsObj = {
@@ -25,18 +19,6 @@ const SearchResults = () => {
     700: 1,
   };
 
-  // const handleScroll = (e) => {
-  //   const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-
-  //   if (scrollHeight - scrollTop === clientHeight) {
-  //     dispatch(NextPage());
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   dispatch(LoadMoreResults());
-  // }, [page]);
-
   if (loading) return null;
 
   return (
@@ -48,7 +30,7 @@ const SearchResults = () => {
           columnClassName="masonry-grid_column"
         >
           {
-                cards.map(
+                bookmarkedCards.map(
                   (card) => (
                     <div className="masonry-div" key={card.id}>
                       <Card key={card.id} card={card} />
@@ -61,4 +43,5 @@ const SearchResults = () => {
     </div>
   );
 };
-export default SearchResults;
+
+export default BookmarkedCards;

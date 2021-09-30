@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
-import logoDevLovePper from '../../assets/LogoDEVLovePPER.svg';
 
 import './home-cards.scss';
 
@@ -10,7 +9,7 @@ const HomeCards = () => {
   const { cards } = useSelector((state) => state.cardsHome);
   const { loading } = useSelector((state) => state.displayOptions);
 
-  console.log('home cards', cards);
+  // console.log('home cards', cards);
 
   const breakpointsColumnsObj = {
     default: 7,
@@ -22,26 +21,17 @@ const HomeCards = () => {
     700: 1,
   };
 
+  if (loading) return null;
+
   return (
     <div className="search-container">
-      {
-        (loading) && (
-        <div className="search-loading-container">
-          <div className="search-loading-heart">
-            <img src={logoDevLovePper} alt="DEVLovePPER Logo" />
-          </div>
-        </div>
-        )
-      }
-      {
-        (!loading) && (
-          <div className="search-results">
-            <Masonry
-              breakpointCols={breakpointsColumnsObj}
-              className="masonry-grid"
-              columnClassName="masonry-grid_column"
-            >
-              {
+      <div className="search-results">
+        <Masonry
+          breakpointCols={breakpointsColumnsObj}
+          className="masonry-grid"
+          columnClassName="masonry-grid_column"
+        >
+          {
                 cards.map(
                   (card) => (
                     <div className="masonry-div" key={card.id}>
@@ -50,11 +40,8 @@ const HomeCards = () => {
                   ),
                 )
               }
-            </Masonry>
-          </div>
-        )
-      }
-
+        </Masonry>
+      </div>
     </div>
   );
 };

@@ -17,23 +17,22 @@ import AddCard from '../AddCard';
 import Legal from '../Legal';
 import TermsOfUse from '../TermsOfUse';
 import About from '../About';
-import UserAccount from '../UserAccount';
+import UserAccount from '../userAccount';
+import UserAccountUpdate from '../UserAccountUpdate';
 import SearchResults from '../SearchResults';
 import AddCardModal from '../AddCardModal';
 import ScrollTop from '../ScrollTop';
+import AppLoader from '../GenericComponents/AppLoader';
+import Loader from '../GenericComponents/Loader';
 
 const App = () => {
   const dispatch = useDispatch();
 
   const {
-    darkMode, loading, addCardModal, connexionModal,
+    darkMode, appLoading, addCardModal, connexionModal,
   } = useSelector((state) => state.displayOptions);
 
   const { username, id } = useSelector((state) => state.userCurrent);
-
-  useEffect(() => {
-    dispatch(fetchCardsHome());
-  }, []);
 
   const cardsHome = useSelector((state) => state.cardsHome.cards);
 
@@ -41,9 +40,11 @@ const App = () => {
 
   const mergedCards = [...cardsHome, ...cardsSearch];
 
-  // if (loading) {
-  //   return 'Loading...';
-  // }
+  useEffect(() => {
+    dispatch(fetchCardsHome());
+  }, []);
+
+  if (appLoading) return <AppLoader />;
 
   return (
     <div className={darkMode ? 'app--dark' : 'app'}>
@@ -53,7 +54,10 @@ const App = () => {
           <Header />
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/search" exact component={SearchResults} />
+            <Route path="/search" exact>
+              <Loader />
+              <SearchResults />
+            </Route>
             {
               mergedCards.map(
                 (card) => (
@@ -63,9 +67,16 @@ const App = () => {
                 ),
               )
             }
-            <Route path="/add-card" exact component={AddCard} />
-            <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact component={UserBookmarks} />
+            <Route path="/add-card" exact>
+              <Loader />
+              <AddCard />
+            </Route>
+            <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact>
+              <Loader />
+              <UserBookmarks />
+            </Route>
             <Route path={`/${username.toLowerCase()}/account`} exact component={UserAccount} />
+            <Route path={`/${username.toLowerCase()}/account/update`} exact component={UserAccountUpdate} />
             <Route path="/legal" exact component={Legal} />
             <Route path="/terms-of-use" exact component={TermsOfUse} />
             <Route path="/about" exact component={About} />

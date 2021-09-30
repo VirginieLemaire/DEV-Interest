@@ -15,6 +15,7 @@ const Field = ({
   autoComplete,
   minlength,
   maxlength,
+  readOnly,
 }) => {
   const inputId = `field-${name}`;
 
@@ -34,6 +35,7 @@ const Field = ({
         required={required}
         minLength={minlength}
         maxLength={maxlength}
+        readOnly={readOnly}
       />
 
       <label
@@ -56,6 +58,7 @@ Field.propTypes = {
   autoComplete: PropTypes.string,
   minlength: PropTypes.string,
   maxlength: PropTypes.string,
+  readOnly: PropTypes.bool,
 };
 
 // Valeurs par défaut pour les props
@@ -66,6 +69,7 @@ Field.defaultProps = {
   autoComplete: 'off',
   minlength: '',
   maxlength: '',
+  readOnly: false,
 };
 
 // == Export

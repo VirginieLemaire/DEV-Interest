@@ -4,6 +4,11 @@
   flex-direction: column;
   margin: 3rem 0;
 
+  &--dark{
+    background-color: vars.$dark-color;
+    color: vars.$white-color;
+  }
+
   &--selected{
     color: vars.$primary-color;
   }
@@ -26,6 +31,11 @@
     background-color: vars.$white-color;
     padding: 1rem 0;
     box-shadow: 0px 24px 35px rgba(124, 81, 81, 0.10);
+
+    &--dark{
+      background-color: vars.$dark-color;
+      color: vars.$white-color;
+    }
 
     &--icon{
       font-size: 3rem;
