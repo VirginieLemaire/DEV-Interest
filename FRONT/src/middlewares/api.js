@@ -10,7 +10,7 @@ import {
   changeSearchField, FETCH_CARDS_SEARCH, saveCardsSearch,
 } from '../action/cardsSearch';
 
-import { DELETE_USER_CURRENT } from '../action/userUpdate';
+import { DELETE_USER_CURRENT, UPDATE_USER_CURRENT } from '../action/userUpdate';
 
 import { isLoading } from '../action/displayOptions';
 import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
@@ -181,6 +181,32 @@ export default (store) => (next) => (action) => {
         },
       ).catch(
         () => console.log('error'),
+      );
+      next(action);
+      break;
+    }
+    case UPDATE_USER_CURRENT: {
+      const { id } = store.getState().userCurrent;
+      const { email, username, password } = store.getState().userUpdate;
+
+      console.log (`Je veux mettre à jour l'user ayant pour id ${id}`);
+
+      axiosInstance.put(
+        `/users/${id}`,
+        {
+          email,
+          username,
+          password,
+        },
+      ).then(
+        (response) => {
+          console.log(response.data.user),
+          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken,
+          store.dispatch(connectUser(response.data.user));
+          store.dispatch(resetUpdateUserFields());
+        } 
+      ).catch(
+        (error) => console.log(error),
       );
       next(action);
       break;

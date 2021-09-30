@@ -19,8 +19,9 @@ const UserAccountUpdate = () => {
 
   const handleSubmitUpdateForm = (event) => {
     event.preventDefault();
-    // insérer vérifs
-    updateUserCurrent();
+    if(passwordNew === passwordNewVerification) {
+      dispatch(updateUserCurrent());
+    }
   }
 
   return (

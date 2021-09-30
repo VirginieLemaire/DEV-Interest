@@ -18,6 +18,7 @@ const UserAccount = () => {
 
   const handleDeleteButtonClick = () => {
     dispatch(deleteUserCurrent());
+    history.push('/');
   }
 
   return (

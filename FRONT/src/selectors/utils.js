@@ -16,3 +16,21 @@ export const getDomainName = (url) => {
   const domain = (new URL(url));
   return domain.hostname.replace('www.', '');
 };
+
+// const parseStringJavascript = (string) => {
+//   const lowerString = string.toLowerCase();
+//   const word = "javascript"
+//   return lowerString.includes(word);
+// }
+
+
+// const addTech = () => dispatch(changeNewCardTechs(1, 'techs'))
+
+// const isJavascript = parseStringJavascript(title);
+
+// console.log(isJavascript)
+
+// if (isJavascript) {
+//   console.log('IsJavascript');
+//   return addTech
+// }
