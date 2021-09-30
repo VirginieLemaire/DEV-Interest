@@ -2,7 +2,11 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+--delete update a user
 DROP FUNCTION update_user;
+
+--SET DEFAULT sur role_id
+ALTER TABLE "user" ALTER COLUMN role_id SET
+NOT NULL;
 
 COMMIT;
