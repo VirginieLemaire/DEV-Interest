@@ -44,7 +44,7 @@ class User {
     async findUser() {
         try {
             //comparer l'email de connexion avec la DB
-            const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]); //this vient du constructeur
+            const { rows } = await client.query(`SELECT * FROM user_bookmarks WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]); //this vient du constructeur
 
             //si pas de correspondance on renvoie une erreur
             if (!rows[0]) {
@@ -60,7 +60,8 @@ class User {
             const userSecure = {
                 id: rows[0].id,
                 username: rows[0].user_name,
-                email: rows[0].email
+                email: rows[0].email,
+                bookmarks: rows[0].email
             }
             console.log(userSecure);
             //renvoyer le user

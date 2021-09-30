@@ -21,7 +21,7 @@ class Cards {
     static async findQueryAllCards(keyword,limit,skip) {
         try {
             console.log({keyword}, {limit}, {skip});
-
+            //TODO  voir ARRAY searching https://docs.postgresql.fr/11/arrays.html#ARRAYS-SEARCHING
             //chercher dans toutes les colonnes sauf slug et URLs
             //il faut passer aussi les technos pour pouvoir chercher sur ses valeurs
             const {rows} = await client.query(`SELECT cards.*, tech.name FROM cards
