@@ -54,6 +54,7 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/search" exact>
+              <Loader />
               <SearchResults />
             </Route>
             {
