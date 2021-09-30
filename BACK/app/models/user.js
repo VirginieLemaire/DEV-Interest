@@ -44,7 +44,7 @@ class User {
     async findUser() {
         try {
             //comparer l'email de connexion avec la DB
-            const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]); //this vient du constructeur
+            const { rows } = await client.query(`SELECT * FROM user_bookmarks WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]); //this vient du constructeur
 
             //si pas de correspondance on renvoie une erreur
             if (!rows[0]) {
@@ -60,7 +60,8 @@ class User {
             const userSecure = {
                 id: rows[0].id,
                 username: rows[0].user_name,
-                email: rows[0].email
+                email: rows[0].email,
+                bookmarks: rows[0].bookmarks
             }
             console.log(userSecure);
             //renvoyer le user
@@ -123,15 +124,13 @@ class User {
 async update() {
         try {
             //bcrypt sur le password
-            const password = await bcrypt.hash(this.password, 10);
-            // date NOW avec formatage
-            const timeElapsed = Date.now();
-            const today = new Date(timeElapsed);
-            today = today.toISOString();
+            const passwordCrypted = await bcrypt.hash(this.password, 10);
+            this.password = passwordCrypted;
+            console.log('nouveau this: ',this);
+            
             //updater l'enregistrement 
-            await client.query('UPDATE "user" SET email= $1, user_name = $2, password = $3, createat = $4 WHERE email =$1', [this.email,this.username, password,today]);
-             console.log(this);
-             
+            await client.query('SELECT update_user($1)', [this]);
+
         } catch (error) {
             console.log('Erreur SQL', error.detail);
             //relancer l'erreur pout que le controller puisse l'attrapper et la renvoyer au front

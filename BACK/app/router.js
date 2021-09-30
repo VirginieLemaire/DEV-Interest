@@ -13,27 +13,28 @@ const router = Router();
 router.get('/cards', cardController.findAllCards);
 //ajout d'une carte
     //1. renseigner l'URL et fetcher les infos open graph
-    router.post('/cards', fetchUrlController.findUrl);
+    router.post('/cards',checkJwt, fetchUrlController.findUrl);
     //2. remplir le formulaire et envoyer au back
-    router.post('/cards/save', cardController.save);
+    router.post('/cards/save',checkJwt, cardController.save);
 //modification d'une carte
-router.post('/cards/:id', cardController.save);
+router.post('/cards/:id',checkJwt, cardController.save);
 
 //résultat de recherche
 router.get('/cards/search?',cardController.findQueryAllCards);
 
 // VOIR les cartes en favoris
-router.get('/users/:id/bookmarks', bookmarksController.findBookmarksByUserId);
+router.get('/users/:id/bookmarks',checkJwt, bookmarksController.findBookmarksByUserId);
 // Ajout d'une carte en favoris
-router.post('/cards/:id/bookmarks', checkJwt, userController.getInfos,bookmarksController.addBookmarkById);
+router.post('/cards/:id/bookmarks',checkJwt, bookmarksController.addBookmarkById);
 //Delete une carte des favoris
-router.delete('users/:id/bookmarks/:id', checkJwt);
+router.delete('/users/:id/bookmarks/:id',checkJwt, bookmarksController.deleteBookmarkById);
 
 //USERS by id
-router.get('/users/:id' , userController.findById);
+router.get('/users/:id' ,checkJwt, userController.findById);
 //DELETE USER BY ID
-router.delete('/users/:id' , userController.deleteUserById);
-router.put('/users/:id' , userController.update);
+router.delete('/users/:id' ,checkJwt, userController.deleteUserById);
+//modifier un user
+router.put('/users/:id' ,checkJwt, userController.update);
 
 //LOGIN - SIGNUP
 router.post('/login', userController.login);

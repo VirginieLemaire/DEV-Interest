@@ -22,14 +22,18 @@ const userController = {
             const user = await new User(login).findUser();
             //console.log({user});
             //response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-            response.header('Access-Control-Expose-Headers: Access-Token, Uid');
-            response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
-            response.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+            //response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+            //response.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
             //response.cookie('Authorization' , jwt.makeToken(user.id), { maxAge: 1800});
             //response.setHeader(`id = ${user.id}`);
-            response.setHeader('Authorization' , jwt.makeToken(user.id));
-            response.status(200).json(user);
-            
+            //response.setHeader('Authorization' , jwt.makeToken(user.id));
+            const accessToken = jwt.makeToken(user.id);
+            response.header('Authorization', accessToken).send({accessToken: accessToken,user});
+            // response.send({
+            //     accessToken: accessToken,
+            // });
+            // response.status(200).json(user);
+
         } catch (error) {
             //lire l'erreur
             console.trace(error);
@@ -69,9 +73,16 @@ const userController = {
      //update a user
      update : async (request, response) => {
         try {
+            //créer un objet avec toutes les données user à envoyer
+            let userDatas = {
+                id : request.params.id,
+                email : request.body.email,
+                password : request.body.password,
+                username : request.body.username
+            };
+ 
             //UPDATE
-            const user = await new User(request.body).update();
-
+            const user = await new User(userDatas).update();
             response.status(204).json({success: true});
             
         } catch(error) {
