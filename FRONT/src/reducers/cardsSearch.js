@@ -12,7 +12,7 @@ export const initialState = {
   lang: '',
   category: '',
   page: 1,
-  size: '',
+  size: 15,
 };
 
 const reducer = (state = initialState, action = {}) => {
