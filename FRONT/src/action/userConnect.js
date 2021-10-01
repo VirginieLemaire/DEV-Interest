@@ -15,7 +15,7 @@ export const login = () => (
 );
 
 export const RESET_CONNECTING_FIELDS = 'RESET_CONNECTING_FIELDS';
-export const resteConnectingFields = () => (
+export const resetConnectingFields = () => (
   {
     type: RESET_CONNECTING_FIELDS,
   }

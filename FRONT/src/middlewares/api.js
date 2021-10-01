@@ -21,11 +21,14 @@ import {
   DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields, updateUserCurrent,
 } from '../action/userUpdate';
 
-import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
+import {
+  connectUser, LOGIN, resetConnectingFields,
+} from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS,
-  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, userLogout,
+  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA,
+  REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, userLogout,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
@@ -45,11 +48,13 @@ export default (store) => (next) => (action) => {
         .get(`/cards?page=${firstPage}&size=${size}`)
         .then(
           (response) => {
-            console.log('la page daccueil charge les résultats suivants : ', response.data.data);
+            console.log(`La page d'ACCUEIL charge les résultats suivants (avec la config : page ${firstPage} et size ${size}): `);
+            console.log(`/cards?page=${firstPage}&size=${size}`);
+            console.table(response.data.data);
+
             store.dispatch(saveCardsHome(response.data.data));
             store.dispatch(NextPageHome());
             store.dispatch(setAppLoading(false));
-            // console.log(response.data.data);
             store.dispatch(setLoading(false));
           },
         );
@@ -62,9 +67,13 @@ export default (store) => (next) => (action) => {
         .get(`/cards?page=${page}&size=${size}`)
         .then(
           (response) => {
+            console.log(`En scrollant en bas de la page, la page d'ACCUEIL reçoit les résultats supplémentaires suivant (page ${page} et size ${size}):`);
+            console.log(`/cards?page=${page}&size=${size}`);
+            console.table(response.data.data);
+
             store.dispatch(saveMoreHomeCards(response.data.data));
             store.dispatch(NextPageHome());
-            console.log(`la résultat de la page ${page} sur la Home sont:`, response.data.data);
+
             if (response.data.data.length < size) {
               store.dispatch(setMoreHome(false));
             }
@@ -83,9 +92,12 @@ export default (store) => (next) => (action) => {
           .get(`/cards/search?keyword=${searchQuery}&page=${firstPage}&size=${size}`)
           .then(
             (response) => {
+              console.log(`Les résultats de la RECHERCHE avec le mot clé ${searchQuery} sont (page ${firstPage} et size ${size}):`);
+              console.log(`/cards/search?keyword=${searchQuery}&page=${firstPage}&size=${size}`);
+              console.table(response.data.data);
+
               store.dispatch(saveCardsSearch(response.data.data));
               store.dispatch(NextPage());
-              console.log(`la résultat de la recherche avec le mot clé ${searchQuery} est:`, response.data.data);
               store.dispatch(changeSearchField('', 'search'));
               store.dispatch(setLoading(false));
             },
@@ -97,8 +109,11 @@ export default (store) => (next) => (action) => {
           .get('/cards')
           .then(
             (response) => {
+              console.log('En faisont une RECHERCHE sans keyword, je reçois les résultats par défaut suivant');
+              console.log('/cards');
+              console.table(response.data.data);
+
               store.dispatch(saveCardsSearch(response.data.data));
-              // console.log(response.data.data);
               store.dispatch(setLoading(false));
             },
           );
@@ -112,9 +127,11 @@ export default (store) => (next) => (action) => {
         .get(`/cards/search?keyword=${currentSearch}&page=${page}&size=${size}`)
         .then(
           (response) => {
+            console.log(`En scrollant en bas de la page, je charge des résultats supplémentaires de la RECHERCHE avec le mot clé ${currentSearch} (page ${page} et size ${size})`);
+            console.table(response.data.data);
+
             store.dispatch(saveMoreCards(response.data.data));
             store.dispatch(NextPage());
-            console.log(`la résultat suivant page ${page} de la recherche avec le mot clé ${currentSearch} est:`, response.data.data);
             store.dispatch(changeSearchField('', 'search'));
             if (response.data.data.length < 15) {
               store.dispatch(setMore(false));
@@ -205,8 +222,6 @@ export default (store) => (next) => (action) => {
     case LOGIN: {
       const { email, password } = store.getState().userConnect;
 
-      // 1 - On conctace le point d'entrée de l'api pour s'authentifier
-      // On envoie ici nos identifiants de cnnection (email et password)
       axiosInstance.post(
         '/login',
         {
@@ -215,16 +230,12 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('lors du login, je reçois ces données (response.data.user)', response.data.user);
-          // 2 - l'api nous renvoie nos infos, dont notre token jwt
-          // c'est à a charge de le stocker - ici, nous avons choisi
-          // de le stocker dans le state, c'est donc le reducer qui s'en chargera
+          console.log('Connection du user réussi ! Je reçois du serveur ces données (response.data.user) :', response.data.user);
           store.dispatch(connectUser(response.data.user));
-          store.dispatch(resteConnectingFields());
+          store.dispatch(resetConnectingFields());
           store.dispatch(toggleLogged());
           console.log('Le Token reçu lors du login (response.data.accessToken) :', response.data.accessToken);
-          // autre possibilité, on stocke directement notre token dans l'objet axios
-          // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
@@ -242,10 +253,14 @@ export default (store) => (next) => (action) => {
         .then(
           (response) => {
             store.dispatch(setLoading(false));
-            console.log('mes cartes favories sont ', response.data);
+            console.table('Fetch de la route /users/:id/bookmarks');
+            console.table(`Les cartes favorites du user ${id} sont`);
+            console.table(response.data);
             store.dispatch(saveBookmarkedCards(response.data));
-            // console.log(response.data.data);
           },
+        )
+        .catch(
+          (error) => console.log(`le serveur n'a pas réussi à renvoyer la liste des favoris du user ${id}, il a retourné (error.response)`, error.response),
         );
       next(action);
       break;
