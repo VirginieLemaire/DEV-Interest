@@ -4,9 +4,10 @@ import Masonry from 'react-masonry-css';
 import './bookmarked-cards.scss';
 
 import Card from '../Card';
+import { useEffect } from 'react';
 
 const BookmarkedCards = () => {
-  const { bookmarkedCards } = useSelector((state) => state.userCurrent);
+  const { bookmarkedCards, bookmarks } = useSelector((state) => state.userCurrent);
   const { loading } = useSelector((state) => state.displayOptions);
 
   const breakpointsColumnsObj = {

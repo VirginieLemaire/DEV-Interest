@@ -8,6 +8,7 @@ import './card.scss';
 import { showAddCardModal } from '../../action/displayOptions';
 import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
 
+
 // == Composant
 const Card = ({ card }) => {
   const dispatch = useDispatch();

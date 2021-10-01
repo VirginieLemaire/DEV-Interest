@@ -29,7 +29,7 @@ import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS,
   FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA,
-  REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, userLogout,
+  REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, updateBookmarks, userLogout,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
@@ -72,7 +72,7 @@ export default (store) => (next) => (action) => {
       const { page, size } = store.getState().cardsHome;
 
       console.log('----------------------------------------------------------');
-      console.log(`Je demande au serveur de me retourner les cartes suivantes pour l'accueil (page ${page})`);
+      console.log(`En scrollant en bas, je demande au serveur de me retourner les cartes suivantes pour l'accueil (page ${page})`);
       console.log(`Route empreintée en GET : /cards?page=${page}&size=${size}`);
 
       axiosInstance
@@ -411,8 +411,8 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('Ajout au bookmarks réussi !', response);
-          store.dispatch(readUserCurrentData());
+          console.log('Ajout au bookmarks réussi ! Sa nouvelle liste de bookmarks mise à jour est:', response.data);
+          store.dispatch(updateBookmarks(response.data));
         },
       ).catch(
         (error) => console.log('ERREUR serveur lors de l\'ajout de bookmark (error.response): ', error.response),
@@ -431,8 +431,8 @@ export default (store) => (next) => (action) => {
         `/users/${id}/bookmarks/${action.cardId}`,
       ).then(
         (response) => {
-          console.log('Suppression de la carte des bookmarks réussi ! ', response);
-          store.dispatch(readUserCurrentData());
+          console.log('Suppression de la carte des bookmarks réussi ! Sa nouvelle liste de bookmarks mise à jour est: ', response.data);
+          store.dispatch(updateBookmarks(response.data));
         },
       ).catch(
         (error) => console.log('ERREUR serveur lors de de la suppression de la carte des bookmarks (error.response): ', error.response),
