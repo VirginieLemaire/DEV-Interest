@@ -46,7 +46,9 @@ class User {
             //comparer l'email de connexion avec la DB dans la table user
             console.log("je suis dans le modèle et je compare l'email envoyé par le client avec celui de la DB");
             const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]);//this vient du constructeur
-            console.log(rows[0].id);
+            //stocker l'id trouvé dans la table user
+            const id = rows[0].id;
+            console.log({id}, " user");
             //si pas de réponse => retourner l'erreur
             if (!rows[0].id) {
                 console.log("les emails ne correspondent pas, je renvoie l'erreur au client sans préciser la cause pour des raisons de sécurité");
@@ -61,8 +63,6 @@ class User {
                 }
             console.log("vérif ok!");
             //si user voir s'il a des bookmarks
-            //stocker l'id trouvé dans la table user
-            const id = rows[0].id;
             //console.log('id trouvé dans la table user: ',id);
             
             console.log("je cherche à savoir s'il a déjà des bookmarks");
