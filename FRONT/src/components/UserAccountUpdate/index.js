@@ -14,7 +14,6 @@ const UserAccountUpdate = () => {
   const history = useHistory();
 
   const { username, email, passwordCurrent, passwordNew, passwordNewVerification } = useSelector((state) => state.userUpdate);
-  const { username : userCurrentUsername, email: userCurrentEmail } = useSelector((state) => state.userCurrent);
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const handleClick = () => {
@@ -37,7 +36,7 @@ const UserAccountUpdate = () => {
         <h2 className="user-account-update__form__subtitle">Modifier le nom d'utilisation</h2>
         <Field
           autoComplete="off"
-          value={!username ? userCurrentUsername : username}
+          value={username}
           name="username"
           placeholder="Nom d'utilisateur"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'username'))}
@@ -48,7 +47,7 @@ const UserAccountUpdate = () => {
         <h2 className="user-account-update__form__subtitle">Modifier l'email de compte</h2>
         <EmailField
           autoComplete="off"
-          value={!email ? userCurrentEmail : email}
+          value={email}
           name="email"
           placeholder="Email"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}

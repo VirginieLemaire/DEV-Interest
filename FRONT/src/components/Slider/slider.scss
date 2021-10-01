@@ -1,0 +1,26 @@
+.carousel {
+  position: relative;
+}
+
+.carousel .thumbs {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 10px;
+}
+
+.carousel .thumb {
+  margin: 0 5px;
+  cursor: pointer;
+
+}
+
+.carousel .overlay {
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10%;
+  background: rgba(0, 0, 0, .6);
+  color: #FFF;
+}
