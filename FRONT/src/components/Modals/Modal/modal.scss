@@ -1,0 +1,116 @@
+@use '../../../styles/vars';
+
+.modal{
+  perspective: 1000px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__content{
+    animation-name: fadeInOpacity;
+	  animation-iteration-count: 1;
+	  animation-timing-function: ease-in;
+	  animation-duration: 0.5s;
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+    width: 500px;
+    background-color: vars.$white-color;
+    border-radius: vars.$border-radius-input;
+    text-align: center;
+
+    &--dark{
+      background-color: vars.$text-color;
+      color: vars.$white-color;
+    }
+  }
+
+  &__logo{
+    width: 3rem;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  &__header{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3rem;
+
+    &-header{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      &--item{
+        display:flex;
+        justify-content: center;
+        width: 33%;
+        &:last-child{
+          font-size: 1.2rem;
+          cursor: pointer;
+          :hover{
+            font-size: 1.4rem;
+            background-color: vars.$light-color;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+
+  &__footer{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &__title{
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: vars.$primary-color;
+    padding-top: 10px;
+  }
+
+  &__body{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 30px 0 50px 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+}
+
+
+.modal_animation{
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.2s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

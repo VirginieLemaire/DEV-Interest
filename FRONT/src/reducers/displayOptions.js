@@ -1,13 +1,15 @@
 import {
+  ADD_CARD_THANK_MODAL,
+  CREATE_ACCOUNT_THANK_MODAL,
   DARK_MODE_OFF,
-  DARK_MODE_TOGGLE, SET_APP_LOADING, SET_LOADING, SET_MORE, SET_MORE_HOME, SHOW_ADD_CARD_MODAL,
+  DARK_MODE_TOGGLE, DELETE_USER_SUCCESS_MODAL, SET_APP_LOADING, SET_LOADING,
+  SET_MORE, SET_MORE_HOME, SHOW_ADD_CARD_MODAL,
   SHOW_CONNEXION_MODAL, SHOW_SIGNUP_MODAL, TOGGLE_DISPLAY_URL,
+  TOGGLE_MODAL,
+  UPDATE_ACCOUNT_SUCCESS_MODAL, UPDATE_CARD_SUCCESS_MODAL,
 } from '../action/displayOptions';
 
 export const initialState = {
-  connexionModal: false,
-  addCardModal: false,
-  addCardSuccessModal: false,
   loading: false,
   appLoading: true,
   hasAnAccount: true,
@@ -15,6 +17,16 @@ export const initialState = {
   darkMode: false,
   more: true,
   moreHome: true,
+  connexionModal: false,
+  addCardModal: false,
+
+  modal: false,
+
+  createAccountThankModalValue: false,
+  updateAccountSuccessModalValue: false,
+  addCardThankModalValue: false,
+  updateCardSuccessModalValue: false,
+  deleteUserSuccessModalValue: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -68,6 +80,37 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         more: action.more,
+      };
+    case CREATE_ACCOUNT_THANK_MODAL:
+      return {
+        ...state,
+        createAccountThankModalValue: !state.createAccountThankModalValue,
+      };
+    case UPDATE_ACCOUNT_SUCCESS_MODAL:
+      return {
+        ...state,
+        updateAccountSuccessModalValue: !state.updateAccountSuccessModalValue,
+      };
+    case ADD_CARD_THANK_MODAL:
+      return {
+        ...state,
+        addCardThankModalValue: !state.addCardThankModalValue,
+      };
+    case UPDATE_CARD_SUCCESS_MODAL:
+      return {
+        ...state,
+        updateCardSuccessModalValue: !state.updateCardSuccessModalValue,
+      };
+    case DELETE_USER_SUCCESS_MODAL:
+      return {
+        ...state,
+        deleteUserSuccessModalValue: !state.deleteUserSuccessModalValue,
+      };
+
+    case TOGGLE_MODAL:
+      return {
+        ...state,
+        modal: !state.modal,
       };
     default:
       return state;

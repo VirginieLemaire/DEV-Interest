@@ -24,7 +24,7 @@ String.prototype.capitalize = function () {
 const CardDetails = ({ card }) => {
   const dispatch = useDispatch();
 
-  const { displayUrl } = useSelector((state) => state.displayOptions);
+  const { displayUrl, darkMode } = useSelector((state) => state.displayOptions);
 
   const handleClick = (event) => {
     console.log(event);
@@ -41,7 +41,7 @@ const CardDetails = ({ card }) => {
 
   return (
     <div className="card-details">
-      <div className="card-details__board">
+      <div className={darkMode ? 'card-details__board card-details__board--dark' : 'card-details__board'}>
         <div className="card-details__board__image-container">
           <img className="card-details__board__image-container__image" src={card.image} alt={card.title} />
         </div>
@@ -125,7 +125,7 @@ const CardDetails = ({ card }) => {
         </div>
       </div>
       <div className="card-details__suggestion-title-container">
-        <h2 className="card-details__suggestion-title-container__title">D'autres cartes pourraient t'intéresser</h2>
+        <h2 className={darkMode ? 'card-details__suggestion-title-container__title card-details__suggestion-title-container__title--dark' : 'card-details__suggestion-title-container__title'}>D'autres cartes pourraient t'intéresser</h2>
       </div>
       <SearchResults />
     </div>

@@ -24,12 +24,17 @@ import AddCardModal from '../AddCardModal';
 import ScrollTop from '../ScrollTop';
 import AppLoader from '../GenericComponents/AppLoader';
 import Loader from '../GenericComponents/Loader';
+import AddCardThankModal from '../Modals/addCardThankModal';
+import CreateAccountThankModal from '../Modals/CreateAccountThankModal';
+import UpdateAccountSuccessModal from '../Modals/UpdateAccountSuccessModal';
+import UpdateCardSuccessModal from '../Modals/UpdateCardSuccessModal';
+import DeleteUserSuccessModal from '../Modals/DeleteUserSuccessModal';
 
 const App = () => {
   const dispatch = useDispatch();
 
   const {
-    darkMode, appLoading, addCardModal, connexionModal,
+    darkMode, appLoading, addCardModal, connexionModal, modal,
   } = useSelector((state) => state.displayOptions);
 
   const { username, id } = useSelector((state) => state.userCurrent);
@@ -48,7 +53,7 @@ const App = () => {
 
   return (
     <div className={darkMode ? 'app--dark' : 'app'}>
-      <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''}`}>
+      <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''} ${modal ? 'blur' : ''}`}>
         <div className="content-wrap">
           <ScrollTop />
           <Header />
@@ -87,6 +92,11 @@ const App = () => {
       </div>
       <AddCardModal />
       <ConnexionModal />
+      <AddCardThankModal />
+      <CreateAccountThankModal />
+      <UpdateAccountSuccessModal />
+      <UpdateCardSuccessModal />
+      <DeleteUserSuccessModal />
     </div>
   );
 };
