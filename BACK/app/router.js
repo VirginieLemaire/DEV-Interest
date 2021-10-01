@@ -18,6 +18,7 @@ router.get('/cards', cardController.findAllCards);
     router.post('/cards/save',checkJwt, cardController.save);
 //modification d'une carte
 router.post('/cards/:id',checkJwt, cardController.save);
+router.delete('/cards/:id/users', checkJwt, cardController.deleteCardById);
 
 //résultat de recherche
 router.get('/cards/search?',cardController.findQueryAllCards);
@@ -28,6 +29,9 @@ router.get('/users/:id/bookmarks',checkJwt, bookmarksController.findBookmarksByU
 router.post('/cards/:id/bookmarks',checkJwt, bookmarksController.addBookmarkById);
 //Delete une carte des favoris
 router.delete('/users/:id/bookmarks/:id',checkJwt, bookmarksController.deleteBookmarkById);
+
+// voir les cartes crées
+router.get('/mycards', checkJwt, userController.findByContributor);
 
 //USERS by id
 router.get('/users/:id' ,checkJwt, userController.findById);
