@@ -299,7 +299,7 @@ export default (store) => (next) => (action) => {
         (response) => {
           console.log('il faut enregister ces informations', response.data.user);
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
-          store.dispatch(connectUser(email, username));
+          store.dispatch(connectUser({email, username}));
           store.dispatch(resetUpdateUserFields());
         },
       ).catch(
