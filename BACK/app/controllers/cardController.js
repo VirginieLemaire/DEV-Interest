@@ -86,19 +86,6 @@ const cardsController = {
            response.status(500).json(error.message);
         }
     },
-    deleteCardById: async (request, response) => {
-        try {
-            const id_card = parseInt(request.params.id,10);
-            console.log(id_card);
-            const card = await new Cards().deleteCard(id_card);
-            response.status(201).json({success: true});
-
-        } catch(error) {
-           //lire l'erreur
-           console.trace(error);
-           //envoyer l'info au front
-           response.status(500).json(error.message);
-        }
-    },
+    
 }
 module.exports = cardsController;
