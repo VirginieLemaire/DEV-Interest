@@ -32,12 +32,20 @@ class Bookmarks {
     async addBookmarkById(idcard,iduser) {
         try {
             // date NOW avec formatage
+            console.log("je rajoute la card à la liste des favoris");
             await client.query('INSERT INTO user_prefer_card (user_id, card_id) VALUES($1,$2) RETURNING id;', [
                 iduser,
                 idcard
                 
             ]);
-              return        
+            console.log("je vais récupérer les favoris du user");
+            const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [iduser]);
+            console.log("je renvoie le tableau d'id de bookmarks");
+            console.log(bookmarksUser.rows);
+
+            //renvoyer le tableau d'id de bookmarks au controller            
+            return bookmarksUser.rows[0].bookmarks;
+   
         } catch (error) {
             //voir l'erreur en console
             console.trace(error);
@@ -47,9 +55,15 @@ class Bookmarks {
     }
     async deleteBoomarkById(id_bookmark,iduser) {
         try {
-            console.log('je suis dans le model', id_bookmark)
+            console.log('je suis dans le model', id_bookmark);
             await client.query('DELETE FROM "user_prefer_card" WHERE card_id =$1 AND user_id=$2', [id_bookmark, iduser]);
-            
+            console.log("je vais récupérer les favoris du user");
+            const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [iduser]);
+            console.log("je renvoie le tableau d'id de bookmarks");
+            console.log(bookmarksUser.rows);
+
+            //renvoyer le tableau d'id de bookmarks au controller            
+            return bookmarksUser.rows[0].bookmarks;
         } catch (error) {
             //voir l'erreur en console
             console.trace(error);
