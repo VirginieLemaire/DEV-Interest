@@ -48,7 +48,8 @@ const userController = {
     //S'enregistrer
     signUp: async (request, response) => {
         try {
-            console.log("j'envoie les infos envoyées par le client dans le modèle");
+            console.log("signup: j'envoie les infos envoyées par le client dans le modèle");
+
             const user = await new User(request.body).signUp();
             console.log('je suis dans le controller', user);
             const accessToken = jwt.makeToken(user.id);
@@ -119,15 +120,7 @@ const userController = {
             response.status(500).json(error.message);
         }
     },
-    findByContributor: async (request, response) => {
-        try {
-            const id = request.userId;
-            const user = await User.findContributor(id);
-            response.json(user);
-        } catch(error) {
-            console.log(error);
-        }
-    },
+    
 
 }
 

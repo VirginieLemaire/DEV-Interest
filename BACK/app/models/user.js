@@ -69,7 +69,8 @@ class User {
             
             const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [id]);
             console.log("voici ce que j'ai trouvé :");
-            console.log(bookmarksUser.rows[0].bookmarks);
+            console.log(bookmarksUser.rows);
+
             if (!bookmarksUser.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
                 console.log("pas d'id bookmarks, je renvoie les infos user");
                 // créer un objet user sécurisé
@@ -166,24 +167,7 @@ async update() {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-    static async findContributor(id) {
-        try {
-            //requête vers la table
-            const { rows } = await client.query('SELECT * FROM "cards" WHERE user_id=$1 ORDER BY createdAt', [id]);
-            //condition pour agir selon que la requête renvoie quelque chose ou non
-            if (rows[0]) {
-                return new User(rows[0]);
-            }
-            return rows;
-
-            
-        } catch (error) {
-            //voir l'erreur en console
-            console.trace(error);
-            //renvoyer l'erreur au front
-            throw new Error(error.detail ? error.detail : error.message);
-        }
-    }
+   
 }
 
 module.exports = User;
