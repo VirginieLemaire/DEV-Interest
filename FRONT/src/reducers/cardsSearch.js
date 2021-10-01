@@ -4,7 +4,7 @@ import {
 
 export const initialState = {
   currentSearch: '',
-  cardMini: [],
+  cardsMini: [],
   cards: [],
   searchQuery: '',
   type: '',

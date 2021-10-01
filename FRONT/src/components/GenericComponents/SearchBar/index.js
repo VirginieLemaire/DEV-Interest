@@ -19,7 +19,7 @@ const SearchBar = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { searchQuery } = useSelector((state) => state.cardsSearch);
+  const { searchQuery, cardsMini } = useSelector((state) => state.cardsSearch);
   const { loading } = useSelector((state) => state.displayOptions);
 
   const handleSearchSubmit = (event) => {
@@ -36,18 +36,34 @@ const SearchBar = ({
   };
 
   return (
-    <div className={`search-bar ${size} ${fontSize}`}>
-      <form autoComplete="off" className="search-bar__form" onSubmit={handleSearchSubmit}>
-        {(loading === false) && <FontAwesomeIcon icon={faSearch} className="search-bar__icon notloading" />}
-        {(loading === true) && <FontAwesomeIcon icon={faSpinner} className="search-bar__icon loading" />}
-        <input
-          className={`search-bar__input ${fontSize}`}
-          type="search"
-          placeholder={placeholder}
-          onChange={handleSearchbarChange}
-          value={searchQuery}
-        />
-      </form>
+    <div className="search-bar__container">
+      <div className={`search-bar ${size} ${fontSize}`}>
+        <form autoComplete="off" className="search-bar__form" onSubmit={handleSearchSubmit}>
+          {(loading === false) && <FontAwesomeIcon icon={faSearch} className="search-bar__icon notloading" />}
+          {(loading === true) && <FontAwesomeIcon icon={faSpinner} className="search-bar__icon loading" />}
+          <input
+            className={`search-bar__input ${fontSize}`}
+            type="search"
+            placeholder={placeholder}
+            onChange={handleSearchbarChange}
+            value={searchQuery}
+          />
+        </form>
+      </div>
+      { (cardsMini.length > 0) && (
+      <div className="search-bar__mini-results">
+        {
+          cardsMini.map(
+            (card) => (
+              <div className="search-bar__mini-results--item">
+                <div className="search-bar__mini-results--item__title">{card.type.toUpperCase()} - </div>
+                <div className="search-bar__mini-results  --item__title">{card.title.substring(0, 70)}...</div>
+              </div>
+            ),
+          )
+        }
+      </div>
+      )}
     </div>
   );
 };
