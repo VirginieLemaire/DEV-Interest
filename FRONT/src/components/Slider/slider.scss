@@ -1,26 +1,27 @@
+@use '../../styles/vars';
+
 .carousel {
-  position: relative;
+  border-radius: vars.$border-radius-input;
+
 }
 
-.carousel .thumbs {
+.slide {
   display: flex;
-  justify-content: center;
-  margin: 0;
-  padding: 10px;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+
+  &__image {
+    object-fit: cover;
+    min-height: 100%;
+  }
+  
+  &__title {
+    font-weight: bold;
+    font-size: 2rem;
+    margin-top: 2rem;
+
+  }
+
 }
 
-.carousel .thumb {
-  margin: 0 5px;
-  cursor: pointer;
-
-}
-
-.carousel .overlay {
-  width: 80%;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 10%;
-  background: rgba(0, 0, 0, .6);
-  color: #FFF;
-}

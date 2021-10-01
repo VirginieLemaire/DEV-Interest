@@ -3,7 +3,7 @@
 .home {
   display: flex;
   flex-direction: column;
-  gap: 6rem;
+  gap: 4rem; 
   align-items: center;
   color: vars.$text-color;
 
@@ -11,26 +11,61 @@
     color: vars.$white-color;
   }
 
-  &__catch-title {
+  &__welcome-container{
+    display: flex;
+    gap: 4rem;
     margin-top: 4rem;
-    font-size: 2rem;
-    font-style: italic;
-    line-height: 2.5rem;
+    height: 65vh;
+    width: 100vw;
+    padding-right: 4rem;
+
+    &__slider {
+      width: 30%;
+      overflow: hidden;
+      background-color: vars.$white-color;
+      border-radius: vars.$border-radius-input;
+      box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
+
+      &--dark {
+        width: 30%;
+        height: auto;
+        border: solid vars.$dark-color 3px;
+        border-radius: vars.$border-radius-input;
+        background-color: vars.$dark-color;
+        color: vars.$white-color;
+      }
+    }
+
+    &__actions {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6rem;
+
+      &__catch-title {
+        font-size: 2rem;
+        font-style: italic;
+        line-height: 2.5rem;
+      }
+    
+      &__searchbar-container {
+        width: 80%;
+      }
+    
+      &__break {
+        width: 20%;
+      }
+    
+      &__catch-phrase {
+        font-size: 1.5rem;
+        font-style: italic;
+        line-height: 2rem;
+      }
+    }
+
   }
 
-  &__searchbar-container {
-    width: 40%;
-  }
-
-  &__break {
-    width: 20%;
-  }
-
-  &__catch-phrase {
-    font-size: 1.5rem;
-    font-style: italic;
-    line-height: 2rem;
-  }
 
   &__tags-content-wraper {
 

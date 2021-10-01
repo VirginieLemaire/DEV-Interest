@@ -3,9 +3,10 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import './slider.scss';
 
+
 const Slider = () => {
-  const data = useSelector((state) => state.cardsHome.cards.slice(0, 3));
-  console.log(data);
+  const data = useSelector((state) => state.cardsHome.cards.slice(0, 10));
+  const { darkMode } = useSelector((state) => state.displayOptions);
 
   return (
     <div className="slider">
@@ -16,14 +17,14 @@ const Slider = () => {
         thumbWidth={50}
         showIndicators={false}
         showStatus={false}
+        showArrows={false}
+        showThumbs={false}
       >
         {
           data.map((slide) => (
-            <div key={slide.id}>
-              <img src={slide.image} alt=""/>
-              <div className="overlay"></div>
-              <h2 className="overlay__title">{slide.title}</h2>
-              <p className="overlay__text">{slide.description}</p>
+            <div key={slide.id} className="slide">
+              <img  className="slide__image" src={slide.image} alt=""/>
+              <h2 className="slide__title">{slide.title}</h2>
             </div>
           )
         )}
