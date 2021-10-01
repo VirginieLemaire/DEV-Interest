@@ -28,6 +28,7 @@ import AddCardThankModal from '../Modals/addCardThankModal';
 import CreateAccountThankModal from '../Modals/CreateAccountThankModal';
 import UpdateAccountSuccessModal from '../Modals/UpdateAccountSuccessModal';
 import UpdateCardSuccessModal from '../Modals/UpdateCardSuccessModal';
+import DeleteUserSuccessModal from '../Modals/DeleteUserSuccessModal';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -95,6 +96,7 @@ const App = () => {
       <CreateAccountThankModal />
       <UpdateAccountSuccessModal />
       <UpdateCardSuccessModal />
+      <DeleteUserSuccessModal />
     </div>
   );
 };

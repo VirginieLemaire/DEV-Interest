@@ -35,6 +35,8 @@ import {
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
+import UpdateAccountSuccessModal from '../components/Modals/UpdateAccountSuccessModal';
+import DeleteUserSuccessModal from '../components/Modals/DeleteUserSuccessModal';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -374,6 +376,8 @@ export default (store) => (next) => (action) => {
           console.log('Update du user REUSSI, voici les informations reçues du back', response.data.user);
           console.log('Le token reçu lors de l\'update est : ', response.data.accessToken);
 
+          store.dispatch(toggleModal());
+          store.dispatch(UpdateAccountSuccessModal());
           store.dispatch(connectUser(email, username));
           store.dispatch(resetUpdateUserFields());
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
@@ -396,6 +400,8 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('Suppression du user REUSSI', response);
+          store.dispatch(toggleModal());
+          store.dispatch(DeleteUserSuccessModal());
           store.dispatch(userLogout());
         },
       ).catch(

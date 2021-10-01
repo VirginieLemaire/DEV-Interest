@@ -94,6 +94,13 @@ export const updateCardSuccessModal = () => (
   }
 );
 
+export const DELETE_USER_SUCCESS_MODAL = 'DELETE_USER_SUCCESS_MODAL';
+export const deleteUserSuccessModal = () => (
+  {
+    type: DELETE_USER_SUCCESS_MODAL,
+  }
+);
+
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';
 export const toggleModal = () => (
   {

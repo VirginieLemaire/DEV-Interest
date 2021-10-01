@@ -2,7 +2,7 @@ import {
   ADD_CARD_THANK_MODAL,
   CREATE_ACCOUNT_THANK_MODAL,
   DARK_MODE_OFF,
-  DARK_MODE_TOGGLE, SET_APP_LOADING, SET_LOADING, SET_MORE, SET_MORE_HOME, SHOW_ADD_CARD_MODAL,
+  DARK_MODE_TOGGLE, DELETE_USER_SUCCESS_MODAL, SET_APP_LOADING, SET_LOADING, SET_MORE, SET_MORE_HOME, SHOW_ADD_CARD_MODAL,
   SHOW_CONNEXION_MODAL, SHOW_SIGNUP_MODAL, TOGGLE_DISPLAY_URL,
   TOGGLE_MODAL,
   UPDATE_ACCOUNT_SUCCESS_MODAL, UPDATE_CARD_SUCCESS_MODAL,
@@ -25,6 +25,7 @@ export const initialState = {
   updateAccountSuccessModalValue: false,
   addCardThankModalValue: false,
   updateCardSuccessModalValue: false,
+  deleteUserSuccessModalValue: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -99,6 +100,12 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         updateCardSuccessModalValue: !state.updateCardSuccessModalValue,
       };
+    case DELETE_USER_SUCCESS_MODAL:
+      return {
+        ...state,
+        deleteUserSuccessModalValue: !state.deleteUserSuccessModalValue,
+      };
+
     case TOGGLE_MODAL:
       return {
         ...state,
