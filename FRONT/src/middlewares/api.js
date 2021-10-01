@@ -15,11 +15,13 @@ import {
   NextPage, saveCardsSearch, saveMoreCards,
 } from '../action/cardsSearch';
 import {
-  setAppLoading, setLoading, setMore, setMoreHome,
+  addCardThankModal,
+  createAccountThankModal,
+  setAppLoading, setLoading, setMore, setMoreHome, toggleModal,
 } from '../action/displayOptions';
 
 import {
-  DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields, updateUserCurrent,
+  DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields,
 } from '../action/userUpdate';
 
 import {
@@ -28,7 +30,7 @@ import {
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS,
-  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA,
+  FETCH_BOOKMARKED_CARDS, READ_USER_CURRENT_DATA,
   REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, updateBookmarks, userLogout,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
@@ -242,7 +244,7 @@ export default (store) => (next) => (action) => {
       console.log('----------------------------------------------------------');
       console.log('Je souhaite ajouer une carte sur le serveur');
       console.log('Route empreintée en POST : /cards/save (+ données suivantes dans le body)');
-      console.table(newCard);
+      console.log(newCard);
 
       axiosInstance.post(
         '/cards/save',
@@ -252,6 +254,8 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('L\'enregistrement de la carte a REUSSI ! et les informations ont bien été récupérées par le FRONT', response);
+          store.dispatch(toggleModal());
+          store.dispatch(addCardThankModal());
           store.dispatch(fetchCardsHome());
           store.dispatch(resetNewCard());
         },
@@ -334,6 +338,9 @@ export default (store) => (next) => (action) => {
         (response) => {
           console.log('Signup REUSSI ! Enregistrement des informations reçues du back (response.data.user)', response.data.user);
           console.log('Le token reçu lors du signup est :', response.data.accessToken);
+
+          store.dispatch(toggleModal());
+          store.dispatch(createAccountThankModal());
 
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resetNewUserFields());

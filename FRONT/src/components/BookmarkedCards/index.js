@@ -4,7 +4,6 @@ import Masonry from 'react-masonry-css';
 import './bookmarked-cards.scss';
 
 import Card from '../Card';
-import { useEffect } from 'react';
 
 const BookmarkedCards = () => {
   const { bookmarkedCards, bookmarks } = useSelector((state) => state.userCurrent);

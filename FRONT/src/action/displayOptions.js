@@ -65,3 +65,38 @@ export const setMoreHome = (more) => (
     more,
   }
 );
+
+export const CREATE_ACCOUNT_THANK_MODAL = 'CREATE_ACCOUNT_THANK_MODAL';
+export const createAccountThankModal = () => (
+  {
+    type: CREATE_ACCOUNT_THANK_MODAL,
+  }
+);
+
+export const UPDATE_ACCOUNT_SUCCESS_MODAL = 'UPDATE_ACCOUNT_SUCCESS_MODAL';
+export const updateAccountSuccessModal = () => (
+  {
+    type: UPDATE_ACCOUNT_SUCCESS_MODAL,
+  }
+);
+
+export const ADD_CARD_THANK_MODAL = 'ADD_CARD_THANK_MODAL';
+export const addCardThankModal = () => (
+  {
+    type: ADD_CARD_THANK_MODAL,
+  }
+);
+
+export const UPDATE_CARD_SUCCESS_MODAL = 'UPDATE_CARD_SUCCESS_MODAL';
+export const updateCardSuccessModal = () => (
+  {
+    type: UPDATE_CARD_SUCCESS_MODAL,
+  }
+);
+
+export const TOGGLE_MODAL = 'TOGGLE_MODAL';
+export const toggleModal = () => (
+  {
+    type: TOGGLE_MODAL,
+  }
+);
