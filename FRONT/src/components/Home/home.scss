@@ -3,7 +3,7 @@
 .home {
   display: flex;
   flex-direction: column;
-  gap: 4rem; 
+  gap: 2rem; 
   align-items: center;
   color: vars.$text-color;
 
@@ -13,26 +13,19 @@
 
   &__welcome-container{
     display: flex;
-    gap: 4rem;
     margin-top: 4rem;
-    height: 65vh;
     width: 100vw;
-    padding-right: 4rem;
+    gap: 2.5rem;
 
     &__slider {
-      width: 30%;
-      overflow: hidden;
-      background-color: vars.$white-color;
+      background-color: vars.$light-color;
+      color: rgba(vars.$primary-color, 0.5);
       border-radius: vars.$border-radius-input;
-      box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
 
       &--dark {
-        width: 30%;
-        height: auto;
-        border: solid vars.$dark-color 3px;
+        background-color: vars.$text-color;
+        color: rgba(vars.$primary-color, 0.5);
         border-radius: vars.$border-radius-input;
-        background-color: vars.$dark-color;
-        color: vars.$white-color;
       }
     }
 

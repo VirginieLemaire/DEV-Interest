@@ -5,20 +5,23 @@ import './slider.scss';
 
 
 const Slider = () => {
-  const data = useSelector((state) => state.cardsHome.cards.slice(0, 10));
-  const { darkMode } = useSelector((state) => state.displayOptions);
+  const data = useSelector((state) => state.cardsHome.cards.slice(0, 30));
 
   return (
     <div className="slider">
       <Carousel 
         autoPlay
-        interval={2000}
+        width={850}
+        interval={5000}
         infiniteLoop
-        thumbWidth={50}
         showIndicators={false}
         showStatus={false}
         showArrows={false}
         showThumbs={false}
+        stopOnHover={false}
+        transitionTime={3000}
+        centerMode={true}
+        centerSlidePercentage={100}
       >
         {
           data.map((slide) => (
