@@ -15,7 +15,6 @@ import Loader from '../GenericComponents/Loader';
 import Slider from '../Slider';
 
 const Home = () => {
-
   const dispatch = useDispatch();
 
   const { username, isLogged } = useSelector((state) => state.userCurrent);
@@ -36,7 +35,7 @@ const Home = () => {
 
   return (
     <div className={darkMode ? 'home home--dark' : 'home'}>
-    {/* <Slider /> */}
+      {/* <Slider /> */}
       {
         isLogged ? <p className="home__catch-title">Salut {username}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
       }

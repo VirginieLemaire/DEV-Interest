@@ -11,8 +11,8 @@ import {
 } from '../action/cardsHome';
 
 import {
-  changeSearchField, FETCH_CARDS_SEARCH, LOAD_MORE_RESULTS,
-  NextPage, saveCardsSearch, saveMoreCards,
+  changeSearchField, FETCH_CARDS_MINI_SEARCH, FETCH_CARDS_SEARCH, LOAD_MORE_RESULTS,
+  NextPage, saveCardsMiniSearch, saveCardsSearch, saveMoreCards,
 } from '../action/cardsSearch';
 import {
   addCardThankModal,
@@ -92,6 +92,28 @@ export default (store) => (next) => (action) => {
             if (response.data.data.length < size) {
               store.dispatch(setMoreHome(false));
             }
+          },
+        )
+        .catch(
+          (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
+        );
+      next(action);
+      break;
+    }
+    case FETCH_CARDS_MINI_SEARCH: {
+      const { searchQuery } = store.getState().cardsSearch;
+      console.log('----------------------------------------------------------');
+      console.log(`Je demande au serveur de me retourner les cartes pour la MINI recherche de la searchbard avec les mots-clés: ${searchQuery}`);
+      console.log(`Route empreintée en GET : /cards/search?keyword=${searchQuery}&page=${1}&size=${3}`);
+
+      axiosInstance
+        .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${3}`)
+        .then(
+          (response) => {
+            console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
+            console.log(response.data.data);
+
+            store.dispatch(saveCardsMiniSearch(response.data.data));
           },
         )
         .catch(
