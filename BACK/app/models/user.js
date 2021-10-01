@@ -153,17 +153,23 @@ class User {
 
 async update() {
         try {
-            //bcrypt sur le password
-            const passwordCrypted = await bcrypt.hash(this.password, 10);
-            this.password = passwordCrypted;
-            console.log('nouveau this: ',this);
+            console.log(">> coucou c'est moi, la méthode update du model");
+            //bcrypt sur le password s'il existe
+            if (this.password) {
+                console.log("update >> --> il y a un password, je le crypte et je remplace celui qui se trouve dans this");
+                const passwordCrypted = await bcrypt.hash(this.password, 10);
+                this.password = passwordCrypted;
+                console.log('update : nouveau this= ',this);
+            }
             
             //updater l'enregistrement 
+            console.log("update >> je mets à jour les infos en DB");
+            console.log('****************');
             await client.query('SELECT update_user($1)', [this]);
 
         } catch (error) {
             console.log('Erreur SQL', error.detail);
-            //relancer l'erreur pout que le controller puisse l'attrapper et la renvoyer au front
+            //relancer l'erreur pour que le controller puisse l'attrapper et la renvoyer au front
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
