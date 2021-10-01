@@ -8,6 +8,7 @@ import './card.scss';
 import { showAddCardModal } from '../../action/displayOptions';
 import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
 
+
 // == Composant
 const Card = ({ card }) => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Card = ({ card }) => {
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
-  console.log('isBookmarked à la valeur: ', isBookmarked);
+  // console.log('isBookmarked à la valeur: ', isBookmarked);
 
   const handleClick = () => {
     if (isLogged) {
