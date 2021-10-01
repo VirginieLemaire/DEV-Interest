@@ -16,11 +16,12 @@ const userController = {
     login: async (request, response) => {
         try {
             //récupérer les infos de login
-            const login = request.body
+            console.log('récupérer les infos de login');
+            const login = request.body;
             //authentification
-        
+            console.log('authentifier le user, on part dans le modèle');
             const user = await new User(login).findUser();
-            
+            console.log('ok on a trouvé le user, on crée le token');
             //console.log({user});
             //response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
             //response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
@@ -29,6 +30,7 @@ const userController = {
             //response.setHeader(`id = ${user.id}`);
             //response.setHeader('Authorization' , jwt.makeToken(user.id));
             const accessToken = jwt.makeToken(user.id);
+            console.log('token user créé, on envoi tout au client');
             response.header('Authorization', accessToken).send({accessToken: accessToken,user});
             // response.send({
             //     accessToken: accessToken,
@@ -45,9 +47,9 @@ const userController = {
     //S'enregistrer
     signUp: async (request, response) => {
         try {
-            
+            console.log("j'envoie les infos envoyées par le client dans le modèle");
             const user = await new User(request.body).signUp();
-            console.log('jes suis dans le controller', user);
+            console.log('je suis dans le controller', user);
             const accessToken = jwt.makeToken(user.id);
             response.send({user});
             //response.status(201).json(user);

@@ -40,37 +40,42 @@ class User {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-
+    //login
     async findUser() {
         try {
             //comparer l'email de connexion avec la DB dans la table user
+            console.log("je suis dans le modèle et je compare l'email envoyé par le client avec celui de la DB");
             const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]);//this vient du constructeur
             console.log(rows[0].id);
             //si pas de réponse => retourner l'erreur
             if (!rows[0].id) {
+                console.log("les emails ne correspondent pas, je renvoie l'erreur au client sans préciser la cause pour des raisons de sécurité");
                 throw new Error('Identification failed');
             }
+            //vérifier que les mots de passe correspondent
+            console.log("je vérifie que les mots de passe correspondent");
+            const isValid = await bcrypt.compare(this.password, rows[0].password);
+                if (!isValid) {
+                    console.log("ce n'est pas bon, on renvoie une erreur au client sans préciser la raison par sécurité");
+                    throw new Error('Identification failed');
+                }
+            console.log("vérif ok!");
             //si user voir s'il a des bookmarks
             const id = rows[0].id;
-            console.log('id trouvé dans la table user: ',id);
+            //console.log('id trouvé dans la table user: ',id);
             
             console.log("je cherche à savoir s'il a déjà des bookmarks");
             
             const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [id]);
             console.log(bookmarksUser.rows);
             if (!bookmarksUser.rows[0]) {
-                //vérifier le mot de passe
                 console.log("pas d'id bookmarks");
-                const isValid = await bcrypt.compare(this.password, rows[0].password);
-                if (!isValid) {
-                    throw new Error('Identification failed');
-                }
                 // créer un objet user sécurisé
                 let userSecure = {
                     id: rows[0].id,
                     username: rows[0].user_name,
                     email: rows[0].email
-                }
+                };
                 console.log(userSecure);
                 //renvoyer le user au controller            
                 return userSecure;
