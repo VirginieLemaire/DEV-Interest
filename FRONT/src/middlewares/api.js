@@ -17,6 +17,7 @@ import {
 import {
   addCardThankModal,
   createAccountThankModal,
+  deleteUserSuccessModal,
   setAppLoading, setLoading, setMore, setMoreHome, toggleModal,
 } from '../action/displayOptions';
 
@@ -36,7 +37,6 @@ import {
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
 import UpdateAccountSuccessModal from '../components/Modals/UpdateAccountSuccessModal';
-import DeleteUserSuccessModal from '../components/Modals/DeleteUserSuccessModal';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -401,7 +401,7 @@ export default (store) => (next) => (action) => {
         (response) => {
           console.log('Suppression du user REUSSI', response);
           store.dispatch(toggleModal());
-          store.dispatch(DeleteUserSuccessModal());
+          store.dispatch(deleteUserSuccessModal());
           store.dispatch(userLogout());
         },
       ).catch(
