@@ -16,8 +16,9 @@ router.get('/cards', cardController.findAllCards);
     router.post('/cards',checkJwt, fetchUrlController.findUrl);
     //2. remplir le formulaire et envoyer au back
     router.post('/cards/save',checkJwt, cardController.save);
-//modification d'une carte
+//modification d'une carte avec retour d'un ID ou insert si pas ID
 router.post('/cards/:id',checkJwt, cardController.save);
+// DELETE carte
 router.delete('/cards/:id/users', checkJwt, cardController.deleteCardById);
 
 //résultat de recherche
@@ -31,7 +32,7 @@ router.post('/cards/:id/bookmarks',checkJwt, bookmarksController.addBookmarkById
 router.delete('/users/:id/bookmarks/:id',checkJwt, bookmarksController.deleteBookmarkById);
 
 // voir les cartes crées
-router.get('/mycards', checkJwt, userController.findByContributor);
+router.get('/contributor/cards', checkJwt, userController.findByContributor);
 
 //USERS by id
 router.get('/users/:id' ,checkJwt, userController.findById);
