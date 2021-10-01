@@ -61,15 +61,17 @@ class User {
                 }
             console.log("vérif ok!");
             //si user voir s'il a des bookmarks
+            //stocker l'id trouvé dans la table user
             const id = rows[0].id;
             //console.log('id trouvé dans la table user: ',id);
             
             console.log("je cherche à savoir s'il a déjà des bookmarks");
             
             const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [id]);
-            console.log(bookmarksUser.rows);
-            if (!bookmarksUser.rows[0]) {
-                console.log("pas d'id bookmarks");
+            console.log("voici ce que j'ai trouvé :");
+            console.log(bookmarksUser.rows[0].bookmarks);
+            if (!bookmarksUser.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
+                console.log("pas d'id bookmarks, je renvoie les infos user");
                 // créer un objet user sécurisé
                 let userSecure = {
                     id: rows[0].id,
@@ -81,19 +83,15 @@ class User {
                 return userSecure;
             } else {
                 //sinon retourner user_bookmarks
-                console.log("j'ai trouvé un id dans bookmarks");
-                //vérifier le mot de passe
-                const isValid = await bcrypt.compare(this.password, bookmarksUser.rows[0].password);
-                if (!isValid) {
-                    throw new Error('Identification failed');
-                }
+                console.log("j'ai trouvé un id dans bookmarks, je renvoie les infos user avec le tableau des id des bookmarks");
+                
                 // créer un objet user sécurisé avec ses bookmarks
                 let userSecure = {
                     id: bookmarksUser.rows[0].id,
                     username: bookmarksUser.rows[0].user_name,
                     email: bookmarksUser.rows[0].email,
                     bookmarks: bookmarksUser.rows[0].bookmarks
-                }
+                };
                 console.log(userSecure);
                 //renvoyer le user au controller            
                 return userSecure;

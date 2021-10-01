@@ -31,7 +31,7 @@ const userController = {
             //response.setHeader(`id = ${user.id}`);
             //response.setHeader('Authorization' , jwt.makeToken(user.id));
             const accessToken = jwt.makeToken(user.id);
-            console.log('token user créé, on envoi tout au client');
+            console.log('token user créé, on envoie tout au client');
             response.header('Authorization', accessToken).send({accessToken: accessToken,user});
             // response.send({
             //     accessToken: accessToken,
