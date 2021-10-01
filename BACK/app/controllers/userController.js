@@ -48,7 +48,7 @@ const userController = {
     //S'enregistrer
     signUp: async (request, response) => {
         try {
-            console.log("j'envoie les infos envoyées par le client dans le modèle");
+            console.log("signup: j'envoie les infos envoyées par le client dans le modèle");
             const user = await new User(request.body).signUp();
             console.log('je suis dans le controller', user);
             const accessToken = jwt.makeToken(user.id);

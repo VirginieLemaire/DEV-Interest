@@ -69,7 +69,7 @@ class User {
             
             const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [id]);
             console.log("voici ce que j'ai trouvé :");
-            console.log(bookmarksUser.rows[0].bookmarks);
+            console.log(bookmarksUser.rows);
             if (!bookmarksUser.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
                 console.log("pas d'id bookmarks, je renvoie les infos user");
                 // créer un objet user sécurisé
