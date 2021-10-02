@@ -42,7 +42,6 @@ const UserAccountUpdate = () => {
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'username'))}
           minlength="4"
           maxlength="20"
-          required
         />
         <h2 className="user-account-update__form__subtitle">Modifier l'email de compte</h2>
         <EmailField
@@ -51,7 +50,6 @@ const UserAccountUpdate = () => {
           name="email"
           placeholder="Email"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}
-          required
         />
         <h2 className="user-account-update__form__subtitle">Modifier le mot de passe</h2>
         <div className="user-account-update__form__new-password-container">
