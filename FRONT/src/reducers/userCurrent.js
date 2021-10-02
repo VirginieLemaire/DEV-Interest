@@ -13,6 +13,7 @@ export const initialState = {
   newPasswordVerification: '',
   bookmarks: [],
   bookmarkedCards: [],
+  contributions: [],
   isLogged: false,
 };
 

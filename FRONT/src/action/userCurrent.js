@@ -43,6 +43,13 @@ export const connectUser = (data) => (
   }
 );
 
+export const FETCH_CONTRIBUTIONS = 'FETCH_CONTRIBUTIONS';
+export const fetchContributions = () => (
+  {
+    type: FETCH_CONTRIBUTIONS,
+  }
+);
+
 export const FETCH_BOOKMARKED_CARDS = 'FETCH_BOOKMARKED_CARDS';
 export const fetchBookmarkedCards = () => (
   {
