@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
@@ -8,7 +9,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './search-bar.scss';
-import { changeSearchField, fetchCardsMiniSearch, fetchCardsSearch } from '../../../action/cardsSearch';
+import { changeSearchField, fetchCardsMiniSearch, fetchCardsSearch, resetCardsMini, resetSearchQuery } from '../../../action/cardsSearch';
 
 // la propriété loading est a false par défaut et si passée à vrai affiche un spinner
 // la propriété "size" est facultative et a comme valeur par défaut une width de 100%,
@@ -55,10 +56,10 @@ const SearchBar = ({
         {
           cardsMini.map(
             (card) => (
-              <div className="search-bar__mini-results--item">
+              <Link key={card.id} to={`/cards/${card.slug}/${card.id}`} className="search-bar__mini-results--item" onClick={() => dispatch(resetCardsMini())}>
                 <div className="search-bar__mini-results--item__title">{card.type.toUpperCase()} - </div>
-                <div className="search-bar__mini-results  --item__title">{card.title.substring(0, 70)}...</div>
-              </div>
+                <div className="search-bar__mini-results--item__title">{card.title.substring(0, 70)}...</div>
+              </Link>
             ),
           )
         }

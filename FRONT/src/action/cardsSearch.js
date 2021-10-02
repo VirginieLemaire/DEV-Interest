@@ -65,3 +65,10 @@ export const saveCardsMiniSearch = (data) => (
     data,
   }
 );
+
+export const RESET_CARDS_MINI = 'RESET_CARDS_MINI';
+export const resetCardsMini = () => (
+  {
+    type: RESET_CARDS_MINI,
+  }
+);
