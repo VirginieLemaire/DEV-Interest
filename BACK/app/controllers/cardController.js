@@ -67,7 +67,7 @@ const cardsController = {
             response.status(500).json(error.message);
         }
     },
-    //update or insert a card
+    //insert a card
     save : async (request, response) => {
         try {
             const card = await new Cards(request.body).save();
