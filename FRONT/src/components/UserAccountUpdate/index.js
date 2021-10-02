@@ -54,6 +54,7 @@ const UserAccountUpdate = () => {
           required
         />
         <h2 className="user-account-update__form__subtitle">Modifier le mot de passe</h2>
+        <div className="user-account-update__form__new-password-container">
         <PasswordField
           autoComplete="password"
           value={passwordCurrent}
@@ -63,7 +64,6 @@ const UserAccountUpdate = () => {
           required
           minlength="4"
         />
-        <div className="user-account-update__form__new-password-container">
         <PasswordField
           autoComplete="new-password"
           value={passwordNew}
