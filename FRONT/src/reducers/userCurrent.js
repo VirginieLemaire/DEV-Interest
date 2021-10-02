@@ -54,6 +54,11 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         bookmarks: action.data,
       };
+    case SAVE_CONTRIBUTIONS:
+      return {
+        ...state,
+        contributions: action.data,
+      };
     default:
       return state;
   }

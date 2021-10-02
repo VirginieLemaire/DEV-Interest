@@ -50,6 +50,14 @@ export const fetchContributions = () => (
   }
 );
 
+export const SAVE_CONTRIBUTIONS = 'SAVE_CONTRIBUTIONS';
+export const saveContributions = (data) => (
+  {
+    type: SAVE_CONTRIBUTIONS,
+    data,
+  }
+);
+
 export const FETCH_BOOKMARKED_CARDS = 'FETCH_BOOKMARKED_CARDS';
 export const fetchBookmarkedCards = () => (
   {
