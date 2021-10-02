@@ -19,6 +19,7 @@ const cardsController = {
             if(card === "") {
                 response.status(200).json('Pas de contenu !');
             }else {
+                response.header('resultat_home_cards', card.length);
                 response.json({
                     page,
                     size,
@@ -51,10 +52,11 @@ const cardsController = {
             const card = await Cards.findQueryAllCards(keyword,limit,skip);
             console.log(card);
             
-            //response.setHeader('Authorization', jwt.makeToken(request.userId));
+            
             if(card === "") {
                 response.status(200).json('Pas de contenu !');
             }else {
+                response.header('resultat', card.length);
                 response.json({
                     page,
                     size,

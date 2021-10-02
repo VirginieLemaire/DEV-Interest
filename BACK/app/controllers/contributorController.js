@@ -6,6 +6,7 @@ const cardsController = {
         try {
             const id = request.userId;
             const user = await Contributor.findContributor(id);
+            response.header('resultat_contributor', user.length);
             response.json(user);
         } catch(error) {
             console.log(error);
