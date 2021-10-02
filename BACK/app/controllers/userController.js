@@ -2,6 +2,10 @@ const User = require("../models/user");
 const jwt = require('../services/jwt');
 
 
+
+
+
+
 const userController = {
     //Trouver une user (nécessite un id)
     findById: async (request, response) => {
@@ -48,21 +52,24 @@ const userController = {
     //S'enregistrer
     signUp: async (request, response) => {
         try {
-            console.log("signup: j'envoie les infos envoyées par le client dans le modèle");
-            const user = await new User(request.body).signUp();
-            console.log('je suis dans le controller', user);
-            const accessToken = jwt.makeToken(user.id);
-            response.send({user});
-            //response.status(201).json(user);
-            
 
+            let data = request.body;
+            console.log('Signup-request.body dans controller',data)
+            const user = await new User(request.body).signUp(data); 
+             if(this.result) {
+                 response.status(400).json(this.result.error);
+             }else {
+                //response.status(200).json(user);
+                console.log('je suis dans le controller', user);
+                response.send({user});
+             }
         } catch(error) {
            //lire l'erreur
            console.trace(error);
            //envoyer l'info au front
            response.status(500).json(error.message);
         }
-    },
+},
     deleteUserById: async (request, response) => {
         try {
             const id = parseInt(request.params.id,10);
@@ -81,45 +88,31 @@ const userController = {
      //update a user
      update : async (request, response) => {
         try {
-            //créer un objet avec toutes les données user à envoyer
-            let userDatas = {
-                id : request.params.id,
-                email : request.body.email,
-                password : request.body.password,
-                username : request.body.username
+            console.log("updateController >> 1) je vais créer un objet userDatas en BOUCLANT sur les datas qui me sont envoyées par le client");
+            //boucler sur les propriétés de request.body pour ne mettre à jour que celles qui ont été envoyées
+            for (const key in request.body) {
+                //créer un objet avec toutes les données user à envoyer
+                let userDatas = {
+                    id : request.params.id,
+                    [key] : request.body[key]
+                };
+                console.log({userDatas});
+                // UPDATE
+                console.log("updateController >> j'envoie cet objet au model pour qu'il cause avec la DB");
+                console.log('- - - - - - -');
+                await new User(userDatas).update();   
             };
- 
-            //UPDATE
-            const user = await new User(userDatas).update();
-            response.status(204).json({success: true});
-            
+            console.log(`updateController >> 2) \\o/ tout s'est bien passé, j'en informe le client`);
+            //renvoyer un message au front lui signifiant que tout c'est bien passé
+            response.status(204).json('*** tes données ont bien été mises à jour ***');
+   
         } catch(error) {
            //lire l'erreur
            console.trace(error);
            //envoyer l'info au front
            response.status(500).json(error.message);
         }
-    },
-    //tester la validation de ce token (qui fait la requête)
-    getInfos: (request, response,next) => {
-        try {
-            console.log(request.userId);
-            const infos = {
-                message: "Ceci est un message obtenu après avoir vérifié qui a fait la requête",
-            }
-            //créer un nouveau token
-            // pour avoir l'id il faut qu'il soit stocké quelque part -> dans la request grâce au middleware
-            response.setHeader('Authorization', jwt.makeToken(request.userId));
-            response.status(200).json(infos);
-            next();
-            
-        } catch (error) {
-            console.trace(error);
-            //renvoyer l'info au front
-            response.status(500).json(error.message);
-        }
-    },
-    
+    }    
 
 }
 

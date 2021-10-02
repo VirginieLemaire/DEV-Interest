@@ -1,5 +1,10 @@
 const client = require('../database');
 const bcrypt = require('bcrypt');
+const {userSchema} = require('../schemas/userSchema');
+
+
+
+
 
 
 
@@ -70,6 +75,7 @@ class User {
             const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [id]);
             console.log("voici ce que j'ai trouvé :");
             console.log(bookmarksUser.rows);
+
             if (!bookmarksUser.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
                 console.log("pas d'id bookmarks, je renvoie les infos user");
                 // créer un objet user sécurisé
@@ -105,29 +111,41 @@ class User {
         }
     }
 
-    async signUp() {
+    async signUp(data) {
         try {
-            //hasher le mot de passe
-            //console.log('jes suis dans le model', user);
-            const password = await bcrypt.hash(this.password, 10);
+            
+            const {email, password, username} = data;
+            console.log('Signup-je suis dans le model' ,data);
+            // hash du password
+            let saltRounds = await bcrypt.genSalt(10);
+            let HashedPassword = await bcrypt.hash(password, saltRounds);
+            console.log(HashedPassword);
+            // validation de joi
+            const result = await userSchema.validate(data);
+            console.log('Signup-resultat du validate de joi', result);
+            if (result.error) {
+                throw new Error(result.error);     
+            }
             const {rows} = await client.query('INSERT INTO "user" (email, password, user_name, role_id) VALUES ($1, $2, $3, $4) RETURNING id', [
-                this.email,
-                password,
-                this.username,
+                data.email,
+                HashedPassword,
+                data.username,
                 //id du rôle par défaut (utilisateur)
                 1
             ]);
-            // creer un user pour securiser
-            const userSecure = {
+                // creer un user pour securiser
+                const userSecure = {
                 id: rows[0].id,
                 username: this.username,
                 email: this.email
             }
             
-            return userSecure;          
+            return userSecure;
+            
+  
         } catch (error) {
             //voir l'erreur en console
-            console.trace(error);
+            //console.trace(error);
             //renvoyer l'erreur au front
             throw new Error(error.detail ? error.detail : error.message);
         }
@@ -152,17 +170,23 @@ class User {
 
 async update() {
         try {
-            //bcrypt sur le password
-            const passwordCrypted = await bcrypt.hash(this.password, 10);
-            this.password = passwordCrypted;
-            console.log('nouveau this: ',this);
+            console.log(">> coucou c'est moi, la méthode update du model");
+            //bcrypt sur le password s'il existe
+            if (this.password) {
+                console.log("update >> --> il y a un password, je le crypte et je remplace celui qui se trouve dans this");
+                const passwordCrypted = await bcrypt.hash(this.password, 10);
+                this.password = passwordCrypted;
+                console.log('update : nouveau this= ',this);
+            }
             
             //updater l'enregistrement 
+            console.log("update >> je mets à jour les infos en DB");
+            console.log('****************');
             await client.query('SELECT update_user($1)', [this]);
 
         } catch (error) {
             console.log('Erreur SQL', error.detail);
-            //relancer l'erreur pout que le controller puisse l'attrapper et la renvoyer au front
+            //relancer l'erreur pour que le controller puisse l'attrapper et la renvoyer au front
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
