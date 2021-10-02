@@ -250,12 +250,12 @@ export default (store) => (next) => (action) => {
       next(action);
       break;
     }
-    case FETCH_Contributions: {
+    case FETCH_CONTRIBUTIONS: {
       store.dispatch(setLoading(true));
       const { id } = store.getState().userCurrent;
       console.log('je veux les cartes crées par le user ', id);
       axiosInstance
-        .get(`/mycards`)
+        .get(`/user/${id}/mycards`)
         .then(
           (response) => {
             store.dispatch(setLoading(false));
