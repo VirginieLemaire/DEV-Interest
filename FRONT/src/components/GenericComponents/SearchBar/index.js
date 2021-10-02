@@ -9,7 +9,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './search-bar.scss';
-import { changeSearchField, fetchCardsMiniSearch, fetchCardsSearch, resetCardsMini, resetSearchQuery } from '../../../action/cardsSearch';
+import {
+  changeSearchField, fetchCardsMiniSearch, fetchCardsSearch, resetCardsMini, resetSearchQuery,
+} from '../../../action/cardsSearch';
 
 // la propriété loading est a false par défaut et si passée à vrai affiche un spinner
 // la propriété "size" est facultative et a comme valeur par défaut une width de 100%,
@@ -27,9 +29,13 @@ const SearchBar = ({
     event.preventDefault();
     history.push('/search');
     dispatch(fetchCardsSearch());
+    dispatch(resetCardsMini());
   };
 
   const handleSearchbarChange = (e) => {
+    if (!searchQuery) {
+      dispatch(resetCardsMini());
+    }
     dispatch(changeSearchField(e.target.value, 'searchQuery'));
     setTimeout(() => {
       dispatch(fetchCardsMiniSearch());
@@ -50,21 +56,24 @@ const SearchBar = ({
             value={searchQuery}
           />
         </form>
-      </div>
-      { (cardsMini.length > 0) && (
-      <div className="search-bar__mini-results">
-        {
+
+        { (cardsMini.length > 0) && (
+        <div className={`search-bar__mini-results ${cardsMini.length > 0 ? 'show' : 'hide'}`}>
+          {
           cardsMini.map(
             (card) => (
               <Link key={card.id} to={`/cards/${card.slug}/${card.id}`} className="search-bar__mini-results--item" onClick={() => dispatch(resetCardsMini())}>
+                <img src={card.image} alt={card.title} className="search-bar__mini-results--item__image" />
                 <div className="search-bar__mini-results--item__title">{card.type.toUpperCase()} - </div>
                 <div className="search-bar__mini-results--item__title">{card.title.substring(0, 70)}...</div>
               </Link>
             ),
           )
         }
+          <div className="search-bar__mini-results--counter">xx résultats</div>
+        </div>
+        )}
       </div>
-      )}
     </div>
   );
 };
