@@ -25,7 +25,27 @@ const cardsController = {
            //envoyer l'info au front
            response.status(500).json(error.message);
         }
+    },
+    //update a card
+    update : async (request, response) => {
+        try {
+            const card = await new Contributor(request.body).update();
+            //if (card) {
+                //il y a eu des nouveautés
+                response.status(201).json(card);
+            //} else {
+                //pas de valeur de retour, c'était un UPDATE
+                response.status(204).json('Update done');
+            //}
+
+        } catch(error) {
+           //lire l'erreur
+           console.trace(error);
+           //envoyer l'info au front
+           response.status(500).json(error.message);
+        }
     }
+
 }
 
 module.exports = cardsController;
