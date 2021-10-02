@@ -45,7 +45,7 @@ const UserAccount = () => {
           />
           <Button 
             color
-            styling="full"
+            styling="outline"
             handleClick={handleDeleteButtonClick}
             content="Supprimer le compte"
           />

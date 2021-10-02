@@ -7,9 +7,12 @@
 .slide {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   justify-content: flex-start;
   position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   &__image {
     object-fit: cover;
@@ -17,8 +20,7 @@
   }
   
   &__title {
-    // font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     padding: 1rem;
 
   }
