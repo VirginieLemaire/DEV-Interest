@@ -27,24 +27,8 @@
 
   &__button-container {
     display: flex;
-    flex-direction: column;
-    width: 30%;
     gap: 1rem;
-
-    &__text {
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
-      margin-top: 1rem;
-
-      &__subtitle {
-        font-weight: bold;
-      }
-
-      &__warning {
-        font-size: .8rem;
-      }
-    
-    }
+    justify-content: center;
+    margin-top: 4rem;
   }
 }

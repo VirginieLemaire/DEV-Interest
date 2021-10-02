@@ -37,22 +37,12 @@ const UserAccount = () => {
         handleChange={() => null}
       />
       <div className="user-account__button-container">
-        <div className="user-account__button-container__text">
-            <h2 className="user-account__button-container__text__subtitle">Modifier</h2>
-            <p className="user-account__button-container__text__warning">Modifier les informations de compte</p>
-          </div>
-            <Button 
-              color
-              styling="full"
-              handleClick={handleModifyClick}
-              content="Modifier le compte"
-            />
-      </div>
-      <div className="user-account__button-container">
-        <div className="user-account__button-container__text">
-          <h2 className="user-account__button-container__text__subtitle">Supprimer</h2>
-          <p className="user-account__button-container__text__warning">Supprimer le compte et les données qui y sont associées</p>
-        </div>
+          <Button 
+            color
+            styling="full"
+            handleClick={handleModifyClick}
+            content="Modifier le compte"
+          />
           <Button 
             color
             styling="full"
