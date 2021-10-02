@@ -52,10 +52,11 @@ const userController = {
     //S'enregistrer
     signUp: async (request, response) => {
         try {
-
             let data = request.body;
+            console.log("signupController: j'envoie les infos envoyées par le client dans le modèle");
+            const user = await new User(request.body).signUp(data);
+            console.log('je suis dans le controller', user);
             console.log('Signup-request.body dans controller',data)
-            const user = await new User(request.body).signUp(data); 
              if(this.result) {
                  response.status(400).json(this.result.error);
              }else {
