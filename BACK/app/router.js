@@ -18,7 +18,7 @@ router.get('/cards', cardController.findAllCards);
     //2. remplir le formulaire et envoyer au back
     router.post('/cards/save',checkJwt, cardController.save);
 //modification d'une carte
-router.post('/contributor/cards/:id',checkJwt, contributorController.update);
+router.put('/contributor/cards/:id',checkJwt, contributorController.update);
 // DELETE carte
 router.delete('/cards/:id/users', checkJwt, contributorController.deleteCardById);
 

@@ -29,7 +29,13 @@ const cardsController = {
     //update a card
     update : async (request, response) => {
         try {
-            const card = await new Contributor(request.body).update();
+            console.log("j'arrive dans le controller");
+            
+            const id = request.userId;
+            const id_card = parseInt(request.params.id,10);
+            console.log(id, id_card);
+            
+            const card = await new Contributor(request.body, id, id_card).update();
             //if (card) {
                 //il y a eu des nouveautés
                 response.status(201).json(card);

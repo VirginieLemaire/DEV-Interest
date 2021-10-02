@@ -25,3 +25,16 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYz
 ### - ajoute un favori
 POST {{baseurl}}/cards/65/bookmarks
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTYzMjg0OTMxMiwiZXhwIjoxNjMyODUxMTEyfQ.H2_zECnqSH7QlvAMwN5f3VSwWvyB4LSCZYMYPLYRyFI
+
+### - modifier une carte
+PUT  {{baseurl}}/contributor/cards/72
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTYzMzE5NzM5MCwiZXhwIjoxNjMzMTk5MTkwfQ.eTZPgB0t4FFJWwq4_bqqd6l9WZkGMvL2UxxhoD2SdIk
+Content-Type: application/json
+
+{
+	"techs": [
+		"2",
+		"5",
+		"11"
+	]
+}
