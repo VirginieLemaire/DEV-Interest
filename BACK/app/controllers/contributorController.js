@@ -29,11 +29,11 @@ const cardsController = {
     //update a card
     update : async (request, response) => {
         try {
-            console.log("j'arrive dans le controller: \n-> je récupère l'id user dans le token \n-> et l'id carte dans l'URL");
+            console.log("\n     *****\nj'arrive dans le controller: \n--> je récupère l'id user dans le token \n--> et l'id carte dans l'URL\n");
             const id = request.userId;
             const idCard = parseInt(request.params.id,10);
 
-            console.log("je crée un objet ayant toutes les propriétés requises");
+            console.log("je crée un objet ayant toutes les propriétés requises : ");
             let data = {
                 id: id,
                 card_id : idCard,
@@ -43,7 +43,7 @@ const cardsController = {
             }
             console.log({data});
             
-            console.log("je passe cet objet au modèle pour l'utiliser avec la méthode update");
+            console.log("\nje passe cet objet au modèle pour l'utiliser avec la méthode update\n >>>>>> go speak with DB ;p \n");
             const card = await new Contributor(data).update();
             response.status(201).json(card);
 
