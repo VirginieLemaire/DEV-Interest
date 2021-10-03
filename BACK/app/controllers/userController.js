@@ -17,12 +17,12 @@ const userController = {
     login: async (request, response) => {
         try {
             //récupérer les infos de login
-            console.log("\n je suis le controller : \n-> un user s'est connecté au client, je récupère les infos de login");
+            console.log("\n** Hello, je suis le controller : \n-> un user s'est connecté au client, je récupère les infos de login");
             const login = request.body;
             //authentification
-            console.log('\n je vais authentifier le user, je vais envoyer les infos au model pour comparaison');
+            console.log('Je veux authentifier le user => je vais envoyer les infos au model pour comparaison\n');
             const user = await new User(login).findUser();
-            console.log("\n C'est ok on a trouvé le user, on crée le token..............");
+            console.log("\nC'est à nouveau le controller: ok on m'a renvoyé un user, je crée le token..............");
             //console.log({user});
             //response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
             //response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');

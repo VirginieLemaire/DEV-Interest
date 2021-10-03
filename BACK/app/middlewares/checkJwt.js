@@ -4,11 +4,11 @@ module.exports = (request, response, next) => {
     //stocker l'id et appeler next
     try {
         //récupérer le token (! authorization prend ici une minuscule)
-        console.log("\nje suis le middleware checkJWT, mon rôle est de récupérer le token envoyé par le client et vérifier qu'il correspond bien à celui que je connais\n");
+        console.log("\n*** Je suis le middleware checkJWT, mon rôle est de récupérer le token envoyé par le client et vérifier qu'il correspond bien à celui que je connais\n");
         
         const autHeader = request.headers['authorization'];
         let token = autHeader && autHeader.split(' ')[1];
-        console.log(autHeader);
+        //console.log(autHeader);
         if (token == null) return response.sendStatus(401);
         //tester (si erreur sera renvoyé au catch, si ok on continue)
         const payload = jwt.validateToken(token);

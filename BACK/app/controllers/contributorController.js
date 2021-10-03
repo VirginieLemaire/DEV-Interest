@@ -29,7 +29,7 @@ const cardsController = {
     //update a card
     update : async (request, response) => {
         try {
-            console.log("\n     *****\nj'arrive dans le controller: \n--> je récupère l'id user dans le token \n--> et l'id carte dans l'URL\n");
+            console.log("\n     *****\nJe suis l'update du contributorController: \n--> je récupère l'id user dans le token \n--> et l'id carte dans l'URL\n");
             const id = request.userId;
             const idCard = parseInt(request.params.id,10);
 
