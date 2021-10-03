@@ -1,6 +1,7 @@
 @use '../../styles/vars';
 
 .header2{
+  z-index: 1;
   position: sticky;
   top: 0;
   display: flex;
