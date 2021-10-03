@@ -43,7 +43,7 @@ const Header2 = () => {
       </div>
       <div className="header__search-bar-area">
         {
-         !pathname === '/' && (
+         pathname !== '/' && (
          <SearchBar
            className="header__search-bar"
            placeholder="Search..."
