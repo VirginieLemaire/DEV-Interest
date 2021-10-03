@@ -1,0 +1,65 @@
+@use '../../../../../styles/vars';
+
+.menu-item--dark{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: vars.$border-radius-input;
+  transition: background vars.$speed;
+  padding: 0.5rem;
+
+  & > p {
+    color: vars.$white-color;
+  }
+
+  &:hover{
+    background-color: vars.$light-color-plus;
+    color: vars.$primary-color;
+    & > p {
+      color: vars.$text-color;
+      font-weight: bold;
+    }
+  }
+}
+
+.menu-item{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: vars.$border-radius-input;
+  transition: background vars.$speed;
+  padding: 0.5rem;
+
+  & > p {
+    color: vars.$text-color;
+  }
+
+  &:hover{
+    background-color: vars.$light-color-plus;
+    color: vars.$primary-color;
+  }
+}
+
+.icon-right{
+  margin-left: auto;
+}
+
+.icon-button-drop-item{
+  width: calc(60px * 0.6);
+  height: calc(60px * 0.6);
+  background-color: vars.$light-color;
+  border-radius: vars.$border-radius-input;
+  padding: 5px;
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: filter 300ms;
+  color: vars.$text-color;
+  margin-right: 1rem;
+
+  &:hover{
+    color: vars.$primary-color;
+  }
+
+}

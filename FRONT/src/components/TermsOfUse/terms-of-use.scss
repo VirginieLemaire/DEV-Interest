@@ -2,7 +2,6 @@
 .terms-of-use{
   display: flex;
   flex-direction: column;
-  margin: 3rem 0;
 
   &--dark{
     background-color: vars.$dark-color;
@@ -23,7 +22,7 @@
 
   &__nav{
     position: sticky;
-    top: 0;
+    top: 60px;
     display: flex;
     justify-content: center;
     align-items: center;

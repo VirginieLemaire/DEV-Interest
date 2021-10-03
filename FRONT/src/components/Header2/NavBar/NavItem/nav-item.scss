@@ -1,0 +1,32 @@
+@use '../../../../styles/vars';
+
+.nav-item{
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem
+}
+
+.icon-active{
+  width: calc(60px * 0.6);
+  height: calc(60px * 0.6);
+  background-color: vars.$light-color;
+  border-radius: vars.$border-radius-input;
+  padding: 5px;
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: filter 300ms;
+  color: vars.$primary-color;
+
+  & > svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover{
+    filter: brightness(0.90);
+  }
+}

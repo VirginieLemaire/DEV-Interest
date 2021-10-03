@@ -33,13 +33,14 @@ const SearchBar = ({
   };
 
   const handleSearchbarChange = (e) => {
+    window.clearTimeout();
     if (!searchQuery) {
       dispatch(resetCardsMini());
     }
     dispatch(changeSearchField(e.target.value, 'searchQuery'));
     setTimeout(() => {
       dispatch(fetchCardsMiniSearch());
-    }, 1000);
+    }, 300);
   };
 
   return (

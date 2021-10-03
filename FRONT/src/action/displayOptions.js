@@ -107,3 +107,18 @@ export const toggleModal = () => (
     type: TOGGLE_MODAL,
   }
 );
+
+export const TOGGLE_OPENNAV = 'TOGGLE_OPENNAV';
+export const toggleOpenNav = () => (
+  {
+    type: TOGGLE_OPENNAV,
+  }
+);
+
+export const SET_ACTIVE_MENU = 'SET_ACTIVE_MENU';
+export const setActiveMenu = (activeMenu) => (
+  {
+    type: SET_ACTIVE_MENU,
+    activeMenu,
+  }
+);

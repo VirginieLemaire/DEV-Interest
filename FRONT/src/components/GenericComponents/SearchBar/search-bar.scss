@@ -68,7 +68,9 @@
     border-radius: 0 0 vars.$border-radius-input vars.$border-radius-input;
     font-size: 1rem;
     box-shadow: vars.$shadow-primary;
-
+    & > a{
+      color: vars.$text-color;
+    }
       &--counter{
         text-align: center;
         padding: 0 0 0.5rem 0;

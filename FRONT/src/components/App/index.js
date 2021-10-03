@@ -29,6 +29,8 @@ import CreateAccountThankModal from '../Modals/CreateAccountThankModal';
 import UpdateAccountSuccessModal from '../Modals/UpdateAccountSuccessModal';
 import UpdateCardSuccessModal from '../Modals/UpdateCardSuccessModal';
 import DeleteUserSuccessModal from '../Modals/DeleteUserSuccessModal';
+import Header2 from '../Header2';
+import HeaderOffset from '../GenericComponents/HeaderOffSet';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -56,7 +58,8 @@ const App = () => {
       <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''} ${modal ? 'blur' : ''}`}>
         <div className="content-wrap">
           <ScrollTop />
-          <Header />
+          <Header2 />
+          <HeaderOffset />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/search" exact>
