@@ -29,20 +29,24 @@ const cardsController = {
     //update a card
     update : async (request, response) => {
         try {
-            console.log("j'arrive dans le controller");
-            
+            console.log("j'arrive dans le controller: \n-> je récupère l'id user dans le token \n-> et l'id carte dans l'URL");
             const id = request.userId;
-            const id_card = parseInt(request.params.id,10);
-            console.log(id, id_card);
+            const idCard = parseInt(request.params.id,10);
+
+            console.log("je crée un objet ayant toutes les propriétés requises");
+            let data = {
+                id: id,
+                card_id : idCard,
+            };
+            for (const key in request.body) {
+                data[key] = request.body[key];
+            }
+            console.log({data});
             
-            const card = await new Contributor(request.body, id, id_card).update();
-            //if (card) {
-                //il y a eu des nouveautés
-                response.status(201).json(card);
-            //} else {
-                //pas de valeur de retour, c'était un UPDATE
-                response.status(204).json('Update done');
-            //}
+            console.log("je passe cet objet au modèle pour l'utiliser avec la méthode update");
+            const card = await new Contributor(data).update();
+            response.status(201).json(card);
+
 
         } catch(error) {
            //lire l'erreur

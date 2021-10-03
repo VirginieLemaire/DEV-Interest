@@ -28,7 +28,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTYz
 
 ### - modifier une carte
 PUT  {{baseurl}}/contributor/cards/72
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTYzMzE5NzM5MCwiZXhwIjoxNjMzMTk5MTkwfQ.eTZPgB0t4FFJWwq4_bqqd6l9WZkGMvL2UxxhoD2SdIk
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTYzMzE5NzU4OSwiZXhwIjoxNjMzMTk5Mzg5fQ.2yBfUi_RO2dOczCkrWKEKLxMSmbtGDsItNp_9Z7ozGs
 Content-Type: application/json
 
 {
