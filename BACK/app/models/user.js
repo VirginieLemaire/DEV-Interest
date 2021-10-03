@@ -1,5 +1,10 @@
 const client = require('../database');
 const bcrypt = require('bcrypt');
+const {userSchema} = require('../schemas/userSchema');
+
+
+
+
 
 
 
@@ -104,29 +109,41 @@ class User {
         }
     }
 
-    async signUp() {
+    async signUp(data) {
         try {
-            //hasher le mot de passe
-            //console.log('jes suis dans le model', user);
-            const password = await bcrypt.hash(this.password, 10);
+            
+            const {email, password, username} = data;
+            console.log('Signup-je suis dans le model' ,data);
+            // hash du password
+            let saltRounds = await bcrypt.genSalt(10);
+            let HashedPassword = await bcrypt.hash(password, saltRounds);
+            console.log(HashedPassword);
+            // validation de joi
+            const result = await userSchema.validate(data);
+            console.log('Signup-resultat du validate de joi', result);
+            if (result.error) {
+                throw new Error(result.error);     
+            }
             const {rows} = await client.query('INSERT INTO "user" (email, password, user_name, role_id) VALUES ($1, $2, $3, $4) RETURNING id', [
-                this.email,
-                password,
-                this.username,
+                data.email,
+                HashedPassword,
+                data.username,
                 //id du rôle par défaut (utilisateur)
                 1
             ]);
-            // creer un user pour securiser
-            const userSecure = {
+                // creer un user pour securiser
+                const userSecure = {
                 id: rows[0].id,
                 username: this.username,
                 email: this.email
             }
             
-            return userSecure;          
+            return userSecure;
+            
+  
         } catch (error) {
             //voir l'erreur en console
-            console.trace(error);
+            //console.trace(error);
             //renvoyer l'erreur au front
             throw new Error(error.detail ? error.detail : error.message);
         }

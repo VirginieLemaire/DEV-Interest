@@ -40,7 +40,7 @@ router.get('/users/:id' ,checkJwt, userController.findById);
 //DELETE USER BY ID
 router.delete('/users/:id' ,checkJwt, userController.deleteUserById);
 //modifier un user
-router.put('/users/:id' ,/* checkJwt,  */userController.update);
+router.put('/users/:id' , checkJwt, userController.update);
 
 //LOGIN - SIGNUP
 router.post('/login', userController.login);

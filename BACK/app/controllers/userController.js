@@ -2,6 +2,10 @@ const User = require("../models/user");
 const jwt = require('../services/jwt');
 
 
+
+
+
+
 const userController = {
     //Trouver une user (nécessite un id)
     findById: async (request, response) => {
@@ -48,22 +52,25 @@ const userController = {
     //S'enregistrer
     signUp: async (request, response) => {
         try {
+            let data = request.body;
             console.log("signupController: j'envoie les infos envoyées par le client dans le modèle");
-
-            const user = await new User(request.body).signUp();
+            const user = await new User(request.body).signUp(data);
             console.log('je suis dans le controller', user);
-            const accessToken = jwt.makeToken(user.id);
-            response.send({user});
-            //response.status(201).json(user);
-            
-
+            console.log('Signup-request.body dans controller',data)
+             if(this.result) {
+                 response.status(400).json(this.result.error);
+             }else {
+                //response.status(200).json(user);
+                console.log('je suis dans le controller', user);
+                response.send({user});
+             }
         } catch(error) {
            //lire l'erreur
            console.trace(error);
            //envoyer l'info au front
            response.status(500).json(error.message);
         }
-    },
+},
     deleteUserById: async (request, response) => {
         try {
             const id = parseInt(request.params.id,10);

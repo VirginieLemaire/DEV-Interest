@@ -11,6 +11,7 @@ const bookmarksController = {
             if(bookmarks === "") {
                 response.status(200).json('Pas de contenu !');
             }else {
+                response.header('resultat_bookmarks', bookmarks.length);
                 response.json(bookmarks);
                 return this.id;
             }
