@@ -3,7 +3,8 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-
+  margin-top: -60px;
+  
   &--dark{
     background-color: vars.$dark-color;
     color: vars.$white-color;
