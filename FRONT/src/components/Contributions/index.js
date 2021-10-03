@@ -1,13 +1,17 @@
 import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
 
-import './contributions.scss';
 
 import Card from '../Card';
+import Button from '../GenericComponents/Button';
+import './contributions.scss';
 
 const BookmarkedCards = () => {
   const { contributions } = useSelector((state) => state.userCurrent);
   const { loading } = useSelector((state) => state.displayOptions);
+
+  const handleModifyClick = () => null;
+  const handleDeleteButtonClick = ()=> null;
 
   const breakpointsColumnsObj = {
     default: 7,
@@ -34,6 +38,20 @@ const BookmarkedCards = () => {
                   (card) => (
                     <div className="masonry-div" key={card.id}>
                       <Card key={card.id} card={card} />
+                      <div className="buttons-container">
+                        <Button 
+                          color
+                          styling="full"
+                          handleClick={handleModifyClick}
+                          content="Modifier"
+                        />
+                        <Button 
+                          color
+                          styling="outline"
+                          handleClick={handleDeleteButtonClick}
+                          content="Supprimer"
+                        />
+                      </div>
                     </div>
                   ),
                 )
