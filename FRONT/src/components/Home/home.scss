@@ -18,12 +18,10 @@
     gap: 2.5rem;
 
     &__slider {
-      background-color: vars.$light-color;
       color: rgba(vars.$primary-color, 0.5);
       border-radius: vars.$border-radius-input;
 
       &--dark {
-        background-color: vars.$text-color;
         color: rgba(vars.$primary-color, 0.5);
         border-radius: vars.$border-radius-input;
       }

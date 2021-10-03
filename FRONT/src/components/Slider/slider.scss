@@ -17,6 +17,7 @@
   &__image {
     object-fit: cover;
     height: 600px;
+    border-radius: vars.$border-radius-input;
   }
   
   &__title {

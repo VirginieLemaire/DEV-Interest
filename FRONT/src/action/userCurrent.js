@@ -103,3 +103,12 @@ export const readUserCurrentData = () => (
     type: READ_USER_CURRENT_DATA,
   }
 );
+
+export const UPDATE_THUMB = 'UPDATE_THUMB';
+export const updateThumb = (value) => (
+  {
+    type: UPDATE_THUMB,
+    value,
+  }
+);
+

@@ -1,5 +1,5 @@
 import {
-  ADD_BOOKMARK, CONNECT_USER, REMOVE_BOOKMARK, TOGGLE_LOGGED,
+  ADD_BOOKMARK, CONNECT_USER, REMOVE_BOOKMARK, TOGGLE_LOGGED, UPDATE_THUMB,
   USER_LOGOUT, CHANGE_CURRENT_USER_FIELD, SAVE_BOOKMARKED_CARDS, UPDATE_BOOKMARKS, SAVE_CONTRIBUTIONS
 } from '../action/userCurrent';
 
@@ -11,6 +11,7 @@ export const initialState = {
   newEmail: '',
   newPassword: '',
   newPasswordVerification: '',
+  thumb: "favorites",
   bookmarks: [],
   bookmarkedCards: [],
   contributions: [
@@ -76,6 +77,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         contributions: action.data,
+      };
+    case UPDATE_THUMB:
+      return {
+        ...state,
+        thumb: action.value,
       };
     default:
       return state;
