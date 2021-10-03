@@ -1,5 +1,16 @@
 @use '../../../styles/vars';
 
+.search-bar__container{
+  border: 2px solid vars.$light-color;
+  border-radius: vars.$border-radius-input;
+  background-color: vars.$light-color;
+
+  &:focus-within{
+    border-radius: vars.$border-radius-input;
+    border: 2px solid vars.$primary-color;
+  }
+}
+
 .search-bar{
   z-index: 2;
   background-color: vars.$light-color;
@@ -7,6 +18,8 @@
   padding: 0.5rem 1rem;
   border-radius: vars.$border-radius-input;
   font-size: 1rem;
+
+
 
     &.quarter{
     width: 25%;
@@ -48,6 +61,7 @@
     width: 100%;
     background-color: transparent;
     border: none;
+
   }
 
   &__container{
@@ -57,7 +71,7 @@
   &__mini-results{
     z-index:2;
     margin-top: 0.3rem;
-    border-top: 1px solid vars.$light-color-plus 90%;
+    border-top: 1px solid vars.$light-color-plus;
     box-sizing: border-box;
     position: absolute;
     float:inline-end;
