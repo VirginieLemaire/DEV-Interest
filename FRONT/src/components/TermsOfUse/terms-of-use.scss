@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   margin-top: -60px;
-  
+
   &--dark{
     background-color: vars.$dark-color;
     color: vars.$white-color;
@@ -31,7 +31,7 @@
     gap: 4rem;
     background-color: vars.$white-color;
     padding: 1rem 0;
-    box-shadow: 0px 24px 35px rgba(124, 81, 81, 0.10);
+    box-shadow: 2px 12px 30px rgba(219, 217, 217, 0.2);
 
     &--dark{
       background-color: vars.$dark-color;
