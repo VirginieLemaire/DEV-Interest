@@ -35,9 +35,36 @@
     }
   }
 
-  &__total-bookmarks {
+  &__thumbs {
+    display: flex;
     margin-top: 5rem;
     font-size: 1.5rem;
+    border-bottom: solid 1px vars.$primary-color;
+    width: 90%;
+    padding-left: .2rem;
+    padding-bottom: .5rem;
+    
+
+    &__thumb {
+      background-color: vars.$white-color;
+      cursor: pointer;
+      border: solid 1px vars.$primary-color;
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+      padding: .5rem 1.5rem;
+      margin: -.5rem;
+      z-index: auto;
+      &--active {
+        cursor: pointer;
+        border-radius: 10px 10px 0 0;
+        background-color: vars.$primary-color;
+        padding: .5rem 1.5rem;
+        margin: -.5rem;
+        z-index: 1;
+        color: vars.$white-color;
+      }
+
+    }
   }
 
   &__bookmarks-container {

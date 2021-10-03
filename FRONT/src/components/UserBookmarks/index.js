@@ -28,11 +28,11 @@ const UserBookmarks = () => {
         </div>
       </div>
       <div className="user-bookmarks__thumbs">
-        <div className="user-bookmarks__thumbs__total-bookmarks" onClick={() => dispatch(updateThumb("favorites"))}>
-          {`${bookmarkedCards.length} ${bookmarkedCards.length > 1 ? "favoris" : "favori"}`}
+        <div className={thumb !== "favorites" ? "user-bookmarks__thumbs__thumb" : "user-bookmarks__thumbs__thumb--active"} onClick={() => dispatch(updateThumb("favorites"))}>
+          {`${bookmarkedCards.length > 1 ? "Favoris" : "Favori"} (${bookmarkedCards.length})`}
         </div>
-        <div className="user-bookmarks__thumbs__total-bookmarks" onClick={() => dispatch(updateThumb("contributions"))}>
-          {`${contributions.length} ${contributions.length > 1 ? "contributions" : "contribution"}`}
+        <div className={thumb !== "contributions" ? "user-bookmarks__thumbs__thumb" : "user-bookmarks__thumbs__thumb--active"} onClick={() => dispatch(updateThumb("contributions"))}>
+          {`${contributions.length > 1 ? "Contributions" : "Contribution"} (${contributions.length})`}
         </div>
       </div>
       <div className="user-bookmarks__bookmarks-container">
