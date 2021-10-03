@@ -23,7 +23,7 @@
       font-weight: bold;
       font-size: 3rem;
       background-color: vars.$primary-color;
-      color: vars.$light-color;
+      color: vars.$white-color;
       border: none;
       border-radius: 50%;
       padding-top: 1.5rem;
@@ -61,6 +61,18 @@
         padding: .5rem 1.5rem;
         margin: -.5rem;
         z-index: 1;
+
+        &--dark {
+          cursor: pointer;
+          background-color: vars.$dark-color;
+          color: vars.$white-color;
+          border: solid 1px vars.$primary-color;
+          border-bottom: none;
+          border-radius: 10px 10px 0 0;
+          padding: .5rem 1.5rem;
+          margin: -.5rem;
+          z-index: 1;  
+        }
       }
 
     }
