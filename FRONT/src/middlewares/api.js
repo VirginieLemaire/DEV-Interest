@@ -433,12 +433,13 @@ export default (store) => (next) => (action) => {
       console.log(`Je veux supprimer l'user ayant pour id ${id}`);
       console.log(`Route empreintée en DELETE : /users/${id}`);
 
+      store.dispatch(toggleModal());
+
       axiosInstance.delete(
         `/users/${id}`,
       ).then(
         (response) => {
           console.log('Suppression du user REUSSI', response);
-          store.dispatch(toggleModal());
           store.dispatch(userLogout());
         },
       ).catch(

@@ -71,7 +71,7 @@ const SearchBar = ({
             ),
           )
         }
-          <div className="search-bar__mini-results--counter">{searchCountMini > 0 ? `${searchCountMini} résultats` : 'Aucun résultat'} résultats</div>
+          <div className="search-bar__mini-results--counter">{searchCountMini > 0 ? `${searchCountMini} résultats` : 'Aucun résultat'}</div>
         </div>
         )}
       </div>
