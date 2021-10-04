@@ -24,7 +24,7 @@ class Cards {
             
             console.log({keyword}, {limit}, {skip});
             //chercher dans toutes les colonnes sauf slug et URLs
-            const {rows} = await client.query(`SELECT * FROM cards
+            const {rows} = await client.query(`SELECT *,count(*) OVER() AS full_count FROM cards
             --vectorise la colonne et la compare au parsage en query de la recherche
                 WHERE to_tsvector('french',title) @@websearch_to_tsquery('french', '${keyword}')
                 OR to_tsvector('french',website) @@websearch_to_tsquery('french', '${keyword}')
