@@ -24,7 +24,7 @@ import AddCardModal from '../AddCardModal';
 import ScrollTop from '../ScrollTop';
 import AppLoader from '../GenericComponents/AppLoader';
 import Loader from '../GenericComponents/Loader';
-import AddCardThankModal from '../Modals/addCardThankModal';
+import AddCardThankModal from '../Modals/AddCardThankModal';
 import CreateAccountThankModal from '../Modals/CreateAccountThankModal';
 import UpdateAccountSuccessModal from '../Modals/UpdateAccountSuccessModal';
 import UpdateCardSuccessModal from '../Modals/UpdateCardSuccessModal';
