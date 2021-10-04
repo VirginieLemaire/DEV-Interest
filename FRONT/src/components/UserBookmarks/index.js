@@ -10,12 +10,14 @@ const UserBookmarks = () => {
 
   const { darkMode, loading } = useSelector((state) => state.displayOptions);
 
-  const { username, bookmarkedCards, contributions, thumb } = useSelector((state) => state.userCurrent);
+  const {
+    username, bookmarkedCards, contributions, thumb, bookmarks,
+  } = useSelector((state) => state.userCurrent);
   useEffect(() => {
     dispatch(fetchBookmarkedCards());
     // dispatch(fetchContributions());
-  }, []);
-  
+  }, [bookmarks]);
+
   if (loading) return null;
 
   return (
@@ -29,16 +31,16 @@ const UserBookmarks = () => {
         </div>
       </div>
       <div className="user-bookmarks__thumbs">
-        <div className={thumb !== "favorites" ? "user-bookmarks__thumbs__thumb" : `user-bookmarks__thumbs__thumb--active${darkMode ? "--dark" : ""}`} onClick={() => dispatch(updateThumb("favorites"))}>
-          {`${bookmarkedCards.length > 1 ? "Favoris" : "Favori"} (${bookmarkedCards.length})`}
+        <div className={thumb !== 'favorites' ? 'user-bookmarks__thumbs__thumb' : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('favorites'))}>
+          {`${bookmarkedCards.length > 1 ? 'Favoris' : 'Favori'} (${bookmarkedCards.length})`}
         </div>
-        <div className={thumb !== "contributions" ? "user-bookmarks__thumbs__thumb" : `user-bookmarks__thumbs__thumb--active${darkMode ? "--dark" : ""}`} onClick={() => dispatch(updateThumb("contributions"))}>
-          {`${contributions.length > 1 ? "Contributions" : "Contribution"} (${contributions.length})`}
+        <div className={thumb !== 'contributions' ? 'user-bookmarks__thumbs__thumb' : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('contributions'))}>
+          {`${contributions.length > 1 ? 'Contributions' : 'Contribution'} (${contributions.length})`}
         </div>
       </div>
       <div className="user-bookmarks__bookmarks-container">
-        { thumb==="favorites" && <BookmarkedCards /> }
-        { thumb==="contributions" && <Contributions />}  
+        { thumb === 'favorites' && <BookmarkedCards /> }
+        { thumb === 'contributions' && <Contributions />}
       </div>
     </div>
   );
