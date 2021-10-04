@@ -43,6 +43,7 @@ const axiosInstance = axios.create({
 });
 
 export default (store) => (next) => (action) => {
+
   switch (action.type) {
     case FETCH_CARDS_HOME: {
       const { size } = store.getState().cardsHome;
@@ -399,8 +400,8 @@ export default (store) => (next) => (action) => {
       break;
     }
     case UPDATE_USER_CURRENT: {
-      const { id } = store.getState().userCurrent;
-      const { email, username, passwordNew: password } = store.getState().userUpdate;
+      const { id, email: emailCurrent, username: usernameCurrent } = store.getState().userCurrent;
+      const { email, username, passwordNew, passwordCurrent } = store.getState().userUpdate;
 
       console.log('----------------------------------------------------------');
       console.log(`Je veux mettre à jour l'user ayant pour id ${id}`);
@@ -409,9 +410,9 @@ export default (store) => (next) => (action) => {
       axiosInstance.put(
         `/users/${id}`,
         {
-          email,
-          username,
-          password,
+          email: !email? emailCurrent : email,
+          username: !username ? usernameCurrent : username,
+          password: !passwordNew ? passwordCurrent : passwordNew,
         },
       ).then(
         (response) => {

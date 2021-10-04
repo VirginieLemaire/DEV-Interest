@@ -4,10 +4,10 @@ import { useHistory } from 'react-router-dom';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
 import SubmitButton from '../GenericComponents/SubmitButton';
-import { changeCurrentUserField } from '../../action/userCurrent';
 import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
 import { changeUpdateUserField, resetUpdateUserFields, updateUserCurrent } from '../../action/userUpdate';
+import { updateAccountSuccessModal } from '../../action/displayOptions';
 
 const UserAccountUpdate = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const UserAccountUpdate = () => {
   const {
     username, email, passwordCurrent, passwordNew, passwordNewVerification,
   } = useSelector((state) => state.userUpdate);
-  const { username: usernameCurrent, email: emailCurrent } = useSelector((state) => state.userCurrent);
+  const { username: usernameCurrent } = useSelector((state) => state.userCurrent);
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const handleClick = () => {
@@ -28,7 +28,7 @@ const UserAccountUpdate = () => {
     event.preventDefault();
     if (passwordNew === passwordNewVerification) {
       dispatch(updateUserCurrent());
-      history.push(`/${username.toLowerCase()}/account`);
+      history.push(`/`);
     }
   };
 
@@ -39,7 +39,7 @@ const UserAccountUpdate = () => {
         <h2 className="user-account-update__form__subtitle">Modifier le nom d'utilisation</h2>
         <Field
           autoComplete="off"
-          value={!username ? usernameCurrent : username}
+          value={username}
           name="username"
           placeholder="Nom d'utilisateur"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'username'))}
@@ -49,7 +49,7 @@ const UserAccountUpdate = () => {
         <h2 className="user-account-update__form__subtitle">Modifier l'email de compte</h2>
         <EmailField
           autoComplete="off"
-          value={!email ? emailCurrent : email}
+          value={email}
           name="email"
           placeholder="Email"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}
