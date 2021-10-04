@@ -26,7 +26,37 @@ const cardsController = {
            //envoyer l'info au front
            response.status(500).json(error.message);
         }
+    },
+    //update a card
+    update : async (request, response) => {
+        try {
+            console.log("\n     *****\nJe suis l'update du contributorController: \n--> je récupère l'id user dans le token \n--> et l'id carte dans l'URL\n");
+            const id = request.userId;
+            const idCard = parseInt(request.params.id,10);
+
+            console.log("je crée un objet ayant toutes les propriétés requises : ");
+            let data = {
+                id: id,
+                card_id : idCard,
+            };
+            for (const key in request.body) {
+                data[key] = request.body[key];
+            }
+            console.log({data});
+            
+            console.log("\nje passe cet objet au modèle pour l'utiliser avec la méthode update\n >>>>>> go speak with DB ;p \n");
+            const card = await new Contributor(data).update();
+            response.status(201).json(card);
+
+
+        } catch(error) {
+           //lire l'erreur
+           console.trace(error);
+           //envoyer l'info au front
+           response.status(500).json(error.message);
+        }
     }
+
 }
 
 module.exports = cardsController;

@@ -49,36 +49,35 @@ class User {
     async findUser() {
         try {
             //comparer l'email de connexion avec la DB dans la table user
-            console.log("je suis dans le modèle et je compare l'email envoyé par le client avec celui de la DB");
+            console.log("** Coucou! Je suis findUser du model User.\nJe compare l'email envoyé par le client avec celui de la DB");
             const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]);//this vient du constructeur
             //stocker l'id trouvé dans la table user
             const id = rows[0].id;
-            console.log({id}, " user");
+            console.log("J'ai trouvé le user" + id );
             //si pas de réponse => retourner l'erreur
             if (!rows[0].id) {
                 console.log("les emails ne correspondent pas, je renvoie l'erreur au client sans préciser la cause pour des raisons de sécurité");
                 throw new Error('Identification failed');
             }
             //vérifier que les mots de passe correspondent
-            console.log("je vérifie que les mots de passe correspondent");
+            console.log("Maintenant je vérifie que les mots de passe correspondent\n...");
             const isValid = await bcrypt.compare(this.password, rows[0].password);
                 if (!isValid) {
                     console.log("ce n'est pas bon, on renvoie une erreur au client sans préciser la raison par sécurité");
                     throw new Error('Identification failed');
                 }
-            console.log("vérif ok!");
+            console.log("vérif ok!\n");
             //si user voir s'il a des bookmarks
             //console.log('id trouvé dans la table user: ',id);
             
-            console.log("je cherche à savoir s'il a déjà des bookmarks");
+            console.log("Je cherche à savoir si le user a des favoris");
             
             const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [id]);
-            console.log("voici ce que j'ai trouvé :");
-            console.log(bookmarksUser.rows);
-
+            //console.log("Voici ce que j'ai trouvé :");
+            //console.log(bookmarksUser.rows);
             if (!bookmarksUser.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
-                console.log("pas d'id bookmarks, je renvoie les infos user");
-                // créer un objet user sécurisé
+                console.log("Cet utilisateur n'est pas présent dans la table bookmarks: je renvoie les infos user au controller");
+                // créer un objet user "sécurisé"
                 let userSecure = {
                     id: rows[0].id,
                     username: rows[0].user_name,
@@ -89,9 +88,8 @@ class User {
                 return userSecure;
             } else {
                 //sinon retourner user_bookmarks
-                console.log("j'ai trouvé un id dans bookmarks, je renvoie les infos user avec le tableau des id des bookmarks");
-                
-                // créer un objet user sécurisé avec ses bookmarks
+                console.log("Cet utilisateur est présent dans la table bookmarks: je renvoie les infos user avec le tableau des id des bookmarks au controller");
+                // créer un objet user "sécurisé" avec ses bookmarks
                 let userSecure = {
                     id: bookmarksUser.rows[0].id,
                     username: bookmarksUser.rows[0].user_name,
