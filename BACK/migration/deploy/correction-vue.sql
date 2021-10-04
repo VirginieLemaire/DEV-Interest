@@ -20,7 +20,7 @@ SELECT DISTINCT
 	"user".id AS user_id,
 	"language".name AS lang,
 	card.createat AS createdAt,
-	card_id_techs.techs AS techs
+	card_id_techs.techs AS techs --card_id_techs est une vue permettant d'avoir ici les noms des techs (pour le front)
 FROM card
 		JOIN category ON category.id = card.category_id
 		JOIN "level" ON "level".id = card.level_id
