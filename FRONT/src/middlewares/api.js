@@ -439,7 +439,6 @@ export default (store) => (next) => (action) => {
         (response) => {
           console.log('Suppression du user REUSSI', response);
           store.dispatch(toggleModal());
-          store.dispatch(deleteUserSuccessModal());
           store.dispatch(userLogout());
         },
       ).catch(

@@ -56,6 +56,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         deleteUserModal: !state.deleteUserModal,
+        modal: !state.modal,
       };
     case DARK_MODE_TOGGLE:
       return {

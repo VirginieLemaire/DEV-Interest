@@ -37,7 +37,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   const {
-    darkMode, appLoading, addCardModal, connexionModal, modal, deleteUserModal
+    darkMode, appLoading, addCardModal, connexionModal, modal,
   } = useSelector((state) => state.displayOptions);
 
   const { username, id } = useSelector((state) => state.userCurrent);
@@ -58,7 +58,7 @@ const App = () => {
 
   return (
     <div className={darkMode ? 'app--dark' : 'app'}>
-      <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''} ${modal ? 'blur' : ''} ${deleteUserModal ? 'blur' : ''}`}>
+      <div className={`main__page ${connexionModal ? 'blur' : ''} ${addCardModal ? 'blur' : ''} ${modal ? 'blur' : ''}`}>
         <div className="content-wrap">
           <ScrollTop />
           <Header2 />
