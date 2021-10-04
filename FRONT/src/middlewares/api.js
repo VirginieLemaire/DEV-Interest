@@ -31,7 +31,8 @@ import {
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
-  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, userLogout, updateBookmarks,
+  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
+  saveBookmarkedCards, toggleLogged, userLogout, updateBookmarks,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
@@ -45,6 +46,7 @@ export default (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_CARDS_HOME: {
       const { size } = store.getState().cardsHome;
+      store.dispatch(setAppLoading(true));
       store.dispatch(setMoreHome(true));
       store.dispatch(setLoading(true));
       const firstPage = 1;

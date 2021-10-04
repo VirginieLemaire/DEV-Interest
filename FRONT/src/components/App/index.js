@@ -45,7 +45,9 @@ const App = () => {
 
   const cardsSearch = useSelector((state) => state.cardsSearch.cards);
 
-  const mergedCards = [...cardsHome, ...cardsSearch];
+  const { contributions, bookmarkedCards } = useSelector((state) => state.userCurrent);
+
+  const mergedCards = [...cardsHome, ...cardsSearch, ...contributions, ...bookmarkedCards];
 
   useEffect(() => {
     dispatch(fetchCardsHome());
