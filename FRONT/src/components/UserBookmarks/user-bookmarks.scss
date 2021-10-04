@@ -45,12 +45,13 @@
 
     &__thumb {
       cursor: pointer;
-      background-color: vars.$primary-color;
-      color: vars.$white-color;
+      background-color: vars.$light-color-plus;
       border-radius: 10px 10px 0 0;
+      border-bottom: solid 1px vars.$primary-color;
       padding: .5rem 1.5rem;
       margin: -.5rem;
       z-index: auto;
+
       &--active {
         cursor: pointer;
         background-color: vars.$white-color;
@@ -65,7 +66,7 @@
         &--dark {
           cursor: pointer;
           background-color: vars.$dark-color;
-          color: vars.$white-color;
+          color: vars.$text-color;
           border: solid 1px vars.$primary-color;
           border-bottom: none;
           border-radius: 10px 10px 0 0;
