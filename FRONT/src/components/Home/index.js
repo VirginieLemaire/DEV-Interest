@@ -12,9 +12,9 @@ import { showAddCardModal } from '../../action/displayOptions';
 import HomeCards from '../HomeCards';
 import { fetchCardsHome } from '../../action/cardsHome';
 import Loader from '../GenericComponents/Loader';
+import Slider from '../Slider';
 
 const Home = () => {
-
   const dispatch = useDispatch();
 
   const { username, isLogged } = useSelector((state) => state.userCurrent);
@@ -35,27 +35,34 @@ const Home = () => {
 
   return (
     <div className={darkMode ? 'home home--dark' : 'home'}>
-      {
-        isLogged ? <p className="home__catch-title">Salut {username}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__catch-title">Découvre de nouvelles choses</p>
-      }
-      <div className="home__searchbar-container">
-        <SearchBar
-          fontSize="medium"
-          // size="half"
-          placeholder={isLogged ? 'Découvre de nouvelles choses' : 'Saisis un mot clé...'}
-          value=""
-        />
-      </div>
-      <hr className="home__break" />
-      {!isLogged ? <p className="home__catch-phrase">...et partage tes bons plans que tu peux garder en favoris!</p> : null}
-      <div className="home__button-container">
-        <Button
-          fontSize="medium"
-          color
-          styling="full"
-          handleClick={() => dispatch(showAddCardModal())}
-          content="Proposer une nouvelle ressource"
-        />
+      <div className="home__welcome-container">
+        <div className="home__welcome-container__actions">
+          {
+            isLogged ? <p className="home__welcome-container__actions__catch-title">Salut {username}, qu'est ce qu'on fait aujourd'hui ?</p> : <p className="home__welcome-container__actions__catch-title">Découvre de nouvelles choses</p>
+          }
+          <div className="home__welcome-container__actions__searchbar-container">
+            <SearchBar
+              fontSize="medium"
+              // size="half"
+              placeholder={isLogged ? 'Découvre de nouvelles choses' : 'Saisis un mot clé...'}
+              value=""
+            />
+          </div>
+          <hr className="home__welcome-container__actions__break" />
+          {!isLogged ? <p className="home__welcome-container__actions__catch-phrase">...et partage tes bons plans que tu peux garder en favoris!</p> : null}
+          <div className="home__welcome-container__actions__button-container">
+            <Button
+              fontSize="medium"
+              color
+              styling="full"
+              handleClick={() => dispatch(showAddCardModal())}
+              content="Proposer une nouvelle ressource"
+            />
+          </div>
+        </div>
+        <div className={darkMode ? 'home__welcome-container__slider--dark' : 'home__welcome-container__slider'}  >
+          <Slider  />
+        </div>
       </div>
       {
         //   <div className="home__tags-content-wraper">

@@ -14,12 +14,12 @@ const UserAccount = () => {
 
   const handleModifyClick = () => {
     history.push(`/${username.toLowerCase()}/account/update`);
-  }
+  };
 
   const handleDeleteButtonClick = () => {
     dispatch(deleteUserCurrent());
     history.push('/');
-  }
+  };
 
   return (
     <div className={darkMode ? 'user-account user-account--dark' : 'user-account'}>
@@ -37,32 +37,21 @@ const UserAccount = () => {
         handleChange={() => null}
       />
       <div className="user-account__button-container">
-        <div className="user-account__button-container__text">
-            <h2 className="user-account__button-container__text__subtitle">Modifier</h2>
-            <p className="user-account__button-container__text__warning">Modifier les informations de compte</p>
-          </div>
-            <Button 
-              color
-              styling="full"
-              handleClick={handleModifyClick}
-              content="Modifier le compte"
-            />
-      </div>
-      <div className="user-account__button-container">
-        <div className="user-account__button-container__text">
-          <h2 className="user-account__button-container__text__subtitle">Supprimer</h2>
-          <p className="user-account__button-container__text__warning">Supprimer le compte et les données qui y sont associées</p>
-        </div>
           <Button 
             color
             styling="full"
+            handleClick={handleModifyClick}
+            content="Modifier le compte"
+          />
+          <Button 
+            color
+            styling="outline"
             handleClick={handleDeleteButtonClick}
             content="Supprimer le compte"
           />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default UserAccount;
-

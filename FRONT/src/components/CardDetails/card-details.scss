@@ -9,7 +9,6 @@ strong {
   flex-direction: column;
   align-items: center;
   gap: 3rem;
-  color: vars.$text-color;
 
   &__board {
     display: flex;
@@ -21,6 +20,12 @@ strong {
     box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
     background-color: vars.$white-color;
     border-radius: vars.$border-radius-input;
+    color: vars.$text-color;
+    
+    &--dark{
+      background-color: vars.$dark-color;
+      color: vars.$white-color;
+    }
 
     &__image-container {
       width: 100%;
@@ -130,7 +135,12 @@ strong {
     &__title {
       font-weight: bold;
       font-size: 1.2rem;
+      
+      &--dark{
+        color: vars.$white-color;
+      }
     }
   }
 
 }
+

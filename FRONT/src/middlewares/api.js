@@ -1,24 +1,41 @@
+/* eslint-disable no-console */
 import axios from 'axios';
 
 import {
   ADD_CARD, changeNewCardField, GET_OPENGRAPH_DATA, resetNewCard,
 } from '../action/cardNew';
 
-import { fetchCardsHome, FETCH_CARDS_HOME, saveCardsHome } from '../action/cardsHome';
+import {
+  fetchCardsHome, FETCH_CARDS_HOME, LOAD_MORE_HOME_CARDS,
+  NextPageHome, saveCardsHome, saveMoreHomeCards,
+} from '../action/cardsHome';
 
 import {
-  changeSearchField, FETCH_CARDS_SEARCH, LOAD_MORE_RESULTS, saveCardsSearch, saveMoreCards,
+  changeSearchField, FETCH_CARDS_MINI_SEARCH, FETCH_CARDS_SEARCH, LOAD_MORE_RESULTS,
+  NextPage, saveCardsMiniSearch, saveCardsSearch, saveMoreCards,
 } from '../action/cardsSearch';
-import { setAppLoading, setLoading } from '../action/displayOptions';
+import {
+  addCardThankModal,
+  createAccountThankModal,
+  deleteUserSuccessModal,
+  setAppLoading, setLoading, setMore, setMoreHome, toggleModal,
+} from '../action/displayOptions';
 
-import { DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields, updateUserCurrent } from '../action/userUpdate';
+import {
+  DELETE_USER_CURRENT, UPDATE_USER_CURRENT, resetUpdateUserFields,
+} from '../action/userUpdate';
 
-import { isLoading } from '../action/displayOptions';
-import { connectUser, LOGIN, resteConnectingFields } from '../action/userConnect';
+import {
+  connectUser, LOGIN, resetConnectingFields,
+} from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
-import { FETCH_BOOKMARKED_CARDS, saveBookmarkedCards, toggleLogged, userLogout } from '../action/userCurrent';
+import {
+  ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
+  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, userLogout,
+} from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
+import UpdateAccountSuccessModal from '../components/Modals/UpdateAccountSuccessModal';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -26,62 +43,159 @@ const axiosInstance = axios.create({
 
 export default (store) => (next) => (action) => {
   switch (action.type) {
-    case FETCH_CARDS_HOME:
+    case FETCH_CARDS_HOME: {
+      const { size } = store.getState().cardsHome;
+      store.dispatch(setMoreHome(true));
       store.dispatch(setLoading(true));
+      const firstPage = 1;
+
+      console.log('----------------------------------------------------------');
+      console.log('Je demande au serveur de me retourner les premières cartes pour l\'accueil');
+      console.log(`Route empreintée en GET : /cards?page=${firstPage}&size=${size}`);
+
       axiosInstance
-        .get('/cards')
+        .get(`/cards?page=${firstPage}&size=${size}`)
         .then(
           (response) => {
+            console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
+            console.log(response.data.data);
+
             store.dispatch(saveCardsHome(response.data.data));
+            store.dispatch(NextPageHome());
             store.dispatch(setAppLoading(false));
-            // console.log(response.data.data);
             store.dispatch(setLoading(false));
           },
+        ).catch(
+          (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
         );
       next(action);
       break;
-    case FETCH_CARDS_SEARCH: {
+    }
+    case LOAD_MORE_HOME_CARDS: {
+      const { page, size } = store.getState().cardsHome;
+
+      console.log('----------------------------------------------------------');
+      console.log(`En scrollant en bas, je demande au serveur de me retourner les cartes suivantes pour l'accueil (page ${page})`);
+      console.log(`Route empreintée en GET : /cards?page=${page}&size=${size}`);
+
+      axiosInstance
+        .get(`/cards?page=${page}&size=${size}`)
+        .then(
+          (response) => {
+            console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
+            console.log(response.data.data);
+
+            store.dispatch(saveMoreHomeCards(response.data.data));
+            store.dispatch(NextPageHome());
+
+            if (response.data.data.length < size) {
+              store.dispatch(setMoreHome(false));
+            }
+          },
+        )
+        .catch(
+          (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
+        );
+      next(action);
+      break;
+    }
+    case FETCH_CARDS_MINI_SEARCH: {
       const { searchQuery } = store.getState().cardsSearch;
+      console.log('----------------------------------------------------------');
+      console.log(`Je demande au serveur de me retourner les cartes pour la MINI recherche de la searchbard avec les mots-clés: ${searchQuery}`);
+      console.log(`Route empreintée en GET : /cards/search?keyword=${searchQuery}&page=${1}&size=${3}`);
+
+      axiosInstance
+        .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${3}`)
+        .then(
+          (response) => {
+            console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
+            console.log(response.data);
+            store.dispatch(saveCardsMiniSearch(response.data.data));
+          },
+        )
+        .catch(
+          (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
+        );
+      next(action);
+      break;
+    }
+    case FETCH_CARDS_SEARCH: {
+      const { searchQuery, size } = store.getState().cardsSearch;
+      store.dispatch(setMore(true));
       store.dispatch(setLoading(true));
+      const firstPage = 1;
+
+      console.log('----------------------------------------------------------');
+      console.log(`Je demande au serveur de me retourner les cartes pour la recherche avec les mots-clés: ${searchQuery}`);
+      console.log(`Route empreintée en GET : /cards/search?keyword=${searchQuery}&page=${firstPage}&size=${size}`);
+
       if (searchQuery) {
         axiosInstance
-          .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${30}`)
+          .get(`/cards/search?keyword=${searchQuery}&page=${firstPage}&size=${size}`)
           .then(
             (response) => {
+              console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
+              console.log(response.data.data);
+
               store.dispatch(saveCardsSearch(response.data.data));
-              console.log(`la résultat de la recherche avec le mot clé ${searchQuery} est:`, response.data.data);
+              store.dispatch(NextPage());
               store.dispatch(changeSearchField('', 'search'));
               store.dispatch(setLoading(false));
             },
+          )
+          .catch(
+            (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
           );
       }
       if (!searchQuery) {
         store.dispatch(setLoading(true));
+
+        console.log('----------------------------------------------------------');
+        console.log('Je demande au serveur de me retourner les cartes pour la recherche par défaut sans mot clé');
+        console.log('Route empreintée en GET : /cards');
+
         axiosInstance
           .get('/cards')
           .then(
             (response) => {
+              console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
+              console.log(response.data.data);
+
               store.dispatch(saveCardsSearch(response.data.data));
-              // console.log(response.data.data);
               store.dispatch(setLoading(false));
             },
+          )
+          .catch(
+            (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
           );
       }
       next(action);
       break;
     }
     case LOAD_MORE_RESULTS: {
-      const { page, currentSearch } = store.getState().cardsSearch;
-      store.dispatch(setLoading(true));
+      const { page, currentSearch, size } = store.getState().cardsSearch;
+
+      console.log('----------------------------------------------------------');
+      console.log(`En scrollant en bas de la page, je demande au serveur de me retourner les cartes pour la recherche avec les mots-clés: ${currentSearch}`);
+      console.log(`Route empreintée en GET : /cards/search?keyword=${currentSearch}&page=${page}&size=${size}`);
+
       axiosInstance
-        .get(`/cards/search?keyword=${currentSearch}&page=${page}&size=${5}`)
+        .get(`/cards/search?keyword=${currentSearch}&page=${page}&size=${size}`)
         .then(
           (response) => {
+            console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
+            console.log(response.data.data);
+
             store.dispatch(saveMoreCards(response.data.data));
-            console.log(`la résultat suivant page ${page} de la recherche avec le mot clé ${currentSearch} est:`, response.data.data);
+            store.dispatch(NextPage());
             store.dispatch(changeSearchField('', 'search'));
-            store.dispatch(setLoading(false));
+            if (response.data.data.length < 15) {
+              store.dispatch(setMore(false));
+            }
           },
+        ).catch(
+          (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
         );
       next(action);
       break;
@@ -89,7 +203,10 @@ export default (store) => (next) => (action) => {
     case GET_OPENGRAPH_DATA: {
       const { url } = store.getState().cardNew;
 
-      console.log('je vais utiliser l url', url, 'pour récupérer les info opengraph');
+      console.log('----------------------------------------------------------');
+      console.log(`J'envoi le lien ${url} (par le body) pour avoir le retour OpenGrah`);
+      console.log('Route empreintée en POST : /cards ( + url dans le Body)');
+
       store.dispatch(setLoading(true));
       axiosInstance.post(
         '/cards',
@@ -98,7 +215,8 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('les données retournées par OpenGraph', response.data);
+          console.log('Retour du serveur POSITIF, les données retournées par OpenGraph sont ', response.data);
+
           if (response.data['og:description']) {
             store.dispatch(changeNewCardField(response.data['og:description'], 'description'));
           }
@@ -118,7 +236,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(setLoading(false));
         },
       ).catch(
-        (error) => console.log('Error Opengraph', error),
+        (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
       );
       next(action);
       break;
@@ -145,7 +263,10 @@ export default (store) => (next) => (action) => {
         techs: techs,
       };
 
-      console.log('la carte a enregistrer', newCard);
+      console.log('----------------------------------------------------------');
+      console.log('Je souhaite ajouer une carte sur le serveur');
+      console.log('Route empreintée en POST : /cards/save (+ données suivantes dans le body)');
+      console.log(newCard);
 
       axiosInstance.post(
         '/cards/save',
@@ -154,12 +275,14 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('il faut enregister ces informations', response);
+          console.log('L\'enregistrement de la carte a REUSSI ! et les informations ont bien été récupérées par le FRONT', response);
+          store.dispatch(toggleModal());
+          store.dispatch(addCardThankModal());
           store.dispatch(fetchCardsHome());
           store.dispatch(resetNewCard());
         },
       ).catch(
-        () => console.log('error'),
+        (error) => console.log('ERREUR, Le serveur n\'a pas réussi à enregistrer la carte et retourne l\'erreur suivante', error.response),
       );
       next(action);
       break;
@@ -167,8 +290,10 @@ export default (store) => (next) => (action) => {
     case LOGIN: {
       const { email, password } = store.getState().userConnect;
 
-      // 1 - On conctace le point d'entrée de l'api pour s'authentifier
-      // On envoie ici nos identifiants de cnnection (email et password)
+      console.log('----------------------------------------------------------');
+      console.log(`Je prépare les infos suivant pour le login: email: ${email} et password: ${password}`);
+      console.log('Route empreintée en POST : /login ( + mail et password dans le Body)');
+
       axiosInstance.post(
         '/login',
         {
@@ -177,20 +302,17 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('response.data', response.data.user);
-          // 2 - l'api nous renvoie nos infos, dont notre token jwt
-          // c'est à a charge de le stocker - ici, nous avons choisi
-          // de le stocker dans le state, c'est donc le reducer qui s'en chargera
+          console.log('Connection du user REUSSI ! Je reçois du serveur ces données (response.data.user) :', response.data.user);
+          console.log('Le serveur me donne aussi le Token suivant lors du login (response.data.accessToken) :', response.data.accessToken);
+
           store.dispatch(connectUser(response.data.user));
-          store.dispatch(resteConnectingFields());
+          store.dispatch(resetConnectingFields());
           store.dispatch(toggleLogged());
-          console.log('Le Token :', response.data.accessToken);
-          // autre possibilité, on stocke directement notre token dans l'objet axios
-          // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
+
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
-        () => console.log('error'),
+        (error) => console.log('ERREUR lors du login et voici le error.response: ', error.response),
       );
       next(action);
       break;
@@ -198,14 +320,39 @@ export default (store) => (next) => (action) => {
     case FETCH_BOOKMARKED_CARDS: {
       store.dispatch(setLoading(true));
       const { id } = store.getState().userCurrent;
-      console.log('je veux les favoris du user ', id);
+
+      console.log('----------------------------------------------------------');
+      console.log(`Je demande au serveur de me retourner les cartes bookmarks du user ${id}`);
+      console.log(`Route empreintée en GET : /users/${id}/bookmarks`);
+
       axiosInstance
         .get(`/users/${id}/bookmarks`)
         .then(
           (response) => {
+            console.log('Retour du serveur POSITIF, les données retournées sont ');
+            console.log(response.data);
+
             store.dispatch(setLoading(false));
-            console.log('mes cartes favories sont ', response.data);
             store.dispatch(saveBookmarkedCards(response.data));
+          },
+        )
+        .catch(
+          (error) => console.log(`le serveur n'a pas réussi à renvoyer la liste des favoris du user ${id}, il a retourné (error.response)`, error.response),
+        );
+      next(action);
+      break;
+    }
+    case FETCH_CONTRIBUTIONS: {
+      store.dispatch(setLoading(true));
+      const { id } = store.getState().userCurrent;
+      console.log('je veux les cartes crées par le user ', id);
+      axiosInstance
+        .get(`/user/${id}/mycards`)
+        .then(
+          (response) => {
+            store.dispatch(setLoading(false));
+            console.log('les cartes que j\'ai crée sont ', response.data);
+            store.dispatch(saveContributions(response.data));
             // console.log(response.data.data);
           },
         );
@@ -215,8 +362,10 @@ export default (store) => (next) => (action) => {
     case SIGNUP: {
       const { username, email, password } = store.getState().userCreate;
 
-      // 1 - On conctace le point d'entrée de l'api pour s'authentifier
-      // On envoie ici nos identifiants de cnnection (email et password)
+      console.log('----------------------------------------------------------');
+      console.log(`Je prépare les infos suivantes pour m'inscrire (username : ${username}, email: ${email} et password: ${password})`);
+      console.log('Route empreintée en POST : /signup (+ username, email, password dans le body)');
+
       axiosInstance.post(
         '/signup',
         {
@@ -226,20 +375,20 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('il faut enregister ces informations', response.data.user);
-          // 2 - l'api nous renvoie nos infos, dont notre token jwt
-          // c'est à a charge de le stocker - ici, nous avons choisi
-          // de le stocker dans le state, c'est donc le reducer qui s'en chargera
+          console.log('Signup REUSSI ! Enregistrement des informations reçues du back (response.data.user)', response.data.user);
+          console.log('Le token reçu lors du signup est :', response.data.accessToken);
+
+          store.dispatch(toggleModal());
+          store.dispatch(createAccountThankModal());
+
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resetNewUserFields());
           store.dispatch(toggleLogged());
-          console.log('Le token enregistré est :', response.data.accessToken);
-          // autre possibilité, on stocke directement notre token dans l'objet axios
-          // axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
+
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
       ).catch(
-        () => console.log('error'),
+        (error) => console.log('ERREUR serveur lors du signup (error.response): ', error.response),
       );
       next(action);
       break;
@@ -248,7 +397,9 @@ export default (store) => (next) => (action) => {
       const { id } = store.getState().userCurrent;
       const { email, username, passwordNew: password } = store.getState().userUpdate;
 
-      console.log (`Je veux mettre à jour l'user ayant pour id ${id}`);
+      console.log('----------------------------------------------------------');
+      console.log(`Je veux mettre à jour l'user ayant pour id ${id}`);
+      console.log(`Route empreintée en PUT : /users/${id} (+ email, username, password dans le body)`);
 
       axiosInstance.put(
         `/users/${id}`,
@@ -259,13 +410,17 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('il faut enregister ces informations', response.data.user);
-          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken,
-          store.dispatch(connectUser({ email, username }));
+          console.log('Update du user REUSSI, voici les informations reçues du back', response.data.user);
+          console.log('Le token reçu lors de l\'update est : ', response.data.accessToken);
+
+          store.dispatch(toggleModal());
+          store.dispatch(UpdateAccountSuccessModal());
+          store.dispatch(connectUser(email, username));
           store.dispatch(resetUpdateUserFields());
-        } 
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
+        },
       ).catch(
-        (error) => console.log(error),
+        (error) => console.log('ERREUR serveur lors de l\'update (error.response): ', error.response),
       );
       next(action);
       break;
@@ -273,31 +428,84 @@ export default (store) => (next) => (action) => {
     case DELETE_USER_CURRENT: {
       const { id } = store.getState().userCurrent;
 
-      console.log (`Je veux supprimer l'user ayant pour id ${id}`);
+      console.log('----------------------------------------------------------');
+      console.log(`Je veux supprimer l'user ayant pour id ${id}`);
+      console.log(`Route empreintée en DELETE : /users/${id}`);
 
       axiosInstance.delete(
-        `/users/${id}`
+        `/users/${id}`,
       ).then(
-        response => console.log(response.data),
-        store.dispatch(userLogout()),
+        (response) => {
+          console.log('Suppression du user REUSSI', response);
+          store.dispatch(toggleModal());
+          store.dispatch(deleteUserSuccessModal());
+          store.dispatch(userLogout());
+        },
       ).catch(
-        (error) => console.log(error),
+        (error) => console.log('ERREUR serveur lors du delete du user (error.response): ', error.response),
       );
       next(action);
       break;
     }
-    // case ADD_TO_FAVORITES: {
-    //   const { id } = store.getState().user;
+    case ADD_TO_BOOKMARKS: {
+      const { id } = store.getState().userCurrent;
 
-    //   console.log(`je dois AJOUTER la carte ${action.cardId} à l'utilisateur ${id}`);
-    //   break;
-    // }
-    // case REMOVE_FROM_FAVORITES: {
-    //   const { id } = store.getState().user;
-    //   console.log(`je dois RETIRER la carte ${action.cardId} à l'utilisateur ${id}`);
-    //   break;
-    // }
+      console.log('----------------------------------------------------------');
+      console.log(`je dois AJOUTER la carte ${action.cardId} à l'utilisateur ${id}`);
+      console.log(`Route empreintée en POST : /cards/${action.cardId}/bookmarks (+ id du user dans le Body)`);
+
+      axiosInstance.post(
+        `/cards/${action.cardId}/bookmarks`,
+        {
+          id,
+        },
+      ).then(
+        (response) => {
+          console.log('Ajout au bookmarks réussi ! Sa nouvelle liste de bookmarks mise à jour est:', response.data);
+          store.dispatch(updateBookmarks(response.data));
+        },
+      ).catch(
+        (error) => console.log('ERREUR serveur lors de l\'ajout de bookmark (error.response): ', error.response),
+      );
+      next(action);
+      break;
+    }
+    case REMOVE_FROM_BOOKMARKS: {
+      const { id } = store.getState().userCurrent;
+
+      console.log('----------------------------------------------------------');
+      console.log(`je dois RETIRER la carte ${action.cardId} à l'utilisateur ${id}`);
+      console.log(`Route empreintée en DELETE : /users/${id}/bookmarks/${action.cardId}`);
+
+      axiosInstance.delete(
+        `/users/${id}/bookmarks/${action.cardId}`,
+      ).then(
+        (response) => {
+          console.log('Suppression de la carte des bookmarks réussi ! Sa nouvelle liste de bookmarks mise à jour est: ', response.data);
+          store.dispatch(updateBookmarks(response.data));
+        },
+      ).catch(
+        (error) => console.log('ERREUR serveur lors de de la suppression de la carte des bookmarks (error.response): ', error.response),
+      );
+      next(action);
+      break;
+    }
+    case READ_USER_CURRENT_DATA: {
+      const { id } = store.getState().userCurrent;
+      axiosInstance.get(
+        `/users/${id}`,
+      ).then(
+        (response) => {
+          console.log(`Les données consultées du user ${id} sont`, response.data);
+        },
+      ).catch(
+        (error) => console.log(`Erreur retourné par le serveur en cas de lecture des données du user à l'id ${id}`, error.response),
+      );
+      next(action);
+      break;
+    }
     default:
       next(action);
+      break;
   }
 };

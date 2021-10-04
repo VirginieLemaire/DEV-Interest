@@ -12,3 +12,25 @@ export const saveCardsHome = (data) => (
     data,
   }
 );
+
+export const LOAD_MORE_HOME_CARDS = 'LOAD_MORE_HOME_CARDS';
+export const loadMoreHomeCards = () => (
+  {
+    type: LOAD_MORE_HOME_CARDS,
+  }
+);
+
+export const NEXT_PAGE_HOME = 'NEXT_PAGE_HOME';
+export const NextPageHome = () => (
+  {
+    type: NEXT_PAGE_HOME,
+  }
+);
+
+export const SAVE_MORE_HOME_CARDS = 'SAVE_MORE_HOME_CARDS';
+export const saveMoreHomeCards = (data) => (
+  {
+    type: SAVE_MORE_HOME_CARDS,
+    data,
+  }
+);

@@ -6,30 +6,26 @@ import { Link } from 'react-router-dom';
 
 import './card.scss';
 import { showAddCardModal } from '../../action/displayOptions';
-import { addBookmark, removeBookmark } from '../../action/userCurrent';
+import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
 
 // == Composant
 const Card = ({ card }) => {
   const dispatch = useDispatch();
 
-  const { bookmarkedCards } = useSelector((state) => state.userCurrent);
+  const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
   const { darkMode } = useSelector((state) => state.displayOptions);
-  const { isLogged } = useSelector((state) => state.userCurrent);
 
-  // const isBookmarked = bookmarkedCards.find((bookmark) => bookmark.id === card.id);
+  const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
+  // console.log('isBookmarked à la valeur: ', isBookmarked);
 
-  // const handleClick = () => {
-  //   if (isLogged) {
-  //     // eslint-disable-next-line no-unused-expressions
-  //     (!isBookmarked) && (dispatch(addBookmark(card)));
-  //     // eslint-disable-next-line no-unused-expressions
-  //     (isBookmarked) && (dispatch(removeBookmark(card)));
-  //   }
-  //   else dispatch(showAddCardModal());
-  // };
-
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
+    if (isLogged) {
+      if (isBookmarked) dispatch(removeFromBookmarks(card.id));
+      else dispatch(addToBookmarks(card.id));
+    }
+    else if (!isLogged) {
+      dispatch(showAddCardModal());
+    }
   };
 
   return (
@@ -39,15 +35,7 @@ const Card = ({ card }) => {
       </Link>
       <div className="card__buttons-group">
         <a className="card__button media" type="button" href={card.url}>{card.type}</a>
-
-        <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmarkFill /></div>
-
-        {
-          // (!isBookmarked) && (
-          //   <div className="card__button bookmark" type="button" onClick={handleClick}><BsBookmark /></div>
-          // )
-        }
-
+        <div className="card__button bookmark" type="button" onClick={handleClick}>{isBookmarked ? <BsBookmarkFill /> : <BsBookmark />}</div>
       </div>
       <Link className="card_link" to={`/cards/${card.slug}/${card.id}`}>
         <h2 className="card__title">{card.title}</h2>

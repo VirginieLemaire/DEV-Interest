@@ -2,17 +2,20 @@ import './user-bookmarks.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import BookmarkedCards from '../BookmarkedCards';
-import { fetchBookmarkedCards } from '../../action/userCurrent';
+import Contributions from '../Contributions';
+import { fetchBookmarkedCards, fetchContributions, updateThumb } from '../../action/userCurrent';
 
 const UserBookmarks = () => {
   const dispatch = useDispatch();
 
   const { darkMode, loading } = useSelector((state) => state.displayOptions);
-  const { username, bookmarkedCards } = useSelector((state) => state.userCurrent);
 
+  const { username, bookmarkedCards, contributions, thumb } = useSelector((state) => state.userCurrent);
   useEffect(() => {
     dispatch(fetchBookmarkedCards());
+    // dispatch(fetchContributions());
   }, []);
+  
   if (loading) return null;
 
   return (
@@ -25,11 +28,17 @@ const UserBookmarks = () => {
           {username}
         </div>
       </div>
-      <div className="user-bookmarks__total-bookmarks">
-        {`${bookmarkedCards.length} favoris`}
+      <div className="user-bookmarks__thumbs">
+        <div className={thumb !== "favorites" ? "user-bookmarks__thumbs__thumb" : `user-bookmarks__thumbs__thumb--active${darkMode ? "--dark" : ""}`} onClick={() => dispatch(updateThumb("favorites"))}>
+          {`${bookmarkedCards.length > 1 ? "Favoris" : "Favori"} (${bookmarkedCards.length})`}
+        </div>
+        <div className={thumb !== "contributions" ? "user-bookmarks__thumbs__thumb" : `user-bookmarks__thumbs__thumb--active${darkMode ? "--dark" : ""}`} onClick={() => dispatch(updateThumb("contributions"))}>
+          {`${contributions.length > 1 ? "Contributions" : "Contribution"} (${contributions.length})`}
+        </div>
       </div>
       <div className="user-bookmarks__bookmarks-container">
-        <BookmarkedCards />
+        { thumb==="favorites" && <BookmarkedCards /> }
+        { thumb==="contributions" && <Contributions />}  
       </div>
     </div>
   );

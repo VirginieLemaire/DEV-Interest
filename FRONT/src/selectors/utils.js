@@ -17,14 +17,18 @@ export const getDomainName = (url) => {
   return domain.hostname.replace('www.', '');
 };
 
-// const parseStringJavascript = (string) => {
+// const parseStringJavascript = (string, techArray) => {
 //   const lowerString = string.toLowerCase();
-//   const word = "javascript"
-//   return lowerString.includes(word);
+//   techArray.forEach((tech) => {
+//     const includeTech = lowerString.includes(tech.label.toLowerCase);
+//     if(includeTech) {
+//       () => dispatch(changeNewCardTechs(tech.value, 'techs'))
+//     }
+//   }) 
 // }
 
 
-// const addTech = () => dispatch(changeNewCardTechs(1, 'techs'))
+// const addTech = 
 
 // const isJavascript = parseStringJavascript(title);
 

@@ -1,4 +1,5 @@
 import { CHANGE_UPDATE_USER_FIELD, RESET_UPDATE_USER_FIELDS } from "../action/userUpdate";
+import { CONNECT_USER } from "../action/userConnect";
 
 export const initialState = {
   username: '',
