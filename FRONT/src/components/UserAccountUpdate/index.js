@@ -13,7 +13,9 @@ const UserAccountUpdate = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { username, email, passwordCurrent, passwordNew, passwordNewVerification } = useSelector((state) => state.userUpdate);
+  const {
+    username, email, passwordCurrent, passwordNew, passwordNewVerification,
+  } = useSelector((state) => state.userUpdate);
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const handleClick = () => {
@@ -23,10 +25,10 @@ const UserAccountUpdate = () => {
 
   const handleSubmitUpdateForm = (event) => {
     event.preventDefault();
-    if(passwordNew === passwordNewVerification) {
+    if (passwordNew === passwordNewVerification) {
       dispatch(updateUserCurrent());
       history.push(`/${username.toLowerCase()}/account`);
-    };
+    }
   };
 
   return (
@@ -84,7 +86,7 @@ const UserAccountUpdate = () => {
           <h2 className="user-account__form__supress-container__text__subtitle">Supprimer le compte</h2>
           <p className="user-account__form__supress-container__text__warning">Supprimer le compte et les données qui y sont associées</p>
         </div>
-          <Button 
+          <Button
             color
             styling="full"
             handleClick={handleClick}
@@ -92,22 +94,21 @@ const UserAccountUpdate = () => {
             />
         </div> */}
         <div className="user-account-update__form__validation-buttons-container">
-        <Button 
-          color
-          styling="full"
-          handleClick={handleClick}
-          content="Annuler"
-        />
-        <SubmitButton
-          color
-          styling="full"
-          content="Valider"
-        />
+          <Button
+            color
+            styling="full"
+            handleClick={handleClick}
+            content="Annuler"
+          />
+          <SubmitButton
+            color
+            styling="full"
+            content="Valider"
+          />
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
 export default UserAccountUpdate;
-

@@ -14,12 +14,12 @@ const UserAccount = () => {
 
   const handleModifyClick = () => {
     history.push(`/${username.toLowerCase()}/account/update`);
-  }
+  };
 
   const handleDeleteButtonClick = () => {
     dispatch(deleteUserCurrent());
     history.push('/');
-  }
+  };
 
   return (
     <div className={darkMode ? 'user-account user-account--dark' : 'user-account'}>
@@ -51,8 +51,7 @@ const UserAccount = () => {
           />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default UserAccount;
-

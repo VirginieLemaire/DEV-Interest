@@ -1,9 +1,11 @@
 import {
-  CHANGE_SEARCH_FIELD, NEXT_PAGE, SAVE_CARDS_SEARCH, SAVE_MORE_CARDS,
+  CHANGE_SEARCH_FIELD, NEXT_PAGE, RESET_CARDS_MINI,
+  SAVE_CARDS_MINI_SEARCH, SAVE_CARDS_SEARCH, SAVE_MORE_CARDS,
 } from '../action/cardsSearch';
 
 export const initialState = {
   currentSearch: '',
+  cardsMini: [],
   cards: [],
   searchQuery: '',
   type: '',
@@ -39,6 +41,17 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         [action.fieldName]: action.value,
+      };
+    case SAVE_CARDS_MINI_SEARCH:
+      return {
+        ...state,
+        cardsMini: action.data,
+      };
+    case RESET_CARDS_MINI:
+      return {
+        ...state,
+        cardsMini: [],
+        searchQuery: '',
       };
     default:
       return state;

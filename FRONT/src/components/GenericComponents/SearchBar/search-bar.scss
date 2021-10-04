@@ -1,6 +1,7 @@
 @use '../../../styles/vars';
 
 .search-bar{
+
   background-color: vars.$light-color;
   color: vars.$text-color;
   padding: 0.5rem 1rem;
@@ -47,6 +48,34 @@
     width: 100%;
     background-color: transparent;
     border: none;
+  }
+
+  &__container{
+    position: relative;
+  }
+  
+  &__mini-results{
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    background-color: vars.$light-color;
+    color: vars.$text-color;
+    border-radius: vars.$border-radius-input;
+    font-size: 1rem;
+    &--item{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0 1rem 1rem;
+      &__title{
+
+      }
+      &:hover{
+        background-color: vars.$light-color-plus;
+        cursor: pointer;
+      }
+    }
   }
 }
 

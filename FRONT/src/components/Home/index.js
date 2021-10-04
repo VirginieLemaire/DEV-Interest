@@ -15,7 +15,6 @@ import Loader from '../GenericComponents/Loader';
 import Slider from '../Slider';
 
 const Home = () => {
-
   const dispatch = useDispatch();
 
   const { username, isLogged } = useSelector((state) => state.userCurrent);

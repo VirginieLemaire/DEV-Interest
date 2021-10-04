@@ -9,6 +9,7 @@ const UserBookmarks = () => {
   const dispatch = useDispatch();
 
   const { darkMode, loading } = useSelector((state) => state.displayOptions);
+
   const { username, bookmarkedCards, contributions, thumb } = useSelector((state) => state.userCurrent);
   useEffect(() => {
     dispatch(fetchBookmarkedCards());

@@ -2,12 +2,11 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useDispatch, useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
-import { LoadMoreResults, LOAD_MORE_RESULTS } from '../../action/cardsSearch';
+import { loadMoreHomeCards } from '../../action/cardsHome';
 
 import './home-cards.scss';
 
 import Card from '../Card';
-import { loadMoreHomeCards } from '../../action/cardsHome';
 import AppLoader from '../GenericComponents/AppLoader';
 
 const HomeCards = () => {
