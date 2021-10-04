@@ -35,7 +35,7 @@ class Cards {
                 OR to_tsvector('french',contributor) @@websearch_to_tsquery('french', '${keyword}')
                 OR to_tsvector('french',lang) @@websearch_to_tsquery('french', '${keyword}')
                 OR (to_tsvector('french', array_to_string(techs, ' ')) @@websearch_to_tsquery('french', '${keyword}'))
-                ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`);
+                ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`) ;
             console.log('résultat: ', rows);
             //renvoyer au front           
             return rows.map(row => new Cards(row));
