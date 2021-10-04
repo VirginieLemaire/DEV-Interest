@@ -16,11 +16,12 @@ const UserAccountUpdate = () => {
   const {
     username, email, passwordCurrent, passwordNew, passwordNewVerification,
   } = useSelector((state) => state.userUpdate);
+  const { username: usernameCurrent, email: emailCurrent } = useSelector((state) => state.userCurrent);
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const handleClick = () => {
     dispatch(resetUpdateUserFields());
-    history.push(`/${userCurrentUsername.toLowerCase()}/account`);
+    history.push(`/${usernameCurrent.toLowerCase()}/account`);
   };
 
   const handleSubmitUpdateForm = (event) => {
@@ -38,7 +39,7 @@ const UserAccountUpdate = () => {
         <h2 className="user-account-update__form__subtitle">Modifier le nom d'utilisation</h2>
         <Field
           autoComplete="off"
-          value={username}
+          value={!username ? usernameCurrent : username}
           name="username"
           placeholder="Nom d'utilisateur"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'username'))}
@@ -48,7 +49,7 @@ const UserAccountUpdate = () => {
         <h2 className="user-account-update__form__subtitle">Modifier l'email de compte</h2>
         <EmailField
           autoComplete="off"
-          value={email}
+          value={!email ? emailCurrent : email}
           name="email"
           placeholder="Email"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}
