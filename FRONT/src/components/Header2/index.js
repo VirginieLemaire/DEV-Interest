@@ -38,7 +38,7 @@ const Header2 = () => {
     <div className={darkMode ? 'header2 header2--dark' : 'header2'}>
       <div className="header2__logo-area">
         <Link className="header2__home-link" to="/">
-          <div className="header2__home-link--DEV">DEV</div><div className="header2__home-link--heart"><GiTechnoHeart /></div><div className="header2__home-link--interest">PER</div>
+          <div className="header2__home-link--DEV">DEV</div><div className="header2__home-link--heart"><GiTechnoHeart /></div><div className="header2__home-link--interest">Interest</div>
         </Link>
       </div>
       <div className="header__search-bar-area">

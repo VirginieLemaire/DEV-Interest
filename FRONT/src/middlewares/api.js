@@ -31,7 +31,7 @@ import {
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
-  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, userLogout,
+  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, userLogout, updateBookmarks,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
