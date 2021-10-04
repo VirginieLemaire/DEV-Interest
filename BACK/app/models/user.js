@@ -51,6 +51,7 @@ class User {
             //comparer l'email de connexion avec la DB dans la table user
             console.log("** Coucou! Je suis findUser du model User.\nJe compare l'email envoyé par le client avec celui de la DB");
             const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]);//this vient du constructeur
+            console.log(rows);
             //stocker l'id trouvé dans la table user
             const id = rows[0].id;
             console.log("J'ai trouvé le user" + id );
@@ -81,7 +82,8 @@ class User {
                 let userSecure = {
                     id: rows[0].id,
                     username: rows[0].user_name,
-                    email: rows[0].email
+                    email: rows[0].email,
+                    createdAt: rows[0].createat
                 };
                 console.log(userSecure);
                 //renvoyer le user au controller            
@@ -94,6 +96,7 @@ class User {
                     id: bookmarksUser.rows[0].id,
                     username: bookmarksUser.rows[0].user_name,
                     email: bookmarksUser.rows[0].email,
+                    createdAt: rows[0].createat,
                     bookmarks: bookmarksUser.rows[0].bookmarks
                 };
                 console.log(userSecure);
@@ -135,7 +138,8 @@ class User {
                 const userSecure = {
                 id: rows[0].id,
                 username: this.username,
-                email: this.email
+                email: this.email,
+                createdAt: rows[0].createat
             }
             
             return userSecure;
