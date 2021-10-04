@@ -14,11 +14,13 @@ class Contributor {
     static async findContributor(id) {
         try {
             //requête vers la table
+            console.log(id);
             const { rows } = await client.query('SELECT * FROM "cards" WHERE user_id=$1 ORDER BY createdAt', [id]);
             //condition pour agir selon que la requête renvoie quelque chose ou non
             if (rows[0]) {
                 return new Contributor(rows);
             }
+            console.log('resultat dans le model' ,user);
             return rows;
 
             
