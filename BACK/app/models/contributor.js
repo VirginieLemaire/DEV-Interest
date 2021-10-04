@@ -14,11 +14,13 @@ class Contributor {
     static async findContributor(id) {
         try {
             //requête vers la table
+            console.log(id);
             const { rows } = await client.query('SELECT * FROM "cards" WHERE user_id=$1 ORDER BY createdAt', [id]);
             //condition pour agir selon que la requête renvoie quelque chose ou non
             if (rows[0]) {
-                return new Contributor(rows);
+                return rows.map(row => new Contributor(row));
             }
+            console.log('resultat dans le model' ,user);
             return rows;
 
             
@@ -29,16 +31,16 @@ class Contributor {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-    async deleteCard(id_card) {
+    async deleteCard() {
         try {
             // recherche de l'id de l'utilisateur
-            const contributorId = await client.query('SELECT user_id FROM card WHERE id =$1', [id_card]);
-            console.log('dans model',this);
+            const contributorId = await client.query('SELECT user_id FROM card WHERE id =$1', [this.user]);
+            console.log('dans model',this.user);
             //si l'utilisateur n'est pas le contributeur
-            if (!this.id === contributorId) {
+            if (this.id !== contributorId.user_id) {
                 throw new Error('Identification failed');
             }
-            await client.query('DELETE FROM "card" WHERE id =$1', [id_card])
+            await client.query('DELETE FROM "card" WHERE id =$1', [this.id_card])
         } catch (error) {
             //voir l'erreur en console
             console.trace(error);
@@ -46,15 +48,14 @@ class Contributor {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-    //mettre à jour une carte
     async update() {
         try {
             console.log("je suis dans le modèle et voici l'objet instancié this: ", this);
             //vérifier que la personne qui souhaite faire la modif est bien celle qui a créé la carte
             console.log("\n!!!!!  je vérifie que la personne qui souhaite faire la modif est bien celle qui a ajouté la ressource");
             // recherche de l'id de l'utilisateur
-            const {rows} = await client.query('SELECT user_id FROM card WHERE id =$1', [this.id]);
-            
+            const {rows} = await client.query('SELECT user_id FROM card WHERE id =$1', [this.card_id]);
+
             //si l'utilisateur n'est pas le contributeur
             if (this.id !== rows[0].user_id) {
                 throw new Error("ERREUR : Le user pas l'autorisation de modifier cette carte car il ne l'a pas créée");
