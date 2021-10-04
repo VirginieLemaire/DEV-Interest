@@ -304,6 +304,9 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
+
+          console.log('response.data', response.data.user);
+
           console.log('Connection du user REUSSI ! Je reçois du serveur ces données (response.data.user) :', response.data.user);
           console.log('Le serveur me donne aussi le Token suivant lors du login (response.data.accessToken) :', response.data.accessToken);
 
@@ -311,7 +314,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(resetConnectingFields());
           store.dispatch(toggleLogged());
 
-          axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
+          axiosInstance.defaults.headers.common.Authorization = response.data.accessToken;
         },
       ).catch(
         (error) => console.log('ERREUR lors du login et voici le error.response: ', error.response),
