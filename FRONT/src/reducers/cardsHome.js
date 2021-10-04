@@ -1,4 +1,4 @@
-import { SAVE_CARDS_HOME } from '../action/cardsHome';
+import { NEXT_PAGE_HOME, SAVE_CARDS_HOME, SAVE_MORE_HOME_CARDS } from '../action/cardsHome';
 
 export const initialState = {
   cards: [],
@@ -7,8 +7,9 @@ export const initialState = {
   level: '',
   lang: '',
   category: '',
-  page: '',
-  size: '',
+  page: 1,
+  size: 30,
+  moreHome: true,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -17,6 +18,17 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         cards: action.data,
+        page: 1,
+      };
+    case NEXT_PAGE_HOME:
+      return {
+        ...state,
+        page: state.page + 1,
+      };
+    case SAVE_MORE_HOME_CARDS:
+      return {
+        ...state,
+        cards: [...state.cards, ...action.data],
       };
     default:
       return state;

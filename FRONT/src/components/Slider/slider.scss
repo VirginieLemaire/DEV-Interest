@@ -1,0 +1,30 @@
+@use '../../styles/vars';
+
+.carousel {
+  border-radius: vars.$border-radius-input;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__image {
+    object-fit: cover;
+    height: 600px;
+    border-radius: vars.$border-radius-input;
+  }
+  
+  &__title {
+    font-size: 1.2rem;
+    padding: 1rem;
+
+  }
+
+}
+

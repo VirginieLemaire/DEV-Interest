@@ -27,7 +27,7 @@ const TermsOfUse = () => {
     <div className={darkMode ? 'terms-of-use terms-of-use--dark' : 'terms-of-use'}>
       <div className={darkMode ? 'terms-of-use__nav terms-of-use__nav--dark' : 'terms-of-use__nav'}>
         <NavHashLink
-          scroll={(el) => scrollWithOffset(el, 270)}
+          scroll={(el) => scrollWithOffset(el, 320)}
           to="#terms-of-use"
           activeClassName="terms-of-use--selected"
           className="terms-of-use__links"

@@ -1,12 +1,17 @@
 @use '../../styles/vars';
 
-.user-account {
+.user-account-update {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: vars.$text-color;
   font-size: 1rem;
-  margin-top: 2rem;
+  margin-top: 4rem;
+  width: 30vw;
+
+  &--dark{
+    color: vars.$white-color;
+  }
 
   &__form {
     display: flex;
@@ -21,6 +26,7 @@
 
     &__subtitle {
       font-weight: bold;
+      margin-top: 1rem;
     }
 
     &__new-password-container {
@@ -28,18 +34,6 @@
       gap: 1rem;
     }
 
-    
-    &__warning {
-      font-size: .8rem;
-      width: 50%;
-      margin-top: -.5rem;
-    }
-    
-    &__supress-button {
-      width:43%;
-      margin: auto;
-    }
-    
     &__validation-buttons-container{
       display: flex;
       gap: 1rem;

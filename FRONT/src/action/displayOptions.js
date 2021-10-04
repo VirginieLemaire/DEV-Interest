@@ -49,3 +49,76 @@ export const toggleDisplayUrl = () => (
     type: TOGGLE_DISPLAY_URL,
   }
 );
+
+export const SET_MORE = 'SET_MORE';
+export const setMore = (more) => (
+  {
+    type: SET_MORE,
+    more,
+  }
+);
+
+export const SET_MORE_HOME = 'SET_MORE_HOME';
+export const setMoreHome = (more) => (
+  {
+    type: SET_MORE_HOME,
+    more,
+  }
+);
+
+export const CREATE_ACCOUNT_THANK_MODAL = 'CREATE_ACCOUNT_THANK_MODAL';
+export const createAccountThankModal = () => (
+  {
+    type: CREATE_ACCOUNT_THANK_MODAL,
+  }
+);
+
+export const UPDATE_ACCOUNT_SUCCESS_MODAL = 'UPDATE_ACCOUNT_SUCCESS_MODAL';
+export const updateAccountSuccessModal = () => (
+  {
+    type: UPDATE_ACCOUNT_SUCCESS_MODAL,
+  }
+);
+
+export const ADD_CARD_THANK_MODAL = 'ADD_CARD_THANK_MODAL';
+export const addCardThankModal = () => (
+  {
+    type: ADD_CARD_THANK_MODAL,
+  }
+);
+
+export const UPDATE_CARD_SUCCESS_MODAL = 'UPDATE_CARD_SUCCESS_MODAL';
+export const updateCardSuccessModal = () => (
+  {
+    type: UPDATE_CARD_SUCCESS_MODAL,
+  }
+);
+
+export const DELETE_USER_SUCCESS_MODAL = 'DELETE_USER_SUCCESS_MODAL';
+export const deleteUserSuccessModal = () => (
+  {
+    type: DELETE_USER_SUCCESS_MODAL,
+  }
+);
+
+export const TOGGLE_MODAL = 'TOGGLE_MODAL';
+export const toggleModal = () => (
+  {
+    type: TOGGLE_MODAL,
+  }
+);
+
+export const TOGGLE_OPENNAV = 'TOGGLE_OPENNAV';
+export const toggleOpenNav = () => (
+  {
+    type: TOGGLE_OPENNAV,
+  }
+);
+
+export const SET_ACTIVE_MENU = 'SET_ACTIVE_MENU';
+export const setActiveMenu = (activeMenu) => (
+  {
+    type: SET_ACTIVE_MENU,
+    activeMenu,
+  }
+);

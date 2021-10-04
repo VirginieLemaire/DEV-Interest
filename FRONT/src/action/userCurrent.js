@@ -43,6 +43,21 @@ export const connectUser = (data) => (
   }
 );
 
+export const FETCH_CONTRIBUTIONS = 'FETCH_CONTRIBUTIONS';
+export const fetchContributions = () => (
+  {
+    type: FETCH_CONTRIBUTIONS,
+  }
+);
+
+export const SAVE_CONTRIBUTIONS = 'SAVE_CONTRIBUTIONS';
+export const saveContributions = (data) => (
+  {
+    type: SAVE_CONTRIBUTIONS,
+    data,
+  }
+);
+
 export const FETCH_BOOKMARKED_CARDS = 'FETCH_BOOKMARKED_CARDS';
 export const fetchBookmarkedCards = () => (
   {
@@ -57,3 +72,43 @@ export const saveBookmarkedCards = (data) => (
     data,
   }
 );
+
+export const UPDATE_BOOKMARKS = 'UPDATE_BOOKMARKS';
+export const updateBookmarks = (data) => (
+  {
+    type: UPDATE_BOOKMARKS,
+    data,
+  }
+);
+
+export const ADD_TO_BOOKMARKS = 'ADD_TO_BOOKMARKS';
+export const addToBookmarks = (cardId) => (
+  {
+    type: ADD_TO_BOOKMARKS,
+    cardId,
+  }
+);
+
+export const REMOVE_FROM_BOOKMARKS = 'REMOVE_FROM_BOOKMARKS';
+export const removeFromBookmarks = (cardId) => (
+  {
+    type: REMOVE_FROM_BOOKMARKS,
+    cardId,
+  }
+);
+
+export const READ_USER_CURRENT_DATA = 'READ_USER_CURRENT_DATA';
+export const readUserCurrentData = () => (
+  {
+    type: READ_USER_CURRENT_DATA,
+  }
+);
+
+export const UPDATE_THUMB = 'UPDATE_THUMB';
+export const updateThumb = (value) => (
+  {
+    type: UPDATE_THUMB,
+    value,
+  }
+);
+

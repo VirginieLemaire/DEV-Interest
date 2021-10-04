@@ -50,3 +50,25 @@ export const NextPage = () => (
     type: NEXT_PAGE,
   }
 );
+
+export const FETCH_CARDS_MINI_SEARCH = 'FETCH_CARDS_MINI_SEARCH';
+export const fetchCardsMiniSearch = () => (
+  {
+    type: FETCH_CARDS_MINI_SEARCH,
+  }
+);
+
+export const SAVE_CARDS_MINI_SEARCH = 'SAVE_CARDS_MINI_SEARCH';
+export const saveCardsMiniSearch = (data) => (
+  {
+    type: SAVE_CARDS_MINI_SEARCH,
+    data,
+  }
+);
+
+export const RESET_CARDS_MINI = 'RESET_CARDS_MINI';
+export const resetCardsMini = () => (
+  {
+    type: RESET_CARDS_MINI,
+  }
+);
