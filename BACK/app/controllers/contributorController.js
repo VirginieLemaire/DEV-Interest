@@ -15,10 +15,14 @@ const cardsController = {
     },
     deleteCardById: async (request, response) => {
         try {
-            const id = request.userId;
+            const user = request.userId;
             const id_card = parseInt(request.params.id,10);
-            console.log('dans controller',id_card, id);
-            const card = await new Contributor(id).deleteCard(id_card);
+            let data = {
+               user: user,
+                id_card : id_card,
+            }
+            console.log('dans controller',id_card, user);
+            const card = await new Contributor(data).deleteCard();
             response.status(201).json({success: true});
 
         } catch(error) {
