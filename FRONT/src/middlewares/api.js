@@ -346,13 +346,17 @@ export default (store) => (next) => (action) => {
     case FETCH_CONTRIBUTIONS: {
       store.dispatch(setLoading(true));
       const { id } = store.getState().userCurrent;
-      console.log('je veux les cartes crées par le user ', id);
+      console.log('----------------------------------------------------------');
+      console.log(`Je demande au serveur de me retourner les contributions du user ${id}`);
+      console.log(`Route empreintée en GET : /contributor/cards`);
+
       axiosInstance
-        .get(`/user/${id}/mycards`)
+        .get('/contributor/cards')
         .then(
           (response) => {
+            console.log('Retour du serveur POSITIF, les données retournées sont ');
+            console.log(response.data);
             store.dispatch(setLoading(false));
-            console.log('les cartes que j\'ai crée sont ', response.data);
             store.dispatch(saveContributions(response.data));
             // console.log(response.data.data);
           },

@@ -15,7 +15,7 @@ const UserBookmarks = () => {
   } = useSelector((state) => state.userCurrent);
   useEffect(() => {
     dispatch(fetchBookmarkedCards());
-    // dispatch(fetchContributions());
+    dispatch(fetchContributions());
   }, [bookmarks]);
 
   if (loading) return null;
