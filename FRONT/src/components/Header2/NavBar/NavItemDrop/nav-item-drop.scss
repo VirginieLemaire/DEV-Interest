@@ -10,7 +10,7 @@
 .icon-button{
   width: calc(60px * 0.6);
   height: calc(60px * 0.6);
-  background-color: vars.$light-color;
+  background-color: vars.$very-light-color;
   border-radius: vars.$border-radius-input;
   padding: 5px;
   margin: 2px;
@@ -44,13 +44,13 @@
     }
 
     &:hover{
-      filter: brightness(0.9);
+      filter: brightness(0.97);
       color: vars.$primary-color;
     }
   }
 
   &.icon-button:hover{
-    filter: brightness(0.90);
+    filter: brightness(0.97);
     color: vars.$primary-color;
   }
 

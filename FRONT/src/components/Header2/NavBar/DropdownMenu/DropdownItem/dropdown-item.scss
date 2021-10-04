@@ -35,7 +35,7 @@
   }
 
   &:hover{
-    background-color: vars.$light-color-plus;
+    background-color: vars.$light-color;
     color: vars.$primary-color;
   }
 }
@@ -47,7 +47,7 @@
 .icon-button-drop-item{
   width: calc(60px * 0.6);
   height: calc(60px * 0.6);
-  background-color: vars.$light-color;
+  background-color: vars.$very-light-color;
   border-radius: vars.$border-radius-input;
   padding: 5px;
   margin: 2px;
@@ -56,6 +56,26 @@
   align-items: center;
   transition: filter 300ms;
   color: vars.$text-color;
+  margin-right: 1rem;
+
+  &:hover{
+    color: vars.$primary-color;
+  }
+
+}
+
+.icon-button-drop-item--dark{
+  width: calc(60px * 0.6);
+  height: calc(60px * 0.6);
+  background-color: vars.$dark-color-accent;
+  border-radius: vars.$border-radius-input;
+  padding: 5px;
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: filter 300ms;
+  color: vars.$white-color;
   margin-right: 1rem;
 
   &:hover{

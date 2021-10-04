@@ -18,7 +18,7 @@ const DropdownItem = ({
   };
   return (
     <Link to={to} className={darkMode ? 'menu-item--dark' : 'menu-item'} onClick={handleClick}>
-      <span className="icon-button-drop-item">
+      <span className={darkMode ? 'icon-button-drop-item--dark' : 'icon-button-drop-item'}>
         {leftIcon}
       </span>
 

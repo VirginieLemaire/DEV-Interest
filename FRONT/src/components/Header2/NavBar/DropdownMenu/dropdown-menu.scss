@@ -13,6 +13,7 @@
   box-shadow: vars.$shadow-primary;
   &--dark{
     background-color: vars.$dark-color;
+    border: 2px solid vars.$dark-color-accent;
   }
 }
 
