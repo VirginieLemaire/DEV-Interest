@@ -268,6 +268,7 @@ export default (store) => (next) => (action) => {
       console.log('Je souhaite ajouer une carte sur le serveur');
       console.log('Route empreintée en POST : /cards/save (+ données suivantes dans le body)');
       console.log(newCard);
+      store.dispatch(toggleModal());
 
       axiosInstance.post(
         '/cards/save',
@@ -277,7 +278,7 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('L\'enregistrement de la carte a REUSSI ! et les informations ont bien été récupérées par le FRONT', response);
-          store.dispatch(toggleModal());
+
           store.dispatch(addCardThankModal());
           store.dispatch(fetchCardsHome());
           store.dispatch(resetNewCard());
@@ -366,6 +367,7 @@ export default (store) => (next) => (action) => {
       console.log('----------------------------------------------------------');
       console.log(`Je prépare les infos suivantes pour m'inscrire (username : ${username}, email: ${email} et password: ${password})`);
       console.log('Route empreintée en POST : /signup (+ username, email, password dans le body)');
+      store.dispatch(toggleModal());
 
       axiosInstance.post(
         '/signup',
@@ -379,7 +381,6 @@ export default (store) => (next) => (action) => {
           console.log('Signup REUSSI ! Enregistrement des informations reçues du back (response.data.user)', response.data.user);
           console.log('Le token reçu lors du signup est :', response.data.accessToken);
 
-          store.dispatch(toggleModal());
           store.dispatch(createAccountThankModal());
 
           store.dispatch(connectUser(response.data.user));
@@ -401,6 +402,7 @@ export default (store) => (next) => (action) => {
       console.log('----------------------------------------------------------');
       console.log(`Je veux mettre à jour l'user ayant pour id ${id}`);
       console.log(`Route empreintée en PUT : /users/${id} (+ email, username, password dans le body)`);
+      store.dispatch(toggleModal());
 
       axiosInstance.put(
         `/users/${id}`,
@@ -414,7 +416,6 @@ export default (store) => (next) => (action) => {
           console.log('Update du user REUSSI, voici les informations reçues du back', response.data.user);
           console.log('Le token reçu lors de l\'update est : ', response.data.accessToken);
 
-          store.dispatch(toggleModal());
           store.dispatch(UpdateAccountSuccessModal());
           store.dispatch(connectUser(email, username));
           store.dispatch(resetUpdateUserFields());
