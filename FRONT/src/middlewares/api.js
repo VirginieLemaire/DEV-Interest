@@ -401,7 +401,11 @@ export default (store) => (next) => (action) => {
     }
     case UPDATE_USER_CURRENT: {
       const { id, email: emailCurrent, username: usernameCurrent } = store.getState().userCurrent;
-      const { email, username, passwordNew, passwordCurrent } = store.getState().userUpdate;
+      const { email: emailNew, username: usernameNew, passwordNew, passwordCurrent } = store.getState().userUpdate;
+
+      const username = !usernameNew ? usernameCurrent : usernameNew;
+      const email = !emailNew? emailCurrent : emailNew;
+      const password = !passwordNew ? passwordCurrent : passwordNew
 
       console.log('----------------------------------------------------------');
       console.log(`Je veux mettre à jour l'user ayant pour id ${id}`);
@@ -410,18 +414,18 @@ export default (store) => (next) => (action) => {
       axiosInstance.put(
         `/users/${id}`,
         {
-          email: !email? emailCurrent : email,
-          username: !username ? usernameCurrent : username,
-          password: !passwordNew ? passwordCurrent : passwordNew,
+          email,
+          username,
+          password, 
         },
       ).then(
         (response) => {
           console.log('Update du user REUSSI, voici les informations reçues du back', response.data.user);
           console.log('Le token reçu lors de l\'update est : ', response.data.accessToken);
 
-          store.dispatch(toggleModal());
-          store.dispatch(UpdateAccountSuccessModal());
-          store.dispatch(connectUser(email, username));
+          // store.dispatch(toggleModal());
+          // store.dispatch(UpdateAccountSuccessModal());
+          store.dispatch(connectUser({email, username}));
           store.dispatch(resetUpdateUserFields());
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
