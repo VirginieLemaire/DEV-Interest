@@ -7,7 +7,7 @@
 
   &:focus-within{
     border-radius: vars.$border-radius-input;
-    border: 2px solid vars.$primary-color;
+    caret-color: vars.$primary-color;
   }
 }
 
