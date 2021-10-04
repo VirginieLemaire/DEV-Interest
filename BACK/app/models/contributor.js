@@ -55,7 +55,6 @@ class Contributor {
             console.log("\n!!!!!  je vérifie que la personne qui souhaite faire la modif est bien celle qui a ajouté la ressource");
             // recherche de l'id de l'utilisateur
             const {rows} = await client.query('SELECT user_id FROM card WHERE id =$1', [this.card_id]);
-
             //si l'utilisateur n'est pas le contributeur
             if (this.id !== rows[0].user_id) {
                 throw new Error("ERREUR : Le user pas l'autorisation de modifier cette carte car il ne l'a pas créée");
