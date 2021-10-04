@@ -22,10 +22,11 @@ export const changeSearchField = (value, fieldName) => (
 );
 
 export const SAVE_CARDS_SEARCH = 'SAVE_CARDS_SEARCH';
-export const saveCardsSearch = (data) => (
+export const saveCardsSearch = (data, count) => (
   {
     type: SAVE_CARDS_SEARCH,
     data,
+    count,
   }
 );
 
@@ -59,10 +60,11 @@ export const fetchCardsMiniSearch = () => (
 );
 
 export const SAVE_CARDS_MINI_SEARCH = 'SAVE_CARDS_MINI_SEARCH';
-export const saveCardsMiniSearch = (data) => (
+export const saveCardsMiniSearch = (data, count) => (
   {
     type: SAVE_CARDS_MINI_SEARCH,
     data,
+    count,
   }
 );
 

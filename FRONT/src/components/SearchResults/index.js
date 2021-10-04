@@ -11,7 +11,7 @@ import AppLoader from '../GenericComponents/AppLoader';
 const SearchResults = () => {
   const dispatch = useDispatch();
 
-  const { cards } = useSelector((state) => state.cardsSearch);
+  const { cards, searchCount } = useSelector((state) => state.cardsSearch);
   const { loading, more } = useSelector((state) => state.displayOptions);
 
   const breakpointsColumnsObj = {
@@ -28,6 +28,7 @@ const SearchResults = () => {
 
   return (
     <div className="search-container">
+      <div className="search-counter"> {searchCount > 0 ? `Il y a  ${searchCount} résultats` : 'Aucun résultat'}</div>
       <div className="search-results">
         <InfiniteScroll
           dataLength={cards.length}

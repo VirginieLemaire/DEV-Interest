@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
 
-import { showDeleteUserModal } from '../../action/displayOptions';
+import { deleteUserSuccessModal, showDeleteUserModal } from '../../action/displayOptions';
 
 import LogoDEVLovePPER from '../../assets/LogoDEVLovePPER.svg';
 
@@ -21,6 +21,7 @@ const DeleteUserModal = () => {
   const handleYesConnexionClick = () => {
     dispatch(deleteUserCurrent());
     dispatch(showDeleteUserModal());
+    dispatch(deleteUserSuccessModal());
     history.push('/');
   };
 

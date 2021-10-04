@@ -102,17 +102,17 @@ export default (store) => (next) => (action) => {
     }
     case FETCH_CARDS_MINI_SEARCH: {
       const { searchQuery } = store.getState().cardsSearch;
-      console.log('----------------------------------------------------------');
-      console.log(`Je demande au serveur de me retourner les cartes pour la MINI recherche de la searchbard avec les mots-clés: ${searchQuery}`);
-      console.log(`Route empreintée en GET : /cards/search?keyword=${searchQuery}&page=${1}&size=${3}`);
+      // console.log('----------------------------------------------------------');
+      // console.log(`Je demande au serveur de me retourner les cartes pour la MINI recherche de la searchbard avec les mots-clés: ${searchQuery}`);
+      // console.log(`Route empreintée en GET : /cards/search?keyword=${searchQuery}&page=${1}&size=${3}`);
 
       axiosInstance
         .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${3}`)
         .then(
           (response) => {
-            console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
-            console.log(response.data);
-            store.dispatch(saveCardsMiniSearch(response.data.data));
+            // console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
+            // console.log(response.data);
+            store.dispatch(saveCardsMiniSearch(response.data.data, response.data.count));
           },
         )
         .catch(
@@ -137,9 +137,9 @@ export default (store) => (next) => (action) => {
           .then(
             (response) => {
               console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
-              console.log(response.data.data);
+              console.log(response.data);
 
-              store.dispatch(saveCardsSearch(response.data.data));
+              store.dispatch(saveCardsSearch(response.data.data, response.data.count));
               store.dispatch(NextPage());
               store.dispatch(changeSearchField('', 'search'));
               store.dispatch(setLoading(false));
