@@ -11,6 +11,7 @@ const bookmarksController = {
             if(bookmarks === "") {
                 response.status(200).json('Pas de contenu !');
             }else {
+                response.header('resultat_bookmarks', bookmarks.length);
                 response.json(bookmarks);
                 return this.id;
             }
@@ -23,6 +24,7 @@ const bookmarksController = {
     addBookmarkById: async (request, response) => {
         try {
             // params id de la carte
+            console.log("je récupère les infos de la carte et du user");
             const idcard = parseInt(request.params.id, 10);
             const iduser = request.userId;
             console.log({idcard}, {iduser});
@@ -47,8 +49,8 @@ const bookmarksController = {
             const iduser = request.userId;
             console.log('je suis dans le controller', id_bookmark);
             console.log('je suis dans le controller', iduser);
-            await new Bookmarks(id_bookmark,iduser).deleteBoomarkById(id_bookmark,iduser);
-            response.status(201).json({success: true});
+            const bookmark = await new Bookmarks(id_bookmark,iduser).deleteBoomarkById(id_bookmark,iduser);
+            response.status(201).json(bookmark);
         }catch (error) {
             console.log(error);
             response.status(500).json(error.message);

@@ -15,10 +15,11 @@ const cardsController = {
             const limit = parseInt(size);
             const skip = (page - 1) * size;
             const card = await Cards.findAllCards(limit, skip);
-            response.setHeader('Authorization', jwt.makeToken(request.userId));
+            //response.setHeader('Authorization', jwt.makeToken(request.userId));
             if(card === "") {
                 response.status(200).json('Pas de contenu !');
             }else {
+                response.header('resultat_home_cards', card.length);
                 response.json({
                     page,
                     size,
@@ -51,10 +52,11 @@ const cardsController = {
             const card = await Cards.findQueryAllCards(keyword,limit,skip);
             console.log(card);
             
-            response.setHeader('Authorization', jwt.makeToken(request.userId));
+            
             if(card === "") {
                 response.status(200).json('Pas de contenu !');
             }else {
+                response.header('resultat', card.length);
                 response.json({
                     page,
                     size,
@@ -67,17 +69,17 @@ const cardsController = {
             response.status(500).json(error.message);
         }
     },
-    //update or insert a card
+    //insert a card
     save : async (request, response) => {
         try {
             const card = await new Cards(request.body).save();
-            if (card) {
+            //if (card) {
                 //on a une valeur de retour, il s'agit d'un INSERT
                 response.status(201).json(card);
-            } else {
+            //} else {
                 //pas de valeur de retour, c'était un UPDATE
-                response.status(204).json('Update done');
-            }
+            //    response.status(204).json('Update done');
+            //}
 
         } catch(error) {
            //lire l'erreur
@@ -85,6 +87,7 @@ const cardsController = {
            //envoyer l'info au front
            response.status(500).json(error.message);
         }
-    }
+    },
+    
 }
 module.exports = cardsController;

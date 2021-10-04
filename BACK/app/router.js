@@ -5,6 +5,7 @@ const cardController = require('./controllers/cardController');
 const userController = require('./controllers/userController');
 const bookmarksController = require('./controllers/userBookmarks');
 const fetchUrlController = require('./controllers/fetchUrlController');
+const contributorController = require('./controllers/contributorController');
 
 const router = Router();
 
@@ -17,7 +18,9 @@ router.get('/cards', cardController.findAllCards);
     //2. remplir le formulaire et envoyer au back
     router.post('/cards/save',checkJwt, cardController.save);
 //modification d'une carte
-router.post('/cards/:id',checkJwt, cardController.save);
+router.put('/contributor/cards/:id',checkJwt, contributorController.update);
+// DELETE carte
+router.delete('/cards/:id/users', checkJwt, contributorController.deleteCardById);
 
 //résultat de recherche
 router.get('/cards/search?',cardController.findQueryAllCards);
@@ -29,12 +32,15 @@ router.post('/cards/:id/bookmarks',checkJwt, bookmarksController.addBookmarkById
 //Delete une carte des favoris
 router.delete('/users/:id/bookmarks/:id',checkJwt, bookmarksController.deleteBookmarkById);
 
+// voir les cartes crées
+router.get('/contributor/cards', checkJwt, contributorController.findByContributor);
+
 //USERS by id
 router.get('/users/:id' ,checkJwt, userController.findById);
 //DELETE USER BY ID
 router.delete('/users/:id' ,checkJwt, userController.deleteUserById);
 //modifier un user
-router.put('/users/:id' ,checkJwt, userController.update);
+router.put('/users/:id' , checkJwt, userController.update);
 
 //LOGIN - SIGNUP
 router.post('/login', userController.login);

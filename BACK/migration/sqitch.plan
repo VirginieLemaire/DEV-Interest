@@ -12,3 +12,4 @@ function_add_card_to_bookmarks 2021-09-29T10:06:28Z Virginie <student@teleporter
 function_update_card 2021-09-30T09:08:43Z Virginie <student@teleporter> # update a card
 function_update_user 2021-09-30T11:16:01Z Virginie <student@teleporter> # replace previous migration with bad name -function_add_card
 view-user-bookmarks 2021-09-30T11:25:29Z Virginie <student@teleporter> # view user with bookmarks id
+cascade_card 2021-09-30T16:03:48Z fred <frederic.botella@gmail.com> # alter table card
