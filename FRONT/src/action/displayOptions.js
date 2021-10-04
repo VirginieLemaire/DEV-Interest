@@ -122,3 +122,12 @@ export const setActiveMenu = (activeMenu) => (
     activeMenu,
   }
 );
+
+export const SHOW_DELETE_USER_MODAL = 'SHOW_DELETE_USER_MODAL';
+export const showDeleteUserModal = () => (
+  {
+    type: SHOW_DELETE_USER_MODAL,
+  }
+);
+
+

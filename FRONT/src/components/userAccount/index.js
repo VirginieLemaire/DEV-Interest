@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
-import { deleteUserCurrent } from '../../action/userUpdate';
+import { showDeleteUserModal } from '../../action/displayOptions';
 
 const UserAccount = () => {
   const dispatch = useDispatch();
@@ -17,8 +17,7 @@ const UserAccount = () => {
   };
 
   const handleDeleteButtonClick = () => {
-    dispatch(deleteUserCurrent());
-    history.push('/');
+    dispatch(showDeleteUserModal());
   };
 
   return (
@@ -37,18 +36,18 @@ const UserAccount = () => {
         handleChange={() => null}
       />
       <div className="user-account__button-container">
-          <Button 
-            color
-            styling="full"
-            handleClick={handleModifyClick}
-            content="Modifier le compte"
-          />
-          <Button 
-            color
-            styling="outline"
-            handleClick={handleDeleteButtonClick}
-            content="Supprimer le compte"
-          />
+        <Button
+          color
+          styling="full"
+          handleClick={handleModifyClick}
+          content="Modifier le compte"
+        />
+        <Button
+          color
+          styling="outline"
+          handleClick={handleDeleteButtonClick}
+          content="Supprimer le compte"
+        />
       </div>
     </div>
   );

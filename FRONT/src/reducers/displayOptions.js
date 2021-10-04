@@ -4,7 +4,7 @@ import {
   DARK_MODE_OFF,
   DARK_MODE_TOGGLE, DELETE_USER_SUCCESS_MODAL, SET_ACTIVE_MENU, SET_APP_LOADING, SET_LOADING,
   SET_MORE, SET_MORE_HOME, SHOW_ADD_CARD_MODAL,
-  SHOW_CONNEXION_MODAL, SHOW_SIGNUP_MODAL, TOGGLE_DISPLAY_URL,
+  SHOW_CONNEXION_MODAL, SHOW_DELETE_USER_MODAL, SHOW_SIGNUP_MODAL, TOGGLE_DISPLAY_URL,
   TOGGLE_MODAL,
   TOGGLE_OPENNAV,
   UPDATE_ACCOUNT_SUCCESS_MODAL, UPDATE_CARD_SUCCESS_MODAL,
@@ -18,8 +18,10 @@ export const initialState = {
   darkMode: false,
   more: true,
   moreHome: true,
+
   connexionModal: false,
   addCardModal: false,
+  deleteUserModal: false,
 
   modal: false,
 
@@ -49,6 +51,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         addCardModal: !state.addCardModal,
+      };
+    case SHOW_DELETE_USER_MODAL:
+      return {
+        ...state,
+        deleteUserModal: !state.deleteUserModal,
       };
     case DARK_MODE_TOGGLE:
       return {

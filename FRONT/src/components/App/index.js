@@ -31,6 +31,7 @@ import UpdateCardSuccessModal from '../Modals/UpdateCardSuccessModal';
 import DeleteUserSuccessModal from '../Modals/DeleteUserSuccessModal';
 import Header2 from '../Header2';
 import HeaderOffset from '../GenericComponents/HeaderOffSet';
+import DeleteUserModal from '../DeleteUserModal';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -102,6 +103,7 @@ const App = () => {
       <UpdateAccountSuccessModal />
       <UpdateCardSuccessModal />
       <DeleteUserSuccessModal />
+      <DeleteUserModal />
     </div>
   );
 };
