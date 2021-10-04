@@ -43,6 +43,21 @@ export const connectUser = (data) => (
   }
 );
 
+export const FETCH_CONTRIBUTIONS = 'FETCH_CONTRIBUTIONS';
+export const fetchContributions = () => (
+  {
+    type: FETCH_CONTRIBUTIONS,
+  }
+);
+
+export const SAVE_CONTRIBUTIONS = 'SAVE_CONTRIBUTIONS';
+export const saveContributions = (data) => (
+  {
+    type: SAVE_CONTRIBUTIONS,
+    data,
+  }
+);
+
 export const FETCH_BOOKMARKED_CARDS = 'FETCH_BOOKMARKED_CARDS';
 export const fetchBookmarkedCards = () => (
   {
@@ -88,3 +103,12 @@ export const readUserCurrentData = () => (
     type: READ_USER_CURRENT_DATA,
   }
 );
+
+export const UPDATE_THUMB = 'UPDATE_THUMB';
+export const updateThumb = (value) => (
+  {
+    type: UPDATE_THUMB,
+    value,
+  }
+);
+

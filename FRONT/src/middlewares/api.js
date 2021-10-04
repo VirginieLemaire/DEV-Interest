@@ -30,9 +30,8 @@ import {
 } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
-  ADD_TO_BOOKMARKS,
-  FETCH_BOOKMARKED_CARDS, READ_USER_CURRENT_DATA,
-  REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, updateBookmarks, userLogout,
+  ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
+  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, userLogout,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
@@ -340,6 +339,23 @@ export default (store) => (next) => (action) => {
         )
         .catch(
           (error) => console.log(`le serveur n'a pas réussi à renvoyer la liste des favoris du user ${id}, il a retourné (error.response)`, error.response),
+        );
+      next(action);
+      break;
+    }
+    case FETCH_CONTRIBUTIONS: {
+      store.dispatch(setLoading(true));
+      const { id } = store.getState().userCurrent;
+      console.log('je veux les cartes crées par le user ', id);
+      axiosInstance
+        .get(`/user/${id}/mycards`)
+        .then(
+          (response) => {
+            store.dispatch(setLoading(false));
+            console.log('les cartes que j\'ai crée sont ', response.data);
+            store.dispatch(saveContributions(response.data));
+            // console.log(response.data.data);
+          },
         );
       next(action);
       break;

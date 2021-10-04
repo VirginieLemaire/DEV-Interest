@@ -1,30 +1,37 @@
 import { useSelector } from 'react-redux';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
+import { Link } from 'react-router-dom';
 import './slider.scss';
 
+
 const Slider = () => {
-  const data = useSelector((state) => state.cardsHome.cards.slice(0, 3));
-  console.log(data);
+  const data = useSelector((state) => state.cardsHome.cards.slice(0, 30));
 
   return (
     <div className="slider">
       <Carousel 
         autoPlay
-        interval={2000}
+        width={850}
+        interval={5000}
         infiniteLoop
-        thumbWidth={50}
         showIndicators={false}
         showStatus={false}
+        showArrows={false}
+        showThumbs={false}
+        stopOnHover={false}
+        transitionTime={3000}
+        centerMode={true}
+        centerSlidePercentage={100}
       >
         {
           data.map((slide) => (
-            <div key={slide.id}>
-              <img src={slide.image} alt=""/>
-              <div className="overlay"></div>
-              <h2 className="overlay__title">{slide.title}</h2>
-              <p className="overlay__text">{slide.description}</p>
+            <Link key={slide.id} to={`/cards/${slide.slug}/${slide.id}`}>
+            <div  className="slide">
+              <img  className="slide__image" src={slide.image} alt=""/>
+              <h2 className="slide__title">{slide.title}</h2>
             </div>
+            </Link>
           )
         )}
       </Carousel>

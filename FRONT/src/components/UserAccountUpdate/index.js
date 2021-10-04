@@ -44,7 +44,6 @@ const UserAccountUpdate = () => {
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'username'))}
           minlength="4"
           maxlength="20"
-          required
         />
         <h2 className="user-account-update__form__subtitle">Modifier l'email de compte</h2>
         <EmailField
@@ -53,9 +52,9 @@ const UserAccountUpdate = () => {
           name="email"
           placeholder="Email"
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}
-          required
         />
         <h2 className="user-account-update__form__subtitle">Modifier le mot de passe</h2>
+        <div className="user-account-update__form__new-password-container">
         <PasswordField
           autoComplete="password"
           value={passwordCurrent}
@@ -65,23 +64,22 @@ const UserAccountUpdate = () => {
           required
           minlength="4"
         />
-        <div className="user-account-update__form__new-password-container">
-          <PasswordField
-            autoComplete="new-password"
-            value={passwordNew}
-            name="passwordNew"
-            placeholder="Nouveau mot de passe"
-            handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNew'))}
-            minlength="4"
-          />
-          <PasswordField
-            autoComplete="new-password-verification"
-            value={passwordNewVerification}
-            name="passwordNewVerification"
-            placeholder="Vérifier mot de passe"
-            handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNewVerification'))}
-            minlength="4"
-          />
+        <PasswordField
+          autoComplete="new-password"
+          value={passwordNew}
+          name="passwordNew"
+          placeholder="Nouveau mot de passe"
+          handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNew'))}
+          minlength="4"
+        />
+        <PasswordField
+          autoComplete="new-password-verification"
+          value={passwordNewVerification}
+          name="passwordNewVerification"
+          placeholder="Vérifier mot de passe"
+          handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNewVerification'))}
+          minlength="4"
+        />
         </div>
         {/* <div className="user-account__form__supress-container">
         <div className="user-account__form__supress-container__text">

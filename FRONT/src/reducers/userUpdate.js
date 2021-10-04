@@ -11,11 +11,6 @@ export const initialState = {
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case CONNECT_USER:
-      return {
-        ...state,
-        ...action.data,
-      };
     case CHANGE_UPDATE_USER_FIELD:
       return {
         ...state,
