@@ -1,11 +1,11 @@
 import {
   AUTOFILL_UPDATE_FIELDS,
   CHANGE_UPDATE_CARD_CERTIFICATION, CHANGE_UPDATE_CARD_FIELD,
-  CHANGE_UPDATE_CARD_TECHS, RESET_UPDATE_CARD,
+  CHANGE_UPDATE_CARD_TECHS, RESET_UPDATE_CARD, SET_DELETE_CARD_ID,
 } from '../action/cardUpdate';
-import Card from '../components/Card';
 
 export const initialState = {
+  id: '',
   title: '',
   slug: '',
   website: '',
@@ -18,6 +18,8 @@ export const initialState = {
   lang: '',
   category: '',
   certification: false,
+
+  deleteCardId: '',
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -40,6 +42,7 @@ const reducer = (state = initialState, action = {}) => {
     case RESET_UPDATE_CARD:
       return {
         ...state,
+        id: '',
         title: '',
         slug: '',
         website: '',
@@ -56,17 +59,23 @@ const reducer = (state = initialState, action = {}) => {
     case AUTOFILL_UPDATE_FIELDS:
       return {
         ...state,
+        id: action.card.id,
         title: action.card.title,
         slug: action.card.slug,
         website: action.card.website,
         description: action.card.description,
         url: action.card.url,
-        image: action.card.image,
-        type: action.card.type,
+        image: action.card.url_image,
+        type: action.card.type_id,
         techs: action.card.techs,
-        level: action.card.level,
-        lang: action.card.lang,
-        category: action.card.category,
+        level: action.card.level_id,
+        lang: action.card.language_id,
+        category: action.card.category_id,
+      };
+    case SET_DELETE_CARD_ID:
+      return {
+        ...state,
+        deleteCardId: action.id,
       };
     default:
       return state;

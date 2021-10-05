@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import Masonry from 'react-masonry-css';
 
 import Card from '../Card';
 import Button from '../GenericComponents/Button';
 import './contributions.scss';
-import { useHistory } from 'react-router';
-import { autofillUpdateFields, getUpdateCardInfo } from '../../action/cardUpdate';
+import { getUpdateCardInfo, setDeleteCardId } from '../../action/cardUpdate';
+import Loader from '../GenericComponents/Loader';
+import { showDeleteCardModal } from '../../action/displayOptions';
 
 const BookmarkedCards = () => {
   const history = useHistory();
@@ -18,7 +20,10 @@ const BookmarkedCards = () => {
     history.push('/update-card');
     dispatch(getUpdateCardInfo(cardId));
   };
-  const handleDeleteButtonClick = () => null;
+  const handleDeleteButtonClick = (cardId) => {
+    dispatch(setDeleteCardId(cardId));
+    dispatch(showDeleteCardModal());
+  };
 
   const breakpointsColumnsObj = {
     default: 7,
@@ -30,7 +35,7 @@ const BookmarkedCards = () => {
     700: 1,
   };
 
-  if (loading) return null;
+  if (loading) return <Loader />;
 
   return (
     <div className="search-container">
@@ -55,7 +60,7 @@ const BookmarkedCards = () => {
                         <Button
                           color
                           styling="outline"
-                          handleClick={handleDeleteButtonClick}
+                          handleClick={() => handleDeleteButtonClick(card.id)}
                           content="Supprimer"
                         />
                       </div>

@@ -33,6 +33,8 @@ import Header2 from '../Header2';
 import HeaderOffset from '../GenericComponents/HeaderOffSet';
 import DeleteUserModal from '../DeleteUserModal';
 import UpdateCard from '../UpdateCard';
+import DeleteCardModal from '../DeleteCardModal';
+import DeleteCardSuccessModal from '../Modals/DeleteCardSuccessModal';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -96,7 +98,9 @@ const App = () => {
       <UpdateAccountSuccessModal />
       <UpdateCardSuccessModal />
       <DeleteUserSuccessModal />
+      <DeleteCardSuccessModal />
       <DeleteUserModal />
+      <DeleteCardModal />
     </div>
   );
 };

@@ -1,39 +1,43 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
-
-import { deleteUserSuccessModal, showDeleteUserModal } from '../../action/displayOptions';
+import PropTypes from 'prop-types';
+import {
+  deleteCardSuccessModal, deleteUserSuccessModal, showDeleteCardModal, showDeleteUserModal, toggleModal,
+} from '../../action/displayOptions';
 
 import LogoDEVLovePPER from '../../assets/LogoDEVLovePPER.svg';
 
 import Button from '../GenericComponents/Button';
 
-import './delete-user-modal.scss';
+import './delete-card-modal.scss';
 import { deleteUserCurrent } from '../../action/userUpdate';
+import { deleteCard } from '../../action/cardUpdate';
 
-const DeleteUserModal = () => {
+const DeleteCardModal = ({ cardId }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { darkMode, deleteUserModal } = useSelector((state) => state.displayOptions);
+  const { darkMode, deleteCardModal } = useSelector((state) => state.displayOptions);
   const { isLogged, username } = useSelector((state) => state.userCurrent);
 
   const handleYesConnexionClick = () => {
-    dispatch(deleteUserCurrent());
-    dispatch(showDeleteUserModal());
+    dispatch(deleteCard());
+    dispatch(showDeleteCardModal());
     history.push('/');
+    dispatch(toggleModal());
   };
 
   const handleNoConnexionClick = () => {
-    dispatch(showDeleteUserModal());
+    dispatch(showDeleteCardModal());
   };
 
   const handleHomeRedirect = () => {
     history.push('/');
-    dispatch(showDeleteUserModal());
+    dispatch(showDeleteCardModal());
   };
 
-  if (!deleteUserModal || !isLogged) {
+  if (!deleteCardModal || !isLogged) {
     return null;
   }
 
@@ -47,7 +51,7 @@ const DeleteUserModal = () => {
               <div className="connexion-modal__header-header--item">
                 <img className="connexion-modal__logo" src={LogoDEVLovePPER} alt="logo court" onClick={handleHomeRedirect} />
               </div>
-              <div className="connexion-modal__header-header--item" onClick={() => dispatch(showDeleteUserModal())}>
+              <div className="connexion-modal__header-header--item" onClick={() => dispatch(showDeleteCardModal())}>
                 <GrFormClose className="close-icon" />
               </div>
             </div>
@@ -57,8 +61,8 @@ const DeleteUserModal = () => {
             <div
               className={darkMode ? 'delete-user-modal__connexion-warning delete-user-modal__connexion-warning--dark' : 'delete-user-modal__connexion-warning'}
             >
-              <div className="delete-user-modal__connexion-warning__main"> Souhaites-tu vraiment nous quitter ? </div>
-              La communauté DEV Interest te remercie pour le temps que tu lui a accordé et espère te revoir très vite!
+              <div className="delete-user-modal__connexion-warning__main"> Souhaites-tu vraiment supprimer cette ressource ? </div>
+              Nous espèrons que tu pourras nous partager d'autres de tes bonnes adresses!
             </div>
             <div className="delete-user-modal__footer">
               <Button
@@ -83,4 +87,8 @@ const DeleteUserModal = () => {
   );
 };
 
-export default DeleteUserModal;
+DeleteCardModal.propTypes = {
+  cardId: PropTypes.number.isRequired,
+};
+
+export default DeleteCardModal;

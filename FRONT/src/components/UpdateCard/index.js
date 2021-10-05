@@ -2,7 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-import { changeUpdateCardCertification, changeUpdateCardField, changeUpdateCardTechs, updateCard } from '../../action/cardUpdate';
+import {
+  changeUpdateCardCertification, changeUpdateCardField, changeUpdateCardTechs, updateCard,
+} from '../../action/cardUpdate';
+import { toggleModal, updateCardSuccessModal } from '../../action/displayOptions';
 import { slugify } from '../../selectors/cards';
 import { capitalizeFirstLetter } from '../../selectors/utils';
 
@@ -19,10 +22,14 @@ const UpdateCard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const { username } = useSelector((state) => state.userCurrent);
+
+  const userId = useSelector((state) => state.userCurrent.id);
+
   const { loading, darkMode } = useSelector((state) => state.displayOptions);
 
   const {
-    title, description, url, image, website, certification, category, techs, type, level, lang,
+    title, description, url, image, website, certification, category, techs, type, level, lang, id,
   } = useSelector((state) => state.cardUpdate);
 
   const customTheme = (theme) => ({
@@ -35,7 +42,6 @@ const UpdateCard = () => {
       neutral20: '#F0EFEF',
     },
   });
-
 
   const languageOptions = [
     { value: 1, label: 'Français' },
@@ -85,13 +91,23 @@ const UpdateCard = () => {
     dispatch(changeUpdateCardField(slugify(e.target.value), 'slug'));
   };
 
+  console.log('l\'id de la carte: ', id);
+
+
   const handleSubmitNewCard = (e) => {
     if (certification) {
       e.preventDefault();
+      dispatch(toggleModal());
+      // dispatch(updateCardSuccessModal());
       dispatch(updateCard());
-      history.push('/');
+      history.push(`/${username}/${userId}/bookmarks`);
     }
   };
+
+  // const newTechs = techs.map((tech) => techValues.find((techValue) => techValue.value === tech));
+
+  // console.log(newTechs);
+
 
   if (loading) return <Loader />;
 
@@ -151,7 +167,9 @@ const UpdateCard = () => {
             required
           />
           <Select
-            inputValue={typeValues.find((value) => value.label === type)}
+            value={
+              typeValues.filter((option) => option.value === type)
+            }
             placeholder="Type de ressource"
             closeMenuOnSelect
             components={animatedComponents}
@@ -160,7 +178,6 @@ const UpdateCard = () => {
             theme={customTheme}
           />
           <Select
-            inputValue={techs}
             placeholder="Technologies"
             closeMenuOnSelect={false}
             components={animatedComponents}
@@ -170,7 +187,9 @@ const UpdateCard = () => {
             theme={customTheme}
           />
           <Select
-            inputValue={category}
+            value={
+              categoryValues.filter((option) => option.value === category)
+            }
             placeholder="Catégorie"
             closeMenuOnSelect
             components={animatedComponents}
@@ -179,7 +198,9 @@ const UpdateCard = () => {
             theme={customTheme}
           />
           <Select
-            inputValue={level}
+            value={
+            levelValues.filter((option) => option.value === level)
+            }
             placeholder="Niveau"
             closeMenuOnSelect
             components={animatedComponents}
@@ -188,7 +209,9 @@ const UpdateCard = () => {
             theme={customTheme}
           />
           <Select
-            inputValue={lang}
+            value={
+              languageOptions.filter((option) => option.value === lang)
+            }
             placeholder="Langue"
             closeMenuOnSelect
             components={animatedComponents}

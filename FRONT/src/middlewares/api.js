@@ -17,8 +17,9 @@ import {
 import {
   addCardThankModal,
   createAccountThankModal,
+  deleteCardSuccessModal,
   deleteUserSuccessModal,
-  setAppLoading, setLoading, setMore, setMoreHome, toggleModal,
+  setAppLoading, setLoading, setMore, setMoreHome, toggleModal, updateCardSuccessModal,
 } from '../action/displayOptions';
 
 import {
@@ -37,7 +38,9 @@ import {
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
 import UpdateAccountSuccessModal from '../components/Modals/UpdateAccountSuccessModal';
-import { autofillUpdateFields, GET_UPDATE_CARD_INFO } from '../action/cardUpdate';
+import {
+  autofillUpdateFields, DELETE_CARD, GET_UPDATE_CARD_INFO, UPDATE_CARD,
+} from '../action/cardUpdate';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -348,9 +351,10 @@ export default (store) => (next) => (action) => {
     case FETCH_CONTRIBUTIONS: {
       store.dispatch(setLoading(true));
       const { id } = store.getState().userCurrent;
+      console.log('----------------------------------------------------------');
       console.log('je veux les cartes crées par le user ', id);
       axiosInstance
-        .get(`/user/${id}/mycards`)
+        .get('/contributor/cards')
         .then(
           (response) => {
             store.dispatch(setLoading(false));
@@ -442,6 +446,7 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('Suppression du user REUSSI', response);
+          store.dispatch(deleteUserSuccessModal());
           store.dispatch(userLogout());
         },
       ).catch(
@@ -509,7 +514,7 @@ export default (store) => (next) => (action) => {
     }
     case GET_UPDATE_CARD_INFO: {
       console.log('----------------------------------------------------------');
-      console.log('je demande à récupérer les infos de la carte pour les réinfecter dans update card:', action.id);
+      console.log('je demande à récupérer les infos de la carte pour les réinjecter dans update card:', action.id);
       console.log(`Route empreintée en GET : /cards/${action.id}`);
 
       axiosInstance.get(
@@ -517,10 +522,79 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log(`REUSSI, les informations reçues de la carte ${action.id} sont`, response.data);
-          // store.dispatch(autofillUpdateFields(response.data.data));
+          store.dispatch(autofillUpdateFields(response.data));
         },
       ).catch(
         (error) => console.log(`ERREUR serveur lors de la lecture d\'une carte sur la route /cards/${action.id} (error.response): `, error.response),
+      );
+      next(action);
+      break;
+    }
+    case UPDATE_CARD: {
+      // const userId = store.getState().userCurrent.id;
+
+      const {
+        id, title, slug, website, description, url, image, level, lang, type, category, techs,
+      } = store.getState().cardUpdate;
+
+      const updateCard = {
+        title: title,
+        slug: slug,
+        website: website,
+        description: description,
+        url_image: image,
+        url: url,
+        user_id: id,
+        level_id: level,
+        language_id: lang,
+        type_id: type,
+        category_id: category,
+        techs: techs,
+      };
+
+      console.log('----------------------------------------------------------');
+      console.log('je souhaite mettre à jour les données d\'une carte avec les infos suivantes: ', updateCard);
+      console.log(`Route empreintée en PUT : /contributor/cards/${action.id}`);
+
+      axiosInstance.put(
+        `/contributor/cards/${id}`,
+        {
+          ...updateCard,
+        },
+      ).then(
+        (response) => {
+          console.log('REUSSI, la carte a bien été mise à jour ! :', response.data);
+          store.dispatch(updateCardSuccessModal());
+        },
+      ).catch(
+        (error) => {
+          console.log('ERREUR la carte n\'a pas pu être mise à jour: ', error.response);
+          // store.dispatch(updateCardSuccessModal());
+        },
+      );
+      next(action);
+      break;
+    }
+
+    case DELETE_CARD: {
+      // const userId = store.getState().userCurrent.id;
+      const { deleteCardId } = store.getState().cardUpdate;
+      console.log('----------------------------------------------------------');
+      console.log('je souhaite supprimer la carte suivantes: ', deleteCardId);
+      console.log(`Route empreintée en DELETE : /cards/${deleteCardId}/users`);
+
+      axiosInstance.delete(
+        `/cards/${deleteCardId}/users`,
+      ).then(
+        (response) => {
+          console.log('REUSSI, la carte a bien été supprimée ! :', response.data);
+          store.dispatch(deleteCardSuccessModal());
+        },
+      ).catch(
+        (error) => {
+          console.log('ERREUR la carte n\'a pas pu être supprimée: ', error.response);
+          // store.dispatch(updateCardSuccessModal());
+        },
       );
       next(action);
       break;

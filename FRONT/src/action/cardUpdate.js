@@ -58,3 +58,19 @@ export const autofillUpdateFields = (card) => (
     card,
   }
 );
+
+export const SET_DELETE_CARD_ID = 'SET_DELETE_CARD_ID';
+export const setDeleteCardId = (id) => (
+  {
+    type: SET_DELETE_CARD_ID,
+    id,
+  }
+);
+
+export const DELETE_CARD = 'DELETE_CARD';
+export const deleteCard = (id) => (
+  {
+    type: DELETE_CARD,
+    id,
+  }
+);

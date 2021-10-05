@@ -2,12 +2,12 @@ import {
   ADD_CARD_THANK_MODAL,
   CREATE_ACCOUNT_THANK_MODAL,
   DARK_MODE_OFF,
-  DARK_MODE_TOGGLE, DELETE_USER_SUCCESS_MODAL, SET_ACTIVE_MENU, SET_APP_LOADING, SET_LOADING,
+  DARK_MODE_TOGGLE, DELETE_CARD_SUCCESS_MODAL, DELETE_USER_SUCCESS_MODAL, SET_ACTIVE_MENU,
+  SET_APP_LOADING, SET_LOADING,
   SET_MORE, SET_MORE_HOME, SHOW_ADD_CARD_MODAL,
-  SHOW_CONNEXION_MODAL, SHOW_DELETE_USER_MODAL, SHOW_SIGNUP_MODAL, TOGGLE_DISPLAY_URL,
-  TOGGLE_MODAL,
-  TOGGLE_OPENNAV,
-  UPDATE_ACCOUNT_SUCCESS_MODAL, UPDATE_CARD_SUCCESS_MODAL,
+  SHOW_CONNEXION_MODAL, SHOW_DELETE_CARD_MODAL, SHOW_DELETE_USER_MODAL, SHOW_SIGNUP_MODAL,
+  TOGGLE_DISPLAY_URL, TOGGLE_MODAL,
+  TOGGLE_OPENNAV, UPDATE_ACCOUNT_SUCCESS_MODAL, UPDATE_CARD_SUCCESS_MODAL,
 } from '../action/displayOptions';
 
 export const initialState = {
@@ -22,6 +22,7 @@ export const initialState = {
   connexionModal: false,
   addCardModal: false,
   deleteUserModal: false,
+  deleteCardModal: false,
 
   modal: false,
 
@@ -30,6 +31,7 @@ export const initialState = {
   addCardThankModalValue: false,
   updateCardSuccessModalValue: false,
   deleteUserSuccessModalValue: false,
+  deleteCardSuccessModalValue: false,
 
   openNav: false,
   activeMenu: '',
@@ -56,6 +58,12 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         deleteUserModal: !state.deleteUserModal,
+        modal: !state.modal,
+      };
+    case SHOW_DELETE_CARD_MODAL:
+      return {
+        ...state,
+        deleteCardModal: !state.deleteCardModal,
         modal: !state.modal,
       };
     case DARK_MODE_TOGGLE:
@@ -112,6 +120,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         updateCardSuccessModalValue: !state.updateCardSuccessModalValue,
+      };
+    case DELETE_CARD_SUCCESS_MODAL:
+      return {
+        ...state,
+        deleteCardSuccessModalValue: !state.deleteCardSuccessModalValue,
       };
     case DELETE_USER_SUCCESS_MODAL:
       return {
