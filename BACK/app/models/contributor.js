@@ -20,7 +20,7 @@ class Contributor {
             if (rows[0]) {
                 return rows.map(row => new Contributor(row));
             }
-            console.log('resultat dans le model' ,user);
+            //console.log('resultat dans le model' ,);
             return rows;
 
             
@@ -55,7 +55,6 @@ class Contributor {
             console.log("\n!!!!!  je vérifie que la personne qui souhaite faire la modif est bien celle qui a ajouté la ressource");
             // recherche de l'id de l'utilisateur
             const {rows} = await client.query('SELECT user_id FROM card WHERE id =$1', [this.card_id]);
-
             //si l'utilisateur n'est pas le contributeur
             if (this.id !== rows[0].user_id) {
                 throw new Error("ERREUR : Le user pas l'autorisation de modifier cette carte car il ne l'a pas créée");
@@ -103,7 +102,7 @@ class Contributor {
                     //ajouter la tech si le tableau n'est pas vide
                     if (techsToAdd.length > 0) {
                         for (const tech of techsToAdd) {
-                            console.log("\nje veux ajouter l'asociation : " + this.card_id, tech);
+                            console.log("\nje veux ajouter l'association : " + this.card_id, tech);
                             await client.query('INSERT INTO card_has_tech (card_id,tech_id) VALUES ($1,$2) RETURNING id', [this.card_id, tech]);
                             console.log("-> ok c'est passé ;)");
                         }

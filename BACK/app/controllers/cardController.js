@@ -53,17 +53,17 @@ const cardsController = {
             //envoyer les infos à la DB pour trouver les cartes
             const card = await Cards.findQueryAllCards(keyword,limit,skip);
             console.log(`\n <<<< de retour dans le controller, j'ai reçu ${card.length} cartes` );
-            
+            let resultat =  card[0].full_count;
             if(card === "") {
                 response.status(200).json('Pas de contenu !');
             }else {
                 //envoi des infos dans le header
-                response.header('resultat', card.length);
+                response.header('resultat', resultat);
                 //envoi des datas
                 response.json({
                     page,
                     size,
-                    count: card.length,
+                    resultat: resultat,
                     data: card
                     
                 });
@@ -72,6 +72,16 @@ const cardsController = {
         } catch(error) {
             console.log(error);
             response.status(500).json(error.message);
+        }
+    },
+    //accéder à une carte
+    findById: async (request, response) => {
+        try {
+            const id = parseInt(request.params.id, 10);
+            const card = await Cards.findById(id);
+            response.json(card);
+        } catch(error) {
+            console.log(error);
         }
     },
     //insert a card

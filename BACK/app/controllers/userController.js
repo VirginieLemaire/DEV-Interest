@@ -27,16 +27,13 @@ const userController = {
             console.log('Je veux authentifier le user => je vais envoyer les infos au model pour comparaison\n');
             const user = await new User(login).findUser();
             console.log("\nC'est à nouveau le controller: ok on m'a renvoyé un user, je crée le token..............");
-            //console.log({user});
-            //response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-            //response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
-            //response.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-            //response.cookie('Authorization' , jwt.makeToken(user.id), { maxAge: 1800});
-            //response.setHeader(`id = ${user.id}`);
-            //response.setHeader('Authorization' , jwt.makeToken(user.id));
+            //access token
             const accessToken = jwt.makeToken(user.id);
+            // refresh token
+            const refreshToken = jwt.refreshToken(user.id);
             console.log('token user créé, on envoie tout au client\n\n');
-            response.header('Authorization', accessToken).send({accessToken: accessToken,user});
+            response.header({'Authorization': accessToken,'refreshToken': refreshToken}).send({accessToken: accessToken, refreshToken: refreshToken,user,});
+            
             // response.send({
             //     accessToken: accessToken,
             // });

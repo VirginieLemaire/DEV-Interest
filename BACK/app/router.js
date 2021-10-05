@@ -1,4 +1,4 @@
-const {Router} = require('express');
+const {Router, request, response} = require('express');
 const checkJwt = require('./middlewares/checkJwt');
 
 const cardController = require('./controllers/cardController');
@@ -6,6 +6,9 @@ const userController = require('./controllers/userController');
 const bookmarksController = require('./controllers/userBookmarks');
 const fetchUrlController = require('./controllers/fetchUrlController');
 const contributorController = require('./controllers/contributorController');
+const checkRefreshToken = require('./middlewares/checkRefreshToken');
+const refreshToken = require('./controllers/refreshToken');
+
 
 const router = Router();
 
@@ -17,6 +20,8 @@ router.get('/cards', cardController.findAllCards);
     router.post('/cards',checkJwt, fetchUrlController.findUrl);
     //2. remplir le formulaire et envoyer au back
     router.post('/cards/save',checkJwt, cardController.save);
+//lire une carte
+router.get('/cards/:id', cardController.findById);
 //modification d'une carte
 router.put('/contributor/cards/:id',checkJwt, contributorController.update);
 // DELETE carte
@@ -46,6 +51,8 @@ router.put('/users/:id' , checkJwt, userController.update);
 router.post('/login', userController.login);
 router.post('/signup', userController.signUp);
 
+// route pour le refresh Token
+router.post('/api/refreshToken',checkRefreshToken, refreshToken.refreshToken);
 /**
  * Une route au cas où aucune ne répond
  * 
