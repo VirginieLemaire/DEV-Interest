@@ -32,7 +32,7 @@ import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
   FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
-  saveBookmarkedCards, toggleLogged, userLogout, updateBookmarks,
+  saveBookmarkedCards, toggleLogged, userLogout, updateBookmarks, DELETE_CONTRIBUTION, fetchContributions,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
@@ -362,6 +362,27 @@ export default (store) => (next) => (action) => {
             // console.log(response.data.data);
           },
         );
+      next(action);
+      break;
+    }
+    case DELETE_CONTRIBUTION: {
+
+      console.log('----------------------------------------------------------');
+      console.log(`Je veux supprimer la carte ayant pour id ${action.cardId}`);
+      console.log(`Route empreintée en DELETE : /cards/${action.cardId}/users`);
+
+      axiosInstance.delete(
+        `/cards/${action.cardId}/users`,
+      ).then(
+        (response) => {
+          console.log('Suppression de la carteI', response);
+          store.dispatch(toggleModal());
+          store.dispatch(deleteUserSuccessModal());
+          store.dispatch(fetchContributions());
+        },
+      ).catch(
+        (error) => console.log('ERREUR serveur lors du delete de la carte (error.response): ', error.response),
+      );
       next(action);
       break;
     }
