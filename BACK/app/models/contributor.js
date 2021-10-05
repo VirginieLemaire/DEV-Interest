@@ -104,7 +104,7 @@ class Contributor {
                     //ajouter la tech si le tableau n'est pas vide
                     if (techsToAdd.length > 0) {
                         for (const tech of techsToAdd) {
-                            console.log("\nje veux ajouter l'asociation : " + this.card_id, tech);
+                            console.log("\nje veux ajouter l'association : " + this.card_id, tech);
                             await client.query('INSERT INTO card_has_tech (card_id,tech_id) VALUES ($1,$2) RETURNING id', [this.card_id, tech]);
                             console.log("-> ok c'est passé ;)");
                         }
