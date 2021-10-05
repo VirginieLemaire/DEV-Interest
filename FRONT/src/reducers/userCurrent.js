@@ -17,7 +17,7 @@ export const initialState = {
   bookmarkedCards: [],
   contributions: [
     {
-      id: 45,
+      id: 84,
       title: 'Typescript, a hero!',
       slug: 'typescript-a-hero',
       website: 'Medium.com',

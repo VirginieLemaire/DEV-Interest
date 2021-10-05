@@ -37,6 +37,7 @@ import {
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
 import UpdateAccountSuccessModal from '../components/Modals/UpdateAccountSuccessModal';
+import { autofillUpdateFields, GET_UPDATE_CARD_INFO } from '../action/cardUpdate';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -502,6 +503,24 @@ export default (store) => (next) => (action) => {
         },
       ).catch(
         (error) => console.log(`Erreur retourné par le serveur en cas de lecture des données du user à l'id ${id}`, error.response),
+      );
+      next(action);
+      break;
+    }
+    case GET_UPDATE_CARD_INFO: {
+      console.log('----------------------------------------------------------');
+      console.log('je demande à récupérer les infos de la carte pour les réinfecter dans update card:', action.id);
+      console.log(`Route empreintée en GET : /cards/${action.id}`);
+
+      axiosInstance.get(
+        `/cards/${action.id}`,
+      ).then(
+        (response) => {
+          console.log(`REUSSI, les informations reçues de la carte ${action.id} sont`, response.data);
+          // store.dispatch(autofillUpdateFields(response.data.data));
+        },
+      ).catch(
+        (error) => console.log(`ERREUR serveur lors de la lecture d\'une carte sur la route /cards/${action.id} (error.response): `, error.response),
       );
       next(action);
       break;

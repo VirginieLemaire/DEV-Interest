@@ -7,8 +7,10 @@ import {
 } from '../../action/cardNew';
 
 import { slugify } from '../../selectors/cards';
+import { capitalizeFirstLetter } from '../../selectors/utils';
 
 import Field from '../GenericComponents/Field';
+import Loader from '../GenericComponents/Loader';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import TextareaField from '../GenericComponents/TextareaField';
 import UrlField from '../GenericComponents/UrlField';
@@ -82,7 +84,7 @@ const AddCard = () => {
   ];
 
   const handleNewCardTitleChange = (e) => {
-    dispatch(changeNewCardField(e.target.value, 'title'));
+    dispatch(changeNewCardField(capitalizeFirstLetter(e.target.value), 'title'));
     dispatch(changeNewCardField(slugify(e.target.value), 'slug'));
   };
 
@@ -94,7 +96,7 @@ const AddCard = () => {
     }
   };
 
-  if (loading) return null;
+  if (loading) return <Loader />;
 
   return (
     <div className={darkMode ? 'add-card add-card--dark' : 'add-card'}>

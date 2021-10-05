@@ -7,6 +7,7 @@ import './search-results.scss';
 
 import Card from '../Card';
 import AppLoader from '../GenericComponents/AppLoader';
+import Loader from '../GenericComponents/Loader';
 
 const SearchResults = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const SearchResults = () => {
     700: 1,
   };
 
-  if (loading) return null;
+  if (loading) return <Loader />;
 
   return (
     <div className="search-container">

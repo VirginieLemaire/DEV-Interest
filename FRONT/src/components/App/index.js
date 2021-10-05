@@ -32,6 +32,7 @@ import DeleteUserSuccessModal from '../Modals/DeleteUserSuccessModal';
 import Header2 from '../Header2';
 import HeaderOffset from '../GenericComponents/HeaderOffSet';
 import DeleteUserModal from '../DeleteUserModal';
+import UpdateCard from '../UpdateCard';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -65,10 +66,7 @@ const App = () => {
           <HeaderOffset />
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/search" exact>
-              <Loader />
-              <SearchResults />
-            </Route>
+            <Route path="/search" exact component={SearchResults} />
             {
               mergedCards.map(
                 (card) => (
@@ -78,14 +76,9 @@ const App = () => {
                 ),
               )
             }
-            <Route path="/add-card" exact>
-              <Loader />
-              <AddCard />
-            </Route>
-            <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact>
-              <Loader />
-              <UserBookmarks />
-            </Route>
+            <Route path="/add-card" exact component={AddCard} />
+            <Route path="/update-card" exact component={UpdateCard} />
+            <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact component={UserBookmarks} />
             <Route path={`/${username.toLowerCase()}/account`} exact component={UserAccount} />
             <Route path={`/${username.toLowerCase()}/account/update`} exact component={UserAccountUpdate} />
             <Route path="/legal" exact component={Legal} />

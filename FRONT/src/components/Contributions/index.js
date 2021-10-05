@@ -1,17 +1,24 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
-
 
 import Card from '../Card';
 import Button from '../GenericComponents/Button';
 import './contributions.scss';
+import { useHistory } from 'react-router';
+import { autofillUpdateFields, getUpdateCardInfo } from '../../action/cardUpdate';
 
 const BookmarkedCards = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const { contributions } = useSelector((state) => state.userCurrent);
   const { loading } = useSelector((state) => state.displayOptions);
 
-  const handleModifyClick = () => null;
-  const handleDeleteButtonClick = ()=> null;
+  const handleUpdateButtonClick = (cardId) => {
+    history.push('/update-card');
+    dispatch(getUpdateCardInfo(cardId));
+  };
+  const handleDeleteButtonClick = () => null;
 
   const breakpointsColumnsObj = {
     default: 7,
@@ -39,13 +46,13 @@ const BookmarkedCards = () => {
                     <div className="masonry-div" key={card.id}>
                       <Card key={card.id} card={card} />
                       <div className="buttons-container">
-                        <Button 
+                        <Button
                           color
                           styling="full"
-                          handleClick={handleModifyClick}
+                          handleClick={() => handleUpdateButtonClick(card.id)}
                           content="Modifier"
                         />
-                        <Button 
+                        <Button
                           color
                           styling="outline"
                           handleClick={handleDeleteButtonClick}
