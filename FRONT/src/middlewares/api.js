@@ -375,9 +375,7 @@ export default (store) => (next) => (action) => {
         `/cards/${action.cardId}/users`,
       ).then(
         (response) => {
-          console.log('Suppression de la carteI', response);
-          store.dispatch(toggleModal());
-          store.dispatch(deleteUserSuccessModal());
+          console.log('Suppression de la carte', response);
           store.dispatch(fetchContributions());
         },
       ).catch(
