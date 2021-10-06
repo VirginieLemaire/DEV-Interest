@@ -8,6 +8,7 @@ const cardsController = {
             const user = await Contributor.findContributor(id);
             response.header('resultat_contributor', user.length);
             response.json(user);
+            console.log('resultat dans le controller' ,user);
         } catch(error) {
             console.log(error);
         }

@@ -24,6 +24,7 @@ const userController = {
             console.log("\nC'est à nouveau le controller: ok on m'a renvoyé un user, je crée le token..............");
             //access token
             const accessToken = jwt.makeToken(user.id);
+            console.log(accessToken);
             // refresh token
             const refreshToken = jwt.refreshToken(user.id);
             console.log('token user créé, on envoie tout au client\n\n');
@@ -80,23 +81,22 @@ const userController = {
      //update a user
      update : async (request, response) => {
         try {
-            console.log("updateController >> 1) je vais créer un objet userDatas en BOUCLANT sur les datas qui me sont envoyées par le client");
+            console.log("updateController >> 1) je vais créer un objet userDatas qui va mixer les données en param et dans le body");
+            let userDatas = {
+                id : request.params.id,
+            };
             //boucler sur les propriétés de request.body pour ne mettre à jour que celles qui ont été envoyées
             for (const key in request.body) {
-                //créer un objet avec toutes les données user à envoyer
-                let userDatas = {
-                    id : request.params.id,
-                    [key] : request.body[key]
-                };
-                console.log({userDatas});
-                // UPDATE
-                console.log("updateController >> j'envoie cet objet au model pour qu'il cause avec la DB");
-                console.log('- - - - - - -');
-                await new User(userDatas).update();   
-            };
-            console.log(`updateController >> 2) \\o/ tout s'est bien passé, j'en informe le client`);
+                userDatas[key] = request.body[key]
+            }
+            console.log({userDatas});
+            // UPDATE
+            console.log("updateController >> j'envoie cet objet au model pour qu'il cause avec la DB");
+            console.log('- - - - - - -');
+            const user = await new User(userDatas).update();   
+            console.log("\nupdateController >> 2) \\o/ tout s'est bien passé, j'en informe le client\n");
             //renvoyer un message au front lui signifiant que tout c'est bien passé
-            response.status(204).json('*** tes données ont bien été mises à jour ***');
+            response.status(201).json(user);
    
         } catch(error) {
            //lire l'erreur

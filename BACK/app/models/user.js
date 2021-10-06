@@ -171,7 +171,7 @@ class User {
         }
     }
 
-async update() {
+    async update() {
         try {
             console.log(">> coucou c'est moi, la méthode update du model");
             //bcrypt sur le password s'il existe
@@ -185,7 +185,45 @@ async update() {
             //updater l'enregistrement 
             console.log("update >> je mets à jour les infos en DB");
             console.log('****************');
-            await client.query('SELECT update_user($1)', [this]);
+            const {rows} = await client.query('SELECT * FROM update_user($1)', [this]);
+            console.log({rows});
+            
+            //renvoyer le user mis à jour au client. 
+            //voir d'abord s'il a des bookmarks
+            //console.log('id trouvé dans la table user: ',id);
+            
+            console.log("Je cherche à savoir si le user a des favoris");
+            
+            const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [this.id]);
+            //console.log("Voici ce que j'ai trouvé :");
+            if (!bookmarksUser.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
+                console.log("Cet utilisateur n'est pas présent dans la table bookmarks: je renvoie les infos user au controller");
+                // créer un objet user "sécurisé"
+                let userSecure = {
+                    id: this.id,
+                    username: rows[0].user_name,
+                    email: rows[0].email,
+                    createdAt: rows[0].createat
+                };
+                console.log(userSecure);
+                //renvoyer le user au controller            
+                return userSecure;
+            } else {
+                //sinon retourner user_bookmarks
+                console.log("Cet utilisateur est présent dans la table bookmarks: je renvoie les infos user avec le tableau des id des bookmarks au controller");
+                console.log(bookmarksUser.rows[0]);
+                // créer un objet user "sécurisé" avec ses bookmarks
+                let userSecure = {
+                    id: this.id,
+                    username: bookmarksUser.rows[0].user_name,
+                    email: bookmarksUser.rows[0].email,
+                    createdAt: rows[0].createat,
+                    bookmarks: bookmarksUser.rows[0].bookmarks
+                };
+                console.log(userSecure);
+                //renvoyer le user au controller            
+                return userSecure;
+            }
 
         } catch (error) {
             console.log('Erreur SQL', error.detail);
