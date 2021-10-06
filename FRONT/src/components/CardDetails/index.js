@@ -8,7 +8,7 @@ import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
 import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
-import { GrLanguage } from '@react-icons/all-files/gr/GrLanguage';
+import { MdLanguage } from '@react-icons/all-files/md/MdLanguage';
 import { getDomainName, formatDate } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
@@ -43,6 +43,8 @@ const CardDetails = ({ card }) => {
     dispatch(toggleDisplayUrl());
   };
 
+  console.log(card.level)
+
   return (
     <div className="card-details">
       <div className={darkMode ? 'card-details__board card-details__board--dark' : 'card-details__board'}>
@@ -52,7 +54,7 @@ const CardDetails = ({ card }) => {
             <h1 className="card-details__board__infos__title-container__title"><strong>{card.title}</strong></h1>
             <div className="card-details__board__infos__title-container__lang-container">
               <div className="card-details__board__infos__title-container__lang-container__icon">
-                <GrLanguage />
+                <MdLanguage />
               </div>
               <div className="card-details__board__infos__tags-section__tags-container__type">
                 <p>{card.lang.capitalize()}</p>
