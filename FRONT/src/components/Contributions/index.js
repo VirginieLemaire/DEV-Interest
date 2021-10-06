@@ -19,7 +19,6 @@ const BookmarkedCards = () => {
 
   const { contributions } = useSelector((state) => state.userCurrent);
   const { loading } = useSelector((state) => state.displayOptions);
-  const dispatch = useDispatch();
 
 
   const handleUpdateButtonClick = (cardId) => {

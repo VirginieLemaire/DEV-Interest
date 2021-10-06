@@ -19,7 +19,7 @@ import {
   createAccountThankModal,
   deleteCardSuccessModal,
   deleteUserSuccessModal,
-  setAppLoading, setLoading, setMore, setMoreHome, toggleModal, updateCardSuccessModal,
+  setAppLoading, setLoading, setMore, setMoreHome, toggleModal, updateAccountSuccessModal, updateCardSuccessModal,
 } from '../action/displayOptions';
 
 import {
@@ -47,7 +47,6 @@ const axiosInstance = axios.create({
 });
 
 export default (store) => (next) => (action) => {
-
   switch (action.type) {
     case FETCH_CARDS_HOME: {
       const { size } = store.getState().cardsHome;
@@ -355,7 +354,7 @@ export default (store) => (next) => (action) => {
       console.log('----------------------------------------------------------');
 
       console.log(`Je demande au serveur de me retourner les contributions du user ${id}`);
-      console.log(`Route empreintée en GET : /contributor/cards`);
+      console.log('Route empreintée en GET : /contributor/cards');
 
       axiosInstance
         .get('/contributor/cards')
@@ -372,7 +371,6 @@ export default (store) => (next) => (action) => {
       break;
     }
     case DELETE_CONTRIBUTION: {
-
       console.log('----------------------------------------------------------');
       console.log(`Je veux supprimer la carte ayant pour id ${action.cardId}`);
       console.log(`Route empreintée en DELETE : /cards/${action.cardId}/users`);
@@ -426,32 +424,34 @@ export default (store) => (next) => (action) => {
     }
     case UPDATE_USER_CURRENT: {
       const { id, email: emailCurrent, username: usernameCurrent } = store.getState().userCurrent;
-      const { email: emailNew, username: usernameNew, passwordNew, passwordCurrent } = store.getState().userUpdate;
+      const {
+        email: emailNew, username: usernameNew, passwordNew, passwordCurrent,
+      } = store.getState().userUpdate;
 
       const username = !usernameNew ? usernameCurrent : usernameNew;
-      const email = !emailNew? emailCurrent : emailNew;
-      const password = !passwordNew ? passwordCurrent : passwordNew
+      const email = !emailNew ? emailCurrent : emailNew;
+      const password = !passwordNew ? passwordCurrent : passwordNew;
 
       console.log('----------------------------------------------------------');
       console.log(`Je veux mettre à jour l'user ayant pour id ${id}`);
       console.log(`Route empreintée en PUT : /users/${id} (+ email, username, password dans le body)`);
-      store.dispatch(toggleModal());
+
 
       axiosInstance.put(
         `/users/${id}`,
         {
           email,
           username,
-          password, 
+          password,
         },
       ).then(
         (response) => {
           console.log('Update du user REUSSI, voici les informations reçues du back', response.data.user);
           console.log('Le token reçu lors de l\'update est : ', response.data.accessToken);
 
-          store.dispatch(UpdateAccountSuccessModal());
-          store.dispatch(connectUser(email, username));
-
+          store.dispatch(toggleModal());
+          store.dispatch(updateAccountSuccessModal());
+          store.dispatch(connectUser({ email, username }));
           store.dispatch(resetUpdateUserFields());
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
