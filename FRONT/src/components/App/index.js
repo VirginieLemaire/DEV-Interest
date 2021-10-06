@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
@@ -35,6 +35,7 @@ import DeleteUserModal from '../DeleteUserModal';
 import UpdateCard from '../UpdateCard';
 import DeleteCardModal from '../DeleteCardModal';
 import DeleteCardSuccessModal from '../Modals/DeleteCardSuccessModal';
+import { connectUser } from '../../action/userConnect';
 
 const App = () => {
   const dispatch = useDispatch();

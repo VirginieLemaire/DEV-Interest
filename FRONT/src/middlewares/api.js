@@ -19,7 +19,8 @@ import {
   createAccountThankModal,
   deleteCardSuccessModal,
   deleteUserSuccessModal,
-  setAppLoading, setLoading, setMore, setMoreHome, toggleModal, updateAccountSuccessModal, updateCardSuccessModal,
+  setAppLoading, setLoading, setMore, setMoreHome, toggleModal,
+  updateAccountSuccessModal, updateCardSuccessModal,
 } from '../action/displayOptions';
 
 import {
@@ -32,12 +33,12 @@ import {
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
-  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
-  saveBookmarkedCards, toggleLogged, userLogout, updateBookmarks, DELETE_CONTRIBUTION, fetchContributions,
+  FETCH_BOOKMARKED_CARDS, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
+  saveBookmarkedCards, toggleLogged, userLogout,
+  updateBookmarks, DELETE_CONTRIBUTION, fetchContributions,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
-import UpdateAccountSuccessModal from '../components/Modals/UpdateAccountSuccessModal';
 import {
   autofillUpdateFields, DELETE_CARD, GET_UPDATE_CARD_INFO, UPDATE_CARD,
 } from '../action/cardUpdate';
@@ -45,6 +46,8 @@ import {
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
 });
+
+let refreshToken;
 
 export default (store) => (next) => (action) => {
   switch (action.type) {
@@ -120,7 +123,7 @@ export default (store) => (next) => (action) => {
           },
         )
         .catch(
-          (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
+          (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données pour la mini search :', error.response),
         );
       next(action);
       break;
@@ -310,12 +313,14 @@ export default (store) => (next) => (action) => {
         (response) => {
           console.log('Connection du user REUSSI ! Je reçois du serveur ces données (response.data.user) :', response.data.user);
           console.log('Le serveur me donne aussi le Token suivant lors du login (response.data.accessToken) :', response.data.accessToken);
+          console.log('Le serveur me donne aussi le refreshToken suivant lors du login (response.data.refreshToken) :', response.data.refreshToken);
 
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resetConnectingFields());
           store.dispatch(toggleLogged());
 
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
+          refreshToken = response.data.refreshToken;
         },
       ).catch(
         (error) => console.log('ERREUR lors du login et voici le error.response: ', error.response),
@@ -415,6 +420,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(toggleLogged());
 
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
+          refreshToken = response.data.refreshToken;
         },
       ).catch(
         (error) => console.log('ERREUR serveur lors du signup (error.response): ', error.response),
@@ -435,7 +441,6 @@ export default (store) => (next) => (action) => {
       console.log('----------------------------------------------------------');
       console.log(`Je veux mettre à jour l'user ayant pour id ${id}`);
       console.log(`Route empreintée en PUT : /users/${id} (+ email, username, password dans le body)`);
-
 
       axiosInstance.put(
         `/users/${id}`,
@@ -633,3 +638,22 @@ export default (store) => (next) => (action) => {
       break;
   }
 };
+
+axiosInstance.interceptors.response.use((response) => response, async (error) => {
+  const originalRequest = error.config;
+  if (error.config.url !== '/refreshToken' && error.response.status === 401 && !originalRequest.retry !== true) {
+    originalRequest.retry = true;
+    if (refreshToken && refreshToken !== '') {
+      axiosInstance.defaults.headers.common.Authorization = `Bearer ${refreshToken}`;
+      console.log(`j'envoie le refresh token sur la route /api/refreshToken en POST ${refreshToken}`);
+      await axiosInstance.post('/api/refreshToken').then((response) => {
+        axiosInstance.defaults.headers.comme.Authorization = `Bearer ${response.data.accessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
+      }).catch((err) => {
+        console.log(err.response.status);
+        refreshToken = null;
+      });
+      return axiosInstance(originalRequest);
+    }
+  }
+});

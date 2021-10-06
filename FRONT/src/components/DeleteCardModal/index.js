@@ -14,7 +14,7 @@ import './delete-card-modal.scss';
 import { deleteUserCurrent } from '../../action/userUpdate';
 import { deleteCard } from '../../action/cardUpdate';
 
-const DeleteCardModal = ({ cardId }) => {
+const DeleteCardModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -87,8 +87,5 @@ const DeleteCardModal = ({ cardId }) => {
   );
 };
 
-DeleteCardModal.propTypes = {
-  cardId: PropTypes.number.isRequired,
-};
 
 export default DeleteCardModal;
