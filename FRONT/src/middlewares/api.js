@@ -119,6 +119,7 @@ export default (store) => (next) => (action) => {
           (response) => {
             // console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
             // console.log(response.data);
+            console.log('response cardsMini du serveur ', response);
             store.dispatch(saveCardsMiniSearch(response.data.data, response.data.count));
           },
         )

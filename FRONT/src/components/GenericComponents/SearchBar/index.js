@@ -25,6 +25,8 @@ const SearchBar = ({
   const { searchQuery, cardsMini, searchCountMini } = useSelector((state) => state.cardsSearch);
   const { loading } = useSelector((state) => state.displayOptions);
 
+  console.log('cardsMini : ', cardsMini);
+
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     history.push('/search');
@@ -58,18 +60,18 @@ const SearchBar = ({
           />
         </form>
 
-        { ((cardsMini.length > 0) || searchQuery !== '') && (
-        <div className={`search-bar__mini-results ${cardsMini.length > 0 ? 'show' : 'hide'}`}>
+        { ( cardsMini !== [] || searchQuery !== '') && (
+        <div className={`search-bar__mini-results ${searchCountMini > 0 ? 'show' : 'hide'}`}>
           {
-          cardsMini.map(
-            (card) => (
-              <Link key={card.id} to={`/cards/${card.slug}/${card.id}`} className="search-bar__mini-results--item" onClick={() => dispatch(resetCardsMini())}>
-                <img src={card.image} alt={card.title} className="search-bar__mini-results--item__image" />
-                <div className="search-bar__mini-results--item__title">{card.type.toUpperCase()} - </div>
-                <div className="search-bar__mini-results--item__title">{card.title.substring(0, 70)}...</div>
-              </Link>
-            ),
-          )
+            cardsMini.map(
+              (card) => (
+                <Link key={card.id} to={`/cards/${card.slug}/${card.id}`} className="search-bar__mini-results--item" onClick={() => dispatch(resetCardsMini())}>
+                  <img src={card.image} alt={card.title} className="search-bar__mini-results--item__image" />
+                  <div className="search-bar__mini-results--item__title">{card.type.toUpperCase()} - </div>
+                  <div className="search-bar__mini-results--item__title">{card.title.substring(0, 70)}...</div>
+                </Link>
+              ),
+            )
         }
           <div className="search-bar__mini-results--counter">{searchCountMini > 0 ? `${searchCountMini} résultats` : 'Aucun résultat'}</div>
         </div>
