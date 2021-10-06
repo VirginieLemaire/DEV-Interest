@@ -32,10 +32,10 @@ const UserBookmarks = () => {
         </div>
       </div>
       <div className="user-bookmarks__thumbs">
-        <div className={thumb !== 'favorites' ? 'user-bookmarks__thumbs__thumb' : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('favorites'))}>
+        <div className={thumb !== 'favorites' ? `user-bookmarks__thumbs__thumb${darkMode ? '--dark' : ''}` : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('favorites'))}>
           {`${bookmarkedCards.length > 1 ? 'Favoris' : 'Favori'} (${bookmarkedCards.length})`}
         </div>
-        <div className={thumb !== 'contributions' ? 'user-bookmarks__thumbs__thumb' : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('contributions'))}>
+        <div className={thumb !== 'contributions' ? `user-bookmarks__thumbs__thumb${darkMode ? '--dark' : ''}` : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('contributions'))}>
           {`${contributions.length > 1 ? 'Contributions' : 'Contribution'} (${contributions.length})`}
         </div>
       </div>

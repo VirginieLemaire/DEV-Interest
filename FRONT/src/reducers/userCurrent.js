@@ -15,26 +15,9 @@ export const initialState = {
   thumb: 'favorites',
   bookmarks: [],
   bookmarkedCards: [],
-  contributions: [
-    // {
-    //   id: 84,
-    //   title: 'Typescript, a hero!',
-    //   slug: 'typescript-a-hero',
-    //   website: 'Medium.com',
-    //   image: 'https://miro.medium.com/max/628/1*zt7XtfNA03TvzVreccTw9A.png',
-    //   description: 'Typescript helped me in achieving ZERO UI failures on Production',
-    //   category: 'Approfondir',
-    //   level: 'Avancé',
-    //   techs: ['javascript', 'HTML', 'Css'],
-    //   type: 'article',
-    //   url: 'https://medium.com/front-end-weekly/typescript-a-hero-f7d9d1ad40d4',
-    //   contributor: 'Romain',
-    //   user_id: 82,
-    //   lang: 'anglais',
-    //   createdat: '2021-09-30T15:37:59.728Z',
-    // },
-  ],
+  contributions: [],
   isLogged: false,
+  createdAt: '',
 };
 
 const reducer = (state = initialState, action = {}) => {

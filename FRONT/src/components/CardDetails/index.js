@@ -9,7 +9,7 @@ import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
 import { GrLanguage } from '@react-icons/all-files/gr/GrLanguage';
-import { getDomainName } from '../../selectors/utils';
+import { getDomainName, formatDate } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
@@ -29,11 +29,7 @@ const CardDetails = ({ card }) => {
   const handleClick = (event) => {
     console.log(event);
   };
-  const creationDate = new Date(card.createdat).toLocaleDateString('fr-FR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const creationDate = formatDate(card.createdat);
 
   const handleContentToggle = () => {
     dispatch(toggleDisplayUrl());

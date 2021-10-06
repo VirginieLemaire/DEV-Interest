@@ -33,7 +33,7 @@ import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
   FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
-  saveBookmarkedCards, toggleLogged, userLogout, updateBookmarks,
+  saveBookmarkedCards, toggleLogged, userLogout, updateBookmarks, DELETE_CONTRIBUTION, fetchContributions,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
@@ -47,6 +47,7 @@ const axiosInstance = axios.create({
 });
 
 export default (store) => (next) => (action) => {
+
   switch (action.type) {
     case FETCH_CARDS_HOME: {
       const { size } = store.getState().cardsHome;
@@ -352,17 +353,40 @@ export default (store) => (next) => (action) => {
       store.dispatch(setLoading(true));
       const { id } = store.getState().userCurrent;
       console.log('----------------------------------------------------------');
-      console.log('je veux les cartes crées par le user ', id);
+
+      console.log(`Je demande au serveur de me retourner les contributions du user ${id}`);
+      console.log(`Route empreintée en GET : /contributor/cards`);
+
       axiosInstance
         .get('/contributor/cards')
         .then(
           (response) => {
+            console.log('Retour du serveur POSITIF, les données retournées sont ');
+            console.log(response.data);
             store.dispatch(setLoading(false));
-            console.log('les cartes que j\'ai crée sont ', response.data);
             store.dispatch(saveContributions(response.data));
             // console.log(response.data.data);
           },
         );
+      next(action);
+      break;
+    }
+    case DELETE_CONTRIBUTION: {
+
+      console.log('----------------------------------------------------------');
+      console.log(`Je veux supprimer la carte ayant pour id ${action.cardId}`);
+      console.log(`Route empreintée en DELETE : /cards/${action.cardId}/users`);
+
+      axiosInstance.delete(
+        `/cards/${action.cardId}/users`,
+      ).then(
+        (response) => {
+          console.log('Suppression de la carte', response);
+          store.dispatch(fetchContributions());
+        },
+      ).catch(
+        (error) => console.log('ERREUR serveur lors du delete de la carte (error.response): ', error.response),
+      );
       next(action);
       break;
     }
@@ -401,8 +425,12 @@ export default (store) => (next) => (action) => {
       break;
     }
     case UPDATE_USER_CURRENT: {
-      const { id } = store.getState().userCurrent;
-      const { email, username, passwordNew: password } = store.getState().userUpdate;
+      const { id, email: emailCurrent, username: usernameCurrent } = store.getState().userCurrent;
+      const { email: emailNew, username: usernameNew, passwordNew, passwordCurrent } = store.getState().userUpdate;
+
+      const username = !usernameNew ? usernameCurrent : usernameNew;
+      const email = !emailNew? emailCurrent : emailNew;
+      const password = !passwordNew ? passwordCurrent : passwordNew
 
       console.log('----------------------------------------------------------');
       console.log(`Je veux mettre à jour l'user ayant pour id ${id}`);
@@ -414,7 +442,7 @@ export default (store) => (next) => (action) => {
         {
           email,
           username,
-          password,
+          password, 
         },
       ).then(
         (response) => {
@@ -423,6 +451,7 @@ export default (store) => (next) => (action) => {
 
           store.dispatch(UpdateAccountSuccessModal());
           store.dispatch(connectUser(email, username));
+
           store.dispatch(resetUpdateUserFields());
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },

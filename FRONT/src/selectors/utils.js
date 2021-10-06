@@ -17,6 +17,14 @@ export const getDomainName = (url) => {
   return domain.hostname.replace('www.', '');
 };
 
+export const formatDate = (date) => (
+  new Date(date).toLocaleDateString('fr-FR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+); 
+
 // const parseStringJavascript = (string, techArray) => {
 //   const lowerString = string.toLowerCase();
 //   techArray.forEach((tech) => {
