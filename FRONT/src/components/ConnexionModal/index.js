@@ -37,7 +37,7 @@ const ConnexionModal = () => {
     e.preventDefault();
     dispatch(showConnexionModal());
     dispatch(login());
-    history.push('/');
+    // history.push('/');
   };
 
   const handleSubmitSignup = (e) => {

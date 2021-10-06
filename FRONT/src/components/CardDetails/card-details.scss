@@ -47,11 +47,13 @@ strong {
 
         &__title {
           font-size: 1.5rem;
+          width: 80%;
         }
 
         &__lang-container {
           display: flex;
           gap: 1rem;
+          align-items: center;
 
           &__icon {
             transform: scale(1.5);
@@ -122,8 +124,6 @@ strong {
   }
 
   &__suggestion-title-container {
-    min-width: 60vw;
-    text-align: left;
 
     &__title {
       font-weight: bold;
