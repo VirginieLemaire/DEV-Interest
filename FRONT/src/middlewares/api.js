@@ -28,14 +28,14 @@ import {
 } from '../action/userUpdate';
 
 import {
-  connectUser, LOGIN, resetConnectingFields,
+  connectUser, LOGIN, resetConnectingFields, SET_ACCESSTOKEN_LOCALSTORAGE,
 } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
   FETCH_BOOKMARKED_CARDS, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
   saveBookmarkedCards, toggleLogged, userLogout,
-  updateBookmarks, DELETE_CONTRIBUTION, fetchContributions,
+  updateBookmarks, DELETE_CONTRIBUTION, fetchContributions, USER_API_LOGOUT,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
@@ -314,6 +314,9 @@ export default (store) => (next) => (action) => {
           console.log('Connection du user REUSSI ! Je reçois du serveur ces données (response.data.user) :', response.data.user);
           console.log('Le serveur me donne aussi le Token suivant lors du login (response.data.accessToken) :', response.data.accessToken);
           console.log('Le serveur me donne aussi le refreshToken suivant lors du login (response.data.refreshToken) :', response.data.refreshToken);
+
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          localStorage.setItem('userToken', response.data.accessToken);
 
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resetConnectingFields());
@@ -630,6 +633,20 @@ export default (store) => (next) => (action) => {
           // store.dispatch(updateCardSuccessModal());
         },
       );
+      next(action);
+      break;
+    }
+    case SET_ACCESSTOKEN_LOCALSTORAGE: {
+      const accessToken = localStorage.getItem('userToken');
+      console.log('accessToken LocalStorage ', accessToken);
+      axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      next(action);
+      break;
+    }
+    case USER_API_LOGOUT: {
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
+      store.dispatch(userLogout());
       next(action);
       break;
     }

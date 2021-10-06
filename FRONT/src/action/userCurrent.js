@@ -112,11 +112,17 @@ export const updateThumb = (value) => (
   }
 );
 
-export const DELETE_CONTRIBUTION = 'DELETE_CONTRIBUTION'
+export const DELETE_CONTRIBUTION = 'DELETE_CONTRIBUTION';
 export const deleteContribution = (cardId) => (
   {
     type: DELETE_CONTRIBUTION,
     cardId,
   }
-)
+);
 
+export const USER_API_LOGOUT = 'USER_API_LOGOUT';
+export const userApiLogout = () => (
+  {
+    type: USER_API_LOGOUT,
+  }
+);
