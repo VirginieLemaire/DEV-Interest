@@ -18,7 +18,7 @@ class Bookmarks {
             JOIN user_prefer_card ON card_id = cards.id
             JOIN "user" ON "user".id  = cards.user_id
            
-            WHERE user_prefer_card.user_id = $1 ORDER BY createdAt`, [id]);
+            WHERE user_prefer_card.user_id = $1 ORDER BY createdAt DESC`, [id]);
                 
                 //console.log(rows);
                 return rows.map(row => new Bookmarks(row));

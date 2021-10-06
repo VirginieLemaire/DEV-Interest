@@ -15,7 +15,7 @@ class Contributor {
         try {
             //requête vers la table
             console.log(id);
-            const { rows } = await client.query('SELECT * FROM "cards" WHERE user_id=$1 ORDER BY createdAt', [id]);
+            const { rows } = await client.query('SELECT * FROM "cards" WHERE user_id=$1 ORDER BY createdAt DESC', [id]);
             //condition pour agir selon que la requête renvoie quelque chose ou non
             if (rows[0]) {
                 return rows.map(row => new Contributor(row));

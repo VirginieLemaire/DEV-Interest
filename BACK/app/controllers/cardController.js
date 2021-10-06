@@ -52,18 +52,26 @@ const cardsController = {
             const skip = (page - 1) * size;
             //envoyer les infos à la DB pour trouver les cartes
             const card = await Cards.findQueryAllCards(keyword,limit,skip);
-            console.log(`\n <<<< de retour dans le controller, j'ai reçu ${card.length} cartes` );
-            let resultat =  card[0].full_count;
-            if(card === "") {
-                response.status(200).json('Pas de contenu !');
+            console.log(card);
+            if(card < "0") {
+                //const nothing = response.status(200).json('aucun résultat !');
+                response.json({
+                    page,
+                    size,
+                    count: 0, 
+                    data: []    
+                });
+               
             }else {
+                let resultat =  card[0].full_count;
+                console.log(`\n <<<< de retour dans le controller, j'ai reçu ${resultat} cartes` );
                 //envoi des infos dans le header
                 response.header('resultat', resultat);
                 //envoi des datas
                 response.json({
                     page,
                     size,
-                    resultat: resultat,
+                    count: resultat,
                     data: card
                     
                 });
