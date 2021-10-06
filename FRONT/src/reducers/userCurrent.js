@@ -17,6 +17,7 @@ export const initialState = {
   bookmarkedCards: [],
   contributions: [],
   isLogged: false,
+  createdAt: '',
 };
 
 const reducer = (state = initialState, action = {}) => {

@@ -4,14 +4,16 @@ import { useHistory } from 'react-router-dom';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
 import { showDeleteUserModal } from '../../action/displayOptions';
+import { formatDate } from '../../selectors/utils';
 
 const UserAccount = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const { username, email } = useSelector((state) => state.userCurrent);
+  
+  const { username, email, createdAt } = useSelector((state) => state.userCurrent);
   const { darkMode } = useSelector((state) => state.displayOptions);
-
+  const inscriptionDate = formatDate(createdAt);
+  
   const handleModifyClick = () => {
     history.push(`/${username.toLowerCase()}/account/update`);
   };
@@ -33,6 +35,12 @@ const UserAccount = () => {
       <Field
         name="currentEmail"
         placeholder={email}
+        handleChange={() => null}
+      />
+      <h2 className="user-account__subtitle">Date d'inscription</h2>
+      <Field
+        name="currentEmail"
+        placeholder={inscriptionDate}
         handleChange={() => null}
       />
       <div className="user-account__button-container">

@@ -4,10 +4,10 @@ import { useHistory } from 'react-router-dom';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
 import SubmitButton from '../GenericComponents/SubmitButton';
-import { changeCurrentUserField } from '../../action/userCurrent';
 import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
 import { changeUpdateUserField, resetUpdateUserFields, updateUserCurrent } from '../../action/userUpdate';
+import { updateAccountSuccessModal } from '../../action/displayOptions';
 
 const UserAccountUpdate = () => {
   const dispatch = useDispatch();
@@ -16,18 +16,19 @@ const UserAccountUpdate = () => {
   const {
     username, email, passwordCurrent, passwordNew, passwordNewVerification,
   } = useSelector((state) => state.userUpdate);
+  const { username: usernameCurrent } = useSelector((state) => state.userCurrent);
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const handleClick = () => {
     dispatch(resetUpdateUserFields());
-    history.push(`/${userCurrentUsername.toLowerCase()}/account`);
+    history.push(`/${usernameCurrent.toLowerCase()}/account`);
   };
 
   const handleSubmitUpdateForm = (event) => {
     event.preventDefault();
     if (passwordNew === passwordNewVerification) {
       dispatch(updateUserCurrent());
-      history.push(`/${username.toLowerCase()}/account`);
+      history.push(`/`);
     }
   };
 
