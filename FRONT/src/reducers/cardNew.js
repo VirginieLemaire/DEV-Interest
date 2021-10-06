@@ -2,8 +2,7 @@ import {
   CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD,
   CHANGE_NEW_CARD_TECHS, INSERT_OPENGRAPH_DATA_INTO_NEW_CARD_FORM, RESET_NEW_CARD,
 } from '../action/cardNew';
-import { slugify } from '../selectors/cards';
-import { getDomainName } from '../selectors/utils';
+
 
 export const initialState = {
   title: '',
@@ -50,7 +49,7 @@ const reducer = (state = initialState, action = {}) => {
         type: '',
         techs: [],
         level: '',
-        language: '',
+        lang: '',
         category: '',
         certification: false,
       };

@@ -1,8 +1,15 @@
 @use '../../styles/vars';
 .search-container{
-  padding: 3rem 0;
+  padding: 1rem 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+}
+
+.search-counter{
+  padding: 0 0 2rem 0;
+  text-align: center;
+  font-weight: bold;
 }
 
 .search-results{

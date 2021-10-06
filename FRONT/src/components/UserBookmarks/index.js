@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import BookmarkedCards from '../BookmarkedCards';
 import Contributions from '../Contributions';
 import { fetchBookmarkedCards, fetchContributions, updateThumb } from '../../action/userCurrent';
+import Loader from '../GenericComponents/Loader';
 
 const UserBookmarks = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const UserBookmarks = () => {
     dispatch(fetchContributions());
   }, [bookmarks]);
 
-  if (loading) return null;
+  if (loading) return <Loader />;
 
   return (
     <div className={darkMode ? 'user-bookmarks user-bookmarks--dark' : 'user-bookmarks'}>

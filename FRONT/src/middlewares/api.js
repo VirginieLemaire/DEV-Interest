@@ -17,8 +17,9 @@ import {
 import {
   addCardThankModal,
   createAccountThankModal,
+  deleteCardSuccessModal,
   deleteUserSuccessModal,
-  setAppLoading, setLoading, setMore, setMoreHome, toggleModal,
+  setAppLoading, setLoading, setMore, setMoreHome, toggleModal, updateCardSuccessModal,
 } from '../action/displayOptions';
 
 import {
@@ -37,6 +38,9 @@ import {
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
 import UpdateAccountSuccessModal from '../components/Modals/UpdateAccountSuccessModal';
+import {
+  autofillUpdateFields, DELETE_CARD, GET_UPDATE_CARD_INFO, UPDATE_CARD,
+} from '../action/cardUpdate';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -103,17 +107,17 @@ export default (store) => (next) => (action) => {
     }
     case FETCH_CARDS_MINI_SEARCH: {
       const { searchQuery } = store.getState().cardsSearch;
-      console.log('----------------------------------------------------------');
-      console.log(`Je demande au serveur de me retourner les cartes pour la MINI recherche de la searchbard avec les mots-clés: ${searchQuery}`);
-      console.log(`Route empreintée en GET : /cards/search?keyword=${searchQuery}&page=${1}&size=${3}`);
+      // console.log('----------------------------------------------------------');
+      // console.log(`Je demande au serveur de me retourner les cartes pour la MINI recherche de la searchbard avec les mots-clés: ${searchQuery}`);
+      // console.log(`Route empreintée en GET : /cards/search?keyword=${searchQuery}&page=${1}&size=${3}`);
 
       axiosInstance
         .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${3}`)
         .then(
           (response) => {
-            console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
-            console.log(response.data);
-            store.dispatch(saveCardsMiniSearch(response.data.data));
+            // console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
+            // console.log(response.data);
+            store.dispatch(saveCardsMiniSearch(response.data.data, response.data.count));
           },
         )
         .catch(
@@ -138,9 +142,9 @@ export default (store) => (next) => (action) => {
           .then(
             (response) => {
               console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
-              console.log(response.data.data);
+              console.log(response.data);
 
-              store.dispatch(saveCardsSearch(response.data.data));
+              store.dispatch(saveCardsSearch(response.data.data, response.data.count));
               store.dispatch(NextPage());
               store.dispatch(changeSearchField('', 'search'));
               store.dispatch(setLoading(false));
@@ -269,6 +273,7 @@ export default (store) => (next) => (action) => {
       console.log('Je souhaite ajouer une carte sur le serveur');
       console.log('Route empreintée en POST : /cards/save (+ données suivantes dans le body)');
       console.log(newCard);
+      store.dispatch(toggleModal());
 
       axiosInstance.post(
         '/cards/save',
@@ -278,7 +283,7 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('L\'enregistrement de la carte a REUSSI ! et les informations ont bien été récupérées par le FRONT', response);
-          store.dispatch(toggleModal());
+
           store.dispatch(addCardThankModal());
           store.dispatch(fetchCardsHome());
           store.dispatch(resetNewCard());
@@ -348,6 +353,7 @@ export default (store) => (next) => (action) => {
       store.dispatch(setLoading(true));
       const { id } = store.getState().userCurrent;
       console.log('----------------------------------------------------------');
+
       console.log(`Je demande au serveur de me retourner les contributions du user ${id}`);
       console.log(`Route empreintée en GET : /contributor/cards`);
 
@@ -390,6 +396,7 @@ export default (store) => (next) => (action) => {
       console.log('----------------------------------------------------------');
       console.log(`Je prépare les infos suivantes pour m'inscrire (username : ${username}, email: ${email} et password: ${password})`);
       console.log('Route empreintée en POST : /signup (+ username, email, password dans le body)');
+      store.dispatch(toggleModal());
 
       axiosInstance.post(
         '/signup',
@@ -403,7 +410,6 @@ export default (store) => (next) => (action) => {
           console.log('Signup REUSSI ! Enregistrement des informations reçues du back (response.data.user)', response.data.user);
           console.log('Le token reçu lors du signup est :', response.data.accessToken);
 
-          store.dispatch(toggleModal());
           store.dispatch(createAccountThankModal());
 
           store.dispatch(connectUser(response.data.user));
@@ -429,6 +435,7 @@ export default (store) => (next) => (action) => {
       console.log('----------------------------------------------------------');
       console.log(`Je veux mettre à jour l'user ayant pour id ${id}`);
       console.log(`Route empreintée en PUT : /users/${id} (+ email, username, password dans le body)`);
+      store.dispatch(toggleModal());
 
       axiosInstance.put(
         `/users/${id}`,
@@ -442,9 +449,9 @@ export default (store) => (next) => (action) => {
           console.log('Update du user REUSSI, voici les informations reçues du back', response.data.user);
           console.log('Le token reçu lors de l\'update est : ', response.data.accessToken);
 
-          // store.dispatch(toggleModal());
-          // store.dispatch(UpdateAccountSuccessModal());
-          store.dispatch(connectUser({email, username}));
+          store.dispatch(UpdateAccountSuccessModal());
+          store.dispatch(connectUser(email, username));
+
           store.dispatch(resetUpdateUserFields());
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
@@ -461,12 +468,13 @@ export default (store) => (next) => (action) => {
       console.log(`Je veux supprimer l'user ayant pour id ${id}`);
       console.log(`Route empreintée en DELETE : /users/${id}`);
 
+      store.dispatch(toggleModal());
+
       axiosInstance.delete(
         `/users/${id}`,
       ).then(
         (response) => {
           console.log('Suppression du user REUSSI', response);
-          store.dispatch(toggleModal());
           store.dispatch(deleteUserSuccessModal());
           store.dispatch(userLogout());
         },
@@ -529,6 +537,93 @@ export default (store) => (next) => (action) => {
         },
       ).catch(
         (error) => console.log(`Erreur retourné par le serveur en cas de lecture des données du user à l'id ${id}`, error.response),
+      );
+      next(action);
+      break;
+    }
+    case GET_UPDATE_CARD_INFO: {
+      console.log('----------------------------------------------------------');
+      console.log('je demande à récupérer les infos de la carte pour les réinjecter dans update card:', action.id);
+      console.log(`Route empreintée en GET : /cards/${action.id}`);
+
+      axiosInstance.get(
+        `/cards/${action.id}`,
+      ).then(
+        (response) => {
+          console.log(`REUSSI, les informations reçues de la carte ${action.id} sont`, response.data);
+          store.dispatch(autofillUpdateFields(response.data));
+        },
+      ).catch(
+        (error) => console.log(`ERREUR serveur lors de la lecture d\'une carte sur la route /cards/${action.id} (error.response): `, error.response),
+      );
+      next(action);
+      break;
+    }
+    case UPDATE_CARD: {
+      // const userId = store.getState().userCurrent.id;
+
+      const {
+        id, title, slug, website, description, url, image, level, lang, type, category, techs,
+      } = store.getState().cardUpdate;
+
+      const updateCard = {
+        title: title,
+        slug: slug,
+        website: website,
+        description: description,
+        url_image: image,
+        url: url,
+        user_id: id,
+        level_id: level,
+        language_id: lang,
+        type_id: type,
+        category_id: category,
+        techs: techs,
+      };
+
+      console.log('----------------------------------------------------------');
+      console.log('je souhaite mettre à jour les données d\'une carte avec les infos suivantes: ', updateCard);
+      console.log(`Route empreintée en PUT : /contributor/cards/${action.id}`);
+
+      axiosInstance.put(
+        `/contributor/cards/${id}`,
+        {
+          ...updateCard,
+        },
+      ).then(
+        (response) => {
+          console.log('REUSSI, la carte a bien été mise à jour ! :', response.data);
+          store.dispatch(updateCardSuccessModal());
+        },
+      ).catch(
+        (error) => {
+          console.log('ERREUR la carte n\'a pas pu être mise à jour: ', error.response);
+          // store.dispatch(updateCardSuccessModal());
+        },
+      );
+      next(action);
+      break;
+    }
+
+    case DELETE_CARD: {
+      // const userId = store.getState().userCurrent.id;
+      const { deleteCardId } = store.getState().cardUpdate;
+      console.log('----------------------------------------------------------');
+      console.log('je souhaite supprimer la carte suivantes: ', deleteCardId);
+      console.log(`Route empreintée en DELETE : /cards/${deleteCardId}/users`);
+
+      axiosInstance.delete(
+        `/cards/${deleteCardId}/users`,
+      ).then(
+        (response) => {
+          console.log('REUSSI, la carte a bien été supprimée ! :', response.data);
+          store.dispatch(deleteCardSuccessModal());
+        },
+      ).catch(
+        (error) => {
+          console.log('ERREUR la carte n\'a pas pu être supprimée: ', error.response);
+          // store.dispatch(updateCardSuccessModal());
+        },
       );
       next(action);
       break;

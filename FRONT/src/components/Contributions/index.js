@@ -1,18 +1,36 @@
-import { useSelector, useDispatch } from 'react-redux';
-import Masonry from 'react-masonry-css';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import Masonry from 'react-masonry-css';
 
 import Card from '../Card';
 import Button from '../GenericComponents/Button';
 import './contributions.scss';
+
+import { getUpdateCardInfo, setDeleteCardId } from '../../action/cardUpdate';
+import Loader from '../GenericComponents/Loader';
+import { showDeleteCardModal } from '../../action/displayOptions';
 import { deleteContribution } from '../../action/userCurrent';
 
+
 const BookmarkedCards = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const { contributions } = useSelector((state) => state.userCurrent);
   const { loading } = useSelector((state) => state.displayOptions);
   const dispatch = useDispatch();
 
-  const handleModifyClick = () => null;
+
+  const handleUpdateButtonClick = (cardId) => {
+    history.push('/update-card');
+    dispatch(getUpdateCardInfo(cardId));
+  };
+  const handleDeleteButtonClick = (cardId) => {
+    dispatch(setDeleteCardId(cardId));
+    dispatch(showDeleteCardModal());
+  };
+
 
   const breakpointsColumnsObj = {
     default: 7,
@@ -24,7 +42,7 @@ const BookmarkedCards = () => {
     700: 1,
   };
 
-  if (loading) return null;
+  if (loading) return <Loader />;
 
   return (
     <div className="search-container">
@@ -40,16 +58,18 @@ const BookmarkedCards = () => {
                     <div className="masonry-div" key={card.id}>
                       <Card key={card.id} card={card} />
                       <div className="buttons-container">
-                        <Button 
+                        <Button
                           color
                           styling="full"
-                          handleClick={handleModifyClick}
+                          handleClick={() => handleUpdateButtonClick(card.id)}
                           content="Modifier"
                         />
-                        <Button 
+                        <Button
                           color
                           styling="outline"
-                          handleClick={() => dispatch(deleteContribution(card.id))}
+
+                          handleClick={() => handleDeleteButtonClick(card.id)}
+
                           content="Supprimer"
                         />
                       </div>

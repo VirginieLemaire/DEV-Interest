@@ -130,4 +130,16 @@ export const showDeleteUserModal = () => (
   }
 );
 
+export const SHOW_DELETE_CARD_MODAL = 'SHOW_DELETE_CARD_MODAL';
+export const showDeleteCardModal = () => (
+  {
+    type: SHOW_DELETE_CARD_MODAL,
+  }
+);
 
+export const DELETE_CARD_SUCCESS_MODAL = 'DELETE_CARD_SUCCESS_MODAL';
+export const deleteCardSuccessModal = () => (
+  {
+    type: DELETE_CARD_SUCCESS_MODAL,
+  }
+);

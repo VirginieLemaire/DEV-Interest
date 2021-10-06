@@ -22,7 +22,7 @@ const SearchBar = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { searchQuery, cardsMini } = useSelector((state) => state.cardsSearch);
+  const { searchQuery, cardsMini, searchCountMini } = useSelector((state) => state.cardsSearch);
   const { loading } = useSelector((state) => state.displayOptions);
 
   const handleSearchSubmit = (event) => {
@@ -58,7 +58,7 @@ const SearchBar = ({
           />
         </form>
 
-        { (cardsMini.length > 0) && (
+        { ((cardsMini.length > 0) || searchQuery !== '') && (
         <div className={`search-bar__mini-results ${cardsMini.length > 0 ? 'show' : 'hide'}`}>
           {
           cardsMini.map(
@@ -71,7 +71,7 @@ const SearchBar = ({
             ),
           )
         }
-          <div className="search-bar__mini-results--counter">xx résultats</div>
+          <div className="search-bar__mini-results--counter">{searchCountMini > 0 ? `${searchCountMini} résultats` : 'Aucun résultat'}</div>
         </div>
         )}
       </div>
