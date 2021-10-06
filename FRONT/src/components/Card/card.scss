@@ -30,8 +30,8 @@
 
   &__image{
     border-radius: vars.$border-radius-input;
-    height: auto;
-    min-height: 350px;
+    // height: auto;
+    // min-height: 350px;
     width: 300px;
     object-fit: cover;
   }

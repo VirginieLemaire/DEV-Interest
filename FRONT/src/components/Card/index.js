@@ -53,6 +53,14 @@ const Card = ({ card }) => {
     expert: 'reception-4',
   };
 
+  function randomIntFromInterval(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  const imgStyle = {
+    minHeight: `${randomIntFromInterval(300, 500)}px`,
+  };
+
   const handleClick = () => {
     if (isLogged) {
       if (isBookmarked) dispatch(removeFromBookmarks(card.id));
@@ -66,7 +74,7 @@ const Card = ({ card }) => {
   return (
     <div className={darkMode ? 'card card--dark' : 'card'} id={`card-${card.id}`}>
       <Link className="card_link" to={`/cards/${card.slug}/${card.id}`}>
-        <img className="card__image" src={card.image} alt={card.title} />
+        <img className="card__image" src={card.image} alt={card.title} style={imgStyle} />
       </Link>
       <div className="card__buttons-group">
         <a className="card__button media" type="button" href={card.url}>{capitalizeFirstLetter(card.type)}</a>
