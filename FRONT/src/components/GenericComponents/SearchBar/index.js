@@ -60,8 +60,8 @@ const SearchBar = ({
           />
         </form>
 
-        { ( cardsMini !== [] || searchQuery !== '') && (
-        <div className={`search-bar__mini-results ${searchCountMini > 0 ? 'show' : 'hide'}`}>
+        { ( cardsMini.length > 0 || searchQuery !== '') && (
+        <div className={`search-bar__mini-results ${cardsMini.length > 0 ? 'show' : 'hide'}`}>
           {
             cardsMini.map(
               (card) => (
