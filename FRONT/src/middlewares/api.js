@@ -416,6 +416,9 @@ export default (store) => (next) => (action) => {
           console.log('Signup REUSSI ! Enregistrement des informations reçues du back (response.data.user)', response.data.user);
           console.log('Le token reçu lors du signup est :', response.data.accessToken);
 
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          localStorage.setItem('userToken', response.data.accessToken);
+
           store.dispatch(createAccountThankModal());
 
           store.dispatch(connectUser(response.data.user));
