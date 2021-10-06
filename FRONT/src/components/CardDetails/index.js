@@ -38,9 +38,7 @@ const CardDetails = ({ card }) => {
   return (
     <div className="card-details">
       <div className={darkMode ? 'card-details__board card-details__board--dark' : 'card-details__board'}>
-        <div className="card-details__board__image-container">
-          <img className="card-details__board__image-container__image" src={card.image} alt={card.title} />
-        </div>
+        <img className="card-details__board__image" src={card.image} alt={card.title} />
         <div className="card-details__board__infos">
           <div className="card-details__board__infos__title-container">
             <h1 className="card-details__board__infos__title-container__title"><strong>{card.title}</strong></h1>

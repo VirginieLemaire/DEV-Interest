@@ -12,31 +12,25 @@ strong {
 
   &__board {
     display: flex;
-    min-width: 50vw;
-    max-width: 50vw;
-    min-height: 70vh;
-    max-height: 70vh;
+    width: 1400px;
+    height: 800px;
     gap: 1rem;
     box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
     background-color: vars.$white-color;
     border-radius: vars.$border-radius-input;
     color: vars.$text-color;
+    overflow: hidden;
     
     &--dark{
       background-color: vars.$dark-color;
       color: vars.$white-color;
     }
 
-    &__image-container {
-      width: 100%;
+    &__image {
+      width: 700px;
       min-height: 100%;
-
-      &__image {
-        width: 100%;
-        min-height: 100%;
-        object-fit: cover;
-        border-radius: vars.$border-radius-input 0 0 vars.$border-radius-input;
-      }
+      object-fit: cover;
+      // border-radius: vars.$border-radius-input 0 0 vars.$border-radius-input;
     }
 
     &__infos {
@@ -44,7 +38,7 @@ strong {
       flex-direction: column;
       justify-content: space-between;
       gap: 2rem;
-      padding: 2rem 1rem 2rem 0;
+      padding: 2rem 2rem 2rem 0;
       min-width: 50%;
       min-height: 100%;
 
