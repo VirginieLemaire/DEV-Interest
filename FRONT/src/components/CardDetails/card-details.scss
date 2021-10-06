@@ -15,7 +15,7 @@ strong {
     width: 1400px;
     height: 800px;
     gap: 1rem;
-    box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
+    box-shadow: vars.$shadow-primary;
     background-color: vars.$white-color;
     border-radius: vars.$border-radius-input;
     color: vars.$text-color;
