@@ -8,7 +8,7 @@ const bodySanitizer = (req, res, next) => {
         req.body[propName] = sanitizer.escape(req.body[propName]);// Escapes HTML special characters in attribute values as HTML entities
         console.log('valeur nettoyée par Sanitizer et envoyée au serveur -> ', req.body[propName]);
     };
-    console.log("\nEverything's clear, je passe la main");
+    console.log("\nEverything's clear, je passe la main ***\n");
     next();
 };
 

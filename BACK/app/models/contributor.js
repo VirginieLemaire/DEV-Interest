@@ -20,7 +20,7 @@ class Contributor {
             if (rows[0]) {
                 return rows.map(row => new Contributor(row));
             }
-            console.log('resultat dans le model' ,user);
+            //console.log('resultat dans le model' ,);
             return rows;
 
             

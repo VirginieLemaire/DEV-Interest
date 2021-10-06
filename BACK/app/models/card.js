@@ -36,7 +36,7 @@ class Cards {
                 OR to_tsvector('fr',lang) @@websearch_to_tsquery('fr', '${keyword}')
                 OR (to_tsvector('fr', array_to_string(techs, ' ')) @@websearch_to_tsquery('fr', '${keyword}'))
                 ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`) ;
-            console.log('résultat: ', rows);
+            //console.log('résultat: ', rows);
             //renvoyer au front           
             return rows.map(row => new Cards(row));
             
@@ -50,10 +50,13 @@ class Cards {
     static async findById(id) {
         try {
             //requête vers la table
-            const { rows } = await client.query('SELECT * FROM cards WHERE id=$1', [id]);
+            console.log(">>> je vais chercher la vue carte dans la table");
+            
+            const { rows } = await client.query('SELECT card.*, ARRAY_AGG(card_has_tech.tech_id) techs FROM card JOIN card_has_tech ON card_has_tech.card_id = card.id WHERE card.id=$1 GROUP BY card.id;', [id]);
+            
             //condition pour agir selon que la requête renvoie quelque chose ou non
             if (rows[0]) {
-                return new User(rows[0]);
+                return new Cards(rows[0]);
             }
             return null;
 

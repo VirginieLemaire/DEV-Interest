@@ -1,11 +1,6 @@
 const User = require("../models/user");
 const jwt = require('../services/jwt');
 
-
-
-
-
-
 const userController = {
     //Trouver une user (nécessite un id)
     findById: async (request, response) => {
@@ -27,16 +22,13 @@ const userController = {
             console.log('Je veux authentifier le user => je vais envoyer les infos au model pour comparaison\n');
             const user = await new User(login).findUser();
             console.log("\nC'est à nouveau le controller: ok on m'a renvoyé un user, je crée le token..............");
-            //console.log({user});
-            //response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-            //response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
-            //response.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-            //response.cookie('Authorization' , jwt.makeToken(user.id), { maxAge: 1800});
-            //response.setHeader(`id = ${user.id}`);
-            //response.setHeader('Authorization' , jwt.makeToken(user.id));
+            //access token
             const accessToken = jwt.makeToken(user.id);
+            // refresh token
+            const refreshToken = jwt.refreshToken(user.id);
             console.log('token user créé, on envoie tout au client\n\n');
-            response.header('Authorization', accessToken).send({accessToken: accessToken,user});
+            response.header({'Authorization': accessToken,'refreshToken': refreshToken}).send({accessToken: accessToken, refreshToken: refreshToken,user,});
+            
             // response.send({
             //     accessToken: accessToken,
             // });
@@ -53,22 +45,21 @@ const userController = {
     signUp: async (request, response) => {
         try {
             let data = request.body;
-            console.log("signupController: j'envoie les infos envoyées par le client dans le modèle");
-            const user = await new User(request.body).signUp(data);
-            console.log('je suis dans le controller', user);
-            console.log('Signup-request.body dans controller',data)
-             if(this.result) {
-                 response.status(400).json(this.result.error);
-             }else {
-                //response.status(200).json(user);
-                console.log('je suis dans le controller', user);
-                response.send({user});
-             }
+            console.log('Signup-request.body dans controller',data);
+            console.log("\n>>> signupController: j'envoie les infos envoyées par le client dans le modèle\n");
+            const user = await new User().signUp(data);
+            console.log("\n>>> je suis de retour dans le controller voici ce que je reçois", user);
+            //response.status(200).json(user);
+            console.log("pas d'erreur, je renvoie", user);
+            response.send({user});
+            
         } catch(error) {
-           //lire l'erreur
-           console.trace(error);
-           //envoyer l'info au front
-           response.status(500).json(error.message);
+            //lire l'erreur
+            console.log("!!! Voici l'erreur dans le catch du controller: ",error.message);
+            //console.trace(error);
+            //envoyer l'info au front
+            response.status(409).json(error);
+           //response.status(500).json(error.message);
         }
 },
     deleteUserById: async (request, response) => {

@@ -35,3 +35,4 @@ ORDER BY card.createat DESC
 ;
 
 COMMIT;
+
