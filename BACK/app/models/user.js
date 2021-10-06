@@ -2,12 +2,6 @@ const client = require('../database');
 const bcrypt = require('bcrypt');
 const {userSchema} = require('../schemas/userSchema');
 
-
-
-
-
-
-
 class User {
     /**
      * User table constructor
@@ -116,40 +110,47 @@ class User {
         try {
             
             const {email, password, username} = data;
-            console.log('Signup-je suis dans le model' ,data);
-            // hash du password
-            let saltRounds = await bcrypt.genSalt(10);
-            let HashedPassword = await bcrypt.hash(password, saltRounds);
-            console.log(HashedPassword);
+            console.log('<<< Signup-je suis dans le model et je reçois -je vais le valider avec joi- ' ,data);
             // validation de joi
             const result = await userSchema.validate(data);
-            console.log('Signup-resultat du validate de joi', result);
+            console.log('\nSignup-resultat du validate de joi', result);
             if (result.error) {
-                throw new Error(result.error);     
+                console.log("erreur dans le modèle",result.error.details);
+                console.log("erreur details message: " ,result.error.message );
+                const persError = result.error.message ;
+                throw new Error(persError);     
             }
-            const {rows} = await client.query('INSERT INTO "user" (email, password, user_name, role_id) VALUES ($1, $2, $3, $4) RETURNING id', [
+            // hash du password (obligatoire à cause de joi)
+            let saltRounds = await bcrypt.genSalt(10);
+            let HashedPassword = await bcrypt.hash(password, saltRounds);
+            console.log("je hash le password", {HashedPassword});
+            const {rows} = await client.query('INSERT INTO "user" (email, password, user_name, role_id) VALUES ($1, $2, $3, $4) RETURNING *', [
                 data.email,
                 HashedPassword,
                 data.username,
                 //id du rôle par défaut (utilisateur)
                 1
             ]);
+            console.log("\n voici le résultat",rows[0]);
                 // creer un user pour securiser
                 const userSecure = {
                 id: rows[0].id,
-                username: this.username,
-                email: this.email,
+                username: data.username,
+                email: data.email,
                 createdAt: rows[0].createat
             }
+            console.log("\n et mon user sécurisé qui va être renvoyé au controller", {userSecure});
             
             return userSecure;
             
   
-        } catch (error) {
+        } catch (persError) {
             //voir l'erreur en console
-            //console.trace(error);
+           console.log("***\ndans le catch du model");
+           //console.log(error.message);
+            console.log(persError);
             //renvoyer l'erreur au front
-            throw new Error(error.detail ? error.detail : error.message);
+            throw new Error(persError);
         }
     }
     async deleteUserById(id) {
