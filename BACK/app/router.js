@@ -22,6 +22,7 @@ router.get('/cards', cardController.findAllCards);
     router.post('/cards/save',checkJwt, cardController.save);
 //lire une carte
 router.get('/cards/details/:id', cardController.findById);
+
 //modification d'une carte
 router.put('/contributor/cards/:id',checkJwt, contributorController.update);
 // DELETE carte
