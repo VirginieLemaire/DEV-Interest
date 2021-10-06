@@ -318,6 +318,7 @@ export default (store) => (next) => (action) => {
 
           localStorage.setItem('user', JSON.stringify(response.data.user));
           localStorage.setItem('userToken', response.data.accessToken);
+          localStorage.setItem('userRefreshToken', response.data.refreshToken);
 
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resetConnectingFields());
@@ -419,6 +420,7 @@ export default (store) => (next) => (action) => {
 
           localStorage.setItem('user', JSON.stringify(response.data.user));
           localStorage.setItem('userToken', response.data.accessToken);
+          localStorage.setItem('userRefreshToken', response.data.refreshToken);
 
           store.dispatch(createAccountThankModal());
 
@@ -642,14 +644,18 @@ export default (store) => (next) => (action) => {
     }
     case SET_ACCESSTOKEN_LOCALSTORAGE: {
       const accessToken = localStorage.getItem('userToken');
+      const localStorageRefreshToken = localStorage.getItem('userRefreshToken');
       console.log('accessToken LocalStorage ', accessToken);
+      console.log('refreshToken LocalStorage ', localStorageRefreshToken);
       axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      refreshToken = localStorageRefreshToken;
       next(action);
       break;
     }
     case USER_API_LOGOUT: {
       localStorage.removeItem('user');
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       store.dispatch(userLogout());
       next(action);
       break;

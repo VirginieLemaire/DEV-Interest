@@ -25,8 +25,6 @@ const SearchBar = ({
   const { searchQuery, cardsMini, searchCountMini } = useSelector((state) => state.cardsSearch);
   const { loading } = useSelector((state) => state.displayOptions);
 
-  console.log('cardsMini : ', cardsMini);
-
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     history.push('/search');
