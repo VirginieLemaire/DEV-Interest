@@ -14,7 +14,8 @@ import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
 import './card-details.scss';
-import { toggleDisplayUrl } from '../../action/displayOptions';
+import { showAddCardModal, toggleDisplayUrl } from '../../action/displayOptions';
+import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
@@ -25,10 +26,17 @@ const CardDetails = ({ card }) => {
   const dispatch = useDispatch();
 
   const { displayUrl, darkMode } = useSelector((state) => state.displayOptions);
+  const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
+  const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
 
-  const handleClick = (event) => {
-    console.log(event);
-  };
+  const handleClick = () => {
+    if (isLogged) {
+      if (isBookmarked) dispatch(removeFromBookmarks(card.id));
+      else dispatch(addToBookmarks(card.id));
+    }
+    else if (!isLogged) {
+      dispatch(showAddCardModal());
+    }  };
   const creationDate = formatDate(card.createdat);
 
   const handleContentToggle = () => {
@@ -110,10 +118,10 @@ const CardDetails = ({ card }) => {
               </button>
             </Link>
             <Button
-              styling="full"
+              styling={isBookmarked ? "outline" : "full"}
               color
               handleClick={handleClick}
-              content="Favoris"
+              content={isBookmarked ? "Retirer des favoris" : "Ajouter aux favoris"}
             />
           </div>
         </div>
