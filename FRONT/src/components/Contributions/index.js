@@ -1,17 +1,18 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Masonry from 'react-masonry-css';
 
 
 import Card from '../Card';
 import Button from '../GenericComponents/Button';
 import './contributions.scss';
+import { deleteContribution } from '../../action/userCurrent';
 
 const BookmarkedCards = () => {
   const { contributions } = useSelector((state) => state.userCurrent);
   const { loading } = useSelector((state) => state.displayOptions);
+  const dispatch = useDispatch();
 
   const handleModifyClick = () => null;
-  const handleDeleteButtonClick = ()=> null;
 
   const breakpointsColumnsObj = {
     default: 7,
@@ -48,7 +49,7 @@ const BookmarkedCards = () => {
                         <Button 
                           color
                           styling="outline"
-                          handleClick={handleDeleteButtonClick}
+                          handleClick={() => dispatch(deleteContribution(card.id))}
                           content="Supprimer"
                         />
                       </div>
