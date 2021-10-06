@@ -547,7 +547,7 @@ export default (store) => (next) => (action) => {
       console.log(`Route empreintée en GET : /cards/${action.id}`);
 
       axiosInstance.get(
-        `/cards/${action.id}`,
+        `/cards/details/${action.id}`,
       ).then(
         (response) => {
           console.log(`REUSSI, les informations reçues de la carte ${action.id} sont`, response.data);
