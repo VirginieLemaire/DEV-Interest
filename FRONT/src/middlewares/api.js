@@ -49,6 +49,53 @@ const axiosInstance = axios.create({
 
 let refreshToken;
 
+// axiosInstance.interceptors.response.use((response) => response, async (error) => {
+//   const originalRequest = error.config;
+//   if (error.config.url !== '/api/refreshToken' && error.response.status === 401 && !originalRequest._retry !== true) {
+//     originalRequest._retry = true;
+//     if (refreshToken && refreshToken !== '') {
+//       axiosInstance.defaults.headers.common.Authorization = `Bearer ${refreshToken}`;
+//       console.log(`j'envoie le refresh token sur la route /api/refreshToken en POST ${refreshToken}`);
+//       await axiosInstance.post('/api/refreshToken').then((response) => {
+//         axiosInstance.defaults.headers.comme.Authorization = `Bearer ${response.data.accessToken}`;
+//         originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
+//       }).catch((err) => {
+//         console.log(err.response.status);
+//         refreshToken = null;
+//       });
+//       return axiosInstance(originalRequest);
+//     }
+//   }
+// });
+
+// axiosInstance.interceptors.response.use(
+//   (res) => res,
+//   async (err) => {
+//     const originalConfig = err.config;
+
+//     if (originalConfig.url !== '/api/refreshToken' && err.response) {
+//       // Access Token was expired
+//       if (err.response.status === 401 && !originalConfig._retry) {
+//         originalConfig._retry = true;
+
+//         try {
+//           const response = await axiosInstance.post('/api/refreshToken', {
+//             refreshToken,
+//           });
+//           axiosInstance.defaults.headers.comme.Authorization = `Bearer ${response.data.accessToken}`;
+
+//           return axiosInstance(originalConfig);
+//         }
+//         catch (_error) {
+//           return Promise.reject(_error);
+//         }
+//       }
+//     }
+
+//     return Promise.reject(err);
+//   },
+// );
+
 export default (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_CARDS_HOME: {
@@ -665,22 +712,3 @@ export default (store) => (next) => (action) => {
       break;
   }
 };
-
-axiosInstance.interceptors.response.use((response) => response, async (error) => {
-  const originalRequest = error.config;
-  if (error.config.url !== '/refreshToken' && error.response.status === 401 && !originalRequest.retry !== true) {
-    originalRequest.retry = true;
-    if (refreshToken && refreshToken !== '') {
-      axiosInstance.defaults.headers.common.Authorization = `Bearer ${refreshToken}`;
-      console.log(`j'envoie le refresh token sur la route /api/refreshToken en POST ${refreshToken}`);
-      await axiosInstance.post('/api/refreshToken').then((response) => {
-        axiosInstance.defaults.headers.comme.Authorization = `Bearer ${response.data.accessToken}`;
-        originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
-      }).catch((err) => {
-        console.log(err.response.status);
-        refreshToken = null;
-      });
-      return axiosInstance(originalRequest);
-    }
-  }
-});
