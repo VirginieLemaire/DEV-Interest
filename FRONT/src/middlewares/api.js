@@ -35,7 +35,7 @@ import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
   FETCH_BOOKMARKED_CARDS, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
   saveBookmarkedCards, toggleLogged, userLogout,
-  updateBookmarks, DELETE_CONTRIBUTION, fetchContributions, USER_API_LOGOUT,
+  updateBookmarks, DELETE_CONTRIBUTION, fetchContributions, USER_API_LOGOUT, userApiLogout, GET_USER_WITH_TOKEN, getUserWithToken,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
@@ -47,72 +47,7 @@ const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
 });
 
-let refreshToken;
-
-// console.log('Le refreshToken du localStorage console au debut de l\'api', refreshToken);
-
-// axiosInstance.interceptors.request.use(
-//   async (config) => {
-//     if (refreshToken) {
-//       config.headers.Authorization = `Bearer ${refreshToken}`;
-//       await axiosInstance.post('/api/refreshToken').then((response) => {
-//         axiosInstance.defaults.headers.comme.Authorization = `Bearer ${response.data.accessToken}`;
-//       }).catch((err) => {
-//         console.log(err.response.status);
-//         refreshToken = null;
-//       });
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error),
-// );
-
-// axiosInstance.interceptors.response.use((response) => response, async (error) => {
-//   const originalRequest = error.config;
-//   if (error.config.url !== '/api/refreshToken' && error.response.status === 401 && !originalRequest._retry !== true) {
-//     originalRequest._retry = true;
-//     if (refreshToken && refreshToken !== '') {
-//       axiosInstance.defaults.headers.common.Authorization = `Bearer ${refreshToken}`;
-//       console.log(`j'envoie le refresh token sur la route /api/refreshToken en POST ${refreshToken}`);
-//       await axiosInstance.post('/api/refreshToken').then((response) => {
-//         axiosInstance.defaults.headers.comme.Authorization = `Bearer ${response.data.accessToken}`;
-//         originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
-//       }).catch((err) => {
-//         console.log(err.response.status);
-//         refreshToken = null;
-//       });
-//       return axiosInstance(originalRequest);
-//     }
-//   }
-// });
-
-// axiosInstance.interceptors.response.use(
-//   (res) => res,
-//   async (err) => {
-//     const originalConfig = err.config;
-
-//     if (originalConfig.url !== '/api/refreshToken' && err.response) {
-//       // Access Token was expired
-//       if (err.response.status === 401 && !originalConfig._retry) {
-//         originalConfig._retry = true;
-
-//         try {
-//           const response = await axiosInstance.post('/api/refreshToken', {
-//             refreshToken,
-//           });
-//           axiosInstance.defaults.headers.comme.Authorization = `Bearer ${response.data.accessToken}`;
-
-//           return axiosInstance(originalConfig);
-//         }
-//         catch (_error) {
-//           return Promise.reject(_error);
-//         }
-//       }
-//     }
-
-//     return Promise.reject(err);
-//   },
-// );
+let refreshToken = localStorage.getItem('refreshToken');
 
 export default (store) => (next) => (action) => {
   switch (action.type) {
@@ -381,9 +316,11 @@ export default (store) => (next) => (action) => {
           console.log('Le serveur me donne aussi le Token suivant lors du login (response.data.accessToken) :', response.data.accessToken);
           console.log('Le serveur me donne aussi le refreshToken suivant lors du login (response.data.refreshToken) :', response.data.refreshToken);
 
-          localStorage.setItem('user', JSON.stringify(response.data.user));
           localStorage.setItem('userToken', response.data.accessToken);
           localStorage.setItem('userRefreshToken', response.data.refreshToken);
+
+          console.log('valeur de UserToken du LS ', localStorage.getItem('userToken'));
+          console.log('valeur de serToken du LS ', localStorage.getItem('userRefreshToken'));
 
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resetConnectingFields());
@@ -485,7 +422,6 @@ export default (store) => (next) => (action) => {
           console.log('Signup REUSSI ! Enregistrement des informations reçues du back (response.data.user)', response.data.user);
           console.log('Le token reçu lors du signup est :', response.data.accessToken);
 
-          localStorage.setItem('user', JSON.stringify(response.data.user));
           localStorage.setItem('userToken', response.data.accessToken);
           localStorage.setItem('userRefreshToken', response.data.refreshToken);
 
@@ -720,10 +656,64 @@ export default (store) => (next) => (action) => {
       break;
     }
     case USER_API_LOGOUT: {
-      localStorage.removeItem('user');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       store.dispatch(userLogout());
+      next(action);
+      break;
+    }
+    case GET_USER_WITH_TOKEN: {
+      console.log('je rentre bien dans get user with token');
+      const accessTokenLS = localStorage.getItem('userToken');
+      console.log('je récupère l\'accessToken du LS', accessTokenLS);
+      axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessTokenLS}`;
+      console.log('j\'empreinte la route /user');
+      axiosInstance.get('/user')
+        .then((response) => {
+          console.log('Réussite sur la route /user je reçois les infos :', response);
+          store.dispatch(toggleLogged());
+          store.dispatch(connectUser(response.data.user));
+          localStorage.setItem('accessToken', response.data.accessToken);
+          localStorage.setItem('refreshToken', response.data.refreshToken);
+          console.log('je me connecte avec ces informations', response.data);
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            console.log('j\'ai bien un retour 401');
+            const refreshTokenLS = localStorage.getItem('userRefreshToken');
+            console.log('Je met dans le header le refreshToken ', refreshToken);
+            axiosInstance.defaults.headers.common.Authorization = `Bearer ${refreshTokenLS}`;
+            axiosInstance.post('/api/refreshToken')
+              .then((rs) => {
+                // eslint-disable-next-line max-len
+                console.log('reussite api/refreshToken ', rs.data);
+                axiosInstance.defaults.headers.common.Authorization = `Bearer ${rs.data.accessToken}`;
+                console.log('j\'ai bien reçu un nouveau accessToken car celui que j\'avais n\'étais plus bon', rs.data.accessToken);
+                console.log('je relance la route /user');
+                axiosInstance.get('/user')
+                  .then((res) => {
+                    console.log('Réussite sur la route 2 /user je reçois les infos :', res);
+                    store.dispatch(toggleLogged());
+                    store.dispatch(connectUser(res.data.user));
+                    localStorage.setItem('accessToken', res.data.accessToken);
+                    localStorage.setItem('refreshToken', res.data.refreshToken);
+                    console.log('je me connecte avec ces informations', res.data);
+                  })
+                  .catch((er) => console.log('je suis dans l\'erreur du 2ieme /user', er));
+                // localStorage.setItem('accessToken', response.data.accessToken);
+                // localStorage.setItem('refreshToken', response.data.refreshToken);
+                // store.dispat  h(toggleLogged());
+                // store.dispatch(connectUser(response.data.user));
+                // Rediriger vers la page ou on souhaitait aller à l'origine
+              })
+              .catch((err) => {
+                console.log('je suis dans l\'erreur de la route /refreshtoken');
+                // rediriger vers la page de login
+                store.dispatch(userApiLogout());
+                console.log(err);
+              });
+          }
+        });
       next(action);
       break;
     }

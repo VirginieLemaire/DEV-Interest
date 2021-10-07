@@ -2,12 +2,13 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useDispatch, useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
-import { loadMoreHomeCards } from '../../action/cardsHome';
+import { fetchCardsHome, loadMoreHomeCards } from '../../action/cardsHome';
 
 import './home-cards.scss';
 
 import Card from '../Card';
 import AppLoader from '../GenericComponents/AppLoader';
+import { useEffect } from 'react';
 
 const HomeCards = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,10 @@ const HomeCards = () => {
     1100: 2,
     700: 1,
   };
+
+  useEffect(() => {
+    dispatch(fetchCardsHome());
+  }, []);
 
   if (loading) return null;
 
