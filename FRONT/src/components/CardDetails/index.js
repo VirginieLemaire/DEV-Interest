@@ -1,14 +1,25 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
-import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
-import { FaThermometerThreeQuarters } from '@react-icons/all-files/fa/FaThermometerThreeQuarters';
-import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
+import ReactPlayer from 'react-player'
+
 import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
 import { MdLanguage } from '@react-icons/all-files/md/MdLanguage';
+
+import { DiJavascript1 } from '@react-icons/all-files/di/DiJavascript1';
+import { DiCss3 } from '@react-icons/all-files/di/DiCss3';
+import { DiMongodb } from '@react-icons/all-files/di/DiMongodb';
+import { DiPhp } from '@react-icons/all-files/di/DiPhp';
+import { DiHtml5 } from '@react-icons/all-files/di/DiHtml5';
+import { DiWordpress } from '@react-icons/all-files/di/DiWordpress';
+import { SiPostgresql } from '@react-icons/all-files/si/SiPostgresql';
+import { DiMarkdown } from '@react-icons/all-files/di/DiMarkdown';
+import { DiRuby } from '@react-icons/all-files/di/DiRuby';
+import { DiPython } from '@react-icons/all-files/di/DiPython';
+import { BsFillQuestionDiamondFill } from '@react-icons/all-files/bs/BsFillQuestionDiamondFill';
+
 import { getDomainName, formatDate } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
@@ -34,6 +45,20 @@ const CardDetails = ({ card }) => {
     intermédiaire: 'reception-2',
     avancé: 'reception-3',
     expert: 'reception-4',
+  };
+
+  const iconsTable = {
+    javascript: <DiJavascript1 />,
+    css: <DiCss3 />,
+    mongodb: <DiMongodb />,
+    php: <DiPhp />,
+    html5: <DiHtml5 />,
+    wordpress: <DiWordpress />,
+    postgresql: <SiPostgresql />,
+    markdown: <DiMarkdown />,
+    ruby: <DiRuby />,
+    python: <DiPython />,
+    autre: <BsFillQuestionDiamondFill />,
   };
 
   const handleClick = () => {
@@ -111,7 +136,7 @@ const CardDetails = ({ card }) => {
               </div>
             </div>
           </div>
-
+          {card.type === 'vidéo' && <ReactPlayer url={card.url} />}
           <div className="card-details__board__infos__buttons-container">
             <Link to={{ pathname: card.url }} target="_blank">
               <button
