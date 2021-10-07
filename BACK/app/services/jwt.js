@@ -18,6 +18,7 @@ module.exports = {
                     algorithm: 'HS256',
                     expiresIn: '2m'
 
+
                 }
             );
         } catch (error) {
