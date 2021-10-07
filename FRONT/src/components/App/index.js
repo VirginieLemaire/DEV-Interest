@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
@@ -35,6 +35,8 @@ import DeleteUserModal from '../DeleteUserModal';
 import UpdateCard from '../UpdateCard';
 import DeleteCardModal from '../DeleteCardModal';
 import DeleteCardSuccessModal from '../Modals/DeleteCardSuccessModal';
+import { connectUser, setAccesstokenLocalStorage } from '../../action/userConnect';
+import { toggleLogged } from '../../action/userCurrent';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ const App = () => {
     darkMode, appLoading, addCardModal, connexionModal, modal,
   } = useSelector((state) => state.displayOptions);
 
-  const { username, id } = useSelector((state) => state.userCurrent);
+  const { username, id, isLogged } = useSelector((state) => state.userCurrent);
 
   const cardsHome = useSelector((state) => state.cardsHome.cards);
 
@@ -54,6 +56,13 @@ const App = () => {
   const mergedCards = [...cardsHome, ...cardsSearch, ...contributions, ...bookmarkedCards];
 
   useEffect(() => {
+    if (!isLogged && localStorage.getItem('user')) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      console.log('les infos du localstorage user', user);
+      dispatch(connectUser(user));
+      dispatch(setAccesstokenLocalStorage());
+      dispatch(toggleLogged());
+    }
     dispatch(fetchCardsHome());
   }, []);
 

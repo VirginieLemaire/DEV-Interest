@@ -1,4 +1,6 @@
 @use '../../styles/vars';
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
+
 
 .card{
   width: 300px;
@@ -6,10 +8,15 @@
   border-radius: vars.$border-radius-input;
   // box-shadow: 4px 24px 60px rgba(0,0,0, 0.15);
   box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
+  font-family: 'Roboto', sans-serif;
+
 
   &:hover{
     box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.2);
     transition: box-shadow 0.35s;
+    transition: top 3s linear;
+    position: relative;
+    top: 0.3rem;
   }
 
   &--dark{
@@ -23,16 +30,18 @@
 
   &__image{
     border-radius: vars.$border-radius-input;
-    height: auto;
-    min-height: 350px;
+    // height: auto;
+    // min-height: 350px;
     width: 300px;
     object-fit: cover;
   }
 
   &__title{
-    padding: 0.5rem 0.5rem 0 0.5rem;
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
     font-size: 1.1rem;
     line-height: 1.3;
+    font-family: 'Noto Sans Display', sans-serif;
+    font-weight: 500;
   }
 
   &__website{
@@ -41,16 +50,22 @@
     color: vars.$light-color-plus;
     // background-color: vars.$light-color;
     // font-weight: bold;
-    margin-top: 1rem;
+    margin: 1rem 0 0.5rem 0;
+    font-size: 0.9rem;
   }
 
   &__meta{
-    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+
+
   }
 
   &__tags{
     display: flex;
-    padding: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem 1rem 1rem;
 
     &-category{
       width: 50%;
@@ -65,24 +80,30 @@
     }
 
     &-techno{
+      padding-top: 0.3rem;
       width: 50%;
       display:flex;
       flex-wrap: wrap;
-      justify-content: flex-start;
-      gap: 0.5rem;
-      padding: 0 0.5rem;
-
+      justify-content: flex-end;
       align-items: center;
-      // font-weight: bold;
-      font-size: 0.9rem;
+      gap: 0.5rem;
+      align-items: center;
+
       &--item{
-        background-color: vars.$light-color;
-        padding: 0.3rem;
+        font-size: 1.4rem;
         border-radius: vars.$border-radius-input;
         &--dark{
-          background-color: vars.$text-color;
+
         }
       }
+    }
+
+    &-level{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 1.7rem;
+      width: 50%;
     }
   }
 
@@ -93,11 +114,21 @@
     padding: 0.5rem;
     margin-top: 0.5rem;
     text-align: center;
-    font-size: 0.8rem;
-    font-weight: bold;
+    font-size: 1.5rem;
     text-transform:uppercase;
     &--dark{
       background-color: vars.$text-color;
+    }
+  }
+
+  &__expand{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    padding: 0.2rem 0;
+    &:hover{
+      cursor: pointer;
     }
   }
 
@@ -130,4 +161,8 @@
       }
     }
   }
+}
+
+.hidden{
+  display: none;
 }
