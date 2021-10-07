@@ -446,12 +446,12 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('Update du user REUSSI, voici les informations reçues du back', response.data.user);
+          console.log('Update du user REUSSI, voici les informations reçues du back', response.data);
           console.log('Le token reçu lors de l\'update est : ', response.data.accessToken);
 
           store.dispatch(toggleModal());
           store.dispatch(updateAccountSuccessModal());
-          store.dispatch(connectUser({ email, username }));
+          store.dispatch(connectUser(response.data));
           store.dispatch(resetUpdateUserFields());
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },

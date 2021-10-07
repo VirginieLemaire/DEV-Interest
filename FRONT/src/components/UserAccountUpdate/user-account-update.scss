@@ -7,7 +7,7 @@
   color: vars.$text-color;
   font-size: 1rem;
   margin-top: 4rem;
-  width: 30vw;
+  width: 40vw;
 
   &--dark{
     color: vars.$white-color;
@@ -31,7 +31,7 @@
 
     &__new-password-container {
       display: flex;
-      gap: 1rem;
+      gap: .4rem;
     }
 
     &__validation-buttons-container{

@@ -16,7 +16,7 @@ const UserAccountUpdate = () => {
   const {
     username, email, passwordCurrent, passwordNew, passwordNewVerification,
   } = useSelector((state) => state.userUpdate);
-  const { username: usernameCurrent } = useSelector((state) => state.userCurrent);
+  const { username: usernameCurrent, email: emailCurrent } = useSelector((state) => state.userCurrent);
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const handleClick = () => {
@@ -41,7 +41,7 @@ const UserAccountUpdate = () => {
           autoComplete="off"
           value={username}
           name="username"
-          placeholder="Nom d'utilisateur"
+          placeholder={usernameCurrent}
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'username'))}
           minlength="4"
           maxlength="20"
@@ -51,7 +51,7 @@ const UserAccountUpdate = () => {
           autoComplete="off"
           value={email}
           name="email"
-          placeholder="Email"
+          placeholder={emailCurrent}
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}
         />
         <h2 className="user-account-update__form__subtitle">Modifier le mot de passe</h2>

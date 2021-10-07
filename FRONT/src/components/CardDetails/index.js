@@ -8,13 +8,14 @@ import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
 import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
-import { GrLanguage } from '@react-icons/all-files/gr/GrLanguage';
+import { MdLanguage } from '@react-icons/all-files/md/MdLanguage';
 import { getDomainName, formatDate } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
 import './card-details.scss';
-import { toggleDisplayUrl } from '../../action/displayOptions';
+import { showAddCardModal, toggleDisplayUrl } from '../../action/displayOptions';
+import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
@@ -25,28 +26,35 @@ const CardDetails = ({ card }) => {
   const dispatch = useDispatch();
 
   const { displayUrl, darkMode } = useSelector((state) => state.displayOptions);
+  const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
+  const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
 
-  const handleClick = (event) => {
-    console.log(event);
-  };
+  const handleClick = () => {
+    if (isLogged) {
+      if (isBookmarked) dispatch(removeFromBookmarks(card.id));
+      else dispatch(addToBookmarks(card.id));
+    }
+    else if (!isLogged) {
+      dispatch(showAddCardModal());
+    }  };
   const creationDate = formatDate(card.createdat);
 
   const handleContentToggle = () => {
     dispatch(toggleDisplayUrl());
   };
 
+  console.log(card.level)
+
   return (
     <div className="card-details">
       <div className={darkMode ? 'card-details__board card-details__board--dark' : 'card-details__board'}>
-        <div className="card-details__board__image-container">
-          <img className="card-details__board__image-container__image" src={card.image} alt={card.title} />
-        </div>
+        <img className="card-details__board__image" src={card.image} alt={card.title} />
         <div className="card-details__board__infos">
           <div className="card-details__board__infos__title-container">
             <h1 className="card-details__board__infos__title-container__title"><strong>{card.title}</strong></h1>
             <div className="card-details__board__infos__title-container__lang-container">
               <div className="card-details__board__infos__title-container__lang-container__icon">
-                <GrLanguage />
+                <MdLanguage />
               </div>
               <div className="card-details__board__infos__tags-section__tags-container__type">
                 <p>{card.lang.capitalize()}</p>
@@ -112,10 +120,10 @@ const CardDetails = ({ card }) => {
               </button>
             </Link>
             <Button
-              styling="full"
+              styling={isBookmarked ? "outline" : "full"}
               color
               handleClick={handleClick}
-              content="Favoris"
+              content={isBookmarked ? "Retirer des favoris" : "Ajouter aux favoris"}
             />
           </div>
         </div>
