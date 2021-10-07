@@ -47,6 +47,8 @@ router.get('/users/:id' ,checkJwt, userController.findById);
 router.delete('/users/:id' ,checkJwt, userController.deleteUserById);
 //modifier un user
 router.put('/users/:id' , checkJwt, userController.update);
+//Accéder aux infos d'un user avec la liste des id bookmarks
+router.get('/user',checkJwt, userController.getUserWithBookmarksInfo);
 
 //LOGIN - SIGNUP
 router.post('/login', userController.login);

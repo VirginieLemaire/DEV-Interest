@@ -72,5 +72,6 @@ class Bookmarks {
         }
     }
 
+
 }
 module.exports = Bookmarks;  

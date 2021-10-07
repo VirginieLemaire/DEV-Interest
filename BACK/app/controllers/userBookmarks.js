@@ -55,7 +55,8 @@ const bookmarksController = {
             console.log(error);
             response.status(500).json(error.message);
         }
-    }
+    },
+
 
 }
 

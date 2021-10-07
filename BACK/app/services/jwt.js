@@ -16,7 +16,8 @@ module.exports = {
                 //header
                 {
                     algorithm: 'HS256',
-                    expiresIn: '1m'
+                    expiresIn: '2m'
+
 
                 }
             );
@@ -42,6 +43,7 @@ module.exports = {
     },
     refreshToken: userId => {
         try {
+            console.log('je suis dans le service refreshtoken et voila les infos de userId:',userId);
             return JWT.sign(
                 //payload
                 {
