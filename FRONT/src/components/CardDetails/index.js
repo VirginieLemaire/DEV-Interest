@@ -29,6 +29,13 @@ const CardDetails = ({ card }) => {
   const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
   const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
 
+  const levelIconsTable = {
+    débutant: 'reception-1',
+    intermédiaire: 'reception-2',
+    avancé: 'reception-3',
+    expert: 'reception-4',
+  };
+
   const handleClick = () => {
     if (isLogged) {
       if (isBookmarked) dispatch(removeFromBookmarks(card.id));
@@ -69,10 +76,7 @@ const CardDetails = ({ card }) => {
           <div className="card-details__board__infos__tags-section">
             <div className="card-details__board__infos__tags-section__tags-container">
               <div className="card-details__board__infos__tags-section__tags-container__icon">
-                {(card.level === 'Débutant') && (<FaThermometerEmpty />)}
-                {(card.level === 'Intermédiaire') && (<FaThermometerHalf />)}
-                {(card.level === 'Avancé') && (<FaThermometerThreeQuarters />)}
-                {(card.level === 'Expert') && (<FaThermometerFull />)}
+                <div><i className={`bi bi-${levelIconsTable[card.level.toLowerCase()]}`} /></div>
               </div>
               <div className="card-details__board__infos__tags-section__tags-container__level">
                 <Tag name={card.level.capitalize()} />
