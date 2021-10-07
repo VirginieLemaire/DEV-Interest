@@ -19,6 +19,6 @@ module.exports = (request, response, next) => {
         //passer au middleware suivant
         next();
     } catch (error) {
-        response.status(500).json(error.message);
+        response.status(401).json(error.message);
     }
 }

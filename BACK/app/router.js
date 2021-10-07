@@ -11,7 +11,8 @@ const refreshToken = require('./controllers/refreshToken');
 
 
 const router = Router();
-
+//liste des id bookmarks
+router.get('/bookmarks',checkJwt, bookmarksController.getUserWithBookmarksInfo);
 //CARDS
 //liste de toutes les cartes, paginées par 30 dans l'ordre chronologique descendant
 router.get('/cards', cardController.findAllCards);

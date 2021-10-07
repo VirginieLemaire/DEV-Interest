@@ -59,7 +59,8 @@ const cardsController = {
                 response.json({
                     page,
                     size,
-                    count: 0,     
+                    count: 0, 
+                    data: []    
                 });
                
             }else {
