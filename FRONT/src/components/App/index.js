@@ -35,6 +35,7 @@ import DeleteUserModal from '../DeleteUserModal';
 import UpdateCard from '../UpdateCard';
 import DeleteCardModal from '../DeleteCardModal';
 import DeleteCardSuccessModal from '../Modals/DeleteCardSuccessModal';
+import ErrorPage from '../404'
 import { connectUser, setAccesstokenLocalStorage } from '../../action/userConnect';
 import { toggleLogged } from '../../action/userCurrent';
 
@@ -95,7 +96,7 @@ const App = () => {
             <Route path="/legal" exact component={Legal} />
             <Route path="/terms-of-use" exact component={TermsOfUse} />
             <Route path="/about" exact component={About} />
-            <Route component={Page404} />
+            <Route component={ErrorPage} />
           </Switch>
         </div>
         <Footer />
