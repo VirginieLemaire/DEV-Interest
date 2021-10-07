@@ -22,6 +22,8 @@ const userController = {
             console.log('Je veux authentifier le user => je vais envoyer les infos au model pour comparaison\n');
             const user = await new User(login).findUser();
             console.log("\nC'est à nouveau le controller: ok on m'a renvoyé un user, je crée le token..............");
+            
+
             //access token
             const accessToken = jwt.makeToken(user.id);
             console.log(accessToken);
@@ -68,8 +70,9 @@ const userController = {
             const id = parseInt(request.params.id,10);
             console.log(id);
             const user = await new User(id).deleteUserById(id);
-            response.setHeader('Authorization', jwt.makeToken(id));
+            delete request.headers['authorization']; // should be lowercase
             response.status(201).json({success: true});
+            
 
         } catch(error) {
            //lire l'erreur
@@ -104,7 +107,32 @@ const userController = {
            //envoyer l'info au front
            response.status(500).json(error.message);
         }
-    }    
+    },
+    getUserWithBookmarksInfo : async (request, response) => {
+        try {
+            console.log("let's see what's in request userId...: ",request.userId);
+            
+            console.log("\n Hello, je suis dans le userController !\n je stocke l'id du user connecté dans un objet à passer au model qui va instancier la classe User");
+            const getId ={ userId: request.userId};
+            console.log(getId);
+            const user = await new User(getId).userWithBookmarksId();
+            console.log("<<< de retour dans le controller, voici ce que la requête a retourné : ");
+            console.log(user);
+            
+             //access token
+             const accessToken = jwt.makeToken(request.userId);
+             console.log(accessToken);
+             // refresh token
+             const refreshToken = jwt.refreshToken(request.userId);
+             console.log('token user créé, on envoie tout au client\n\n');
+             response.header({'Authorization': accessToken,'refreshToken': refreshToken}).send({accessToken: accessToken, refreshToken: refreshToken, user});
+            //response.status(201).json(userWithBookmarksId);
+        } catch (error) {
+            console.log(error);
+            response.status(401).json(error.message);
+        }
+    }
+
 
 }
 

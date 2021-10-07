@@ -56,22 +56,7 @@ const bookmarksController = {
             response.status(500).json(error.message);
         }
     },
-    getUserWithBookmarksInfo : async (request, response) => {
-        try {
-            console.log("let's see what's in request userId...: ",request.userId);
-            
-            console.log("\n Hello, je suis dans le bookmarksController !\n je stocke l'id du user connecté dans un objet à passer au model bookmarks qui va instancier la classe Bookmarks");
-            const userId ={ userId: request.userId};
-            console.log(userId);
-            const userWithBookmarksId = await new Bookmarks(userId).userWithBookmarksId();
-            console.log("<<< de retour dans le controller, voici ce que la requête a retourné : ");
-            console.log(userWithBookmarksId);
-            response.status(201).json(userWithBookmarksId);
-        } catch (error) {
-            console.log(error);
-            response.status(500).json(error.message);
-        }
-    }
+
 
 }
 

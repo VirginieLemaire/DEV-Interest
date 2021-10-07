@@ -71,44 +71,7 @@ class Bookmarks {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-    async userWithBookmarksId() {
-        try {
-            console.log("\n>>> Yo! on est dans le model bookmarks. Voyons ce que j'ai instancié : ");
-            console.log(this);
 
-            console.log(">> récupérons les infos du user.........");
-            const {rows} = await client.query('SELECT * FROM "user" WHERE id=$1', [this.userId]);
-            //console.log(rows);
-            console.log("\n>> Je crée un nouvel objet userSecure avec les infos correspondant à ce qui est utile au client:");
-            let userSecure = {
-                id: this.userId,
-                username: rows[0].user_name,
-                email: rows[0].email,
-                createdAt: rows[0].createat
-            };
-            console.log(userSecure);
-                        
-            console.log("\n>> ??? Je cherche à savoir si le user a des favoris ???\n");
-
-            const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [this.userId]);
-            //console.log("Voici ce que j'ai trouvé :");
-            if (!bookmarksUser.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
-                console.log(">> Cet utilisateur n'est pas présent dans la vue bookmarks: je renvoie les infos user au controller");
-                //renvoyer le user au controller            
-                return userSecure;
-            } else {
-                //sinon retourner user_bookmarks
-                console.log(">> Cet utilisateur est présent dans la vue bookmarks: j'atoute le tableau des id des bookmarks à userSecure et j'en envoi user Secure au controller\n");
-                //console.log(bookmarksUser.rows[0]);
-                userSecure.bookmarks = bookmarksUser.rows[0].bookmarks;
-                //console.log(userSecure);
-                //renvoyer le user au controller            
-                return userSecure;
-            }
-        } catch (error) {
-            console.trace(error);
-        }
-    }
 
 }
 module.exports = Bookmarks;  
