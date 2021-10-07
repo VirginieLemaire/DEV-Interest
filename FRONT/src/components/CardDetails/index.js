@@ -98,45 +98,57 @@ const CardDetails = ({ card }) => {
             <p className="card-details__board__infos__contributor">Proposé par: <strong>{card.contributor}</strong></p>
             <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
-          <div className="card-details__board__infos__tags-section">
-            <div className="card-details__board__infos__tags-section__tags-container">
-              <div className="card-details__board__infos__tags-section__tags-container__icon">
-                <div><i className={`bi bi-${levelIconsTable[card.level.toLowerCase()]}`} /></div>
+          <div className="card-details__board__infos__media_section">
+            <div className="card-details__board__infos__media_section__tags-section">
+              <div className="card-details__board__infos__media_section__tags-section__tags-container">
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__icon">
+                  <div><i className={`bi bi-${levelIconsTable[card.level.toLowerCase()]}`} /></div>
+                </div>
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__level">
+                  <Tag name={card.level.capitalize()} />
+                </div>
               </div>
-              <div className="card-details__board__infos__tags-section__tags-container__level">
-                <Tag name={card.level.capitalize()} />
+              <div className="card-details__board__infos__media_section__tags-section__tags-container">
+                <div className="card-details__board__infos__tags-section__tags-container__icon">
+                  <CgScreen />
+                </div>
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__techs-container">
+                  {
+                    card.techs.map((tech) => (
+                      <Tag id={tech} name={tech.capitalize()} />
+                    ))
+                  }
+                </div>
+              </div>
+              <div className="card-details__board__infos__media_section__tags-section__tags-container">
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__icon">
+                  <FaTags />
+                </div>
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__category">
+                  <Tag name={card.category.capitalize()} />
+                </div>
+              </div>
+              <div className="card-details__board__infos__media_section__tags-section__tags-container">
+                <div className="card-details__board__infos__tags-section__tags-container__icon">
+                  <MdPermMedia />
+                </div>
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__type">
+                  <Tag name={card.type.capitalize()} />
+                </div>
               </div>
             </div>
-            <div className="card-details__board__infos__tags-section__tags-container">
-              <div className="card-details__board__infos__tags-section__tags-container__icon">
-                <CgScreen />
-              </div>
-              <div className="card-details__board__infos__tags-section__tags-container__techs-container">
-                {
-                  card.techs.map((tech) => (
-                    <Tag id={tech} name={tech.capitalize()} />
-                  ))
-                }
-              </div>
-            </div>
-            <div className="card-details__board__infos__tags-section__tags-container">
-              <div className="card-details__board__infos__tags-section__tags-container__icon">
-                <FaTags />
-              </div>
-              <div className="card-details__board__infos__tags-section__tags-container__category">
-                <Tag name={card.category.capitalize()} />
-              </div>
-            </div>
-            <div className="card-details__board__infos__tags-section__tags-container">
-              <div className="card-details__board__infos__tags-section__tags-container__icon">
-                <MdPermMedia />
-              </div>
-              <div className="card-details__board__infos__tags-section__tags-container__type">
-                <Tag name={card.type.capitalize()} />
-              </div>
+            <div className="card-details__board__infos__media_section__media">
+              {card.type === 'vidéo' && 
+                <ReactPlayer 
+                  url={card.url} 
+                  width='100%'
+                  height='auto'
+                  controls={true}
+                />
+              }
+              {card.type === 'image' && <img className="card-details__board__infos__media_section__media__image" src={card.image} alt={card.title}/>}
             </div>
           </div>
-          {card.type === 'vidéo' && <ReactPlayer url={card.url} />}
           <div className="card-details__board__infos__buttons-container">
             <Link to={{ pathname: card.url }} target="_blank">
               <button
