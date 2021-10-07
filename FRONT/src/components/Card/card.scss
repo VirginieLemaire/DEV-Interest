@@ -55,6 +55,10 @@
   }
 
   &__meta{
+    display: flex;
+    flex-direction: column;
+
+
   }
 
   &__tags{
@@ -76,6 +80,7 @@
     }
 
     &-techno{
+      padding-top: 0.3rem;
       width: 50%;
       display:flex;
       flex-wrap: wrap;
@@ -86,7 +91,6 @@
 
       &--item{
         font-size: 1.4rem;
-        padding: 0 0.3rem;
         border-radius: vars.$border-radius-input;
         &--dark{
 

@@ -49,6 +49,24 @@ const axiosInstance = axios.create({
 
 let refreshToken;
 
+// console.log('Le refreshToken du localStorage console au debut de l\'api', refreshToken);
+
+// axiosInstance.interceptors.request.use(
+//   async (config) => {
+//     if (refreshToken) {
+//       config.headers.Authorization = `Bearer ${refreshToken}`;
+//       await axiosInstance.post('/api/refreshToken').then((response) => {
+//         axiosInstance.defaults.headers.comme.Authorization = `Bearer ${response.data.accessToken}`;
+//       }).catch((err) => {
+//         console.log(err.response.status);
+//         refreshToken = null;
+//       });
+//     }
+//     return config;
+//   },
+//   (error) => Promise.reject(error),
+// );
+
 // axiosInstance.interceptors.response.use((response) => response, async (error) => {
 //   const originalRequest = error.config;
 //   if (error.config.url !== '/api/refreshToken' && error.response.status === 401 && !originalRequest._retry !== true) {
@@ -400,7 +418,9 @@ export default (store) => (next) => (action) => {
           },
         )
         .catch(
-          (error) => console.log(`le serveur n'a pas réussi à renvoyer la liste des favoris du user ${id}, il a retourné (error.response)`, error.response),
+          (error) => {
+            console.log(`le serveur n'a pas réussi à renvoyer la liste des favoris du user ${id}, il a retourné (error.response)`, error.response);
+          },
         );
       next(action);
       break;
