@@ -37,6 +37,8 @@ const cardsController = {
         try {
             //mots-clefs recherchés
             const keyword = request.query.keyword;
+            console.log(`\nHello, je suis findQueryAllCards du cardController. Voici la requête reçue : ${keyword}`);
+            
             // pagination
             let {page, size} = request.query;
             if (!page) {
@@ -50,23 +52,45 @@ const cardsController = {
             const skip = (page - 1) * size;
             //envoyer les infos à la DB pour trouver les cartes
             const card = await Cards.findQueryAllCards(keyword,limit,skip);
-            console.log(card);
-            
-            
-            if(card === "") {
-                response.status(200).json('Pas de contenu !');
-            }else {
-                response.header('resultat', card.length);
+            console.log("card?", card);
+            if(card < "0") {
+                console.log("y a rien");
+                //const nothing = response.status(200).json('aucun résultat !');
                 response.json({
                     page,
                     size,
+                    count: 0, 
+                    data: []    
+                });
+               
+            }else {
+                let resultat =  card[0].full_count;
+                console.log(`\n <<<< de retour dans le controller, j'ai reçu ${resultat} cartes` );
+                //envoi des infos dans le header
+                response.header('resultat', resultat);
+                //envoi des datas
+                response.json({
+                    page,
+                    size,
+                    count: resultat,
                     data: card
+                    
                 });
             }
             
         } catch(error) {
             console.log(error);
             response.status(500).json(error.message);
+        }
+    },
+    //accéder à une carte
+    findById: async (request, response) => {
+        try {
+            const id = parseInt(request.params.id, 10);
+            const card = await Cards.findById(id);
+            response.json(card);
+        } catch(error) {
+            console.log(error);
         }
     },
     //insert a card

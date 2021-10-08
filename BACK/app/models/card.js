@@ -20,31 +20,51 @@ class Cards {
     }
     static async findQueryAllCards(keyword,limit,skip) {
         try {
+            console.log(`\nHI! Je suis le model findQueryAllCards, voyons la recherche passée et les infos de pagination : `);
+            
             console.log({keyword}, {limit}, {skip});
-            //TODO  voir ARRAY searching https://docs.postgresql.fr/11/arrays.html#ARRAYS-SEARCHING
             //chercher dans toutes les colonnes sauf slug et URLs
-            //il faut passer aussi les technos pour pouvoir chercher sur ses valeurs
-            const {rows} = await client.query(`SELECT cards.*, tech.name FROM cards
-            JOIN card_has_tech ON cards.id = card_has_tech.card_id
-            JOIN tech ON card_has_tech.tech_id = tech.id
+            const {rows} = await client.query(`SELECT *,count(*) OVER() AS full_count FROM cards
             --vectorise la colonne et la compare au parsage en query de la recherche
-                WHERE to_tsvector('french',title) @@websearch_to_tsquery('french', '${keyword}')
-                OR to_tsvector('french',website) @@websearch_to_tsquery('french', '${keyword}')
-                OR to_tsvector('french',description) @@websearch_to_tsquery('french', '${keyword}')
-                OR to_tsvector('french',category) @@websearch_to_tsquery('french', '${keyword}')
-                OR to_tsvector('french',"level") @@websearch_to_tsquery('french', '${keyword}')
-                OR to_tsvector('french',"type") @@websearch_to_tsquery('french', '${keyword}')
-                OR to_tsvector('french',contributor) @@websearch_to_tsquery('french', '${keyword}')
-                OR to_tsvector('french',lang) @@websearch_to_tsquery('french', '${keyword}')
-                OR to_tsvector('french',tech.name) @@websearch_to_tsquery('french', '${keyword}') 
-                ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`);
-            //console.log(rows);
+                WHERE to_tsvector('fr',title) @@websearch_to_tsquery('fr', '${keyword}')
+                OR to_tsvector('fr',website) @@websearch_to_tsquery('fr', '${keyword}')
+                OR to_tsvector('fr',description) @@websearch_to_tsquery('fr', '${keyword}')
+                OR to_tsvector('fr',category) @@websearch_to_tsquery('fr', '${keyword}')
+                OR to_tsvector('fr',"level") @@websearch_to_tsquery('fr', '${keyword}')
+                OR to_tsvector('fr',"type") @@websearch_to_tsquery('fr', '${keyword}')
+                OR to_tsvector('fr',contributor) @@websearch_to_tsquery('fr', '${keyword}')
+                OR to_tsvector('fr',lang) @@websearch_to_tsquery('fr', '${keyword}')
+                OR (to_tsvector('fr', array_to_string(techs, ' ')) @@websearch_to_tsquery('fr', '${keyword}'))
+                ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`) ;
+            //console.log('résultat: ', rows);
             //renvoyer au front           
             return rows.map(row => new Cards(row));
             
                 
         }catch(error) {
             console.log(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+    //trouver une carte via son id
+    static async findById(id) {
+        try {
+            //requête vers la table
+            console.log(">>> je vais chercher la vue carte dans la table");
+            
+            const { rows } = await client.query('SELECT card.*, ARRAY_AGG(card_has_tech.tech_id) techs FROM card JOIN card_has_tech ON card_has_tech.card_id = card.id WHERE card.id=$1 GROUP BY card.id;', [id]);
+            
+            //condition pour agir selon que la requête renvoie quelque chose ou non
+            if (rows[0]) {
+                return new Cards(rows[0]);
+            }
+            return null;
+
+            
+        } catch (error) {
+            //voir l'erreur en console
+            console.trace(error);
+            //renvoyer l'erreur au front
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
