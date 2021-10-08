@@ -24,6 +24,7 @@ import { getDomainName, formatDate } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
+import HomeCards from '../HomeCards';
 import './card-details.scss';
 import { showAddCardModal, toggleDisplayUrl } from '../../action/displayOptions';
 import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
@@ -38,6 +39,7 @@ const CardDetails = ({ card }) => {
 
   const { displayUrl, darkMode } = useSelector((state) => state.displayOptions);
   const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
+  const { searchQuery } = useSelector((state) => state.cardsSearch);
   const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
 
   const levelIconsTable = {
@@ -172,7 +174,8 @@ const CardDetails = ({ card }) => {
       <div className="card-details__suggestion-title-container">
         <h2 className={darkMode ? 'card-details__suggestion-title-container__title card-details__suggestion-title-container__title--dark' : 'card-details__suggestion-title-container__title'}>D'autres cartes pourraient t'intéresser</h2>
       </div>
-      <SearchResults />
+      {searchQuery && <SearchResults />}
+      {!searchQuery && <HomeCards />}
     </div>
   );
 };
