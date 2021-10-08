@@ -35,10 +35,8 @@ import DeleteUserModal from '../DeleteUserModal';
 import UpdateCard from '../UpdateCard';
 import DeleteCardModal from '../DeleteCardModal';
 import DeleteCardSuccessModal from '../Modals/DeleteCardSuccessModal';
-import ErrorPage from '../404'
-import { connectUser, setAccesstokenLocalStorage } from '../../action/userConnect';
+import ErrorPage from '../404';
 import { getUserWithToken, toggleLogged } from '../../action/userCurrent';
-import { setupInterceptors } from '../../middlewares/api';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -57,15 +55,10 @@ const App = () => {
 
   const mergedCards = [...cardsHome, ...cardsSearch, ...contributions, ...bookmarkedCards];
 
+  // dispatch(getUserWithToken());
+
   useEffect(() => {
     dispatch(getUserWithToken());
-    // if (!isLogged && localStorage.getItem('user')) {
-    //   const user = JSON.parse(localStorage.getItem('user'));
-    //   console.log('les infos du localstorage user', user);
-    //   dispatch(connectUser(user));
-    //   dispatch(setAccesstokenLocalStorage());
-    //   dispatch(toggleLogged());
-    // }
     dispatch(fetchCardsHome());
   }, []);
 
