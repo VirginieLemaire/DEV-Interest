@@ -6,14 +6,16 @@ const bookmarksController = {
     findBookmarksByUserId: async (request, response) => {
         try {
             const id = request.params.id;
-            console.log('controller', id);
+            console.log("bookmarksController: voici l'id user récupérée dans les paramètres", id);
             const bookmarks = await Bookmarks.BookmarksByUserId(id);
             if(bookmarks === "") {
                 response.status(200).json('Pas de contenu !');
             }else {
+                console.log("c'est bon j'envoie la liste des favoris au client");
                 response.header('resultat_bookmarks', bookmarks.length);
                 response.json(bookmarks);
-                return this.id;
+                console.log("this", this);
+                //return this.id;
             }
             
         } catch(error) {

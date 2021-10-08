@@ -34,7 +34,7 @@ const cardsController = {
     //update a card
     update : async (request, response) => {
         try {
-            console.log("\n     *****\nJe suis l'update du contributorController: \n--> je récupère l'id user dans le token \n--> et l'id carte dans l'URL\n");
+            console.log("\n     *********************************\nJe suis l'update du contributorController: \n--> je récupère l'id user dans le token \n--> et l'id carte dans l'URL\n");
             const id = request.userId;
             const idCard = parseInt(request.params.id,10);
 
@@ -43,6 +43,7 @@ const cardsController = {
                 id: id,
                 card_id : idCard,
             };
+            console.log("voici ce qui envoyé dans le body par le client", request.body);
             for (const key in request.body) {
                 data[key] = request.body[key];
             }

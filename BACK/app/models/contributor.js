@@ -14,7 +14,7 @@ class Contributor {
     static async findContributor(id) {
         try {
             //requête vers la table
-            console.log(id);
+            console.log("je suis dans le model findContributor et voici l'id user concernée",id);
             const { rows } = await client.query('SELECT * FROM "cards" WHERE user_id=$1 ORDER BY createdAt DESC', [id]);
             //condition pour agir selon que la requête renvoie quelque chose ou non
             if (rows[0]) {
@@ -53,28 +53,28 @@ class Contributor {
             console.log("je suis dans le modèle et voici l'objet instancié this: ", this);
             //vérifier que la personne qui souhaite faire la modif est bien celle qui a créé la carte
             console.log("\n!!!!!  je vérifie que la personne qui souhaite faire la modif est bien celle qui a ajouté la ressource");
+            console.log("this card-id c'est quoi bon sang de bois ? ",this.card_id);
             // recherche de l'id de l'utilisateur
-            const {rows} = await client.query('SELECT user_id FROM card WHERE id =$1', [this.card_id]);
+            const {rows} = await client.query('SELECT user_id FROM card WHERE id=$1', [this.card_id]);
             //si l'utilisateur n'est pas le contributeur
             if (this.id !== rows[0].user_id) {
                 throw new Error("ERREUR : Le user pas l'autorisation de modifier cette carte car il ne l'a pas créée");
             } else { 
                 console.log('\nGOOD : le user est bien contributeur, il a le droit d\'update');
                 //1) mettre à jour la carte avec la fonction update_card qui a fait l'objet d'une amélioration de la migration sqitch
-                await client.query('SELECT update_card($1)', [this]);
+                const updatedCard = await client.query('SELECT update_card($1)', [this]);
+                console.log("\ncarte mise à jour avec la fonction update_card",updatedCard.rows);
                 console.log("\nla table 'card' a bien été mise à jour, on passe aux technos associées");
                             
-                /* solution 1 en attendant mieux : récupérer la liste des associations correspondant à la carte et comparer ce qui a été renvoyé */
-                /* solution 2 : si le front peut nous envoyer ce qui a été ajouté et ce qui a été supprimé : on agit en fonction du résultat
-                -> DELETE FROM card_has_tech WHERE tech_id= $1 
-                -> SELECT update_card_tech($1)*/ 
-                //solution 1
+                /*récupérer la liste des associations correspondant à la carte et comparer ce qui a été renvoyé */
+
                 if (this.techs) {
                     console.log("\nj'ai une mise à jour à faire sur les technos");
                     //remettre en forme le tableau des id de technos envoyé (=> avec sanitize, le tableau est devenu une string, il faut la repasser en array)
                     let techsToArray = this.techs.split(",");
                     console.log({techsToArray});
                     //console.log(techsToArray.length);
+
                     //comparer les technos envoyées pour cette carte aux associations card_has_tech existantes
                     console.log("\nje récupère la liste des associations carte-techno en DB : ");
                     const associations = await client.query('SELECT * FROM card_has_tech WHERE card_id = $1', [this.card_id]);
@@ -120,9 +120,8 @@ class Contributor {
                 } else {
                     console.log("pas de techno envoyée => pas de mise à jour concernant technos");
                 }
-                console.log("\nje cherche la carte mise à jour pour la renvoyer au front\n----------------------------\n");   
-                const updatedCard = await client.query('SELECT * FROM cards WHERE id = $1', [this.card_id]);
-                return updatedCard.rows[0]; 
+
+                return updatedCard.rows; 
 
 
             }

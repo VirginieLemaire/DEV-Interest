@@ -238,7 +238,7 @@ class User {
 
             console.log(">> récupérons les infos du user.........");
             const {rows} = await client.query('SELECT * FROM "user" WHERE id=$1', [this.userId]);
-            console.log(rows);
+            console.log("résultat de la requête DB user",rows);
             console.log("\n>> Je crée un nouvel objet userSecure avec les infos correspondant à ce qui est utile au client:");
             let userSecure = {
                 id: this.userId,
