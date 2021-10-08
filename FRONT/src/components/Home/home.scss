@@ -1,6 +1,8 @@
 @use '../../styles/vars';
 
 .home {
+  max-width: 1980px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   gap: 2rem; 
