@@ -36,7 +36,7 @@ const cardsController = {
         try {
             console.log("\n     *********************************\nJe suis l'update du contributorController: \n--> je récupère l'id user dans le token \n--> et l'id carte dans l'URL\n");
             const id = request.userId;
-            const idCard = request.params.id;
+            const idCard = parseInt(request.params.id,10);
 
             console.log("je crée un objet ayant toutes les propriétés requises : ");
             let data = {

@@ -17,3 +17,4 @@ new_update_card 2021-10-04T11:39:44Z Virginie <student@teleporter> # upgrade the
 new_update_user 2021-10-04T11:53:12Z Virginie <student@teleporter> # upgrade the update user function
 unaccent-configuration 2021-10-04T16:03:47Z Virginie <student@teleporter> # configuring unaccent dictionnary and config
 return-update-user 2021-10-06T15:33:10Z Virginie <student@teleporter> # add return table to function
+correction-update-card 2021-10-08T16:41:34Z Virginie <student@teleporter> # correction fonction update card

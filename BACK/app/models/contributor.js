@@ -62,21 +62,19 @@ class Contributor {
             } else { 
                 console.log('\nGOOD : le user est bien contributeur, il a le droit d\'update');
                 //1) mettre à jour la carte avec la fonction update_card qui a fait l'objet d'une amélioration de la migration sqitch
-                const test = await client.query('SELECT update_card($1)', [this]);
-                console.log("test après update",test.rows);
+                const updatedCard = await client.query('SELECT update_card($1)', [this]);
+                console.log("\ncarte mise à jour avec la fonction update_card",updatedCard.rows);
                 console.log("\nla table 'card' a bien été mise à jour, on passe aux technos associées");
                             
-                /* solution 1 en attendant mieux : récupérer la liste des associations correspondant à la carte et comparer ce qui a été renvoyé */
-                /* solution 2 : si le front peut nous envoyer ce qui a été ajouté et ce qui a été supprimé : on agit en fonction du résultat
-                -> DELETE FROM card_has_tech WHERE tech_id= $1 
-                -> SELECT update_card_tech($1)*/ 
-                //solution 1
+                /*récupérer la liste des associations correspondant à la carte et comparer ce qui a été renvoyé */
+
                 if (this.techs) {
                     console.log("\nj'ai une mise à jour à faire sur les technos");
                     //remettre en forme le tableau des id de technos envoyé (=> avec sanitize, le tableau est devenu une string, il faut la repasser en array)
                     let techsToArray = this.techs.split(",");
                     console.log({techsToArray});
                     //console.log(techsToArray.length);
+
                     //comparer les technos envoyées pour cette carte aux associations card_has_tech existantes
                     console.log("\nje récupère la liste des associations carte-techno en DB : ");
                     const associations = await client.query('SELECT * FROM card_has_tech WHERE card_id = $1', [this.card_id]);
@@ -122,9 +120,8 @@ class Contributor {
                 } else {
                     console.log("pas de techno envoyée => pas de mise à jour concernant technos");
                 }
-                console.log("\nje cherche la carte mise à jour pour la renvoyer au front\n----------------------------\n");   
-                const updatedCard = await client.query('SELECT * FROM cards WHERE id = $1', [this.card_id]);
-                return updatedCard.rows[0]; 
+
+                return updatedCard.rows; 
 
 
             }
