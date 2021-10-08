@@ -1,4 +1,5 @@
 import Card from '../Card';
+import './404.scss';
 import { useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
 import AppLoader from '../GenericComponents/AppLoader';
@@ -6,18 +7,6 @@ import AppLoader from '../GenericComponents/AppLoader';
 const ErrorPage = () => {
 
   const { loading } = useSelector((state) => state.displayOptions);
-
-  // console.log('home cards', cards);
-
-  const breakpointsColumnsObj = {
-    default: 7,
-    2500: 6,
-    2050: 5,
-    1750: 4,
-    1400: 3,
-    1100: 2,
-    700: 1,
-  };
 
   const fakeCards = [
     {
@@ -31,7 +20,7 @@ const ErrorPage = () => {
       slug: '',
       website: '',
       url: '',
-      techs: [],
+      techs: ["Autre"],
       lang: '',
     
 
@@ -47,7 +36,7 @@ const ErrorPage = () => {
       slug: '',
       website: '',
       url: '',
-      techs: [],
+      techs: ["Autre"],
       lang: '',
     },
     {
@@ -61,8 +50,43 @@ const ErrorPage = () => {
       slug: '',
       website: '',
       url: '',
-      techs: [],
+      techs: ["Autre"],
       lang: '',
+    },
+    {
+      category: "Approfondir",
+      contributor: "Romain",
+      createdat: "2021-10-07T23:57:22.728Z",
+      description: "On navigue tranquillement sur Internet, de pages en pages, à la recherche d'une information ciblée... Quand soudain : une erreur 404. La page est",
+      id: 101,
+      image: "https://f.hellowork.com/blogdumoderateur/2013/07/404-lego-550x316.jpg",
+      lang: "français",
+      level: "Intermédiaire",
+      slug: "top-20-des-meilleures-pages-derreur-404-bdm",
+      techs: ["Autre"],
+      title: "Top 20 des meilleures pages d'erreur 404 - BDM",
+      type: "article",
+      url: "https://www.blogdumoderateur.com/meilleures-pages-404/",
+      user_id: 82,
+      website: "Blogdumoderateur.com",
+
+    },
+    {
+      category: "Apprendre",
+      contributor: "Romain",
+      createdat: "2021-10-08T05:32:15.687Z",
+      description: "Tutorial pour PluXml pour modifier la page d'erreur 404 par défaut",
+      id: 103,
+      image: "https://pluxopolis.net/data/images/0045/capture01.png",
+      lang: "français",
+      level: "Débutant",
+      slug: "creer-un-page-d039-erreur-404-personalisee-pluxopolis",
+      techs: ["Autre"],
+      title: "Créer un page d&amp;#039;erreur 404 personalisée - Pluxopolis",
+      type: "article",
+      url: "https://pluxopolis.net/creer-un-page-d-erreur-404-personalisee.html",
+      user_id: 82,
+      website: "Pluxopolis.net",
     },
     {
       category: "Approfondir",
@@ -80,17 +104,17 @@ const ErrorPage = () => {
       url: "https://k-graphiste.com/actus/referencement/gerer-404/",
       user_id: 82,
       website: "K-graphiste.com",
-    }
+    },
   ];
 
   if (loading) return null;
 
   return (
     <div className="error-page">
-      <h1 className="error-page__title"></h1>
+      <h1 className="error-page__title">Lost in Terest ?</h1>
       <div className="error-page__cards">
           <Masonry
-            breakpointCols={breakpointsColumnsObj}
+            breakpointCols={3}
             className="masonry-grid"
             columnClassName="masonry-grid_column"
           >
