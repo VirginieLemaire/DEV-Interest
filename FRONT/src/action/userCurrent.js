@@ -126,3 +126,10 @@ export const userApiLogout = () => (
     type: USER_API_LOGOUT,
   }
 );
+
+export const GET_USER_WITH_TOKEN = 'GET_USER_WITH_TOKEN'
+export const getUserWithToken = () => (
+  {
+    type: GET_USER_WITH_TOKEN,
+  }
+);
