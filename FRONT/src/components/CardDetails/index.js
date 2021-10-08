@@ -1,14 +1,25 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaThermometerEmpty } from '@react-icons/all-files/fa/FaThermometerEmpty';
-import { FaThermometerHalf } from '@react-icons/all-files/fa/FaThermometerHalf';
-import { FaThermometerThreeQuarters } from '@react-icons/all-files/fa/FaThermometerThreeQuarters';
-import { FaThermometerFull } from '@react-icons/all-files/fa/FaThermometerFull';
+import ReactPlayer from 'react-player'
+
 import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
 import { MdLanguage } from '@react-icons/all-files/md/MdLanguage';
+
+import { DiJavascript1 } from '@react-icons/all-files/di/DiJavascript1';
+import { DiCss3 } from '@react-icons/all-files/di/DiCss3';
+import { DiMongodb } from '@react-icons/all-files/di/DiMongodb';
+import { DiPhp } from '@react-icons/all-files/di/DiPhp';
+import { DiHtml5 } from '@react-icons/all-files/di/DiHtml5';
+import { DiWordpress } from '@react-icons/all-files/di/DiWordpress';
+import { SiPostgresql } from '@react-icons/all-files/si/SiPostgresql';
+import { DiMarkdown } from '@react-icons/all-files/di/DiMarkdown';
+import { DiRuby } from '@react-icons/all-files/di/DiRuby';
+import { DiPython } from '@react-icons/all-files/di/DiPython';
+import { BsFillQuestionDiamondFill } from '@react-icons/all-files/bs/BsFillQuestionDiamondFill';
+
 import { getDomainName, formatDate } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
@@ -28,6 +39,27 @@ const CardDetails = ({ card }) => {
   const { displayUrl, darkMode } = useSelector((state) => state.displayOptions);
   const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
   const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
+
+  const levelIconsTable = {
+    débutant: 'reception-1',
+    intermédiaire: 'reception-2',
+    avancé: 'reception-3',
+    expert: 'reception-4',
+  };
+
+  const iconsTable = {
+    javascript: <DiJavascript1 />,
+    css: <DiCss3 />,
+    mongodb: <DiMongodb />,
+    php: <DiPhp />,
+    html5: <DiHtml5 />,
+    wordpress: <DiWordpress />,
+    postgresql: <SiPostgresql />,
+    markdown: <DiMarkdown />,
+    ruby: <DiRuby />,
+    python: <DiPython />,
+    autre: <BsFillQuestionDiamondFill />,
+  };
 
   const handleClick = () => {
     if (isLogged) {
@@ -66,48 +98,57 @@ const CardDetails = ({ card }) => {
             <p className="card-details__board__infos__contributor">Proposé par: <strong>{card.contributor}</strong></p>
             <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
-          <div className="card-details__board__infos__tags-section">
-            <div className="card-details__board__infos__tags-section__tags-container">
-              <div className="card-details__board__infos__tags-section__tags-container__icon">
-                {(card.level === 'Débutant') && (<FaThermometerEmpty />)}
-                {(card.level === 'Intermédiaire') && (<FaThermometerHalf />)}
-                {(card.level === 'Avancé') && (<FaThermometerThreeQuarters />)}
-                {(card.level === 'Expert') && (<FaThermometerFull />)}
+          <div className="card-details__board__infos__media_section">
+            <div className="card-details__board__infos__media_section__tags-section">
+              <div className="card-details__board__infos__media_section__tags-section__tags-container">
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__icon">
+                  <div><i className={`bi bi-${levelIconsTable[card.level.toLowerCase()]}`} /></div>
+                </div>
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__level">
+                  <Tag name={card.level.capitalize()} />
+                </div>
               </div>
-              <div className="card-details__board__infos__tags-section__tags-container__level">
-                <Tag name={card.level.capitalize()} />
+              <div className="card-details__board__infos__media_section__tags-section__tags-container">
+                <div className="card-details__board__infos__tags-section__tags-container__icon">
+                  <CgScreen />
+                </div>
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__techs-container">
+                  {
+                    card.techs.map((tech) => (
+                      <Tag id={tech} name={tech.capitalize()} />
+                    ))
+                  }
+                </div>
+              </div>
+              <div className="card-details__board__infos__media_section__tags-section__tags-container">
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__icon">
+                  <FaTags />
+                </div>
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__category">
+                  <Tag name={card.category.capitalize()} />
+                </div>
+              </div>
+              <div className="card-details__board__infos__media_section__tags-section__tags-container">
+                <div className="card-details__board__infos__tags-section__tags-container__icon">
+                  <MdPermMedia />
+                </div>
+                <div className="card-details__board__infos__media_section__tags-section__tags-container__type">
+                  <Tag name={card.type.capitalize()} />
+                </div>
               </div>
             </div>
-            <div className="card-details__board__infos__tags-section__tags-container">
-              <div className="card-details__board__infos__tags-section__tags-container__icon">
-                <CgScreen />
-              </div>
-              <div className="card-details__board__infos__tags-section__tags-container__techs-container">
-                {
-                  card.techs.map((tech) => (
-                    <Tag id={tech} name={tech.capitalize()} />
-                  ))
-                }
-              </div>
-            </div>
-            <div className="card-details__board__infos__tags-section__tags-container">
-              <div className="card-details__board__infos__tags-section__tags-container__icon">
-                <FaTags />
-              </div>
-              <div className="card-details__board__infos__tags-section__tags-container__category">
-                <Tag name={card.category.capitalize()} />
-              </div>
-            </div>
-            <div className="card-details__board__infos__tags-section__tags-container">
-              <div className="card-details__board__infos__tags-section__tags-container__icon">
-                <MdPermMedia />
-              </div>
-              <div className="card-details__board__infos__tags-section__tags-container__type">
-                <Tag name={card.type.capitalize()} />
-              </div>
+            <div className="card-details__board__infos__media_section__media">
+              {card.type === 'vidéo' && 
+                <ReactPlayer 
+                  url={card.url} 
+                  width='100%'
+                  height='auto'
+                  controls={true}
+                />
+              }
+              {card.type === 'image' && <img className="card-details__board__infos__media_section__media__image" src={card.image} alt={card.title}/>}
             </div>
           </div>
-
           <div className="card-details__board__infos__buttons-container">
             <Link to={{ pathname: card.url }} target="_blank">
               <button
