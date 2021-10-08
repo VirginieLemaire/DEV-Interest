@@ -82,7 +82,8 @@ const CardDetails = ({ card }) => {
   return (
     <div className="card-details">
       <div className={darkMode ? 'card-details__board card-details__board--dark' : 'card-details__board'}>
-        <img className="card-details__board__image" src={card.image} alt={card.title} />
+        {card.type === 'vidéo' &&  <ReactPlayer url={card.url} width='100%' height='auto' controls={true}/>}
+        {card.type !== 'vidéo' && <img className="card-details__board__image" src={card.image} alt={card.title} />}
         <div className="card-details__board__infos">
           <div className="card-details__board__infos__title-container">
             <h1 className="card-details__board__infos__title-container__title"><strong>{card.title}</strong></h1>
@@ -138,17 +139,6 @@ const CardDetails = ({ card }) => {
                   <Tag name={card.type.capitalize()} />
                 </div>
               </div>
-            </div>
-            <div className="card-details__board__infos__media_section__media">
-              {card.type === 'vidéo' && 
-                <ReactPlayer 
-                  url={card.url} 
-                  width='100%'
-                  height='auto'
-                  controls={true}
-                />
-              }
-              {card.type === 'image' && <img className="card-details__board__infos__media_section__media__image" src={card.image} alt={card.title}/>}
             </div>
           </div>
           <div className="card-details__board__infos__buttons-container">
