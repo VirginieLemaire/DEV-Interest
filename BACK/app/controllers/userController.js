@@ -88,6 +88,7 @@ const userController = {
             let userDatas = {
                 id : request.params.id,
             };
+            console.log("voici ce qui envoyé dans le body par le client", request.body);
             //boucler sur les propriétés de request.body pour ne mettre à jour que celles qui ont été envoyées
             for (const key in request.body) {
                 userDatas[key] = request.body[key]
