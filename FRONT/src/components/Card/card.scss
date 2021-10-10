@@ -166,3 +166,17 @@
 .hidden{
   display: none;
 }
+
+@media screen and (max-width: 600px){
+  .card{
+    width: 100vw;
+    border-radius:0;
+    &__image{
+      border-radius: 0;
+      // height: auto;
+      // min-height: 350px;
+      width: 100vw;
+      object-fit: cover;
+    }
+  }
+}

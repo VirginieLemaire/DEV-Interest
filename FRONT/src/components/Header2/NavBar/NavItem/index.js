@@ -10,21 +10,23 @@ const usePathname = () => {
 };
 
 const NavItem = ({
-  to, icon, text, onClick, iconActive, pathActive,
+  to, icon, text, onClick, iconActive, pathActive, id,classText,
 }) => {
   const pathname = usePathname();
 
   return (
-    <li className="nav-item">
+    <li className="nav-item" id={id}>
       <Link to={to} className={pathActive.find((path) => path === pathname) ? 'icon-active' : 'icon-button'} onClick={onClick}>
         {pathActive.find((path) => path === pathname) ? iconActive : icon}
       </Link>
-      {text}
+      <p className={classText}>{text}</p>
     </li>
   );
 };
 
 NavItem.propTypes = {
+  classText: PropTypes.string,
+  id: PropTypes.string,
   to: PropTypes.string,
   text: PropTypes.node,
   icon: PropTypes.node,
@@ -34,6 +36,8 @@ NavItem.propTypes = {
 };
 
 NavItem.defaultProps = {
+  classText: '',
+  id: '',
   text: null,
   icon: null,
   iconActive: null,

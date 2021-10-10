@@ -7,11 +7,14 @@ import { RiUserHeartLine } from '@react-icons/all-files/ri/RiUserHeartLine';
 import { RiUserHeartFill } from '@react-icons/all-files/ri/RiUserHeartFill';
 import { GiTechnoHeart } from '@react-icons/all-files/gi/GiTechnoHeart';
 import { BsFillBookmarksFill } from '@react-icons/all-files/bs/BsFillBookmarksFill';
+import { FiSearch } from '@react-icons/all-files/fi/FiSearch';
 
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { darkModeToggle, showAddCardModal, showConnexionModal } from '../../action/displayOptions';
+import {
+  darkModeToggle, showAddCardModal, showConnexionModal, showSearchModal,
+} from '../../action/displayOptions';
 
 import Navbar from './NavBar';
 import NavItem from './NavBar/NavItem';
@@ -41,7 +44,7 @@ const Header2 = () => {
           <div className="header2__home-link--DEV">DEV</div><div className="header2__home-link--heart"><GiTechnoHeart /></div><div className="header2__home-link--interest">Interest</div>
         </Link>
       </div>
-      <div className="header__search-bar-area">
+      <div className="header__search-bar-area" id="header-searchbar">
         {
          pathname !== '/' && (
          <SearchBar
@@ -55,6 +58,13 @@ const Header2 = () => {
       </div>
       { isLogged && (
       <Navbar>
+        <NavItem
+          icon={<FiSearch />}
+          iconActive={<FiSearch />}
+          onClick={() => dispatch(showSearchModal())}
+          pathActive={['#']}
+          id="header-search-button"
+        />
         <NavItem
           icon={<BsPlusSquare />}
           iconActive={<BsPlusSquareFill />}
@@ -73,6 +83,7 @@ const Header2 = () => {
           text={<p className={darkMode ? 'icon-text--dark' : 'icon-text'}>{username}</p>}
           to={`/${username.toLowerCase()}/account`}
           pathActive={[`/${username.toLowerCase()}/account`, `/${username.toLowerCase()}/account/update`]}
+          classText="header-button-text"
         />
         <NavItemDrop
           icon={<BsFillCaretDownFill />}
@@ -83,13 +94,22 @@ const Header2 = () => {
       )}
       { !isLogged && (
         <Navbar>
+          <NavItem
+            icon={<FiSearch />}
+            iconActive={<FiSearch />}
+            onClick={() => dispatch(showSearchModal())}
+            pathActive={['#']}
+            id="header-search-button"
+          />
           <NavItemText
             text="Se connecter"
             onClick={() => dispatch(showConnexionModal())}
           />
         </Navbar>
       )}
-      <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
+      <div className="darkmode-button">
+        <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
+      </div>
     </div>
   );
 };

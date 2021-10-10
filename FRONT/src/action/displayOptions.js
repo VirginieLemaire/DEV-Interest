@@ -143,3 +143,10 @@ export const deleteCardSuccessModal = () => (
     type: DELETE_CARD_SUCCESS_MODAL,
   }
 );
+
+export const SHOW_SEARCH_MODAL = 'SHOW_SEARCH_MODAL';
+export const showSearchModal = () => (
+  {
+    type: SHOW_SEARCH_MODAL,
+  }
+);
