@@ -73,15 +73,24 @@ strong {
         justify-content: space-between;
       }
       
+      &__techs-container {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        
+        &__tech {
+          display: flex;
+          gap: 1rem;
+          &__icon{
+            transform: scale(2);
+          }
+        }
+      }
       &__tags-container {
         display: flex;
+        justify-content: space-evenly;
         gap: 1rem;
 
-        &__techs-container {
-          display: flex;
-          flex-direction: row;
-          gap: 1rem;
-        }
 
         &__icon {
           transform: scale(1.5);

@@ -102,16 +102,15 @@ const CardDetails = ({ card }) => {
             <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
           <div className="card-details__board__infos__techs-container">
-              <div className="card-details__board__infos__techs-container__icon">
-                <CgScreen />
-              </div>
-              <div className="card-details__board__infos____techs-container__tags">
-                {
-                  card.techs.map((tech) => (
-                    <Tag id={tech} name={tech.capitalize()} />
-                  ))
-                }
-               </div>
+            <p>Technos: </p>
+            {
+              card.techs.map((tech) => (
+                <div className="card-details__board__infos__techs-container__tech">
+                  <aside key={`${card.id}-${tech}`} className="card-details__board__infos__techs-container__tech__icon">{iconsTable[tech.toLowerCase()]}</aside>
+                  <Tag id={tech} name={tech.capitalize()} />
+                </div>
+              ))
+            }
           </div>
           <div className="card-details__board__infos__tags-container">
             <div className="card-details__board__infos__tags-container__icon">
