@@ -37,6 +37,7 @@ import DeleteCardModal from '../DeleteCardModal';
 import DeleteCardSuccessModal from '../Modals/DeleteCardSuccessModal';
 import ErrorPage from '../404';
 import { getUserWithToken, toggleLogged } from '../../action/userCurrent';
+import Home2 from '../Home2';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -72,7 +73,7 @@ const App = () => {
           <Header2 />
           <HeaderOffset />
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact component={Home2} />
             <Route path="/search" exact component={SearchResults} />
             {
               mergedCards.map(

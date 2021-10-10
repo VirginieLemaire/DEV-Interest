@@ -610,12 +610,13 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('REUSSI, la carte a bien été mise à jour ! :', response.data);
+          store.dispatch(toggleModal());
           store.dispatch(updateCardSuccessModal());
         },
       ).catch(
         (error) => {
           console.log('ERREUR la carte n\'a pas pu être mise à jour: ', error.response);
-          // store.dispatch(updateCardSuccessModal());
+          alert('ca n\'a pas marché');
         },
       );
       next(action);
