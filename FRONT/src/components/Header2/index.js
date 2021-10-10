@@ -64,8 +64,8 @@ const Header2 = () => {
         <NavItem
           icon={<BsBookmarks />}
           iconActive={<BsFillBookmarksFill />}
-          to={`/${username.toLowerCase()}/${id}/bookmarks`}
-          pathActive={[`/${username.toLowerCase()}/${id}/bookmarks`]}
+          to={`/${username.toLowerCase()}/${id}/bookmarks/favorites`}
+          pathActive={[`/${username.toLowerCase()}/${id}/bookmarks/favorites`]}
         />
         <NavItem
           icon={<RiUserHeartLine />}
