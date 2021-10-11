@@ -3,7 +3,7 @@
 .add-card{
   display: flex;
   max-width: 1080px;
-  margin: auto;
+  margin: 2rem auto;
   gap: 2rem;
   justify-content: center;
   align-items: flex-start;
@@ -98,6 +98,7 @@
       margin-top: 2rem;
 
       display: flex;
+      justify-content: center;
       align-items: center;
       font-size: 0.8rem;
       &--dark{
@@ -121,8 +122,14 @@
       }
     }
   }
-  }
 
+}
+
+.add-card__input-certified{
+  &--dark{
+    color: vars.$white-color;
+  }
+}
 
 #field-newCardDescription{
   height: 10rem;
