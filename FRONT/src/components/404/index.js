@@ -1,13 +1,15 @@
 import Card from '../Card';
 import './404.scss';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Masonry from 'react-masonry-css';
+import Button from '../GenericComponents/Button';
 import AppLoader from '../GenericComponents/AppLoader';
 
 const ErrorPage = () => {
 
   const { loading } = useSelector((state) => state.displayOptions);
-
+  const history = useHistory();
   const fakeCards = [
     {
       id:1,
@@ -111,7 +113,14 @@ const ErrorPage = () => {
 
   return (
     <div className="error-page">
-      <h1 className="error-page__title">Lost in Terest ?</h1>
+      <h1 className="error-page__title">Oups, cette page n'existe pas ...</h1>
+      <Button
+        color
+        styling="full"
+        handleClick={() => history.push('/')}
+        content="Retour à l'accueil"
+      />
+      <p className="error-page__text">Nous pouvons tout de même de proposer quelques lectures sur la 404 ...</p>
       <div className="error-page__cards">
           <Masonry
             breakpointCols={3}
