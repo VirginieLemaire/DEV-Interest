@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Select from 'react-select';
@@ -93,21 +94,32 @@ const UpdateCard = () => {
 
   console.log('l\'id de la carte: ', id);
 
-
   const handleSubmitNewCard = (e) => {
     if (certification) {
       e.preventDefault();
-      dispatch(toggleModal());
       // dispatch(updateCardSuccessModal());
       dispatch(updateCard());
       history.push(`/${username}/${userId}/bookmarks`);
     }
   };
 
+  // const [newTechs, setnewTechs] = useState(techs.map((tech) => techValues.find((techValue) => techValue.value === tech)))
+
+  // useEffect({
+  //   setnewTechs(techs.map((tech) => techValues.find((techValue) => techValue.value === tech)))
+  // }, [techs])
+
   // const newTechs = techs.map((tech) => techValues.find((techValue) => techValue.value === tech));
 
   // console.log(newTechs);
 
+  let newTechs;
+
+  const setNewTechs = async () => {
+    newTechs = await techs.map((tech) => techValues.find((techValue) => techValue.value === tech));
+  };
+
+  setNewTechs();
 
   if (loading) return <Loader />;
 
@@ -178,6 +190,7 @@ const UpdateCard = () => {
             theme={customTheme}
           />
           <Select
+            value={newTechs}
             placeholder="Technologies"
             closeMenuOnSelect={false}
             components={animatedComponents}

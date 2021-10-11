@@ -33,6 +33,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         [action.fieldName]: [action.value.map((element) => element.value)],
+        // [1,2] [{value: 1, label: css}, {}]
       };
     case CHANGE_UPDATE_CARD_CERTIFICATION:
       return {

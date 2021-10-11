@@ -577,7 +577,7 @@ export default (store) => (next) => (action) => {
       break;
     }
     case UPDATE_CARD: {
-      // const userId = store.getState().userCurrent.id;
+      const userId = store.getState().userCurrent.id;
 
       const {
         id, title, slug, website, description, url, image, level, lang, type, category, techs,
@@ -590,7 +590,7 @@ export default (store) => (next) => (action) => {
         description: description,
         url_image: image,
         url: url,
-        user_id: id,
+        user_id: userId,
         level_id: level,
         language_id: lang,
         type_id: type,
@@ -600,7 +600,7 @@ export default (store) => (next) => (action) => {
 
       console.log('----------------------------------------------------------');
       console.log('je souhaite mettre à jour les données d\'une carte avec les infos suivantes: ', updateCard);
-      console.log(`Route empreintée en PUT : /contributor/cards/${action.id}`);
+      console.log(`Route empreintée en PUT : /contributor/cards/${id}`);
 
       axiosInstance.put(
         `/contributor/cards/${id}`,
@@ -610,12 +610,13 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('REUSSI, la carte a bien été mise à jour ! :', response.data);
+          store.dispatch(toggleModal());
           store.dispatch(updateCardSuccessModal());
         },
       ).catch(
         (error) => {
           console.log('ERREUR la carte n\'a pas pu être mise à jour: ', error.response);
-          // store.dispatch(updateCardSuccessModal());
+          alert('ca n\'a pas marché');
         },
       );
       next(action);
