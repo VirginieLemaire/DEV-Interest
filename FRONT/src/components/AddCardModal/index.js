@@ -58,7 +58,7 @@ const AddCardModal = () => {
                 <GrFormClose className="close-icon" />
               </div>
             </div>
-            <h4 className="add-card-modal__title">Partage une nouvelle ressource</h4>
+            <h4 className="add-card-modal__title">Enregistrement d'une nouvelle ressource</h4>
           </div>
           {
               (!isLogged) && (
@@ -66,7 +66,7 @@ const AddCardModal = () => {
                   <div
                     className="add-card-modal__connexion-warning"
                   >
-                    Il faut être connecté.e pour pouvoir ajouter ou mettre aux favori une ressource !
+                    Il faut être connecté.e pour pouvoir ajouter une ressource ou la mettre en favoris!
                   </div>
                   <div className="add-card-modal__footer">
 
