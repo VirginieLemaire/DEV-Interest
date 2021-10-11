@@ -92,7 +92,7 @@ const About = () => {
                   ),
                 )
               }
-          </Masonry>
+        </Masonry>
       </div>
     </div>
   );
