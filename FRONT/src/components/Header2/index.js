@@ -92,6 +92,7 @@ const Header2 = () => {
           to={`/${username.toLowerCase()}/account`}
           pathActive={[`/${username.toLowerCase()}/account`, `/${username.toLowerCase()}/account/update`]}
           classText="header-button-text"
+          id="header-account-button"
         />
         <NavItemDrop
           icon={<BsFillCaretDownFill />}

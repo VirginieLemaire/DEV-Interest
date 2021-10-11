@@ -90,6 +90,9 @@
     height: 500px;
     margin: 1rem auto;
     color: vars.$text-color;
+    &--dark{
+      color: vars.$white-color;
+    }
   
     &__actions-container{
       width: 100%;

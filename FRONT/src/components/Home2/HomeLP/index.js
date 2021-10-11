@@ -36,7 +36,7 @@ const HomeLP = () => {
             />
           </div>
           <p className="home-lp__or">ou</p>
-          <div className="home-lp__button" onClick={() => dispatch(showAddCardModal())}>Propose une nouvelle ressource</div>
+          <div className="home-lp__button" onClick={() => dispatch(showAddCardModal())}>Partage une nouvelle ressource</div>
         </div>
       </div>
       <div className="home-lp__slider-container">
