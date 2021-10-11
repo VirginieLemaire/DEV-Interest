@@ -686,8 +686,8 @@ export default (store) => (next) => (action) => {
       break;
     }
     case USER_API_LOGOUT: {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('userRefreshToken');
       store.dispatch(userLogout());
       next(action);
       break;
