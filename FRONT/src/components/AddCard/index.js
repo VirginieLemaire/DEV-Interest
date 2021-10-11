@@ -6,6 +6,7 @@ import makeAnimated from 'react-select/animated';
 import {
   addCard, changeNewCardCertification, changeNewCardField, changeNewCardTechs,
 } from '../../action/cardNew';
+import { getUserWithToken } from '../../action/userCurrent';
 
 import { slugify } from '../../selectors/cards';
 import { capitalizeFirstLetter } from '../../selectors/utils';
@@ -94,6 +95,7 @@ const AddCard = () => {
       e.preventDefault();
       dispatch(addCard());
       history.push('/');
+      dispatch(getUserWithToken());
     }
   };
 
