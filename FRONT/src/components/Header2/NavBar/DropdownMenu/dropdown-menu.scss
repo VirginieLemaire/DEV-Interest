@@ -27,11 +27,23 @@
 
 .menu {
   width: 100%;
+
   &--dark{
     background-color: vars.$dark-color;
     & p {
       color: vars.$white-color;
     }
+  }
+}
+
+.dark-mode-toggle-dd{
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  &--dark{
+    color: vars.$white-color;
   }
 }
 
@@ -54,3 +66,12 @@
   transition: all vars.$speed ease;
 }
 
+@media screen and (max-width: 600px) {
+  .dark-mode-toggle-dd{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+}
