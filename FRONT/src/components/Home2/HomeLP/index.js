@@ -18,7 +18,7 @@ const HomeLP = () => {
         { isLogged && (
           <div>
             <h2 className="home-lp__title"><br />Hello <span className="home-lp__title-devint">{capitalizeFirstLetter(username)}</span> !<br /> Qu'est ce que l'on fait aujourd'hui ?</h2>
-            <aside className="home-lp__subtitle"> Part à la découverte de nouvelles ressources pour être un développeur toujours à la pointe ou partage tes bons plans à la communauté</aside>
+            <aside className="home-lp__subtitle"> Pars à la découverte de nouvelles ressources pour être un développeur toujours à la pointe ou partage tes bons plans à la communauté</aside>
           </div>
         )}
         { !isLogged && (
