@@ -1,7 +1,7 @@
 @use '../../styles/vars';
 
 .header2{
-  z-index: 1;
+  z-index: 1000;
   position: sticky;
   top: 0;
   display: flex;
@@ -11,7 +11,7 @@
   align-items: center;
   padding: 0 2rem ;
   gap: 2rem;
-  width: 100vw;
+  width: 100%;
 
   &--dark{
     background-color: vars.$dark-color;
@@ -69,7 +69,7 @@
  
 @media screen and (max-width: 600px) {
     .header2{
-      z-index: 1;
+      z-index: 1000;
       position: sticky;
       top: 0;
       display: flex;
@@ -140,6 +140,10 @@
     }
     
     .header-button-text{
+      display: none;
+    }
+
+    #header-account-button{
       display: none;
     }
   }

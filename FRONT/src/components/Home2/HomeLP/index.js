@@ -18,12 +18,12 @@ const HomeLP = () => {
         { isLogged && (
           <div>
             <h2 className="home-lp__title"><br />Hello <span className="home-lp__title-devint">{capitalizeFirstLetter(username)}</span> !<br /> Qu'est ce que l'on fait aujourd'hui ?</h2>
-            <aside className="home-lp__subtitle"> Part à la découverte de nouvelles ressources pour être un développeur toujours à la pointe ou partage tes bons plans à la communauté</aside>
+            <aside className="home-lp__subtitle"> Pars à la découverte de nouvelles ressources pour être un développeur toujours à la pointe ou partage tes bons plans à la communauté</aside>
           </div>
         )}
         { !isLogged && (
           <div>
-            <h2 className="home-lp__title"><span className="home-lp__title-devint">DEV Interest</span><br /> Tout ce qui tient à coeur <br /> aux développeurs</h2>
+            <h2 className="home-lp__title"><span className="home-lp__title-devint">DEV Interest</span><br /> Tout ce que les développeurs <br /> ont à coeur !</h2>
             <aside className="home-lp__subtitle"> Découvre, recherche, sauvegarde ou partage une multitude de ressources autour du développement informatique pour être toujours à la page!</aside>
           </div>
         )}
@@ -36,7 +36,7 @@ const HomeLP = () => {
             />
           </div>
           <p className="home-lp__or">ou</p>
-          <div className="home-lp__button" onClick={() => dispatch(showAddCardModal())}>Propose une nouvelle ressource</div>
+          <div className="home-lp__button" onClick={() => dispatch(showAddCardModal())}>Partage une nouvelle ressource</div>
         </div>
       </div>
       <div className="home-lp__slider-container">

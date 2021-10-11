@@ -76,7 +76,7 @@ const DeleteCardModal = () => {
                 submit
                 styling="full"
                 handleClick={handleNoConnexionClick}
-                content="Rester"
+                content="Laisser"
                 color
               />
             </div>

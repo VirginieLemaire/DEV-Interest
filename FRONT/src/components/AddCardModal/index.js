@@ -66,7 +66,7 @@ const AddCardModal = () => {
                   <div
                     className="add-card-modal__connexion-warning"
                   >
-                    Il faut être connecter pour pouvoir ajouter ou mettre aux favori une ressource !
+                    Il faut être connecté.e pour pouvoir ajouter ou mettre aux favori une ressource !
                   </div>
                   <div className="add-card-modal__footer">
 

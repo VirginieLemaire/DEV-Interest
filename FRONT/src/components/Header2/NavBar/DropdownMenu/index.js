@@ -13,7 +13,7 @@ const DropdownMenu = () => {
 
   const { darkMode } = useSelector((state) => state.displayOptions);
 
-  const { username } = useSelector((state) => state.userCurrent);
+  const { username, id } = useSelector((state) => state.userCurrent);
 
   return (
     <div className={darkMode ? 'dropdown dropdown--dark' : 'dropdown'}>

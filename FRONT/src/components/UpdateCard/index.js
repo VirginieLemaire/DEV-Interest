@@ -232,7 +232,7 @@ const UpdateCard = () => {
             onChange={(value) => dispatch(changeUpdateCardField(value.value, 'lang'))}
             theme={customTheme}
           />
-          <label className="add-card__input-certified" htmlFor="certify-add-card">
+          <label className={darkMode ? 'add-card__input-certified add-card__input-certified--dark' : 'add-card__input-certified'} htmlFor="certify-add-card">
             <input
               type="checkbox"
               id="certify-add-card"

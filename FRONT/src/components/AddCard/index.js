@@ -6,6 +6,7 @@ import makeAnimated from 'react-select/animated';
 import {
   addCard, changeNewCardCertification, changeNewCardField, changeNewCardTechs,
 } from '../../action/cardNew';
+import { getUserWithToken, toggleLogged } from '../../action/userCurrent';
 
 import { slugify } from '../../selectors/cards';
 import { capitalizeFirstLetter } from '../../selectors/utils';
@@ -95,13 +96,15 @@ const AddCard = () => {
       e.preventDefault();
       dispatch(addCard());
       history.push('/');
+      dispatch(getUserWithToken());
+      dispatch(toggleLogged());
     }
   };
 
   if (loading) return <Loader />;
 
   return (
-    <div className={darkMode ? 'add-card add-card--dark' : 'add-card'}>
+    <div className="add-card">
       <form className="add-card__form" onSubmit={handleSubmitNewCard}>
         <h2 className={darkMode ? 'add-card__form__title add-card__form__title--dark' : 'add-card__form__title'}>Ajout d'une nouvelle ressource</h2>
         <Field
@@ -195,7 +198,9 @@ const AddCard = () => {
           onChange={(value) => dispatch(changeNewCardField(value.value, 'lang'))}
           theme={customTheme}
         />
-        <label className="add-card__form__input-certified" htmlFor="certify-add-card">
+
+        <label className={darkMode ? 'add-card__input-certified add-card__input-certified--dark' : 'add-card__input-certified'} htmlFor="certify-add-card">
+
           <input
             type="checkbox"
             id="certify-add-card"

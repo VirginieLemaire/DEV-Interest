@@ -8,9 +8,7 @@
   justify-content: center;
   align-items: flex-start;
 
-  &--dark{
-    color: vars.$white-color;
-  }
+
 
   &__form{
     display: flex;
@@ -95,7 +93,14 @@
   
     &__button{
       margin-top: 2rem;
-      text-align: center;
+
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      &--dark{
+        color: vars.$white-color;
+      }
+
     }
   }
   }
@@ -107,4 +112,10 @@
 
 #field-title{
   
+}
+
+@media screen and (max-width: 600px) {
+  .add-card{
+    padding: 1rem;
+  }
 }
