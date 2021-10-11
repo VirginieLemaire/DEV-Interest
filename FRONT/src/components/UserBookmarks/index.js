@@ -1,7 +1,7 @@
 import './user-bookmarks.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import BookmarkedCards from '../BookmarkedCards';
 import Contributions from '../Contributions';
 import { fetchBookmarkedCards, fetchContributions, updateThumb } from '../../action/userCurrent';
@@ -9,6 +9,10 @@ import Loader from '../GenericComponents/Loader';
 
 const UserBookmarks = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const pathname = location.pathname;
+  const getActualThumb = pathname.split("/").splice(-1);
+  const actualThumb = getActualThumb[0];
 
   const { darkMode, loading } = useSelector((state) => state.displayOptions);
 
@@ -33,16 +37,16 @@ const UserBookmarks = () => {
         </div>
       </div>
       <div className="user-bookmarks__thumbs">
-        <Link to={`/${username.toLowerCase()}/${id}/bookmarks/favorites`} className={thumb !== 'favorites' ? `user-bookmarks__thumbs__thumb${darkMode ? '--dark' : ''}` : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('favorites'))}>
+        <Link to={`/${username.toLowerCase()}/${id}/bookmarks/favorites`} className={actualThumb === 'favorites' ? `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}` : `user-bookmarks__thumbs__thumb${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('favorites'))}>
           {`${bookmarkedCards.length > 1 ? 'Favoris' : 'Favori'} (${bookmarkedCards.length})`}
         </Link>
-        <Link to={`/${username.toLowerCase()}/${id}/bookmarks/contributions`} className={thumb !== 'contributions' ? `user-bookmarks__thumbs__thumb${darkMode ? '--dark' : ''}` : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('contributions'))}>
+        <Link to={`/${username.toLowerCase()}/${id}/bookmarks/contributions`} className={actualThumb === 'contributions' ? `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}` : `user-bookmarks__thumbs__thumb${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('contributions'))}>
           {`${contributions.length > 1 ? 'Contributions' : 'Contribution'} (${contributions.length})`}
         </Link>
       </div>
       <div className="user-bookmarks__bookmarks-container">
-        { thumb === 'favorites' && <BookmarkedCards /> }
-        { thumb === 'contributions' && <Contributions />}
+        { actualThumb === 'favorites' && <BookmarkedCards /> }
+        { actualThumb === 'contributions' && <Contributions />}
       </div>
     </div>
   );

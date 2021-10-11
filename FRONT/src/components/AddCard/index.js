@@ -16,6 +16,7 @@ import Loader from '../GenericComponents/Loader';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import TextareaField from '../GenericComponents/TextareaField';
 import UrlField from '../GenericComponents/UrlField';
+import CardPreview from '../CardPreview';
 
 import './add-card.scss';
 
@@ -28,7 +29,7 @@ const AddCard = () => {
   const { loading, darkMode } = useSelector((state) => state.displayOptions);
 
   const {
-    title, description, url, image, website, certification,
+    title, description, url, image, website, certification, techs, level
   } = useSelector((state) => state.cardNew);
 
   const customTheme = (theme) => ({
@@ -105,9 +106,9 @@ const AddCard = () => {
   return (
     <div className="add-card">
       <form className="add-card__form" onSubmit={handleSubmitNewCard}>
-        <h2 className={darkMode ? 'add-card__title add-card__title--dark' : 'add-card__title'}>Ajout d'une nouvelle ressource</h2>
+        <h2 className={darkMode ? 'add-card__form__title add-card__form__title--dark' : 'add-card__form__title'}>Ajout d'une nouvelle ressource</h2>
         <Field
-          className="add-card__input-title"
+          className="add-card__form__input-title"
           value={title}
           type="text"
           name="title"
@@ -118,7 +119,7 @@ const AddCard = () => {
           maxlength="120"
         />
         <TextareaField
-          className="add-card__input-description"
+          className="add-card__form__input-description"
           value={description}
           type="textarea"
           name="description"
@@ -129,7 +130,7 @@ const AddCard = () => {
           maxLength="500"
         />
         <Field
-          className="add-card__input-website"
+          className="add-card__form__input-website"
           value={website}
           type="text"
           name="website"
@@ -140,7 +141,7 @@ const AddCard = () => {
           readOnly
         />
         <UrlField
-          className="add-card__input-url"
+          className="add-card__form__input-url"
           value={url}
           name="urlSource"
           placeholder="Lien Url de la ressource"
@@ -149,7 +150,7 @@ const AddCard = () => {
           readOnly
         />
         <UrlField
-          className="add-card__input-image"
+          className="add-card__form__input-image"
           value={image}
           name="urlImage"
           placeholder="Lien Url de l'image"
@@ -197,7 +198,9 @@ const AddCard = () => {
           onChange={(value) => dispatch(changeNewCardField(value.value, 'lang'))}
           theme={customTheme}
         />
+
         <label className={darkMode ? 'add-card__input-certified add-card__input-certified--dark' : 'add-card__input-certified'} htmlFor="certify-add-card">
+
           <input
             type="checkbox"
             id="certify-add-card"
@@ -208,7 +211,7 @@ const AddCard = () => {
           />
           Je certifie que la ressource partagée respecte les conditions d'utilisations
         </label>
-        <div className="add-card__button">
+        <div className="add-card__form__button">
           <SubmitButton
             color
             styling="full"
@@ -216,6 +219,11 @@ const AddCard = () => {
           />
         </div>
       </form>
+      {(title || image || website) && 
+        <div className="add-card__card-preview">
+          <CardPreview title={title} image={image} website={website}/>
+        </div>
+      }
     </div>
   );
 };
