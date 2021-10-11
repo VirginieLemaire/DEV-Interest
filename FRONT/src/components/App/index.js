@@ -75,7 +75,6 @@ const App = () => {
         <div className="content-wrap">
           <ScrollTop />
           <Header2 />
-          <HeaderOffset />
           <Switch>
             <Route path="/" exact component={Home2} />
             <Route path="/search" exact component={SearchResults} />

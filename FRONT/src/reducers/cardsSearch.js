@@ -1,6 +1,8 @@
+import { faAllergies } from '@fortawesome/free-solid-svg-icons';
 import {
   CHANGE_SEARCH_FIELD, NEXT_PAGE, RESET_CARDS_MINI,
-  SAVE_CARDS_MINI_SEARCH, SAVE_CARDS_SEARCH, SAVE_MORE_CARDS,
+  RESET_FILTERS_TO_ALL,
+  SAVE_CARDS_MINI_SEARCH, SAVE_CARDS_SEARCH, SAVE_MORE_CARDS, SET_CURRENT_SEARCH, SET_FILTER,
 } from '../action/cardsSearch';
 
 export const initialState = {
@@ -17,6 +19,11 @@ export const initialState = {
   category: '',
   page: 1,
   size: 15,
+  techFilter: 'all',
+  categoryFilter: 'all',
+  levelFilter: 'all',
+  typeFilter: 'all',
+  langFilter: 'all',
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -26,7 +33,6 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         cards: action.data,
         page: 1,
-        currentSearch: state.searchQuery,
         searchQuery: '',
         searchCount: action.count,
         cardsMini: [],
@@ -58,6 +64,25 @@ const reducer = (state = initialState, action = {}) => {
         cardsMini: [],
         searchQuery: '',
         searchCountMini: '',
+      };
+    case RESET_FILTERS_TO_ALL:
+      return {
+        ...state,
+        techFilter: 'all',
+        categoryFilter: 'all',
+        levelFilter: 'all',
+        typeFilter: 'all',
+        langFilter: 'all',
+      };
+    case SET_FILTER:
+      return {
+        ...state,
+        [action.fieldName]: action.value,
+      };
+    case SET_CURRENT_SEARCH:
+      return {
+        ...state,
+        currentSearch: action.value,
       };
     default:
       return state;

@@ -99,7 +99,7 @@ const UpdateCard = () => {
       e.preventDefault();
       // dispatch(updateCardSuccessModal());
       dispatch(updateCard());
-      history.push(`/${username}/${userId}/bookmarks`);
+      history.push(`/${username}/${userId}/bookmarks/contributions`);
     }
   };
 

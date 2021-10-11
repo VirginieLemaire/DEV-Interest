@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './search-bar.scss';
 import {
-  changeSearchField, fetchCardsMiniSearch, fetchCardsSearch, resetCardsMini, resetSearchQuery,
+  changeSearchField, fetchCardsMiniSearch, fetchCardsSearch, resetCardsMini, resetFiltersToAll, resetSearchQuery,
 } from '../../../action/cardsSearch';
 import { setSearchModal } from '../../../action/displayOptions';
 
@@ -29,6 +29,7 @@ const SearchBar = ({
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     history.push('/search');
+    dispatch(resetFiltersToAll());
     dispatch(fetchCardsSearch());
     dispatch(resetCardsMini());
     dispatch(setSearchModal(false));
@@ -60,7 +61,7 @@ const SearchBar = ({
           />
         </form>
 
-        { ( cardsMini.length > 0 || searchQuery !== '') && (
+        { (searchQuery !== '') && (
         <div className={`search-bar__mini-results ${cardsMini.length > 0 ? 'show' : 'hide'}`}>
           {
             cardsMini.map(

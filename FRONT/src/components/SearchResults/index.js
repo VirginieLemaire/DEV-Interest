@@ -8,6 +8,7 @@ import './search-results.scss';
 import Card from '../Card';
 import AppLoader from '../GenericComponents/AppLoader';
 import Loader from '../GenericComponents/Loader';
+import SearchFilters from '../SearchFilters';
 
 const SearchResults = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const SearchResults = () => {
 
   return (
     <div className="search-container">
+      <SearchFilters />
       <div className={darkMode ? 'search-counter search-counter--dark' : 'search-counter'}> {searchCount > 0 ? `Il y a  ${searchCount} résultats` : 'Aucun résultat'}</div>
 
       <div className="search-results">
