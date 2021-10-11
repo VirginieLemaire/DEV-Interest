@@ -46,6 +46,7 @@ const SearchFilters = () => {
         <select className={techFilter !== 'all' ? 'search-filter__select selected-filter' : 'search-filter__select'} name="tech" id="tech-filter" onChange={handleTechFilterChange} value={techFilter}>
           <option className="search-filter__option search-filter__option--default" value="all">Technologie</option>
           <option className="search-filter__option" value="all">Tout</option>
+          <option className="search-filter__option" value="javascript">Javascript</option>
           <option className="search-filter__option" value="css">CSS</option>
           <option className="search-filter__option" value="mongodb">MongoDB</option>
           <option className="search-filter__option" value="php">PHP</option>
