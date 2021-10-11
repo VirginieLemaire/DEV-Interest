@@ -7,11 +7,12 @@ import './search-results.scss';
 
 import Card from '../Card';
 import AppLoader from '../GenericComponents/AppLoader';
+import Loader from '../GenericComponents/Loader';
 
 const SearchResults = () => {
   const dispatch = useDispatch();
 
-  const { cards } = useSelector((state) => state.cardsSearch);
+  const { cards, searchCount } = useSelector((state) => state.cardsSearch);
   const { loading, more } = useSelector((state) => state.displayOptions);
 
   const breakpointsColumnsObj = {
@@ -24,10 +25,12 @@ const SearchResults = () => {
     700: 1,
   };
 
-  if (loading) return null;
+  if (loading) return <Loader />;
 
   return (
     <div className="search-container">
+      <div className="search-counter"> {searchCount > 0 ? `Il y a  ${searchCount} résultats` : 'Aucun résultat'}</div>
+
       <div className="search-results">
         <InfiniteScroll
           dataLength={cards.length}

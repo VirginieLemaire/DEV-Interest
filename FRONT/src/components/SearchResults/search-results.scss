@@ -1,8 +1,15 @@
 @use '../../styles/vars';
 .search-container{
-  padding: 3rem 0;
+  padding: 1rem 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+}
+
+.search-counter{
+  padding: 0 0 2rem 0;
+  text-align: center;
+  font-weight: bold;
 }
 
 .search-results{
@@ -69,5 +76,47 @@
   100%
   {
     transform: scale( .75 );
+  }
+}
+
+.search-results--mobile{
+  // display:none;
+}
+
+@media screen and (max-width: 500px){
+  .search-container{
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .search-counter{
+    padding: 0 0 2rem 0;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .search-results{
+  padding: 0 0rem;
+   width: 100%;
+  }
+  
+  .masonry-grid {
+    display: -webkit-box; /* Not needed if autoprefixing */
+    display: -ms-flexbox; /* Not needed if autoprefixing */
+    display: flex;
+    margin-left: -30px; /* gutter size offset */
+    width: auto;
+  }
+  .masonry-grid_column {
+    padding-left: 30px; /* gutter size */
+    background-clip: padding-box;
+  }
+  
+  /* Style your items */
+  .masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
+    background: transparent;
+    margin-bottom: 50px;
   }
 }

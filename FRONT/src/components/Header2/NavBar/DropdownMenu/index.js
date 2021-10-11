@@ -5,7 +5,7 @@ import { BsReverseLayoutTextSidebarReverse } from '@react-icons/all-files/bs/BsR
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import DropdownItem from './DropdownItem';
-import { userLogout } from '../../../../action/userCurrent';
+import { userApiLogout, userLogout } from '../../../../action/userCurrent';
 
 const DropdownMenu = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const DropdownMenu = () => {
 
         <DropdownItem
           leftIcon={<RiShutDownLine />}
-          onClick={() => dispatch(userLogout())}
+          onClick={() => dispatch(userApiLogout())}
         >
           <p>Déconnexion</p>
         </DropdownItem>

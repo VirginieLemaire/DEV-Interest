@@ -12,7 +12,7 @@ const Slider = () => {
     <div className="slider">
       <Carousel 
         autoPlay
-        width={850}
+        width={800}
         interval={5000}
         infiniteLoop
         showIndicators={false}

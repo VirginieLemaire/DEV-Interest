@@ -8,6 +8,8 @@ export const initialState = {
   cardsMini: [],
   cards: [],
   searchQuery: '',
+  searchCount: '',
+  searchCountMini: '',
   type: '',
   techs: [],
   level: '',
@@ -26,6 +28,8 @@ const reducer = (state = initialState, action = {}) => {
         page: 1,
         currentSearch: state.searchQuery,
         searchQuery: '',
+        searchCount: action.count,
+        cardsMini: [],
       };
     case NEXT_PAGE:
       return {
@@ -46,12 +50,14 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         cardsMini: action.data,
+        searchCountMini: action.count,
       };
     case RESET_CARDS_MINI:
       return {
         ...state,
         cardsMini: [],
         searchQuery: '',
+        searchCountMini: '',
       };
     default:
       return state;

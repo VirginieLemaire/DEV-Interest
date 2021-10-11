@@ -28,3 +28,10 @@ export const connectUser = (data) => (
     data,
   }
 );
+
+export const SET_ACCESSTOKEN_LOCALSTORAGE = 'SET_ACCESSTOKEN_LOCALSTORAGE';
+export const setAccesstokenLocalStorage = () => (
+  {
+    type: SET_ACCESSTOKEN_LOCALSTORAGE,
+  }
+);

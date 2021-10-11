@@ -1,4 +1,5 @@
 @use '../../styles/vars';
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
 
 strong {
   font-weight: bold;
@@ -12,31 +13,24 @@ strong {
 
   &__board {
     display: flex;
-    min-width: 50vw;
-    max-width: 50vw;
-    min-height: 70vh;
-    max-height: 70vh;
+    width: 1400px;
+    height: 800px;
     gap: 1rem;
-    box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
+    box-shadow: vars.$shadow-primary;
     background-color: vars.$white-color;
     border-radius: vars.$border-radius-input;
     color: vars.$text-color;
+    overflow: hidden;
     
     &--dark{
       background-color: vars.$dark-color;
       color: vars.$white-color;
     }
 
-    &__image-container {
-      width: 100%;
+    &__image {
+      width: 700px;
       min-height: 100%;
-
-      &__image {
-        width: 100%;
-        min-height: 100%;
-        object-fit: cover;
-        border-radius: vars.$border-radius-input 0 0 vars.$border-radius-input;
-      }
+      object-fit: cover;
     }
 
     &__infos {
@@ -44,7 +38,7 @@ strong {
       flex-direction: column;
       justify-content: space-between;
       gap: 2rem;
-      padding: 2rem 1rem 2rem 0;
+      padding: 2rem 2rem 2rem 0;
       min-width: 50%;
       min-height: 100%;
 
@@ -54,18 +48,19 @@ strong {
 
         &__title {
           font-size: 1.5rem;
+          width: 80%;
         }
 
         &__lang-container {
           display: flex;
           gap: 1rem;
+          align-items: center;
 
           &__icon {
             transform: scale(1.5);
           }
         }
       }
-
 
       &__description {
         font-size: 1.1rem;
@@ -77,22 +72,29 @@ strong {
         display: flex;
         justify-content: space-between;
       }
-
-      &__tags-section {
+      
+      &__techs-container {
         display: flex;
-        flex-direction: column;
+        justify-content: center;
+        flex-direction: row;
         gap: 2rem;
-
-        &__tags-container {
+        
+        &__tech {
           display: flex;
           gap: 1rem;
-
-          &__techs-container {
-            display: flex;
-            flex-direction: row;
-            gap: 1rem;
+          &__icon{
+            transform: scale(2);
           }
+        }
+      }
+      &__tags-container {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 1rem;
 
+        &__tag {
+          display: flex;
+          gap: 1rem;
           &__icon {
             transform: scale(1.5);
           }
@@ -129,8 +131,6 @@ strong {
   }
 
   &__suggestion-title-container {
-    min-width: 60vw;
-    text-align: left;
 
     &__title {
       font-weight: bold;

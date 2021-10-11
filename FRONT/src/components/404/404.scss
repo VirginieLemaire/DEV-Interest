@@ -1,0 +1,13 @@
+.error-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+
+  &__title {
+    font-size: 4rem;
+    font-weight: bold;
+  }
+
+
+}

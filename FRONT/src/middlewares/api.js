@@ -17,8 +17,10 @@ import {
 import {
   addCardThankModal,
   createAccountThankModal,
+  deleteCardSuccessModal,
   deleteUserSuccessModal,
   setAppLoading, setLoading, setMore, setMoreHome, toggleModal,
+  updateAccountSuccessModal, updateCardSuccessModal,
 } from '../action/displayOptions';
 
 import {
@@ -26,20 +28,26 @@ import {
 } from '../action/userUpdate';
 
 import {
-  connectUser, LOGIN, resetConnectingFields,
+  connectUser, LOGIN, resetConnectingFields, SET_ACCESSTOKEN_LOCALSTORAGE,
 } from '../action/userConnect';
 import { resetNewUserFields, SIGNUP } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
-  FETCH_BOOKMARKED_CARDS, readUserCurrentData, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS, saveBookmarkedCards, toggleLogged, userLogout,
+  FETCH_BOOKMARKED_CARDS, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
+  saveBookmarkedCards, toggleLogged, userLogout,
+  updateBookmarks, DELETE_CONTRIBUTION, fetchContributions, USER_API_LOGOUT, userApiLogout, GET_USER_WITH_TOKEN, getUserWithToken,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
-import UpdateAccountSuccessModal from '../components/Modals/UpdateAccountSuccessModal';
+import {
+  autofillUpdateFields, DELETE_CARD, GET_UPDATE_CARD_INFO, UPDATE_CARD,
+} from '../action/cardUpdate';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
 });
+
+let refreshToken = localStorage.getItem('refreshToken');
 
 export default (store) => (next) => (action) => {
   switch (action.type) {
@@ -101,21 +109,22 @@ export default (store) => (next) => (action) => {
     }
     case FETCH_CARDS_MINI_SEARCH: {
       const { searchQuery } = store.getState().cardsSearch;
-      console.log('----------------------------------------------------------');
-      console.log(`Je demande au serveur de me retourner les cartes pour la MINI recherche de la searchbard avec les mots-clés: ${searchQuery}`);
-      console.log(`Route empreintée en GET : /cards/search?keyword=${searchQuery}&page=${1}&size=${3}`);
+      // console.log('----------------------------------------------------------');
+      // console.log(`Je demande au serveur de me retourner les cartes pour la MINI recherche de la searchbard avec les mots-clés: ${searchQuery}`);
+      // console.log(`Route empreintée en GET : /cards/search?keyword=${searchQuery}&page=${1}&size=${3}`);
 
       axiosInstance
         .get(`/cards/search?keyword=${searchQuery}&page=${1}&size=${3}`)
         .then(
           (response) => {
-            console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
-            console.log(response.data);
-            store.dispatch(saveCardsMiniSearch(response.data.data));
+            // console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
+            // console.log(response.data);
+            // console.log('response cardsMini du serveur ', response);
+            store.dispatch(saveCardsMiniSearch(response.data.data, response.data.count));
           },
         )
         .catch(
-          (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
+          (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données pour la mini search :', error.response),
         );
       next(action);
       break;
@@ -136,9 +145,9 @@ export default (store) => (next) => (action) => {
           .then(
             (response) => {
               console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
-              console.log(response.data.data);
+              console.log(response.data);
 
-              store.dispatch(saveCardsSearch(response.data.data));
+              store.dispatch(saveCardsSearch(response.data.data, response.data.count));
               store.dispatch(NextPage());
               store.dispatch(changeSearchField('', 'search'));
               store.dispatch(setLoading(false));
@@ -267,6 +276,7 @@ export default (store) => (next) => (action) => {
       console.log('Je souhaite ajouer une carte sur le serveur');
       console.log('Route empreintée en POST : /cards/save (+ données suivantes dans le body)');
       console.log(newCard);
+      store.dispatch(toggleModal());
 
       axiosInstance.post(
         '/cards/save',
@@ -276,7 +286,7 @@ export default (store) => (next) => (action) => {
       ).then(
         (response) => {
           console.log('L\'enregistrement de la carte a REUSSI ! et les informations ont bien été récupérées par le FRONT', response);
-          store.dispatch(toggleModal());
+
           store.dispatch(addCardThankModal());
           store.dispatch(fetchCardsHome());
           store.dispatch(resetNewCard());
@@ -304,12 +314,20 @@ export default (store) => (next) => (action) => {
         (response) => {
           console.log('Connection du user REUSSI ! Je reçois du serveur ces données (response.data.user) :', response.data.user);
           console.log('Le serveur me donne aussi le Token suivant lors du login (response.data.accessToken) :', response.data.accessToken);
+          console.log('Le serveur me donne aussi le refreshToken suivant lors du login (response.data.refreshToken) :', response.data.refreshToken);
+
+          localStorage.setItem('userToken', response.data.accessToken);
+          localStorage.setItem('userRefreshToken', response.data.refreshToken);
+
+          console.log('valeur de UserToken du LS ', localStorage.getItem('userToken'));
+          console.log('valeur de serToken du LS ', localStorage.getItem('userRefreshToken'));
 
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resetConnectingFields());
           store.dispatch(toggleLogged());
 
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
+          refreshToken = response.data.refreshToken;
         },
       ).catch(
         (error) => console.log('ERREUR lors du login et voici le error.response: ', error.response),
@@ -337,7 +355,9 @@ export default (store) => (next) => (action) => {
           },
         )
         .catch(
-          (error) => console.log(`le serveur n'a pas réussi à renvoyer la liste des favoris du user ${id}, il a retourné (error.response)`, error.response),
+          (error) => {
+            console.log(`le serveur n'a pas réussi à renvoyer la liste des favoris du user ${id}, il a retourné (error.response)`, error.response);
+          },
         );
       next(action);
       break;
@@ -345,17 +365,40 @@ export default (store) => (next) => (action) => {
     case FETCH_CONTRIBUTIONS: {
       store.dispatch(setLoading(true));
       const { id } = store.getState().userCurrent;
-      console.log('je veux les cartes crées par le user ', id);
+      console.log('----------------------------------------------------------');
+
+      console.log(`Je demande au serveur de me retourner les contributions du user ${id}`);
+      console.log('Route empreintée en GET : /contributor/cards');
+
       axiosInstance
-        .get(`/user/${id}/mycards`)
+        .get('/contributor/cards')
         .then(
           (response) => {
+            console.log('Retour du serveur POSITIF, les données retournées sont ');
+            console.log(response.data);
             store.dispatch(setLoading(false));
-            console.log('les cartes que j\'ai crée sont ', response.data);
             store.dispatch(saveContributions(response.data));
             // console.log(response.data.data);
           },
         );
+      next(action);
+      break;
+    }
+    case DELETE_CONTRIBUTION: {
+      console.log('----------------------------------------------------------');
+      console.log(`Je veux supprimer la carte ayant pour id ${action.cardId}`);
+      console.log(`Route empreintée en DELETE : /cards/${action.cardId}/users`);
+
+      axiosInstance.delete(
+        `/cards/${action.cardId}/users`,
+      ).then(
+        (response) => {
+          console.log('Suppression de la carte', response);
+          store.dispatch(fetchContributions());
+        },
+      ).catch(
+        (error) => console.log('ERREUR serveur lors du delete de la carte (error.response): ', error.response),
+      );
       next(action);
       break;
     }
@@ -365,6 +408,7 @@ export default (store) => (next) => (action) => {
       console.log('----------------------------------------------------------');
       console.log(`Je prépare les infos suivantes pour m'inscrire (username : ${username}, email: ${email} et password: ${password})`);
       console.log('Route empreintée en POST : /signup (+ username, email, password dans le body)');
+      store.dispatch(toggleModal());
 
       axiosInstance.post(
         '/signup',
@@ -378,7 +422,9 @@ export default (store) => (next) => (action) => {
           console.log('Signup REUSSI ! Enregistrement des informations reçues du back (response.data.user)', response.data.user);
           console.log('Le token reçu lors du signup est :', response.data.accessToken);
 
-          store.dispatch(toggleModal());
+          localStorage.setItem('userToken', response.data.accessToken);
+          localStorage.setItem('userRefreshToken', response.data.refreshToken);
+
           store.dispatch(createAccountThankModal());
 
           store.dispatch(connectUser(response.data.user));
@@ -386,6 +432,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(toggleLogged());
 
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
+          refreshToken = response.data.refreshToken;
         },
       ).catch(
         (error) => console.log('ERREUR serveur lors du signup (error.response): ', error.response),
@@ -394,8 +441,14 @@ export default (store) => (next) => (action) => {
       break;
     }
     case UPDATE_USER_CURRENT: {
-      const { id } = store.getState().userCurrent;
-      const { email, username, passwordNew: password } = store.getState().userUpdate;
+      const { id, email: emailCurrent, username: usernameCurrent } = store.getState().userCurrent;
+      const {
+        email: emailNew, username: usernameNew, passwordNew, passwordCurrent,
+      } = store.getState().userUpdate;
+
+      const username = !usernameNew ? usernameCurrent : usernameNew;
+      const email = !emailNew ? emailCurrent : emailNew;
+      const password = !passwordNew ? passwordCurrent : passwordNew;
 
       console.log('----------------------------------------------------------');
       console.log(`Je veux mettre à jour l'user ayant pour id ${id}`);
@@ -410,12 +463,12 @@ export default (store) => (next) => (action) => {
         },
       ).then(
         (response) => {
-          console.log('Update du user REUSSI, voici les informations reçues du back', response.data.user);
+          console.log('Update du user REUSSI, voici les informations reçues du back', response.data);
           console.log('Le token reçu lors de l\'update est : ', response.data.accessToken);
 
           store.dispatch(toggleModal());
-          store.dispatch(UpdateAccountSuccessModal());
-          store.dispatch(connectUser(email, username));
+          store.dispatch(updateAccountSuccessModal());
+          store.dispatch(connectUser(response.data));
           store.dispatch(resetUpdateUserFields());
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
         },
@@ -432,12 +485,13 @@ export default (store) => (next) => (action) => {
       console.log(`Je veux supprimer l'user ayant pour id ${id}`);
       console.log(`Route empreintée en DELETE : /users/${id}`);
 
+      store.dispatch(toggleModal());
+
       axiosInstance.delete(
         `/users/${id}`,
       ).then(
         (response) => {
           console.log('Suppression du user REUSSI', response);
-          store.dispatch(toggleModal());
           store.dispatch(deleteUserSuccessModal());
           store.dispatch(userLogout());
         },
@@ -501,6 +555,166 @@ export default (store) => (next) => (action) => {
       ).catch(
         (error) => console.log(`Erreur retourné par le serveur en cas de lecture des données du user à l'id ${id}`, error.response),
       );
+      next(action);
+      break;
+    }
+    case GET_UPDATE_CARD_INFO: {
+      console.log('----------------------------------------------------------');
+      console.log('je demande à récupérer les infos de la carte pour les réinjecter dans update card:', action.id);
+      console.log(`Route empreintée en GET : /cards/${action.id}`);
+
+      axiosInstance.get(
+        `/cards/details/${action.id}`,
+      ).then(
+        (response) => {
+          console.log(`REUSSI, les informations reçues de la carte ${action.id} sont`, response.data);
+          store.dispatch(autofillUpdateFields(response.data));
+        },
+      ).catch(
+        (error) => console.log(`ERREUR serveur lors de la lecture d\'une carte sur la route /cards/${action.id} (error.response): `, error.response),
+      );
+      next(action);
+      break;
+    }
+    case UPDATE_CARD: {
+      const userId = store.getState().userCurrent.id;
+
+      const {
+        id, title, slug, website, description, url, image, level, lang, type, category, techs,
+      } = store.getState().cardUpdate;
+
+      const updateCard = {
+        title: title,
+        slug: slug,
+        website: website,
+        description: description,
+        url_image: image,
+        url: url,
+        user_id: userId,
+        level_id: level,
+        language_id: lang,
+        type_id: type,
+        category_id: category,
+        techs: techs,
+      };
+
+      console.log('----------------------------------------------------------');
+      console.log('je souhaite mettre à jour les données d\'une carte avec les infos suivantes: ', updateCard);
+      console.log(`Route empreintée en PUT : /contributor/cards/${id}`);
+
+      axiosInstance.put(
+        `/contributor/cards/${id}`,
+        {
+          ...updateCard,
+        },
+      ).then(
+        (response) => {
+          console.log('REUSSI, la carte a bien été mise à jour ! :', response.data);
+          store.dispatch(toggleModal());
+          store.dispatch(updateCardSuccessModal());
+        },
+      ).catch(
+        (error) => {
+          console.log('ERREUR la carte n\'a pas pu être mise à jour: ', error.response);
+          alert('ca n\'a pas marché');
+        },
+      );
+      next(action);
+      break;
+    }
+
+    case DELETE_CARD: {
+      // const userId = store.getState().userCurrent.id;
+      const { deleteCardId } = store.getState().cardUpdate;
+      console.log('----------------------------------------------------------');
+      console.log('je souhaite supprimer la carte suivantes: ', deleteCardId);
+      console.log(`Route empreintée en DELETE : /cards/${deleteCardId}/users`);
+
+      axiosInstance.delete(
+        `/cards/${deleteCardId}/users`,
+      ).then(
+        (response) => {
+          console.log('REUSSI, la carte a bien été supprimée ! :', response.data);
+          store.dispatch(deleteCardSuccessModal());
+        },
+      ).catch(
+        (error) => {
+          console.log('ERREUR la carte n\'a pas pu être supprimée: ', error.response);
+          // store.dispatch(updateCardSuccessModal());
+        },
+      );
+      next(action);
+      break;
+    }
+    case SET_ACCESSTOKEN_LOCALSTORAGE: {
+      const accessToken = localStorage.getItem('userToken');
+      const localStorageRefreshToken = localStorage.getItem('userRefreshToken');
+      console.log('accessToken LocalStorage ', accessToken);
+      console.log('refreshToken LocalStorage ', localStorageRefreshToken);
+      axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      refreshToken = localStorageRefreshToken;
+      next(action);
+      break;
+    }
+    case USER_API_LOGOUT: {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      store.dispatch(userLogout());
+      next(action);
+      break;
+    }
+    case GET_USER_WITH_TOKEN: {
+      console.log('je rentre bien dans get user with token');
+      const accessTokenLS = localStorage.getItem('userToken');
+      console.log('je récupère l\'accessToken du LS', accessTokenLS);
+      axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessTokenLS}`;
+      console.log('j\'empreinte la route /user');
+      axiosInstance.get('/user')
+        .then((response) => {
+          console.log('Réussite sur la route /user je reçois les infos :', response);
+          store.dispatch(toggleLogged());
+          store.dispatch(connectUser(response.data.user));
+          localStorage.setItem('accessToken', response.data.accessToken);
+          localStorage.setItem('refreshToken', response.data.refreshToken);
+          console.log('je me connecte avec ces informations', response.data);
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            console.log('j\'ai bien un retour 401');
+            const refreshTokenLS = localStorage.getItem('userRefreshToken');
+            console.log('Je met dans le header le refreshToken ', refreshToken);
+            axiosInstance.defaults.headers.common.Authorization = `Bearer ${refreshTokenLS}`;
+            axiosInstance.post('/api/refreshToken')
+              .then((rs) => {
+                // eslint-disable-next-line max-len
+                console.log('reussite api/refreshToken ', rs.data);
+                axiosInstance.defaults.headers.common.Authorization = `Bearer ${rs.data.accessToken}`;
+                console.log('j\'ai bien reçu un nouveau accessToken car celui que j\'avais n\'étais plus bon', rs.data.accessToken);
+                console.log('je relance la route /user');
+                axiosInstance.get('/user')
+                  .then((res) => {
+                    console.log('Réussite sur la route 2 /user je reçois les infos :', res);
+                    store.dispatch(toggleLogged());
+                    store.dispatch(connectUser(res.data.user));
+                    localStorage.setItem('accessToken', res.data.accessToken);
+                    localStorage.setItem('refreshToken', res.data.refreshToken);
+                    console.log('je me connecte avec ces informations', res.data);
+                  })
+                  .catch((er) => console.log('je suis dans l\'erreur du 2ieme /user', er));
+                // localStorage.setItem('accessToken', response.data.accessToken);
+                // localStorage.setItem('refreshToken', response.data.refreshToken);
+                // store.dispat  h(toggleLogged());
+                // store.dispatch(connectUser(response.data.user));
+                // Rediriger vers la page ou on souhaitait aller à l'origine
+              })
+              .catch((err) => {
+                console.log('je suis dans l\'erreur de la route /refreshtoken');
+                // rediriger vers la page de login
+                store.dispatch(userApiLogout());
+                console.log(err);
+              });
+          }
+        });
       next(action);
       break;
     }

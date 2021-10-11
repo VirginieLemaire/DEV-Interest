@@ -4,10 +4,10 @@ import { useHistory } from 'react-router-dom';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
 import SubmitButton from '../GenericComponents/SubmitButton';
-import { changeCurrentUserField } from '../../action/userCurrent';
 import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
 import { changeUpdateUserField, resetUpdateUserFields, updateUserCurrent } from '../../action/userUpdate';
+import { updateAccountSuccessModal } from '../../action/displayOptions';
 
 const UserAccountUpdate = () => {
   const dispatch = useDispatch();
@@ -16,18 +16,19 @@ const UserAccountUpdate = () => {
   const {
     username, email, passwordCurrent, passwordNew, passwordNewVerification,
   } = useSelector((state) => state.userUpdate);
+  const { username: usernameCurrent, email: emailCurrent } = useSelector((state) => state.userCurrent);
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const handleClick = () => {
     dispatch(resetUpdateUserFields());
-    history.push(`/${userCurrentUsername.toLowerCase()}/account`);
+    history.push(`/${usernameCurrent.toLowerCase()}/account`);
   };
 
   const handleSubmitUpdateForm = (event) => {
     event.preventDefault();
     if (passwordNew === passwordNewVerification) {
       dispatch(updateUserCurrent());
-      history.push(`/${username.toLowerCase()}/account`);
+      history.push('/');
     }
   };
 
@@ -40,7 +41,7 @@ const UserAccountUpdate = () => {
           autoComplete="off"
           value={username}
           name="username"
-          placeholder="Nom d'utilisateur"
+          placeholder={usernameCurrent}
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'username'))}
           minlength="4"
           maxlength="20"
@@ -50,36 +51,36 @@ const UserAccountUpdate = () => {
           autoComplete="off"
           value={email}
           name="email"
-          placeholder="Email"
+          placeholder={emailCurrent}
           handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'email'))}
         />
         <h2 className="user-account-update__form__subtitle">Modifier le mot de passe</h2>
         <div className="user-account-update__form__new-password-container">
-        <PasswordField
-          autoComplete="password"
-          value={passwordCurrent}
-          name="passwordCurrent"
-          placeholder="Mot de passe actuel"
-          handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordCurrent'))}
-          required
-          minlength="4"
-        />
-        <PasswordField
-          autoComplete="new-password"
-          value={passwordNew}
-          name="passwordNew"
-          placeholder="Nouveau mot de passe"
-          handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNew'))}
-          minlength="4"
-        />
-        <PasswordField
-          autoComplete="new-password-verification"
-          value={passwordNewVerification}
-          name="passwordNewVerification"
-          placeholder="Vérifier mot de passe"
-          handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNewVerification'))}
-          minlength="4"
-        />
+          <PasswordField
+            autoComplete="password"
+            value={passwordCurrent}
+            name="passwordCurrent"
+            placeholder="Mot de passe actuel"
+            handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordCurrent'))}
+            required
+            minlength="4"
+          />
+          <PasswordField
+            autoComplete="new-password"
+            value={passwordNew}
+            name="passwordNew"
+            placeholder="Nouveau mot de passe"
+            handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNew'))}
+            minlength="4"
+          />
+          <PasswordField
+            autoComplete="new-password-verification"
+            value={passwordNewVerification}
+            name="passwordNewVerification"
+            placeholder="Vérifier mot de passe"
+            handleChange={(e) => dispatch(changeUpdateUserField(e.target.value, 'passwordNewVerification'))}
+            minlength="4"
+          />
         </div>
         {/* <div className="user-account__form__supress-container">
         <div className="user-account__form__supress-container__text">

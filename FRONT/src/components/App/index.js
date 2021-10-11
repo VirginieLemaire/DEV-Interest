@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import MediaQuery from 'react-responsive';
 
 import { fetchCardsHome } from '../../action/cardsHome';
 
@@ -24,13 +25,22 @@ import AddCardModal from '../AddCardModal';
 import ScrollTop from '../ScrollTop';
 import AppLoader from '../GenericComponents/AppLoader';
 import Loader from '../GenericComponents/Loader';
-import AddCardThankModal from '../Modals/addCardThankModal';
+import AddCardThankModal from '../Modals/AddCardThankModal';
 import CreateAccountThankModal from '../Modals/CreateAccountThankModal';
 import UpdateAccountSuccessModal from '../Modals/UpdateAccountSuccessModal';
 import UpdateCardSuccessModal from '../Modals/UpdateCardSuccessModal';
 import DeleteUserSuccessModal from '../Modals/DeleteUserSuccessModal';
 import Header2 from '../Header2';
 import HeaderOffset from '../GenericComponents/HeaderOffSet';
+import DeleteUserModal from '../DeleteUserModal';
+import UpdateCard from '../UpdateCard';
+import DeleteCardModal from '../DeleteCardModal';
+import DeleteCardSuccessModal from '../Modals/DeleteCardSuccessModal';
+import ErrorPage from '../404';
+import { getUserWithToken, toggleLogged } from '../../action/userCurrent';
+import Home2 from '../Home2';
+import SearchModal from '../SearchModal';
+import { setAppLoading } from '../../action/displayOptions';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -39,16 +49,21 @@ const App = () => {
     darkMode, appLoading, addCardModal, connexionModal, modal,
   } = useSelector((state) => state.displayOptions);
 
-  const { username, id } = useSelector((state) => state.userCurrent);
+  const { username, id, isLogged } = useSelector((state) => state.userCurrent);
 
   const cardsHome = useSelector((state) => state.cardsHome.cards);
 
   const cardsSearch = useSelector((state) => state.cardsSearch.cards);
 
-  const mergedCards = [...cardsHome, ...cardsSearch];
+  const { contributions, bookmarkedCards } = useSelector((state) => state.userCurrent);
+
+  const mergedCards = [...cardsHome, ...cardsSearch, ...contributions, ...bookmarkedCards];
+
+  // dispatch(getUserWithToken());
 
   useEffect(() => {
-    dispatch(fetchCardsHome());
+    dispatch(getUserWithToken());
+    dispatch(setAppLoading(false));
   }, []);
 
   if (appLoading) return <AppLoader />;
@@ -61,11 +76,8 @@ const App = () => {
           <Header2 />
           <HeaderOffset />
           <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/search" exact>
-              <Loader />
-              <SearchResults />
-            </Route>
+            <Route path="/" exact component={Home2} />
+            <Route path="/search" exact component={SearchResults} />
             {
               mergedCards.map(
                 (card) => (
@@ -75,31 +87,30 @@ const App = () => {
                 ),
               )
             }
-            <Route path="/add-card" exact>
-              <Loader />
-              <AddCard />
-            </Route>
-            <Route path={`/${username.toLowerCase()}/${id}/bookmarks`} exact>
-              <Loader />
-              <UserBookmarks />
-            </Route>
+            <Route path="/add-card" exact component={AddCard} />
+            <Route path="/update-card" exact component={UpdateCard} />
+            <Route path={`/${username.toLowerCase()}/${id}/bookmarks/(favorites|contributions)`} component={UserBookmarks} />
             <Route path={`/${username.toLowerCase()}/account`} exact component={UserAccount} />
             <Route path={`/${username.toLowerCase()}/account/update`} exact component={UserAccountUpdate} />
             <Route path="/legal" exact component={Legal} />
             <Route path="/terms-of-use" exact component={TermsOfUse} />
             <Route path="/about" exact component={About} />
-            <Route component={Page404} />
+            <Route component={ErrorPage} />
           </Switch>
         </div>
         <Footer />
       </div>
       <AddCardModal />
+      <SearchModal />
       <ConnexionModal />
       <AddCardThankModal />
       <CreateAccountThankModal />
       <UpdateAccountSuccessModal />
       <UpdateCardSuccessModal />
       <DeleteUserSuccessModal />
+      <DeleteCardSuccessModal />
+      <DeleteUserModal />
+      <DeleteCardModal />
     </div>
   );
 };

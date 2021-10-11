@@ -1,6 +1,8 @@
 @use '../../styles/vars';
 
 .home {
+  max-width: 1080px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   gap: 2rem; 
@@ -14,10 +16,11 @@
   &__welcome-container{
     display: flex;
     margin-top: 4rem;
-    width: 100vw;
+    max-width: 1080px;
     gap: 2.5rem;
 
     &__slider {
+      width: 50%;
       color: rgba(vars.$primary-color, 0.5);
       border-radius: vars.$border-radius-input;
 
@@ -28,6 +31,7 @@
     }
 
     &__actions {
+      max-width: 540px;
       width: 50%;
       display: flex;
       flex-direction: column;

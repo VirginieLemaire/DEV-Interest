@@ -3,22 +3,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Field from '../GenericComponents/Field';
 import Button from '../GenericComponents/Button';
-import { deleteUserCurrent } from '../../action/userUpdate';
+import { showDeleteUserModal } from '../../action/displayOptions';
+import { formatDate } from '../../selectors/utils';
 
 const UserAccount = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const { username, email } = useSelector((state) => state.userCurrent);
+  
+  const { username, email, createdAt } = useSelector((state) => state.userCurrent);
   const { darkMode } = useSelector((state) => state.displayOptions);
-
+  const inscriptionDate = formatDate(createdAt);
+  
   const handleModifyClick = () => {
     history.push(`/${username.toLowerCase()}/account/update`);
   };
 
   const handleDeleteButtonClick = () => {
-    dispatch(deleteUserCurrent());
-    history.push('/');
+    dispatch(showDeleteUserModal());
   };
 
   return (
@@ -36,19 +37,25 @@ const UserAccount = () => {
         placeholder={email}
         handleChange={() => null}
       />
+      <h2 className="user-account__subtitle">Date d'inscription</h2>
+      <Field
+        name="currentEmail"
+        placeholder={inscriptionDate}
+        handleChange={() => null}
+      />
       <div className="user-account__button-container">
-          <Button 
-            color
-            styling="full"
-            handleClick={handleModifyClick}
-            content="Modifier le compte"
-          />
-          <Button 
-            color
-            styling="outline"
-            handleClick={handleDeleteButtonClick}
-            content="Supprimer le compte"
-          />
+        <Button
+          color
+          styling="full"
+          handleClick={handleModifyClick}
+          content="Modifier le compte"
+        />
+        <Button
+          color
+          styling="outline"
+          handleClick={handleDeleteButtonClick}
+          content="Supprimer le compte"
+        />
       </div>
     </div>
   );

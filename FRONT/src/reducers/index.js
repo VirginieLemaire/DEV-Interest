@@ -8,6 +8,7 @@ import userCreateReducer from './userCreate';
 import userUpdateReducer from './userUpdate';
 
 import cardNewReducer from './cardNew';
+import cardUpdateReducer from './cardUpdate';
 import cardsSearchReducer from './cardsSearch';
 import cardsHomeReducer from './cardsHome';
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   cardsSearch: cardsSearchReducer,
   cardsHome: cardsHomeReducer,
   cardNew: cardNewReducer,
+  cardUpdate: cardUpdateReducer,
   displayOptions: displayOptionsReducer,
   userCreate: userCreateReducer,
   userCurrent: userCurrentReducer,
