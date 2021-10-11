@@ -31,18 +31,18 @@ class Cards {
             let level = '';
             let type = '';
             let lang = '';
-            const pagination = '';
+            const pagination = `ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`;
 
             if (searchQuery.keyword) keyword = `WHERE to_tsvector('fr',cards::text) @@websearch_to_tsquery('fr', '${searchQuery.keyword}')`;
-            if (searchQuery.tech !== 'all') tech = `AND to_tsvector('fr', techs::text) @@websearch_to_tsquery('fr', '${searchQuery.tech})'`;
+            if (searchQuery.tech !== 'all') tech = `AND to_tsvector('fr', techs::text) @@websearch_to_tsquery('fr', '${searchQuery.tech}')`;
             if (searchQuery.category !== 'all') category = `AND to_tsvector('fr', category::text) @@websearch_to_tsquery('fr', '${searchQuery.category}')`;
             if (searchQuery.level !== 'all') level = `AND to_tsvector('fr', level::text) @@websearch_to_tsquery('fr', '${searchQuery.level}')`;
             if (searchQuery.type !== 'all') type = `AND to_tsvector('fr', type::text) @@websearch_to_tsquery('fr', '${searchQuery.type}')`;
             if (searchQuery.lang !== 'all') lang = `AND to_tsvector('fr', lang::text) @@websearch_to_tsquery('fr', '${searchQuery.lang}')`;
-            console.log(`${select} ${keyword} ${tech} ${category} ${level} ${type} ${lang};`);
+            console.log(`${select} ${keyword} ${tech} ${category} ${level} ${type} ${lang}${pagination};`);
             
             //chercher dans toutes les colonnes sauf slug et URLs
-            const {rows} = await client.query(`${select} ${keyword} ${tech} ${category} ${level} ${type} ${lang}`) ;
+            const {rows} = await client.query(`${select} ${keyword} ${tech} ${category} ${level} ${type} ${lang}${pagination}`) ;
             //console.log('résultat: ', rows);
             //renvoyer au front           
             return rows.map(row => new Cards(row));
