@@ -9,6 +9,7 @@ import './home-cards.scss';
 import Card from '../Card';
 import AppLoader from '../GenericComponents/AppLoader';
 import { useEffect } from 'react';
+import Loader from '../GenericComponents/Loader';
 
 const HomeCards = () => {
   const dispatch = useDispatch();
@@ -28,11 +29,7 @@ const HomeCards = () => {
     700: 1,
   };
 
-  useEffect(() => {
-    dispatch(fetchCardsHome());
-  }, []);
-
-  if (loading) return null;
+  if (loading) return <Loader />;
 
   return (
     <div className="search-container">

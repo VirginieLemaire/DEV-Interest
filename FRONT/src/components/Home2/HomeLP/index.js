@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { BsPlusSquare } from '@react-icons/all-files/bs/BsPlusSquare';
 import { showAddCardModal } from '../../../action/displayOptions';
 import { capitalizeFirstLetter } from '../../../selectors/utils';
 import Button from '../../GenericComponents/Button';
@@ -17,7 +18,7 @@ const HomeLP = () => {
         { isLogged && (
           <div>
             <h2 className="home-lp__title"><br />Hello <span className="home-lp__title-devint">{capitalizeFirstLetter(username)}</span> !<br /> Qu'est ce que l'on fait aujourd'hui ?</h2>
-            <aside className="home-lp__subtitle"> Pars à la découverte de nouvelles ressources pour être un développeur toujours à la pointe ou partage tes bons plans à la communauté</aside>
+            <aside className="home-lp__subtitle"> Part à la découverte de nouvelles ressources pour être un développeur toujours à la pointe ou partage tes bons plans à la communauté</aside>
           </div>
         )}
         { !isLogged && (

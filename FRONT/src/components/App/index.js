@@ -40,6 +40,7 @@ import ErrorPage from '../404';
 import { getUserWithToken, toggleLogged } from '../../action/userCurrent';
 import Home2 from '../Home2';
 import SearchModal from '../SearchModal';
+import { setAppLoading } from '../../action/displayOptions';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getUserWithToken());
-    dispatch(fetchCardsHome());
+    dispatch(setAppLoading(false));
   }, []);
 
   if (appLoading) return <AppLoader />;
