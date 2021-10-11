@@ -150,3 +150,11 @@ export const showSearchModal = () => (
     type: SHOW_SEARCH_MODAL,
   }
 );
+
+export const SET_DARKMODE = 'SET_DARKMODE';
+export const setDarkMode = (value) => (
+  {
+    type: SET_DARKMODE,
+    value,
+  }
+);

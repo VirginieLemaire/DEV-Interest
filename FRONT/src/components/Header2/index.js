@@ -32,10 +32,18 @@ const usePathname = () => {
 const Header2 = () => {
   const dispatch = useDispatch();
   const { darkMode } = useSelector((state) => state.displayOptions);
+  // console.log('valeur de DM normal', darkMode);
+
+  localStorage.setItem('darkModeLS', JSON.stringify(darkMode));
+  // console.log('valeur de darkModeLS', JSON.parse(localStorage.getItem('darkModeLS')));
 
   const { isLogged, username, id } = useSelector((state) => state.userCurrent);
 
   const pathname = usePathname();
+
+  const handleToggleDarkMode = () => {
+    dispatch(darkModeToggle());
+  };
 
   return (
     <div className={darkMode ? 'header2 header2--dark' : 'header2'}>
@@ -75,7 +83,7 @@ const Header2 = () => {
           icon={<BsBookmarks />}
           iconActive={<BsFillBookmarksFill />}
           to={`/${username.toLowerCase()}/${id}/bookmarks/favorites`}
-          pathActive={[`/${username.toLowerCase()}/${id}/bookmarks/favorites`, `/${username.toLowerCase()}/${id}/bookmarks/contributions` ]}
+          pathActive={[`/${username.toLowerCase()}/${id}/bookmarks/favorites`, `/${username.toLowerCase()}/${id}/bookmarks/contributions`]}
         />
         <NavItem
           icon={<RiUserHeartLine />}
@@ -108,7 +116,7 @@ const Header2 = () => {
         </Navbar>
       )}
       <div className="darkmode-button">
-        <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
+        <ToggleButton isOn={darkMode} handleToggle={handleToggleDarkMode} />
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ const HomeLP = () => {
         )}
         { !isLogged && (
           <div>
-            <h2 className="home-lp__title"><span className="home-lp__title-devint">DEV Interest</span><br /> Tout ce qui tient à coeur <br /> aux développeurs</h2>
+            <h2 className="home-lp__title"><span className="home-lp__title-devint">DEV Interest</span><br /> Tout ce que les développeurs <br /> ont à coeur !</h2>
             <aside className="home-lp__subtitle"> Découvre, recherche, sauvegarde ou partage une multitude de ressources autour du développement informatique pour être toujours à la page!</aside>
           </div>
         )}
