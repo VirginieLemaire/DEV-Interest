@@ -13,6 +13,8 @@
   gap: 2rem;
   background-color: vars.$white-color;
   box-shadow: 2px 12px 30px rgba(88, 88, 88, 0.1);
+  overflow-x:scroll;
+  white-space: nowrap;
   
   &--dark{
     background-color: vars.$dark-color;
