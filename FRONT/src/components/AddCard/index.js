@@ -15,6 +15,7 @@ import Loader from '../GenericComponents/Loader';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import TextareaField from '../GenericComponents/TextareaField';
 import UrlField from '../GenericComponents/UrlField';
+import CardPreview from '../CardPreview';
 
 import './add-card.scss';
 
@@ -27,7 +28,7 @@ const AddCard = () => {
   const { loading, darkMode } = useSelector((state) => state.displayOptions);
 
   const {
-    title, description, url, image, website, certification,
+    title, description, url, image, website, certification, techs, level
   } = useSelector((state) => state.cardNew);
 
   const customTheme = (theme) => ({
@@ -213,6 +214,9 @@ const AddCard = () => {
           />
         </div>
       </form>
+      <div className="add-card__card-preview">
+        <CardPreview title={title} image={image} website={website}/>
+      </div>
     </div>
   );
 };
