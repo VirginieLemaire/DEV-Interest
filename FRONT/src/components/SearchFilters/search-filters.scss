@@ -1,1 +1,45 @@
 @use '../../styles/vars';
+
+.search-filters{
+  z-index: 999;
+  text-align: center;
+  margin-top: -1rem;
+  padding: 1rem 0;
+  position: sticky;
+  top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  background-color: vars.$white-color;
+  box-shadow: 2px 12px 30px rgba(88, 88, 88, 0.1);
+
+  &__current-search{
+
+    &__item{
+      color: vars.$primary-color;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+  }
+
+}
+
+.search-filter{
+
+
+
+  &__select{
+    padding: 0.5rem;
+    border-radius: vars.$border-radius-input;
+  }
+
+  &__option{
+    margin-bottom: 0.5rem;
+
+    &--default{
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+}
