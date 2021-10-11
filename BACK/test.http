@@ -39,3 +39,5 @@ Content-Type: application/json
 	]
 }
 
+### recherche
+get {{baseurl}}/cards/search?keyword=javascript&tech=all&category=apprendre&level=débutant&type=vidéo&lang=français
