@@ -221,6 +221,7 @@ const AddCard = () => {
       </form>
       {(title || image || website) && 
         <div className="add-card__card-preview">
+          <h2 className={darkMode ? 'add-card__card-preview__title add-card__card-preview__title--dark' : 'add-card__card-preview__title'}>Aperçu de votre contribution</h2>
           <CardPreview title={title} image={image} website={website}/>
         </div>
       }
