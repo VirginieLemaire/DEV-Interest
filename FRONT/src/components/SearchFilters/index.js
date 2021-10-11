@@ -4,8 +4,10 @@ import './search-filters.scss';
 
 const SearchFilters = () => {
   const dispatch = useDispatch();
-
-  const { currentSearch, techFilter, categoryFilter, levelFilter, typeFilter, langFilter } = useSelector((state) => state.cardsSearch);
+  const { darkMode } = useSelector((state) => state.displayOptions);
+  const {
+    currentSearch, techFilter, categoryFilter, levelFilter, typeFilter, langFilter,
+  } = useSelector((state) => state.cardsSearch);
 
   const handleTechFilterChange = (e) => {
     e.preventDefault();
@@ -38,10 +40,10 @@ const SearchFilters = () => {
   };
 
   return (
-    <div className="search-filters">
+    <div className={darkMode ? 'search-filters search-filters--dark' : 'search-filters'}>
       <div className="search-filters__current-search">Recherche en cours : "<span className="search-filters__current-search__item">{currentSearch ? `${currentSearch}` : 'aucune recherche'}</span>"</div>
       <div className="search-filter">
-        <select className="search-filter__select" name="tech" id="tech-filter" onChange={handleTechFilterChange} value={techFilter}>
+        <select className={techFilter !== 'all' ? 'search-filter__select selected-filter' : 'search-filter__select'} name="tech" id="tech-filter" onChange={handleTechFilterChange} value={techFilter}>
           <option className="search-filter__option search-filter__option--default" value="all">Technologie</option>
           <option className="search-filter__option" value="all">Tout</option>
           <option className="search-filter__option" value="css">CSS</option>
@@ -57,7 +59,7 @@ const SearchFilters = () => {
         </select>
       </div>
       <div className="search-filter">
-        <select className="search-filter__select" name="category" id="category-filter" onChange={handleCategoryFilterChange} value={categoryFilter}>
+        <select className={categoryFilter !== 'all' ? 'search-filter__select selected-filter' : 'search-filter__select'} name="category" id="category-filter" onChange={handleCategoryFilterChange} value={categoryFilter}>
           <option className="search-filter__option search-filter__option--default" value="all">Catégorie</option>
           <option className="search-filter__option" value="all">Tout</option>
           <option className="search-filter__option" value="apprendre">Apprendre</option>
@@ -67,7 +69,7 @@ const SearchFilters = () => {
         </select>
       </div>
       <div className="search-filter">
-        <select className="search-filter__select" name="level" id="level-filter" onChange={handleLevelFilterChange} value={levelFilter}>
+        <select className={levelFilter !== 'all' ? 'search-filter__select selected-filter' : 'search-filter__select'} name="level" id="level-filter" onChange={handleLevelFilterChange} value={levelFilter}>
           <option className="search-filter__option search-filter__option--default" value="all">Niveau</option>
           <option className="search-filter__option" value="all">Tout</option>
           <option className="search-filter__option" value="débutant">Débutant</option>
@@ -77,7 +79,7 @@ const SearchFilters = () => {
         </select>
       </div>
       <div className="search-filter">
-        <select className="search-filter__select" name="type" id="type-filter" onChange={handleTypeFilterChange} value={typeFilter}>
+        <select className={typeFilter !== 'all' ? 'search-filter__select selected-filter' : 'search-filter__select'} name="type" id="type-filter" onChange={handleTypeFilterChange} value={typeFilter}>
           <option className="search-filter__option search-filter__option--default" value="all">Média</option>
           <option className="search-filter__option" value="all">Tout</option>
           <option className="search-filter__option" value="article">Article</option>
@@ -90,7 +92,7 @@ const SearchFilters = () => {
         </select>
       </div>
       <div className="search-filter">
-        <select className="search-filter__select" name="lang" id="lang-filter" onChange={handleLangFilterChange} value={langFilter}>
+        <select className={langFilter !== 'all' ? 'search-filter__select selected-filter' : 'search-filter__select'} name="lang" id="lang-filter" onChange={handleLangFilterChange} value={langFilter}>
           <option className="search-filter__option search-filter__option--default" value="all">Langue</option>
           <option className="search-filter__option" value="all">Tout</option>
           <option className="search-filter__option" value="français">Français</option>
