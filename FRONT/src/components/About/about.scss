@@ -18,7 +18,9 @@
   &__team {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
   }
 
 }
