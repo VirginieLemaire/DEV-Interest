@@ -95,19 +95,3 @@
         }
     }
 }
-
-@media (max-width: 640px) {
-    .header{
-        flex-direction: column;
-        gap: 2rem;
-        margin: 2rem 0;
-        
-        &__logo{
-            height: 1.3rem;
-        }
-
-        &__button{
-
-        }
-    }
-}

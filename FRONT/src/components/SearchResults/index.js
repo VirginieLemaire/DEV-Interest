@@ -30,6 +30,7 @@ const SearchResults = () => {
   return (
     <div className="search-container">
       <div className="search-counter"> {searchCount > 0 ? `Il y a  ${searchCount} résultats` : 'Aucun résultat'}</div>
+
       <div className="search-results">
         <InfiniteScroll
           dataLength={cards.length}

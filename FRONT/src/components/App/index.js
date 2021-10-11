@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import MediaQuery from 'react-responsive';
 
 import { fetchCardsHome } from '../../action/cardsHome';
 
@@ -38,6 +39,7 @@ import DeleteCardSuccessModal from '../Modals/DeleteCardSuccessModal';
 import ErrorPage from '../404';
 import { getUserWithToken, toggleLogged } from '../../action/userCurrent';
 import Home2 from '../Home2';
+import SearchModal from '../SearchModal';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -98,6 +100,7 @@ const App = () => {
         <Footer />
       </div>
       <AddCardModal />
+      <SearchModal />
       <ConnexionModal />
       <AddCardThankModal />
       <CreateAccountThankModal />
