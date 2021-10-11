@@ -41,7 +41,7 @@ const SearchFilters = () => {
 
   return (
     <div className={darkMode ? 'search-filters search-filters--dark' : 'search-filters'}>
-      <div className="search-filters__current-search">Recherche en cours : "<span className="search-filters__current-search__item">{currentSearch ? `${currentSearch}` : 'aucune recherche'}</span>"</div>
+      <div className="search-filters__current-search">Recherche : "<span className="search-filters__current-search__item">{currentSearch ? `${currentSearch}` : 'aucune recherche'}</span>"</div>
       <div className="search-filter">
         <select className={techFilter !== 'all' ? 'search-filter__select selected-filter' : 'search-filter__select'} name="tech" id="tech-filter" onChange={handleTechFilterChange} value={techFilter}>
           <option className="search-filter__option search-filter__option--default" value="all">Technologie</option>
