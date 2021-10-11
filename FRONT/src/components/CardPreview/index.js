@@ -19,7 +19,7 @@ import './card-preview.scss';
 import { capitalizeFirstLetter } from '../../selectors/utils';
 
 // == Composant
-const CardPreview = ({ title, image, website }) => {
+const CardPreview = ({ card }) => {
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const iconsTable = {
@@ -46,14 +46,14 @@ const CardPreview = ({ title, image, website }) => {
   return (
     <div className={darkMode ? 'card-preview card-preview--dark' : 'card-preview'}>
       <div className="card-preview__image-container">
-        <img className="card-preview__image-container__image" src={image} alt={title} />
+        <img className="card-preview__image-container__image" src={card.image} alt={card.title} />
       </div>
       <div className="card-preview__buttons-group">
         <div className="card-preview__button bookmark" type="button"><BsBookmark /></div>
       </div>
       <div className="card-preview_link">
-        <h3 className="card-preview__website">{website.toUpperCase()}</h3>
-        <h2 className="card-preview__title">{title}</h2>
+        <h3 className="card-preview__website">{card.website.toUpperCase()}</h3>
+        <h2 className="card-preview__title">{card.title}</h2>
       </div>
       {/* <div className="card-preview__meta">
         <div className="card-preview__tags">
@@ -77,14 +77,11 @@ const CardPreview = ({ title, image, website }) => {
 };
 
 CardPreview.propTypes = {
-
+  card: PropTypes.shape({
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
-    // techs: PropTypes.arrayOf(
-    //   PropTypes.string.isRequired,
-    // ).isRequired,
-    // level: PropTypes.string.isRequired,
+  }).isRequired,
 
 };
 

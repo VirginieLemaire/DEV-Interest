@@ -7,18 +7,10 @@ const About = () => {
 
   const teamCards = [
     {
-      id:1,
       title:"Virginie",
       image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      description:"",
-      category:"",
-      level:"",
       type:"Product Owner / Git Master",
-      slug: '',
       website: '',
-      url: '',
-      techs: [""],
-      lang: '',
     },
     {
       id:1,
