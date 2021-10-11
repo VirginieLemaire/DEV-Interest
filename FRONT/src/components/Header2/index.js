@@ -41,9 +41,6 @@ const Header2 = () => {
 
   const pathname = usePathname();
 
-  const handleToggleDarkMode = () => {
-    dispatch(darkModeToggle());
-  };
 
   return (
     <div className={darkMode ? 'header2 header2--dark' : 'header2'}>
@@ -117,7 +114,7 @@ const Header2 = () => {
         </Navbar>
       )}
       <div className="darkmode-button">
-        <ToggleButton isOn={darkMode} handleToggle={handleToggleDarkMode} />
+        <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
       </div>
     </div>
   );

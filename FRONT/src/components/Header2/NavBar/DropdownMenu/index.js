@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import DropdownItem from './DropdownItem';
 import { userApiLogout, userLogout } from '../../../../action/userCurrent';
+import ToggleButton from '../../../GenericComponents/ToggleButton';
+import { darkModeToggle } from '../../../../action/displayOptions';
 
 const DropdownMenu = () => {
   const dispatch = useDispatch();
@@ -46,6 +48,10 @@ const DropdownMenu = () => {
         >
           <p>Déconnexion</p>
         </DropdownItem>
+        <div className={darkMode ? 'dark-mode-toggle-dd dark-mode-toggle-dd--dark' : 'dark-mode-toggle-dd'}>
+          <ToggleButton isOn={darkMode} handleToggle={() => dispatch(darkModeToggle())} />
+          <div>Dark Mode</div>
+        </div>
       </div>
 
     </div>
