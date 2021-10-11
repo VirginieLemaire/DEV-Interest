@@ -10,15 +10,6 @@
   box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
   font-family: 'Roboto', sans-serif;
 
-
-  &:hover{
-    box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.2);
-    transition: box-shadow 0.35s;
-    transition: top 3s linear;
-    position: relative;
-    top: 0.3rem;
-  }
-
   &--dark{
     background-color: vars.$dark-color;
     color: vars.$white-color;
@@ -27,8 +18,8 @@
   &__image-container{
     &__image{
       border-radius: vars.$border-radius-input;
-      // height: auto;
-      // min-height: 350px;
+      height: auto;
+      min-height: 400px;
       width: 300px;
       object-fit: cover;
     }

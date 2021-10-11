@@ -22,14 +22,6 @@ import { capitalizeFirstLetter } from '../../selectors/utils';
 const CardPreview = ({ title, image, website }) => {
   const { darkMode } = useSelector((state) => state.displayOptions);
 
-  function randomIntFromInterval(min, max) { // min and max included
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
-  const imgStyle = {
-    minHeight: `${randomIntFromInterval(300, 500)}px`,
-  };
-
   const iconsTable = {
     javascript: <DiJavascript1 />,
     css: <DiCss3 />,
@@ -54,7 +46,7 @@ const CardPreview = ({ title, image, website }) => {
   return (
     <div className={darkMode ? 'card-preview card-preview--dark' : 'card-preview'}>
       <div className="card-preview__image-container">
-        <img className="card-preview__image-container__image" src={image} alt={title} style={imgStyle} />
+        <img className="card-preview__image-container__image" src={image} alt={title} />
       </div>
       <div className="card-preview__buttons-group">
         <div className="card-preview__button bookmark" type="button"><BsBookmark /></div>
