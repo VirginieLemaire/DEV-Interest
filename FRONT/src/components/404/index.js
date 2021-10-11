@@ -109,7 +109,7 @@ const ErrorPage = () => {
     },
   ];
 
-  if (loading) return null;
+  if (loading) return AppLoader;
 
   return (
     <div className="error-page">
