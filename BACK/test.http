@@ -39,3 +39,12 @@ Content-Type: application/json
 	]
 }
 
+### recherche
+post {{baseurl}}/cards
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMzk2MDk4MywiZXhwIjoxNjMzOTYyNzgzfQ.NBYI0KCL2qVbtJUDxYKdXyrDzcyOnD4LlVEdZ0jEgVI
+
+Content-Type: application/json
+
+{
+    "url": "https://www.bortzmeyer.org/postgresql-recherche-texte.html"
+}
