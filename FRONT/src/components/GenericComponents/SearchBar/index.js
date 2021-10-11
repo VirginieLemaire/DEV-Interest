@@ -12,6 +12,7 @@ import './search-bar.scss';
 import {
   changeSearchField, fetchCardsMiniSearch, fetchCardsSearch, resetCardsMini, resetSearchQuery,
 } from '../../../action/cardsSearch';
+import { setSearchModal } from '../../../action/displayOptions';
 
 // la propriété loading est a false par défaut et si passée à vrai affiche un spinner
 // la propriété "size" est facultative et a comme valeur par défaut une width de 100%,
@@ -30,6 +31,7 @@ const SearchBar = ({
     history.push('/search');
     dispatch(fetchCardsSearch());
     dispatch(resetCardsMini());
+    dispatch(setSearchModal(false));
   };
 
   const handleSearchbarChange = (e) => {
