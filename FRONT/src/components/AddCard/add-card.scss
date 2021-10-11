@@ -7,9 +7,7 @@
   margin: auto;
   gap: 2rem;
 
-  &--dark{
-    color: vars.$white-color;
-  }
+
 
   &__form{
     display: flex;
@@ -90,6 +88,9 @@
       display: flex;
       align-items: center;
       font-size: 0.8rem;
+      &--dark{
+        color: vars.$white-color;
+      }
     }
   }
 

@@ -100,7 +100,7 @@ const AddCard = () => {
   if (loading) return <Loader />;
 
   return (
-    <div className={darkMode ? 'add-card add-card--dark' : 'add-card'}>
+    <div className="add-card">
       <form className="add-card__form" onSubmit={handleSubmitNewCard}>
         <h2 className={darkMode ? 'add-card__title add-card__title--dark' : 'add-card__title'}>Ajout d'une nouvelle ressource</h2>
         <Field
@@ -194,7 +194,7 @@ const AddCard = () => {
           onChange={(value) => dispatch(changeNewCardField(value.value, 'lang'))}
           theme={customTheme}
         />
-        <label className="add-card__input-certified" htmlFor="certify-add-card">
+        <label className={darkMode ? 'add-card__input-certified add-card__input-certified--dark' : 'add-card__input-certified'} htmlFor="certify-add-card">
           <input
             type="checkbox"
             id="certify-add-card"
