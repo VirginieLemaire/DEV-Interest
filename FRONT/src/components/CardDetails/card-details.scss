@@ -62,7 +62,6 @@ strong {
         }
       }
 
-
       &__description {
         font-size: 1.1rem;
         font-style: italic;
@@ -73,37 +72,34 @@ strong {
         display: flex;
         justify-content: space-between;
       }
-
-      &__media_section {
+      
+      &__techs-container {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1rem;
-
-
-        &__tags-section {
+        justify-content: center;
+        flex-direction: row;
+        gap: 2rem;
+        
+        &__tech {
           display: flex;
-          flex-direction: column;
-          gap: 2rem;
-          width: 20%;
-  
-          &__tags-container {
-            display: flex;
-            gap: 1rem;
-  
-            &__techs-container {
-              display: flex;
-              flex-direction: row;
-              gap: 1rem;
-            }
-  
-            &__icon {
-              transform: scale(1.5);
-            }
+          gap: 1rem;
+          &__icon{
+            transform: scale(2);
           }
         }
       }
+      &__tags-container {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 1rem;
 
+        &__tag {
+          display: flex;
+          gap: 1rem;
+          &__icon {
+            transform: scale(1.5);
+          }
+        }
+      }
 
       &__buttons-container {
         display: flex;

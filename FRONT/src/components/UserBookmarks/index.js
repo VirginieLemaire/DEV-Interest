@@ -1,6 +1,7 @@
 import './user-bookmarks.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import BookmarkedCards from '../BookmarkedCards';
 import Contributions from '../Contributions';
 import { fetchBookmarkedCards, fetchContributions, updateThumb } from '../../action/userCurrent';
@@ -12,7 +13,7 @@ const UserBookmarks = () => {
   const { darkMode, loading } = useSelector((state) => state.displayOptions);
 
   const {
-    username, bookmarkedCards, contributions, thumb, bookmarks,
+    id, username, bookmarkedCards, contributions, thumb, bookmarks,
   } = useSelector((state) => state.userCurrent);
   useEffect(() => {
     dispatch(fetchBookmarkedCards());
@@ -32,12 +33,12 @@ const UserBookmarks = () => {
         </div>
       </div>
       <div className="user-bookmarks__thumbs">
-        <div className={thumb !== 'favorites' ? `user-bookmarks__thumbs__thumb${darkMode ? '--dark' : ''}` : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('favorites'))}>
+        <Link to={`/${username.toLowerCase()}/${id}/bookmarks/favorites`} className={thumb !== 'favorites' ? `user-bookmarks__thumbs__thumb${darkMode ? '--dark' : ''}` : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('favorites'))}>
           {`${bookmarkedCards.length > 1 ? 'Favoris' : 'Favori'} (${bookmarkedCards.length})`}
-        </div>
-        <div className={thumb !== 'contributions' ? `user-bookmarks__thumbs__thumb${darkMode ? '--dark' : ''}` : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('contributions'))}>
+        </Link>
+        <Link to={`/${username.toLowerCase()}/${id}/bookmarks/contributions`} className={thumb !== 'contributions' ? `user-bookmarks__thumbs__thumb${darkMode ? '--dark' : ''}` : `user-bookmarks__thumbs__thumb--active${darkMode ? '--dark' : ''}`} onClick={() => dispatch(updateThumb('contributions'))}>
           {`${contributions.length > 1 ? 'Contributions' : 'Contribution'} (${contributions.length})`}
-        </div>
+        </Link>
       </div>
       <div className="user-bookmarks__bookmarks-container">
         { thumb === 'favorites' && <BookmarkedCards /> }
