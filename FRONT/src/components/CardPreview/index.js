@@ -43,12 +43,26 @@ const CardPreview = ({ card }) => {
     expert: 'reception-4',
   };
 
+  const typeValues = [
+    null,
+    'Article',
+    'Vidéo',
+    'Image',
+    'Site Web',
+    'Repository',
+    'Package',
+    'Autre',
+  ];
+
+  console.log(card.type)
+
   return (
     <div className={darkMode ? 'card-preview card-preview--dark' : 'card-preview'}>
       <div className="card-preview__image-container">
         <img className="card-preview__image-container__image" src={card.image} alt={card.title} />
       </div>
       <div className="card-preview__buttons-group">
+        <div className="card-preview__button media" type="button" href={card.url}>{card.type ? capitalizeFirstLetter(typeValues[card.type]) : ""}</div>
         <div className="card-preview__button bookmark" type="button"><BsBookmark /></div>
       </div>
       <div className="card-preview_link">
@@ -81,6 +95,7 @@ CardPreview.propTypes = {
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
+    // type: PropTypes.string.isRequired,
   }).isRequired,
 
 };
