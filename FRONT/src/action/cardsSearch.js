@@ -74,3 +74,27 @@ export const resetCardsMini = () => (
     type: RESET_CARDS_MINI,
   }
 );
+
+export const RESET_FILTERS_TO_ALL = 'RESET_FILTERS_TO_ALL';
+export const resetFiltersToAll = () => (
+  {
+    type: RESET_FILTERS_TO_ALL,
+  }
+);
+
+export const SET_FILTER = 'SET_FILTER';
+export const setFilter = (value, fieldName) => (
+  {
+    type: SET_FILTER,
+    value,
+    fieldName,
+  }
+);
+
+export const SET_CURRENT_SEARCH = 'SET_CURRENT_SEARCH';
+export const setCurrentSearch = (value) => (
+  {
+    type: SET_CURRENT_SEARCH,
+    value,
+  }
+);

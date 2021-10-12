@@ -8,12 +8,13 @@ import './search-results.scss';
 import Card from '../Card';
 import AppLoader from '../GenericComponents/AppLoader';
 import Loader from '../GenericComponents/Loader';
+import SearchFilters from '../SearchFilters';
 
 const SearchResults = () => {
   const dispatch = useDispatch();
 
   const { cards, searchCount } = useSelector((state) => state.cardsSearch);
-  const { loading, more } = useSelector((state) => state.displayOptions);
+  const { loading, more, darkMode } = useSelector((state) => state.displayOptions);
 
   const breakpointsColumnsObj = {
     default: 7,
@@ -29,7 +30,8 @@ const SearchResults = () => {
 
   return (
     <div className="search-container">
-      <div className="search-counter"> {searchCount > 0 ? `Il y a  ${searchCount} résultats` : 'Aucun résultat'}</div>
+      <SearchFilters />
+      <div className={darkMode ? 'search-counter search-counter--dark' : 'search-counter'}> {searchCount > 0 ? `Il y a  ${searchCount} résultats` : 'Aucun résultat'}</div>
 
       <div className="search-results">
         <InfiniteScroll

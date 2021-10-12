@@ -32,10 +32,15 @@ const usePathname = () => {
 const Header2 = () => {
   const dispatch = useDispatch();
   const { darkMode } = useSelector((state) => state.displayOptions);
+  // console.log('valeur de DM normal', darkMode);
+
+  localStorage.setItem('darkModeLS', JSON.stringify(darkMode));
+  // console.log('valeur de darkModeLS', JSON.parse(localStorage.getItem('darkModeLS')));
 
   const { isLogged, username, id } = useSelector((state) => state.userCurrent);
 
   const pathname = usePathname();
+
 
   return (
     <div className={darkMode ? 'header2 header2--dark' : 'header2'}>
@@ -75,7 +80,7 @@ const Header2 = () => {
           icon={<BsBookmarks />}
           iconActive={<BsFillBookmarksFill />}
           to={`/${username.toLowerCase()}/${id}/bookmarks/favorites`}
-          pathActive={[`/${username.toLowerCase()}/${id}/bookmarks/favorites`, `/${username.toLowerCase()}/${id}/bookmarks/contributions` ]}
+          pathActive={[`/${username.toLowerCase()}/${id}/bookmarks/favorites`, `/${username.toLowerCase()}/${id}/bookmarks/contributions`]}
         />
         <NavItem
           icon={<RiUserHeartLine />}
@@ -84,6 +89,7 @@ const Header2 = () => {
           to={`/${username.toLowerCase()}/account`}
           pathActive={[`/${username.toLowerCase()}/account`, `/${username.toLowerCase()}/account/update`]}
           classText="header-button-text"
+          id="header-account-button"
         />
         <NavItemDrop
           icon={<BsFillCaretDownFill />}

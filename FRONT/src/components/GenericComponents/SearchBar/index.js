@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './search-bar.scss';
 import {
-  changeSearchField, fetchCardsMiniSearch, fetchCardsSearch, resetCardsMini, resetSearchQuery,
+  changeSearchField, fetchCardsMiniSearch, fetchCardsSearch, resetCardsMini, resetFiltersToAll, resetSearchQuery,
 } from '../../../action/cardsSearch';
+import { setSearchModal } from '../../../action/displayOptions';
 
 // la propriété loading est a false par défaut et si passée à vrai affiche un spinner
 // la propriété "size" est facultative et a comme valeur par défaut une width de 100%,
@@ -28,8 +29,10 @@ const SearchBar = ({
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     history.push('/search');
+    dispatch(resetFiltersToAll());
     dispatch(fetchCardsSearch());
     dispatch(resetCardsMini());
+    dispatch(setSearchModal(false));
   };
 
   const handleSearchbarChange = (e) => {
@@ -58,7 +61,7 @@ const SearchBar = ({
           />
         </form>
 
-        { ( cardsMini.length > 0 || searchQuery !== '') && (
+        { (searchQuery !== '') && (
         <div className={`search-bar__mini-results ${cardsMini.length > 0 ? 'show' : 'hide'}`}>
           {
             cardsMini.map(

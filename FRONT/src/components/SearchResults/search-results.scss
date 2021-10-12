@@ -7,9 +7,14 @@
 }
 
 .search-counter{
-  padding: 0 0 2rem 0;
+  padding: 2rem 0 2rem 0;
   text-align: center;
   font-weight: bold;
+
+  &--dark{
+    color: vars.$white-color;
+  }
+
 }
 
 .search-results{
@@ -95,6 +100,9 @@
     padding: 0 0 2rem 0;
     text-align: center;
     font-weight: bold;
+    &--dark{
+      color: vars.$white-color;
+    }
   }
   
   .search-results{

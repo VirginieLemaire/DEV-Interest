@@ -40,7 +40,7 @@ import ErrorPage from '../404';
 import { getUserWithToken, toggleLogged } from '../../action/userCurrent';
 import Home2 from '../Home2';
 import SearchModal from '../SearchModal';
-import { setAppLoading } from '../../action/displayOptions';
+import { setAppLoading, setDarkMode } from '../../action/displayOptions';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -64,6 +64,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getUserWithToken());
     dispatch(setAppLoading(false));
+    dispatch(setDarkMode(JSON.parse(localStorage.getItem('darkModeLS'))));
   }, []);
 
   if (appLoading) return <AppLoader />;
@@ -74,7 +75,6 @@ const App = () => {
         <div className="content-wrap">
           <ScrollTop />
           <Header2 />
-          <HeaderOffset />
           <Switch>
             <Route path="/" exact component={Home2} />
             <Route path="/search" exact component={SearchResults} />
@@ -89,7 +89,7 @@ const App = () => {
             }
             <Route path="/add-card" exact component={AddCard} />
             <Route path="/update-card" exact component={UpdateCard} />
-            <Route path={`/${username.toLowerCase()}/${id}/bookmarks/(favorites|contributions)`} component={UserBookmarks} />
+            <Route path={`/${username.toLowerCase()}/${id}/bookmarks/(favorites|contributions)`} exact component={UserBookmarks} />
             <Route path={`/${username.toLowerCase()}/account`} exact component={UserAccount} />
             <Route path={`/${username.toLowerCase()}/account/update`} exact component={UserAccountUpdate} />
             <Route path="/legal" exact component={Legal} />

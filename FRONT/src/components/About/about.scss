@@ -1,1 +1,31 @@
 @use '../../styles/vars';
+
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1080px;
+  margin: auto;
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    line-height: 1.5rem;
+  }
+
+  &__team {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+}

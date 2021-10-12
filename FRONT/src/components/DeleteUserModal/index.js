@@ -58,7 +58,7 @@ const DeleteUserModal = () => {
               className={darkMode ? 'delete-user-modal__connexion-warning delete-user-modal__connexion-warning--dark' : 'delete-user-modal__connexion-warning'}
             >
               <div className="delete-user-modal__connexion-warning__main"> Souhaites-tu vraiment nous quitter ? </div>
-              La communauté DEV Interest te remercie pour le temps que tu lui a accordé et espère te revoir très vite!
+              La communauté DEV Interest te remercie pour le temps que tu lui as accordé et espère te revoir très vite! Toutes tes contributions seront supprimées également.
             </div>
             <div className="delete-user-modal__footer">
               <Button

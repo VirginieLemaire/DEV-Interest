@@ -1,6 +1,7 @@
 @use '../../styles/vars';
 
 .connexion-modal{
+  z-index: 500;
   perspective: 1000px;
   position: fixed;
   left: 0;

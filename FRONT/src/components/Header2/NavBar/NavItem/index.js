@@ -19,7 +19,7 @@ const NavItem = ({
       <Link to={to} className={pathActive.find((path) => path === pathname) ? 'icon-active' : 'icon-button'} onClick={onClick}>
         {pathActive.find((path) => path === pathname) ? iconActive : icon}
       </Link>
-      <p className={classText}>{text}</p>
+      <div className={classText}>{text}</div>
     </li>
   );
 };

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player';
 
 import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
@@ -54,7 +54,7 @@ const CardDetails = ({ card }) => {
     css: <DiCss3 />,
     mongodb: <DiMongodb />,
     php: <DiPhp />,
-    html5: <DiHtml5 />,
+    html: <DiHtml5 />,
     wordpress: <DiWordpress />,
     postgresql: <SiPostgresql />,
     markdown: <DiMarkdown />,
@@ -70,19 +70,20 @@ const CardDetails = ({ card }) => {
     }
     else if (!isLogged) {
       dispatch(showAddCardModal());
-    }  };
+    }
+  };
   const creationDate = formatDate(card.createdat);
 
   const handleContentToggle = () => {
     dispatch(toggleDisplayUrl());
   };
 
-  console.log(card.level)
+  console.log(card.level);
 
   return (
     <div className="card-details">
       <div className={darkMode ? 'card-details__board card-details__board--dark' : 'card-details__board'}>
-        {card.type === 'vidéo' &&  <ReactPlayer url={card.url} width='100%' height='auto' controls={true}/>}
+        {card.type === 'vidéo' && <ReactPlayer url={card.url} width="100%" height="auto" controls />}
         {card.type !== 'vidéo' && <img className="card-details__board__image" src={card.image} alt={card.title} />}
         <div className="card-details__board__infos">
           <div className="card-details__board__infos__title-container">
@@ -144,10 +145,10 @@ const CardDetails = ({ card }) => {
               </button>
             </Link>
             <Button
-              styling={isBookmarked ? "outline" : "full"}
+              styling={isBookmarked ? 'outline' : 'full'}
               color
               handleClick={handleClick}
-              content={isBookmarked ? "Retirer des favoris" : "Ajouter aux favoris"}
+              content={isBookmarked ? 'Retirer des favoris' : 'Ajouter aux favoris'}
             />
           </div>
         </div>
