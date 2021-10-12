@@ -119,8 +119,9 @@ CardPreview.propTypes = {
     website: PropTypes.string.isRequired,
     type: PropTypes.number.isRequired,
     level: PropTypes.number.isRequired,
-  }).isRequired,
-
+    techs: PropTypes.arrayOf(
+      PropTypes.number.isRequired,
+    ).isRequired,  }).isRequired,
 };
 
 // == Export
