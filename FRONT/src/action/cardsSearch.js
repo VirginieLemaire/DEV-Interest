@@ -6,9 +6,15 @@ export const searchCards = () => (
 );
 
 export const FETCH_CARDS_SEARCH = 'FETCH_CARDS_SEARCH';
-export const fetchCardsSearch = () => (
+export const fetchCardsSearch = (keywords, tech, category, level, typeF, lang) => (
   {
     type: FETCH_CARDS_SEARCH,
+    keywords,
+    tech,
+    category,
+    level,
+    typeF,
+    lang,
   }
 );
 

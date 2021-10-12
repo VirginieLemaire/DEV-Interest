@@ -1,8 +1,7 @@
 import { SAVE_CARD } from '../action/cardCurrent';
 
-
 export const initialState = {
-  card: {},
+  card: null,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -10,7 +9,7 @@ const reducer = (state = initialState, action = {}) => {
     case SAVE_CARD:
       return {
         ...state,
-        card: action.card,
+        card: action.data,
       };
     default:
       return state;

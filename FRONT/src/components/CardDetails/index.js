@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
 
 import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
-import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
 import { MdLanguage } from '@react-icons/all-files/md/MdLanguage';
 
@@ -28,26 +28,22 @@ import HomeCards from '../HomeCards';
 import './card-details.scss';
 import { showAddCardModal, toggleDisplayUrl } from '../../action/displayOptions';
 import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
-import { useEffect } from 'react';
-import { fetchCardsHome } from '../../action/cardsHome';
 import { fetchCard } from '../../action/cardCurrent';
+import Loader from '../GenericComponents/Loader';
 
-// eslint-disable-next-line no-extend-native
-String.prototype.capitalize = function () {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};
-
-const CardDetails = ({ match }) => {
+const CardDetails = () => {
   const dispatch = useDispatch();
+  const { slug, id } = useParams();
 
-  console.log('match', match);
-
-  dispatch(fetchCard(match.params.id, match.params.slug));
+  useEffect(() => {
+    dispatch(fetchCard(id, slug));
+  }, []);
 
   const card = useSelector((state) => state.cardCurrent);
-  const { displayUrl, darkMode } = useSelector((state) => state.displayOptions);
+  const { displayUrl, darkMode, loading } = useSelector((state) => state.displayOptions);
   const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
   const { searchQuery } = useSelector((state) => state.cardsSearch);
+
   const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
 
   const levelIconsTable = {
@@ -80,13 +76,15 @@ const CardDetails = ({ match }) => {
       dispatch(showAddCardModal());
     }
   };
-  const creationDate = formatDate(card.createdat);
+  const creationDate = formatDate(card.createat);
 
   const handleContentToggle = () => {
     dispatch(toggleDisplayUrl());
   };
 
-  console.log(card.level);
+  console.log('Card FETCHED ', card.card);
+
+  if (loading) return <Loader />;
 
   return (
     <div className="card-details">
@@ -170,33 +168,4 @@ const CardDetails = ({ match }) => {
   );
 };
 
-CardDetails.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      slug: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
-};
-// CardDetails.propTypes = {
-//   card: PropTypes.shape({
-//     slug: PropTypes.string.isRequired,
-//     url: PropTypes.string.isRequired,
-//     image: PropTypes.string.isRequired,
-//     description: PropTypes.string.isRequired,
-//     title: PropTypes.string.isRequired,
-//     website: PropTypes.string.isRequired,
-//     category: PropTypes.string.isRequired,
-//     createdat: PropTypes.string.isRequired,
-//     contributor: PropTypes.string.isRequired,
-//     techs: PropTypes.arrayOf(
-//       PropTypes.string.isRequired,
-//     ).isRequired,
-//     level: PropTypes.string.isRequired,
-//     type: PropTypes.string.isRequired,
-//     lang: PropTypes.string.isRequired,
-//   }).isRequired,
-
-// };
-
-export default withRouter(CardDetails);
+export default CardDetails;

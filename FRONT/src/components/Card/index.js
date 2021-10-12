@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import './card.scss';
+import { useEffect } from 'react';
 import { showAddCardModal } from '../../action/displayOptions';
 import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
 import { capitalizeFirstLetter } from '../../selectors/utils';

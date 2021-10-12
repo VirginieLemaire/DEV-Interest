@@ -1,42 +1,45 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { fetchCardsSearch, setFilter } from '../../action/cardsSearch';
 import './search-filters.scss';
 
 const SearchFilters = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { darkMode } = useSelector((state) => state.displayOptions);
   const {
     currentSearch, techFilter, categoryFilter, levelFilter, typeFilter, langFilter,
   } = useSelector((state) => state.cardsSearch);
 
+  useEffect(() => {
+    const url = `/search?keywords=${currentSearch}&tech=${techFilter}&category=${categoryFilter}&level=${levelFilter}&type=${typeFilter}&lang=${langFilter}`;
+    history.push(url);
+  }, [techFilter, categoryFilter, levelFilter, typeFilter, langFilter]);
+
   const handleTechFilterChange = (e) => {
     e.preventDefault();
     dispatch(setFilter(e.currentTarget.value, 'techFilter'));
-    dispatch(fetchCardsSearch());
   };
 
   const handleCategoryFilterChange = (e) => {
     e.preventDefault();
     dispatch(setFilter(e.currentTarget.value, 'categoryFilter'));
-    dispatch(fetchCardsSearch());
   };
 
   const handleLevelFilterChange = (e) => {
     e.preventDefault();
     dispatch(setFilter(e.currentTarget.value, 'levelFilter'));
-    dispatch(fetchCardsSearch());
   };
 
   const handleTypeFilterChange = (e) => {
     e.preventDefault();
     dispatch(setFilter(e.currentTarget.value, 'typeFilter'));
-    dispatch(fetchCardsSearch());
   };
 
   const handleLangFilterChange = (e) => {
     e.preventDefault();
     dispatch(setFilter(e.currentTarget.value, 'langFilter'));
-    dispatch(fetchCardsSearch());
   };
 
   return (

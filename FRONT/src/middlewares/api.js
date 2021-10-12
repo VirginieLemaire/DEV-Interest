@@ -134,7 +134,7 @@ export default (store) => (next) => (action) => {
     }
     case FETCH_CARDS_SEARCH: {
       const {
-        searchQuery, currentSearch, size, techFilter, categoryFilter,
+        currentSearch, size, techFilter, categoryFilter,
         levelFilter, typeFilter, langFilter,
       } = store.getState().cardsSearch;
       store.dispatch(setMore(true));
@@ -142,17 +142,17 @@ export default (store) => (next) => (action) => {
       const firstPage = 1;
 
       console.log('----------------------------------------------------------');
-      console.log(`Je demande au serveur de me retourner les cartes pour la recherche avec les mots-clés: ${searchQuery}`);
-      console.log(`Route empreintée en GET : /cards/search?keyword=${searchQuery}&page=${firstPage}&size=${size}`);
+      console.log(`Je demande au serveur de me retourner les cartes pour la recherche avec les mots-clés: ${action.keywords}`);
+      console.log(`Route empreintée en GET : /cards/search?keyword=${action.keywords}&page=${firstPage}&size=${size}`);
 
-      if (searchQuery) {
+      if (action.keywords) {
         axiosInstance
-          .get(`/cards/search?keyword=${searchQuery}&tech=${techFilter}&category=${categoryFilter}&level=${levelFilter}&type=${typeFilter}&lang=${langFilter}&page=${firstPage}&size=${size}`)
+          .get(`/cards/search?keyword=${action.keywords}&tech=${action.tech}&category=${action.category}&level=${action.level}&type=${action.typeF}&lang=${action.lang}&page=${firstPage}&size=${size}`)
           .then(
             (response) => {
               console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
               console.log(response.data);
-              store.dispatch(setCurrentSearch(searchQuery));
+              store.dispatch(setCurrentSearch(action.keywords));
               store.dispatch(saveCardsSearch(response.data.data, response.data.count));
               store.dispatch(NextPage());
               store.dispatch(changeSearchField('', 'search'));
@@ -185,7 +185,7 @@ export default (store) => (next) => (action) => {
         next(action);
         break;
       }
-      else if (!searchQuery) {
+      else if (!action.keywords) {
         store.dispatch(setLoading(true));
 
         console.log('----------------------------------------------------------');
@@ -694,41 +694,41 @@ export default (store) => (next) => (action) => {
       break;
     }
     case GET_USER_WITH_TOKEN: {
-      console.log('je rentre bien dans get user with token');
+      // console.log('je rentre bien dans get user with token');
       const accessTokenLS = localStorage.getItem('userToken');
-      console.log('je récupère l\'accessToken du LS', accessTokenLS);
+      // console.log('je récupère l\'accessToken du LS', accessTokenLS);
       axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessTokenLS}`;
-      console.log('j\'empreinte la route /user');
+      // console.log('j\'empreinte la route /user');
       axiosInstance.get('/user')
         .then((response) => {
-          console.log('Réussite sur la route /user je reçois les infos :', response);
+          // console.log('Réussite sur la route /user je reçois les infos :', response);
           store.dispatch(toggleLogged());
           store.dispatch(connectUser(response.data.user));
           localStorage.setItem('accessToken', response.data.accessToken);
           localStorage.setItem('refreshToken', response.data.refreshToken);
-          console.log('je me connecte avec ces informations', response.data);
+          // console.log('je me connecte avec ces informations', response.data);
         })
         .catch((error) => {
           if (error.response.status === 401) {
-            console.log('j\'ai bien un retour 401');
+            // console.log('j\'ai bien un retour 401');
             const refreshTokenLS = localStorage.getItem('userRefreshToken');
-            console.log('Je met dans le header le refreshToken ', refreshToken);
+            // console.log('Je met dans le header le refreshToken ', refreshToken);
             axiosInstance.defaults.headers.common.Authorization = `Bearer ${refreshTokenLS}`;
             axiosInstance.post('/api/refreshToken')
               .then((rs) => {
                 // eslint-disable-next-line max-len
-                console.log('reussite api/refreshToken ', rs.data);
+                // console.log('reussite api/refreshToken ', rs.data);
                 axiosInstance.defaults.headers.common.Authorization = `Bearer ${rs.data.accessToken}`;
-                console.log('j\'ai bien reçu un nouveau accessToken car celui que j\'avais n\'étais plus bon', rs.data.accessToken);
-                console.log('je relance la route /user');
+                // console.log('j\'ai bien reçu un nouveau accessToken car celui que j\'avais n\'étais plus bon', rs.data.accessToken);
+                // console.log('je relance la route /user');
                 axiosInstance.get('/user')
                   .then((res) => {
-                    console.log('Réussite sur la route 2 /user je reçois les infos :', res);
+                    // console.log('Réussite sur la route 2 /user je reçois les infos :', res);
                     store.dispatch(toggleLogged());
                     store.dispatch(connectUser(res.data.user));
                     localStorage.setItem('accessToken', res.data.accessToken);
                     localStorage.setItem('refreshToken', res.data.refreshToken);
-                    console.log('je me connecte avec ces informations', res.data);
+                    // console.log('je me connecte avec ces informations', res.data);
                   })
                   .catch((er) => console.log('je suis dans l\'erreur du 2ieme /user', er));
                 // localStorage.setItem('accessToken', response.data.accessToken);
@@ -754,7 +754,7 @@ export default (store) => (next) => (action) => {
       console.log('----------------------------------------------------------');
 
       console.log(`Je demande au serveur de me retourner la carte avec l'${action.id} et le slug ${action.slug}`);
-      console.log('Route empreintée en GET : /contributor/cards');
+      console.log(`Route empreintée en GET : /cards/${action.slug}/${action.id}`);
 
       axiosInstance
         .get(`/cards/${action.slug}/${action.id}`)
@@ -762,9 +762,8 @@ export default (store) => (next) => (action) => {
           (response) => {
             console.log('Retour du serveur POSITIF, les données retournées sont ');
             console.log(response.data);
-            store.dispatch(setLoading(false));
             store.dispatch(saveCard(response.data));
-            // console.log(response.data.data);
+            store.dispatch(setLoading(false));
           },
         ).catch(
           (error) => {

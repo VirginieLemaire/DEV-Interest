@@ -8,9 +8,9 @@ export const fetchCard = (id, slug) => (
 );
 
 export const SAVE_CARD = 'SAVE_CARD';
-export const saveCard = (card) => (
+export const saveCard = (data) => (
   {
     type: SAVE_CARD,
-    card,
+    data,
   }
 );
