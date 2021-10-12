@@ -54,7 +54,7 @@ const CardDetails = ({ card }) => {
     css: <DiCss3 />,
     mongodb: <DiMongodb />,
     php: <DiPhp />,
-    html5: <DiHtml5 />,
+    html: <DiHtml5 />,
     wordpress: <DiWordpress />,
     postgresql: <SiPostgresql />,
     markdown: <DiMarkdown />,
