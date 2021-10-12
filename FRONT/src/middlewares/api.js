@@ -165,26 +165,6 @@ export default (store) => (next) => (action) => {
         next(action);
         break;
       }
-      else if (currentSearch) {
-        axiosInstance
-          .get(`/cards/search?keyword=${currentSearch}&tech=${techFilter}&category=${categoryFilter}&level=${levelFilter}&type=${typeFilter}&lang=${langFilter}&page=${firstPage}&size=${size}`)
-          .then(
-            (response) => {
-              console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
-              console.log(response.data);
-
-              store.dispatch(saveCardsSearch(response.data.data, response.data.count));
-              store.dispatch(NextPage());
-              store.dispatch(changeSearchField('', 'search'));
-              store.dispatch(setLoading(false));
-            },
-          )
-          .catch(
-            (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
-          );
-        next(action);
-        break;
-      }
       else if (!action.keywords) {
         store.dispatch(setLoading(true));
 

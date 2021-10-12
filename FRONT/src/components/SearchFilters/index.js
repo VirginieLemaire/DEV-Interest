@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { fetchCardsSearch, setFilter } from '../../action/cardsSearch';
 import './search-filters.scss';
 
@@ -8,38 +8,61 @@ const SearchFilters = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { darkMode } = useSelector((state) => state.displayOptions);
+
   const {
     currentSearch, techFilter, categoryFilter, levelFilter, typeFilter, langFilter,
   } = useSelector((state) => state.cardsSearch);
 
+  const useQuery = () => new URLSearchParams(useLocation().search);
+
+  const query = useQuery();
+
+  const keywords = query.get('keywords');
+  const tecFilter = query.get('tech');
+  const catFilter = query.get('category');
+  const levFilter = query.get('level');
+  const typFilter = query.get('type');
+  const lanFilter = query.get('lang');
+
+  console.log('-------------------------------');
+  console.log('keywords', keywords);
+  console.log('techFilter', tecFilter);
+  console.log('categoryFilter', catFilter);
+  console.log('levelFilter', levFilter);
+  console.log('typeFilter', typFilter);
+  console.log('langFilter', lanFilter);
+
   useEffect(() => {
-    const url = `/search?keywords=${currentSearch}&tech=${techFilter}&category=${categoryFilter}&level=${levelFilter}&type=${typeFilter}&lang=${langFilter}`;
-    history.push(url);
-  }, [techFilter, categoryFilter, levelFilter, typeFilter, langFilter]);
+    dispatch(setFilter(tecFilter, 'techFilter'));
+    dispatch(setFilter(catFilter, 'categoryFilter'));
+    dispatch(setFilter(levFilter, 'levelFilter'));
+    dispatch(setFilter(typFilter, 'typeFilter'));
+    dispatch(setFilter(lanFilter, 'langFilter'));
+  }, []);
 
   const handleTechFilterChange = (e) => {
-    e.preventDefault();
     dispatch(setFilter(e.currentTarget.value, 'techFilter'));
+    history.push(`/search?keywords=${keywords}&tech=${e.currentTarget.value}&category=${catFilter}&level=${levFilter}&type=${typFilter}&lang=${lanFilter}`);
   };
 
   const handleCategoryFilterChange = (e) => {
-    e.preventDefault();
     dispatch(setFilter(e.currentTarget.value, 'categoryFilter'));
+    history.push(`/search?keywords=${keywords}&tech=${tecFilter}&category=${e.currentTarget.value}&level=${levFilter}&type=${typFilter}&lang=${lanFilter}`);
   };
 
   const handleLevelFilterChange = (e) => {
-    e.preventDefault();
     dispatch(setFilter(e.currentTarget.value, 'levelFilter'));
+    history.push(`/search?keywords=${keywords}&tech=${tecFilter}&category=${catFilter}&level=${e.currentTarget.value}&type=${typFilter}&lang=${lanFilter}`);
   };
 
   const handleTypeFilterChange = (e) => {
-    e.preventDefault();
     dispatch(setFilter(e.currentTarget.value, 'typeFilter'));
+    history.push(`/search?keywords=${keywords}&tech=${tecFilter}&category=${catFilter}&level=${levFilter}&type=${e.currentTarget.value}&lang=${lanFilter}`);
   };
 
   const handleLangFilterChange = (e) => {
-    e.preventDefault();
-    dispatch(setFilter(e.currentTarget.value, 'langFilter'));
+    dispatch(setFilter(e.currentTarget.value, 'typeFilter'));
+    history.push(`/search?keywords=${keywords}&tech=${tecFilter}&category=${catFilter}&level=${levFilter}&type=${typFilter}&lang=${e.currentTarget.value}`);
   };
 
   return (

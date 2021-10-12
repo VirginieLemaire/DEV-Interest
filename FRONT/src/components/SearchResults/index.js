@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Masonry from 'react-masonry-css';
 import { useLocation } from 'react-router';
 import { useEffect } from 'react';
-import { fetchCardsSearch, LoadMoreResults } from '../../action/cardsSearch';
+import { fetchCardsSearch, LoadMoreResults, setFilter } from '../../action/cardsSearch';
 
 import './search-results.scss';
 
@@ -26,13 +26,8 @@ const SearchResults = () => {
   const typeFilter = query.get('type');
   const langFilter = query.get('lang');
 
-  console.log('-----------------');
-  console.log('keywords', keywords);
-  console.log('techFilter', techFilter);
-  console.log('categoryFilter', categoryFilter);
-  console.log('levelFilter', levelFilter);
-  console.log('typeFilter', typeFilter);
-  console.log('langFilter', langFilter);
+ 
+
 
   useEffect(() => {
     dispatch(fetchCardsSearch(
