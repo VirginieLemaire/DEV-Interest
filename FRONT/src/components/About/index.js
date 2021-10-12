@@ -1,63 +1,39 @@
 import './about.scss';
-
-import CardPreview from '../CardPreview';
-import Masonry from 'react-masonry-css';
+import { useSelector } from 'react-redux';
+import CardTeam from '../CardTeam';
 
 const About = () => {
+  const { darkMode } = useSelector((state) => state.displayOptions);
 
   const teamCards = [
     {
       title:"Virginie",
       image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
       type:"Product Owner / Git Master",
-      website: '',
+      techs: ['Javascript', 'PostgreSQL', 'Autres'],
     },
     {
-      id:1,
-      title:"Virginie",
+      title:"Frédéric",
       image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      description:"",
-      category:"",
-      level:"",
       type:"Product Owner / Git Master",
-      slug: '',
-      website: '',
-      url: '',
-      techs: [""],
-      lang: '',
+      techs: ['Javascript', 'PostgreSQL', 'Autres'],
     },
     {
-      id:1,
-      title:"Virginie",
+      title:"Alexandre",
       image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      description:"",
-      category:"",
-      level:"",
       type:"Product Owner / Git Master",
-      slug: '',
-      website: '',
-      url: '',
-      techs: [""],
-      lang: '',
+      techs: ['Javascript', 'CSS'],
     },
     {
-      id:1,
-      title:"Virginie",
+      title:"Romain",
       image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      description:"",
-      category:"",
-      level:"",
       type:"Product Owner / Git Master",
-      slug: '',
-      website: '',
-      url: '',
-      techs: [""],
-      lang: '',
+      techs: ['Javascript', 'CSS'],
     },
   ]
 
   return (
-    <div className="about">
+    <div className={darkMode ? "about about--dark" : "about"}>
       <div className="about__description">
         <h2 className="about__description__title subtitle">Qu'est-ce que DEVinterest?</h2>
         <p className="about__description__text">
@@ -76,23 +52,19 @@ const About = () => {
           Les cartes sont des liens vers des ressources diverses (astuces, tutos, inspiration, outils, plateformes de challenges, ...) aux formats variés (articles, vidéos, jeux...). 
         </p>
       </div>
+      <div className="about__description__title subtitle">L'équipe DEVinterest</div>
       <div className="about__team">
-        <div className="about__team__title subtitle">L'équipe DEVinterest</div>
-        <Masonry
-            breakpointCols={4}
-            className="masonry-grid about__team__cards"
-            columnClassName="masonry-grid_column"
-          >
+        <div className="about__team__cards">
             {
                 teamCards.map(
                   (card) => (
-                    <div className="masonry-div" key={card.id}>
-                      <CardPreview key={card.id} card={card} />
+                    <div className="about__team__cards__card" key={card.title}>
+                      <CardTeam key={card.title} card={card} />
                     </div>
                   ),
                 )
             }
-        </Masonry>
+        </div>
       </div>
     </div>
   );
