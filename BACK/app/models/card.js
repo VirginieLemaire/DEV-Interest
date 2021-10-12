@@ -18,16 +18,34 @@ class Cards {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-    static async findQueryAllCards(keyword,limit,skip) {
+    static async findQueryAllCards(searchQuery,limit,skip) {
         try {
             console.log(`\nHI! Je suis le model findQueryAllCards, voyons la recherche passée et les infos de pagination : `);
             
-            console.log({keyword}, {limit}, {skip});
+            console.log({searchQuery}, {limit}, {skip});
+            //faire une phrase avec tous les champs
+            const select = 'SELECT *,count(*) OVER() AS full_count FROM cards';
+            let keyword = '';
+            let tech = '';
+            let category = '';
+            let level = '';
+            let type = '';
+            let lang = '';
+            const pagination = `ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`;
+
+            if (searchQuery.keyword) keyword = `WHERE to_tsvector('fr',cards::text) @@websearch_to_tsquery('fr', '${searchQuery.keyword}')`;
+
+            if (searchQuery.tech !== 'all') tech = `AND to_tsvector('fr', techs::text) @@websearch_to_tsquery('fr', '${searchQuery.tech}')`;
+            if (searchQuery.category !== 'all') category = `AND to_tsvector('fr', category::text) @@websearch_to_tsquery('fr', '${searchQuery.category}')`;
+            if (searchQuery.level !== 'all') level = `AND to_tsvector('fr', level::text) @@websearch_to_tsquery('fr', '${searchQuery.level}')`;
+            if (searchQuery.type !== 'all') type = `AND to_tsvector('fr', type::text) @@websearch_to_tsquery('fr', '${searchQuery.type}')`;
+            if (searchQuery.lang !== 'all') lang = `AND to_tsvector('fr', lang::text) @@websearch_to_tsquery('fr', '${searchQuery.lang}')`;
+
+            console.log(`${select} ${keyword} ${tech} ${category} ${level} ${type} ${lang}${pagination};`);
+            
             //chercher dans toutes les colonnes sauf slug et URLs
-            const {rows} = await client.query(`SELECT *,count(*) OVER() AS full_count FROM cards
-            --vectorise la colonne et la compare au parsage en query de la recherche
-                WHERE to_tsvector('fr',cards::text) @@websearch_to_tsquery('fr', '${keyword}')
-                ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`) ;
+            const {rows} = await client.query(`${select} ${keyword} ${tech} ${category} ${level} ${type} ${lang}${pagination}`) ;
+
             //console.log('résultat: ', rows);
             //renvoyer au front           
             return rows.map(row => new Cards(row));

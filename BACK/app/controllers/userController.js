@@ -53,6 +53,13 @@ const userController = {
             const user = await new User().signUp(data);
             console.log("\n>>> je suis de retour dans le controller voici ce que je reçois", user);
             //response.status(200).json(user);
+            //access token
+            const accessToken = jwt.makeToken(user.id);
+            console.log(accessToken);
+            // refresh token
+            const refreshToken = jwt.refreshToken(user.id);
+            console.log('token user créé, on envoie tout au client\n\n');
+            response.header({'Authorization': accessToken,'refreshToken': refreshToken}).send({accessToken: accessToken, refreshToken: refreshToken,user,});
             console.log("pas d'erreur, je renvoie", user);
             response.send({user});
             

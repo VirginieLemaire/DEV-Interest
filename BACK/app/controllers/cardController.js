@@ -36,8 +36,16 @@ const cardsController = {
     findQueryAllCards: async (request, response) => {
         try {
             //mots-clefs recherchés
-            const keyword = request.query.keyword;
-            console.log(`\nHello, je suis findQueryAllCards du cardController. Voici la requête reçue : ${keyword}`);
+            const searchQuery = {
+                keyword: request.query.keyword,
+                tech : request.query.tech,
+                category : request.query.category,
+                lang : request.query.lang,
+                level : request.query.level,
+                type : request.query.type
+            };
+            console.log(searchQuery);
+            console.log(`\nHello, je suis findQueryAllCards du cardController. Voici la requête reçue : ${searchQuery}`);
             
             // pagination
             let {page, size} = request.query;
@@ -51,7 +59,7 @@ const cardsController = {
             const limit = parseInt(size);
             const skip = (page - 1) * size;
             //envoyer les infos à la DB pour trouver les cartes
-            const card = await Cards.findQueryAllCards(keyword,limit,skip);
+            const card = await Cards.findQueryAllCards(searchQuery,limit,skip);
             console.log("card?", card);
             if(card < "0") {
                 console.log("y a rien");

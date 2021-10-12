@@ -39,3 +39,19 @@ Content-Type: application/json
 	]
 }
 
+### recherche
+
+get {{baseurl}}/cards/search?keyword=css&tech=javascript&category=all&level=all&type=all&lang=all&page=1&size=3
+
+### recherche 2
+get {{baseurl}}/cards/search?keyword=javascript&tech=&category=all&level=all&type=all&lang=all&page=1&size=15
+
+### ajout d'une carte
+post {{baseurl}}/cards
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMzk2MDk4MywiZXhwIjoxNjMzOTYyNzgzfQ.NBYI0KCL2qVbtJUDxYKdXyrDzcyOnD4LlVEdZ0jEgVI
+
+Content-Type: application/json
+
+{
+    "url": "https://www.bortzmeyer.org/postgresql-recherche-texte.html"
+}
