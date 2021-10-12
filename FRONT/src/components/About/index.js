@@ -80,7 +80,7 @@ const About = () => {
         <div className="about__team__title subtitle">L'équipe DEVinterest</div>
         <Masonry
             breakpointCols={4}
-            className="masonry-grid"
+            className="masonry-grid about__team__cards"
             columnClassName="masonry-grid_column"
           >
             {
@@ -91,7 +91,7 @@ const About = () => {
                     </div>
                   ),
                 )
-              }
+            }
         </Masonry>
       </div>
     </div>
