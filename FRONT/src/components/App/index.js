@@ -78,15 +78,7 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={Home2} />
             <Route path="/search" exact component={SearchResults} />
-            {
-              mergedCards.map(
-                (card) => (
-                  <Route key={card.id} path={`/cards/${card.slug}/${card.id}`} exact>
-                    <CardDetails key={card.id} card={card} />
-                  </Route>
-                ),
-              )
-            }
+            <Route path="/cards/:slug/:id" exact component={CardDetails} />
             <Route path="/add-card" exact component={AddCard} />
             <Route path="/update-card" exact component={UpdateCard} />
             <Route path={`/${username.toLowerCase()}/${id}/bookmarks/(favorites|contributions)`} exact component={UserBookmarks} />

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
 
@@ -20,7 +20,7 @@ import { DiRuby } from '@react-icons/all-files/di/DiRuby';
 import { DiPython } from '@react-icons/all-files/di/DiPython';
 import { BsFillQuestionDiamondFill } from '@react-icons/all-files/bs/BsFillQuestionDiamondFill';
 
-import { getDomainName, formatDate } from '../../selectors/utils';
+import { getDomainName, formatDate, capitalizeFirstLetter } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
@@ -28,15 +28,23 @@ import HomeCards from '../HomeCards';
 import './card-details.scss';
 import { showAddCardModal, toggleDisplayUrl } from '../../action/displayOptions';
 import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
+import { useEffect } from 'react';
+import { fetchCardsHome } from '../../action/cardsHome';
+import { fetchCard } from '../../action/cardCurrent';
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-const CardDetails = ({ card }) => {
+const CardDetails = ({ match }) => {
   const dispatch = useDispatch();
 
+  console.log('match', match);
+
+  dispatch(fetchCard(match.params.id, match.params.slug));
+
+  const card = useSelector((state) => state.cardCurrent);
   const { displayUrl, darkMode } = useSelector((state) => state.displayOptions);
   const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
   const { searchQuery } = useSelector((state) => state.cardsSearch);
@@ -93,7 +101,7 @@ const CardDetails = ({ card }) => {
                 <MdLanguage />
               </div>
               <div className="card-details__board__infos__tags-container__type">
-                <p>{card.lang.capitalize()}</p>
+                <p>{capitalizeFirstLetter(card.lang)}</p>
               </div>
             </div>
           </div>
@@ -108,7 +116,7 @@ const CardDetails = ({ card }) => {
               card.techs.map((tech) => (
                 <div className="card-details__board__infos__techs-container__tech">
                   <aside key={`${card.id}-${tech}`} className="card-details__board__infos__techs-container__tech__icon">{iconsTable[tech.toLowerCase()]}</aside>
-                  <Tag id={tech} name={tech.capitalize()} />
+                  <Tag id={tech} name={capitalizeFirstLetter(tech)} />
                 </div>
               ))
             }
@@ -163,24 +171,32 @@ const CardDetails = ({ card }) => {
 };
 
 CardDetails.propTypes = {
-  card: PropTypes.shape({
-    slug: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    website: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    createdat: PropTypes.string.isRequired,
-    contributor: PropTypes.string.isRequired,
-    techs: PropTypes.arrayOf(
-      PropTypes.string.isRequired,
-    ).isRequired,
-    level: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    lang: PropTypes.string.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired,
+    }),
   }).isRequired,
-
 };
+// CardDetails.propTypes = {
+//   card: PropTypes.shape({
+//     slug: PropTypes.string.isRequired,
+//     url: PropTypes.string.isRequired,
+//     image: PropTypes.string.isRequired,
+//     description: PropTypes.string.isRequired,
+//     title: PropTypes.string.isRequired,
+//     website: PropTypes.string.isRequired,
+//     category: PropTypes.string.isRequired,
+//     createdat: PropTypes.string.isRequired,
+//     contributor: PropTypes.string.isRequired,
+//     techs: PropTypes.arrayOf(
+//       PropTypes.string.isRequired,
+//     ).isRequired,
+//     level: PropTypes.string.isRequired,
+//     type: PropTypes.string.isRequired,
+//     lang: PropTypes.string.isRequired,
+//   }).isRequired,
 
-export default CardDetails;
+// };
+
+export default withRouter(CardDetails);

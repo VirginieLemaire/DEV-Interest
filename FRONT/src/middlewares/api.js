@@ -42,6 +42,7 @@ import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
 import {
   autofillUpdateFields, DELETE_CARD, GET_UPDATE_CARD_INFO, UPDATE_CARD,
 } from '../action/cardUpdate';
+import { FETCH_CARD, saveCard } from '../action/cardCurrent';
 
 const axiosInstance = axios.create({
   baseURL: 'https://devinterest.herokuapp.com/',
@@ -744,6 +745,32 @@ export default (store) => (next) => (action) => {
               });
           }
         });
+      next(action);
+      break;
+    }
+    case FETCH_CARD: {
+      store.dispatch(setLoading(true));
+
+      console.log('----------------------------------------------------------');
+
+      console.log(`Je demande au serveur de me retourner la carte avec l'${action.id} et le slug ${action.slug}`);
+      console.log('Route empreintée en GET : /contributor/cards');
+
+      axiosInstance
+        .get(`/cards/${action.slug}/${action.id}`)
+        .then(
+          (response) => {
+            console.log('Retour du serveur POSITIF, les données retournées sont ');
+            console.log(response.data);
+            store.dispatch(setLoading(false));
+            store.dispatch(saveCard(response.data));
+            // console.log(response.data.data);
+          },
+        ).catch(
+          (error) => {
+            console.log('ERREUR la carte n\'a pas pu être récupérée: ', error.response);
+          },
+        );
       next(action);
       break;
     }
