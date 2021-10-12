@@ -1,4 +1,5 @@
 const fetchOpengraph = require('fetch-opengraph');
+const Verify = require('../models/verify');
 
 const fetchUrlController = {
     findUrl: async (request, response) => {
@@ -19,6 +20,13 @@ const fetchUrlController = {
                 'https://images.unsplash.com/photo-1624565698535-b0be89187ff4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1593&q=80'
 
             ];
+            const testUrl = request.body.url
+            console.log('je suis dans le controller', testUrl);
+            const verifUrl = await Verify.verifyCard(testUrl);
+            //console.log(verifUrl);
+            if (request.body.url === verifUrl.url) {
+               return response.status(403).json({error: 'le lien existe déjà avec la carte',url : `/cards/${verifUrl.slug}/${verifUrl.id}`});
+            }
             //lien url "input form url"
             const url = await fetchOpengraph.fetch(request.body.url);
             //response.setHeader('Authorization', jwt.makeToken(id));
