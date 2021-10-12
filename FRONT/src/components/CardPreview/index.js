@@ -44,7 +44,6 @@ const CardPreview = ({ card }) => {
   };
 
   const typeValues = [
-    null,
     'Article',
     'Vidéo',
     'Image',
@@ -54,7 +53,26 @@ const CardPreview = ({ card }) => {
     'Autre',
   ];
 
-  console.log(card.type)
+  const levelValues = [
+    'Débutant',
+    'Intermédiaire',
+    'Avancé',
+    'Expert',
+  ];
+
+  const techValues = [
+    'JavaScript',
+    'CSS',
+    'MongoDB',
+    'PHP',
+    'HTML',
+    'WordPress',
+    'PostgreSQL',
+    'MarkDown',
+    'Ruby',
+    'Python',
+    'Autre',
+  ];
 
   return (
     <div className={darkMode ? 'card-preview card-preview--dark' : 'card-preview'}>
@@ -62,30 +80,34 @@ const CardPreview = ({ card }) => {
         <img className="card-preview__image-container__image" src={card.image} alt={card.title} />
       </div>
       <div className="card-preview__buttons-group">
-        <div className="card-preview__button media" type="button" href={card.url}>{card.type ? capitalizeFirstLetter(typeValues[card.type]) : ""}</div>
+        <div className="card-preview__button media" type="button" href={card.url}>{card.type ? capitalizeFirstLetter(typeValues[card.type - 1]) : ""}</div>
         <div className="card-preview__button bookmark" type="button"><BsBookmark /></div>
       </div>
       <div className="card-preview_link">
         <h3 className="card-preview__website">{card.website.toUpperCase()}</h3>
         <h2 className="card-preview__title">{card.title}</h2>
       </div>
-      {/* <div className="card-preview__meta">
+      <div className="card-preview__meta">
         <div className="card-preview__tags">
-          <div className={darkMode ? `card-preview__tags-level card-preview__tags-level--dark ${level.toLowerCase()}` : `card-preview__tags-level ${level.toLowerCase()}`}>
-            <div><i className={`bi bi-${levelIconsTable[level.toLowerCase()]}`} /></div>
-          </div>
-          <div className={darkMode ? 'card-preview__tags-techno card__tags-techno--dark' : 'card-preview__tags-techno'}>
-            {
-              techs.map(
-                (tech) => (
-                  <aside key={`${title}-${tech}`} className={darkMode ? `card-preview__tags-techno--item card-preview__tags-techno--item--dark ${tech.toLowerCase()}` : `card__tags-techno--item ${tech.toLowerCase()}`}>{iconsTable[tech.toLowerCase()]}</aside>
-                ),
-              )
-            }
-          </div>
+          { card.level && 
+            <div className={darkMode ? `card-preview__tags-level card-preview__tags-level--dark ${levelValues[card.level - 1].toLowerCase()}` : `card-preview__tags-level ${levelValues[card.level - 1].toLowerCase()}`}>
+              <div><i className={`bi bi-${levelIconsTable[levelValues[card.level - 1].toLowerCase()]}`} /></div>
+            </div>
+          }
+          { card.techs[0] &&
+            <div className={darkMode ? 'card-preview__tags-techno card__tags-techno--dark' : 'card-preview__tags-techno'}>
+              {
+                card.techs[0].map(
+                  (tech) => (
+                    <aside key={`${card.title}-${tech}`} className={darkMode ? `card-preview__tags-techno--item card-preview__tags-techno--item--dark ${techValues[tech -1].toLowerCase()}` : `card__tags-techno--item ${techValues[tech -1].toLowerCase()}`}>{iconsTable[techValues[tech -1].toLowerCase()]}</aside>
+                  ),
+                )
+              }
+            </div>
+          }
         </div>
 
-      </div> */}
+      </div>
     </div>
   );
 };
@@ -95,7 +117,8 @@ CardPreview.propTypes = {
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
-    // type: PropTypes.string.isRequired,
+    type: PropTypes.number.isRequired,
+    level: PropTypes.number.isRequired,
   }).isRequired,
 
 };
