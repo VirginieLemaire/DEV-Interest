@@ -72,6 +72,7 @@ const reducer = (state = initialState, action = {}) => {
         level: action.card.level_id,
         lang: action.card.language_id,
         category: action.card.category_id,
+        certification: false,
       };
     case SET_DELETE_CARD_ID:
       return {

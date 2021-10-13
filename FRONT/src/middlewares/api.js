@@ -597,7 +597,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(autofillUpdateFields(response.data));
         },
       ).catch(
-        (error) => console.log(`ERREUR serveur lors de la lecture d\'une carte sur la route /cards/${action.id} (error.response): `, error.response),
+        (error) => console.log(`ERREUR serveur lors de la lecture d\'une carte sur la route /update/${action.id} (error.response): `, error.response),
       );
       next(action);
       break;
