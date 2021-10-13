@@ -28,13 +28,12 @@ class Verify {
         try {
             //récupérer les infos et chercher dans la table user
             console.log("je suis dans le modèle et voici mes données: ",data.input, `'${data.value}'`);
-            const { rows } = await client.query(`SELECT * FROM "user" WHERE ${data.input} =$1`, [data.value]);
-            console.log(rows.length);
-            if (rows.length === 0) return(`super ${data.value} est disponible dans le champ ${data.input} en DB`);
-            throw new Error(`${data.input} déjà attribué, sorry`)
+            const { rows } = await client.query(`SELECT * FROM "user" WHERE to_tsvector('fr',${data.input}::text) @@websearch_to_tsquery('fr', $1)`, [data.value]);
+            console.log("rows",rows);
+            return rows;
         } catch (error) {
-            console.trace(error);
-            return error;
+            console.log("je suis dans le catch du modèle ", error);
+            // return error;
         }
     }
 }

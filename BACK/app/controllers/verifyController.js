@@ -11,10 +11,14 @@ const verifyController = {
             console.log("type de value: ",typeof data.value);
             console.log("dans verifyController : ",data);
             const verif = await Verif.verifyUserDatas(data);
-            console.log("voici le retour : ", verif);
-            response.json(verif);
+            console.log("voici le retour dans le controller : ", verif.length);
+            if (verif.length === 0) {
+                response.status(200).json(`super ${data.value} est disponible dans le champ ${data.input} en DB`);
+            } else {
+                throw new Error(`${data.input} déjà attribué, sorry`);
+            }
         } catch (error) {
-            console.trace(error);
+            console.trace("je suis dans le catch du controller verifyUser",error);
             response.status(403).json(error.message);
         }
     }
