@@ -134,8 +134,7 @@ export default (store) => (next) => (action) => {
     }
     case FETCH_CARDS_SEARCH: {
       const {
-        currentSearch, size, techFilter, categoryFilter,
-        levelFilter, typeFilter, langFilter,
+        size,
       } = store.getState().cardsSearch;
       store.dispatch(setMore(true));
       store.dispatch(setLoading(true));
@@ -147,7 +146,7 @@ export default (store) => (next) => (action) => {
 
       if (action.keywords) {
         axiosInstance
-          .get(`/cards/search?keyword=${action.keywords}&tech=${action.tech}&category=${action.category}&level=${action.level}&type=${action.typeF}&lang=${action.lang}&page=${firstPage}&size=${size}`)
+          .get(`/cards/search?keyword=${action.keywords}&tech=${action.techFilter}&category=${action.categoryFilter}&level=${action.levelFilter}&type=${action.typeFilter}&lang=${action.langFilter}&page=${firstPage}&size=${size}`)
           .then(
             (response) => {
               console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
@@ -178,7 +177,6 @@ export default (store) => (next) => (action) => {
             (response) => {
               console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
               console.log(response.data.data);
-
               store.dispatch(saveCardsSearch(response.data.data));
               store.dispatch(setLoading(false));
             },
@@ -192,15 +190,15 @@ export default (store) => (next) => (action) => {
     }
     case LOAD_MORE_RESULTS: {
       const {
-        page, currentSearch, size, techFilter, categoryFilter, levelFilter, typeFilter, langFilter,
+        page, size,
       } = store.getState().cardsSearch;
 
       console.log('----------------------------------------------------------');
-      console.log(`En scrollant en bas de la page, je demande au serveur de me retourner les cartes pour la recherche avec les mots-clés: ${currentSearch}`);
-      console.log(`Route empreintée en GET : /cards/search?keyword=${currentSearch}&tech=${techFilter}&category=${categoryFilter}&level=${levelFilter}&type=${typeFilter}&lang=${langFilter}&page=${page}&size=${size}`);
+      console.log(`En scrollant en bas de la page, je demande au serveur de me retourner les cartes pour la recherche avec les mots-clés: ${action.keywords}`);
+      console.log(`Route empreintée en GET : /cards/search?keyword=${action.keywords}&tech=${action.techFilter}&category=${action.categoryFilter}&level=${action.levelFilter}&type=${action.typeFilter}&lang=${action.langFilter}&page=${page}&size=${size}`);
 
       axiosInstance
-        .get(`/cards/search?keyword=${currentSearch}&tech=${techFilter}&category=${categoryFilter}&level=${levelFilter}&type=${typeFilter}&lang=${langFilter}&page=${page}&size=${size}`)
+        .get(`/cards/search?keyword=${action.keywords}&tech=${action.techFilter}&category=${action.categoryFilter}&level=${action.levelFilter}&type=${action.typeFilter}&lang=${action.langFilter}&page=${page}&size=${size}`)
         .then(
           (response) => {
             console.log('Retour du serveur POSITIF et me retourne les données suivantes :');
@@ -209,7 +207,7 @@ export default (store) => (next) => (action) => {
             store.dispatch(saveMoreCards(response.data.data));
             store.dispatch(NextPage());
             store.dispatch(changeSearchField('', 'search'));
-            if (response.data.data.length < 15) {
+            if (response.data.data.length < size) {
               store.dispatch(setMore(false));
             }
           },

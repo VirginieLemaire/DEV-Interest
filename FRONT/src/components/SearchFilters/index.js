@@ -24,13 +24,13 @@ const SearchFilters = () => {
   const typFilter = query.get('type');
   const lanFilter = query.get('lang');
 
-  console.log('-------------------------------');
-  console.log('keywords', keywords);
-  console.log('techFilter', tecFilter);
-  console.log('categoryFilter', catFilter);
-  console.log('levelFilter', levFilter);
-  console.log('typeFilter', typFilter);
-  console.log('langFilter', lanFilter);
+  // console.log('-------------------------------');
+  // console.log('keywords', keywords);
+  // console.log('techFilter', tecFilter);
+  // console.log('categoryFilter', catFilter);
+  // console.log('levelFilter', levFilter);
+  // console.log('typeFilter', typFilter);
+  // console.log('langFilter', lanFilter);
 
   useEffect(() => {
     dispatch(setFilter(tecFilter, 'techFilter'));

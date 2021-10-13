@@ -26,9 +26,6 @@ const SearchResults = () => {
   const typeFilter = query.get('type');
   const langFilter = query.get('lang');
 
- 
-
-
   useEffect(() => {
     dispatch(fetchCardsSearch(
       keywords, techFilter, categoryFilter, levelFilter, typeFilter, langFilter,
@@ -58,7 +55,9 @@ const SearchResults = () => {
       <div className="search-results">
         <InfiniteScroll
           dataLength={cards.length}
-          next={() => dispatch(LoadMoreResults())}
+          next={() => dispatch(LoadMoreResults(
+            keywords, techFilter, categoryFilter, levelFilter, typeFilter, langFilter,
+          ))}
           hasMore={more}
           loader={more ? null : (<AppLoader />)}
         >
