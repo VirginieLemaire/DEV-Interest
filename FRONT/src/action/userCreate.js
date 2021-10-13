@@ -36,3 +36,20 @@ export const verifyEmail = (email) => (
     email,
   }
 )
+
+export const SET_AVAIL = 'SET_AVAIL';
+export const setAvail = (value, fieldName) => (
+  {
+    type: SET_AVAIL,
+    value,
+    fieldName,
+  }
+);
+
+export const PASSWORD_MATCH = 'PASSWORD_MATCH';
+export const passwordMatch = (value) => (
+  {
+    type: PASSWORD_MATCH,
+    value,
+  }
+);

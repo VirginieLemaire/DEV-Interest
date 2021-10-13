@@ -49,3 +49,27 @@ export const getOpengraphData = () => (
     type: GET_OPENGRAPH_DATA,
   }
 );
+
+export const CARD_EXIST = 'CARD_EXIST';
+export const cardExist = (value) => (
+  {
+    type: CARD_EXIST,
+    value,
+  }
+);
+
+export const SAVE_EXIST_CARD_URL = 'SAVE_EXIST_CARD_URL';
+export const saveExistCardUrl = (url) => (
+  {
+    type: SAVE_EXIST_CARD_URL,
+    url,
+  }
+);
+
+export const MISSING_ADD_CARD_FIELDS = 'MISSING_ADD_CARD_FIELDS';
+export const missingAddCardFields = (value) => (
+  {
+    type: MISSING_ADD_CARD_FIELDS,
+    value,
+  }
+)

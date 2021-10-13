@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import {
-  changeUpdateCardCertification, changeUpdateCardField, changeUpdateCardTechs, updateCard,
+  changeUpdateCardCertification, changeUpdateCardField, changeUpdateCardTechs, missingUpdateCardFields, updateCard,
 } from '../../action/cardUpdate';
 import { toggleModal, updateCardSuccessModal } from '../../action/displayOptions';
 import { slugify } from '../../selectors/cards';
@@ -30,8 +30,15 @@ const UpdateCard = () => {
   const { loading, darkMode } = useSelector((state) => state.displayOptions);
 
   const {
-    title, description, url, image, website, certification, category, techs, type, level, lang, id,
+    title, description, url, image, website, certification,
+    category, techs, type, level, lang, id, missingUpdateCardFieldsValue,
   } = useSelector((state) => state.cardUpdate);
+
+  console.log('update url', image);
+  console.log('update type', type);
+  console.log('update category', category);
+  console.log('update lang', lang);
+  console.log('update level', level);
 
   const customTheme = (theme) => ({
     ...theme,
@@ -94,12 +101,16 @@ const UpdateCard = () => {
 
   console.log('l\'id de la carte: ', id);
 
-  const handleSubmitNewCard = (e) => {
-    if (certification) {
-      e.preventDefault();
-      // dispatch(updateCardSuccessModal());
+  const handleSubmitUpdateCard = (e) => {
+    e.preventDefault();
+    if (certification && title && description
+      && techs !== [] && level && category && type && lang) {
       dispatch(updateCard());
+      dispatch(missingUpdateCardFields(false));
       history.push(`/${username}/${userId}/bookmarks/contributions`);
+    }
+    else {
+      dispatch(missingUpdateCardFields(true));
     }
   };
 
@@ -126,14 +137,14 @@ const UpdateCard = () => {
   return (
     <div className="update-card">
       <div className={darkMode ? 'add-card add-card--dark' : 'add-card'}>
-        <form className="add-card__form" onSubmit={handleSubmitNewCard}>
+        <form className="add-card__form" onSubmit={handleSubmitUpdateCard}>
           <h2 className={darkMode ? 'add-card__form__title add-card__title--dark' : 'add-card__title'}>Mise à jour de la ressource</h2>
           <Field
-            className="add-card__form__input-title"
+            className="field__input add-card__form__input-title"
             value={title}
             type="text"
             name="title"
-            placeholder="Titre de la ressource"
+            placeholder="Titre de la ressource*"
             handleChange={handleNewCardTitleChange}
             required
             minlength="10"
@@ -144,14 +155,14 @@ const UpdateCard = () => {
             value={description}
             type="textarea"
             name="description"
-            placeholder="Description"
+            placeholder="Description*"
             handleChange={(e) => dispatch(changeUpdateCardField(e.target.value, 'description'))}
             required
             minLength="10"
             maxLength="500"
           />
           <Field
-            className="add-card__form__input-website"
+            className="field__input add-card__form__input-website"
             value={website}
             type="text"
             name="website"
@@ -179,13 +190,13 @@ const UpdateCard = () => {
             required
           />
           <div className="add-card__form__image-container">
-            <img className="add-card__form__image-container__image" src={image} alt={title}/>
+            <img className="add-card__form__image-container__image" src={image} alt={title} />
           </div>
           <Select
             value={
               typeValues.filter((option) => option.value === type)
             }
-            placeholder="Type de ressource"
+            placeholder="Type de ressource*"
             closeMenuOnSelect
             components={animatedComponents}
             options={typeValues}
@@ -194,7 +205,7 @@ const UpdateCard = () => {
           />
           <Select
             value={newTechs}
-            placeholder="Technologies"
+            placeholder="Technologies*"
             closeMenuOnSelect={false}
             components={animatedComponents}
             isMulti
@@ -206,7 +217,7 @@ const UpdateCard = () => {
             value={
               categoryValues.filter((option) => option.value === category)
             }
-            placeholder="Catégorie"
+            placeholder="Catégorie*"
             closeMenuOnSelect
             components={animatedComponents}
             options={categoryValues}
@@ -217,7 +228,7 @@ const UpdateCard = () => {
             value={
             levelValues.filter((option) => option.value === level)
             }
-            placeholder="Niveau"
+            placeholder="Niveau*"
             closeMenuOnSelect
             components={animatedComponents}
             options={levelValues}
@@ -228,7 +239,7 @@ const UpdateCard = () => {
             value={
               languageOptions.filter((option) => option.value === lang)
             }
-            placeholder="Langue"
+            placeholder="Langue*"
             closeMenuOnSelect
             components={animatedComponents}
             options={languageOptions}
@@ -246,6 +257,9 @@ const UpdateCard = () => {
             />
             Je certifie que la ressource partagée respecte les conditions d'utilisations
           </label>
+          { missingUpdateCardFieldsValue && (
+            <div className="connexion__error">Des champs obligatoires ne sont pas complétés !</div>
+          )}
           <div className="add-card__form__button">
             <SubmitButton
               color

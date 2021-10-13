@@ -101,7 +101,18 @@
   }
 }
 
+.available{
+color: #32936F;
+;;
+}
 
+.not-available{
+  color: #D64933;
+}
+.connexion__error{
+  color: #D64933;
+  text-align: center;
+}
 .linky{
   font-weight: bold;
   color: vars.$primary-color

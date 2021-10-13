@@ -5,6 +5,14 @@ export const toggleLogged = () => (
   }
 );
 
+export const LOGGED = 'LOGGED';
+export const Logged = (value) => (
+  {
+    type: LOGGED,
+    value,
+  }
+);
+
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const userLogout = () => ({
   type: USER_LOGOUT,
@@ -127,9 +135,17 @@ export const userApiLogout = () => (
   }
 );
 
-export const GET_USER_WITH_TOKEN = 'GET_USER_WITH_TOKEN'
+export const GET_USER_WITH_TOKEN = 'GET_USER_WITH_TOKEN';
 export const getUserWithToken = () => (
   {
     type: GET_USER_WITH_TOKEN,
+  }
+);
+
+export const CONNEXION_ERROR = 'CONNEXION_ERROR';
+export const connexionError = (value) => (
+  {
+    type: CONNEXION_ERROR,
+    value,
   }
 );

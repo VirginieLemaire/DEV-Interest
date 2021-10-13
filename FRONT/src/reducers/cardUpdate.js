@@ -1,7 +1,7 @@
 import {
   AUTOFILL_UPDATE_FIELDS,
   CHANGE_UPDATE_CARD_CERTIFICATION, CHANGE_UPDATE_CARD_FIELD,
-  CHANGE_UPDATE_CARD_TECHS, RESET_UPDATE_CARD, SET_DELETE_CARD_ID,
+  CHANGE_UPDATE_CARD_TECHS, MISSING_UPDATE_CARD_FIELDS, RESET_UPDATE_CARD, SET_DELETE_CARD_ID,
 } from '../action/cardUpdate';
 
 export const initialState = {
@@ -72,11 +72,17 @@ const reducer = (state = initialState, action = {}) => {
         level: action.card.level_id,
         lang: action.card.language_id,
         category: action.card.category_id,
+        certification: false,
       };
     case SET_DELETE_CARD_ID:
       return {
         ...state,
         deleteCardId: action.id,
+      };
+    case MISSING_UPDATE_CARD_FIELDS:
+      return {
+        ...state,
+        missingUpdateCardFieldsValue: action.value,
       };
     default:
       return state;

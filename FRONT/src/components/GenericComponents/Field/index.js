@@ -16,6 +16,7 @@ const Field = ({
   minlength,
   maxlength,
   readOnly,
+  className,
 }) => {
   const inputId = `field-${name}`;
 
@@ -29,7 +30,7 @@ const Field = ({
         // infos de base
         id={inputId}
         type={type}
-        className="field__input"
+        className={className}
         placeholder={placeholder}
         name={name}
         required={required}
@@ -59,6 +60,7 @@ Field.propTypes = {
   minlength: PropTypes.string,
   maxlength: PropTypes.string,
   readOnly: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 // Valeurs par défaut pour les props
@@ -70,6 +72,7 @@ Field.defaultProps = {
   minlength: '',
   maxlength: '',
   readOnly: false,
+  className: 'field__input',
 };
 
 // == Export

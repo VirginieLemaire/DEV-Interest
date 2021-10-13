@@ -78,7 +78,9 @@
     font-size: 30rem;
   }
   &__connexion-warning{
-    color: red;
+    font-size: 1.2rem;
+    color: #D64933;
+    text-align: center;
     &__container{
       display: flex;
       flex-direction: column;
