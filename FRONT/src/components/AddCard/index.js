@@ -223,7 +223,7 @@ const AddCard = () => {
       </form>
       {(title || image || website) && 
         <div className="add-card__card-preview">
-          <h2 className={darkMode ? 'add-card__card-preview__title add-card__card-preview__title--dark' : 'add-card__card-preview__title'}>Aperçu de la ressoucre</h2>
+          <h2 className={darkMode ? 'add-card__card-preview__title add-card__card-preview__title--dark' : 'add-card__card-preview__title'}>Aperçu de la carte</h2>
           <CardPreview card={cardNew}/>
         </div>
       }
