@@ -83,7 +83,7 @@ const CardDetails = () => {
       dispatch(showAddCardModal());
     }
   };
-  const creationDate = formatDate(card.createat);
+  const creationDate = formatDate(card.createdat);
 
   const handleContentToggle = () => {
     dispatch(toggleDisplayUrl());
