@@ -174,13 +174,7 @@ const CardDetails = () => {
       <div className="card-details__suggestion-title-container">
          <h2 className={darkMode ? 'card-details__suggestion-title-container__title card-details__suggestion-title-container__title--dark' : 'card-details__suggestion-title-container__title'}>D'autres cartes pourraient t'intéresser</h2>
       </div>
-          
-      {
-        searchQuery && <SearchResults />
-      }
-      {
-        !searchQuery && <CardsDisplay keyword={card.techs[0]} cardIgnored={card.id} />
-      }
+      <CardsDisplay keyword={card.techs[0]} cardIgnored={card.id} />
     </div>
   );
 };
