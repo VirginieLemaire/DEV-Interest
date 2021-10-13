@@ -45,3 +45,11 @@ export const setAvail = (value, fieldName) => (
     fieldName,
   }
 );
+
+export const PASSWORD_MATCH = 'PASSWORD_MATCH';
+export const passwordMatch = (value) => (
+  {
+    type: PASSWORD_MATCH,
+    value,
+  }
+);

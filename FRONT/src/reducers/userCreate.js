@@ -1,4 +1,6 @@
-import { CHANGE_NEW_USER_FIELD, RESET_NEW_USER_FIELDS, SET_AVAIL } from '../action/userCreate';
+import {
+  CHANGE_NEW_USER_FIELD, PASSWORD_MATCH, RESET_NEW_USER_FIELDS, SET_AVAIL,
+} from '../action/userCreate';
 
 export const initialState = {
   username: '',
@@ -7,6 +9,7 @@ export const initialState = {
   email: '',
   password: '',
   passwordVerification: '',
+  passwordMatchValue: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -28,6 +31,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         [action.fieldName]: action.value,
+      };
+    case PASSWORD_MATCH:
+      return {
+        ...state,
+        passwordMatchValue: action.value,
       };
     default:
       return state;

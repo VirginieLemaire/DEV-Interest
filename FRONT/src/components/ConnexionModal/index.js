@@ -14,7 +14,7 @@ import PasswordField from '../GenericComponents/PasswordField';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import Field from '../GenericComponents/Field';
 import {
-  changeNewUserField, signup, verifyEmail, verifyUsername,
+  changeNewUserField, passwordMatch, signup, verifyEmail, verifyUsername,
 } from '../../action/userCreate';
 
 const ConnexionModal = () => {
@@ -22,7 +22,9 @@ const ConnexionModal = () => {
   const history = useHistory();
 
   const { darkMode, hasAnAccount, connexionModal } = useSelector((state) => state.displayOptions);
-  const { usernameAvailability, emailAvailability } = useSelector((state) => state.userCreate);
+  const {
+    usernameAvailability, emailAvailability, passwordMatchValue,
+  } = useSelector((state) => state.userCreate);
 
   const { email, password } = useSelector((state) => state.userConnect);
 
@@ -48,6 +50,10 @@ const ConnexionModal = () => {
       dispatch(showConnexionModal());
       dispatch(signup());
       history.push('/');
+      dispatch(passwordMatch(false));
+    }
+    else if (newUserPassword !== newUserPasswordVerif) {
+      dispatch(passwordMatch(true));
     }
   };
 
@@ -182,6 +188,9 @@ const ConnexionModal = () => {
                 required
                 minlength="4"
               />
+              { passwordMatchValue && (
+                <div className="connexion__error">Les mots de passe ne correspondent pas !</div>
+              )}
             </div>
             <div className="connexion-modal__footer">
               <SubmitButton
