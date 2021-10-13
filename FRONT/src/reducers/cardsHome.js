@@ -1,5 +1,9 @@
 import { NEXT_PAGE_HOME, SAVE_CARDS_HOME, SAVE_MORE_HOME_CARDS } from '../action/cardsHome';
 
+function randomIntFromInterval(min, max) { // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 export const initialState = {
   cards: [],
   type: '',
@@ -17,7 +21,7 @@ const reducer = (state = initialState, action = {}) => {
     case SAVE_CARDS_HOME:
       return {
         ...state,
-        cards: action.data,
+        cards: action.data.map((card) => ({ ...card, height: randomIntFromInterval(300, 500) })),
         page: 1,
       };
     case NEXT_PAGE_HOME:
@@ -28,7 +32,7 @@ const reducer = (state = initialState, action = {}) => {
     case SAVE_MORE_HOME_CARDS:
       return {
         ...state,
-        cards: [...state.cards, ...action.data],
+        cards: [...state.cards, ...action.data.map((card) => ({ ...card, height: randomIntFromInterval(300, 500) }))],
       };
     default:
       return state;
