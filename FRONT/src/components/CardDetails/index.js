@@ -24,7 +24,7 @@ import { getDomainName, formatDate, capitalizeFirstLetter } from '../../selector
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
-import HomeCards from '../HomeCards';
+import CardsDisplay from '../CardsDisplay';
 import './card-details.scss';
 import { showAddCardModal, toggleDisplayUrl } from '../../action/displayOptions';
 import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
@@ -171,16 +171,15 @@ const CardDetails = () => {
           </div>
         </div>
       </div>
-          {
-      // <div className="card-details__suggestion-title-container">
-      //   <h2 className={darkMode ? 'card-details__suggestion-title-container__title card-details__suggestion-title-container__title--dark' : 'card-details__suggestion-title-container__title'}>D'autres cartes pourraient t'intéresser</h2>
-      // </div>
-          }
+      <div className="card-details__suggestion-title-container">
+         <h2 className={darkMode ? 'card-details__suggestion-title-container__title card-details__suggestion-title-container__title--dark' : 'card-details__suggestion-title-container__title'}>D'autres cartes pourraient t'intéresser</h2>
+      </div>
+          
       {
-        // searchQuery && <SearchResults />
+        searchQuery && <SearchResults />
       }
       {
-        // !searchQuery && <HomeCards />
+        !searchQuery && <CardsDisplay keyword={card.techs[0]} />
       }
     </div>
   );
