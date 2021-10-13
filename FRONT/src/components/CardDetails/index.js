@@ -103,30 +103,35 @@ const CardDetails = ({ card }) => {
             <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
           <div className="card-details__board__infos__techs-container">
-            {/* <p>Technos: </p> */}
-            {
-              card.techs.map((tech) => (
-                <div className="card-details__board__infos__techs-container__tech">
-                  <aside key={`${card.id}-${tech}`} className="card-details__board__infos__techs-container__tech__icon">{iconsTable[tech.toLowerCase()]}</aside>
-                  <Tag id={tech} name={tech.capitalize()} />
-                </div>
-              ))
-            }
+            <p className="card-details__board__infos__techs-container__title">Technos: </p>
+            <div className="card-details__board__infos__techs-container__techs">
+              {
+                card.techs.map((tech) => (
+                  <div className="card-details__board__infos__techs-container__techs__tech">
+                    <aside key={`${card.id}-${tech}`} className="card-details__board__infos__techs-container__techs__tech__icon">{iconsTable[tech.toLowerCase()]}</aside>
+                    <Tag id={tech} name={tech.capitalize()} />
+                  </div>
+                ))
+              }
+            </div>
           </div>
           <div className="card-details__board__infos__tags-container">
             <div className="card-details__board__infos__tags-container__tag">
+              <p>Niveau: </p>
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <i className={`bi bi-${levelIconsTable[card.level.toLowerCase()]}`} />
               </div>
               <Tag name={card.level.capitalize()} />
             </div>
             <div className="card-details__board__infos__tags-container__tag">
+              <p>Catégorie: </p>
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <FaTags />
               </div>
               <Tag name={card.category.capitalize()} />
             </div>
             <div className="card-details__board__infos__tags-container__tag">
+              <p>Type: </p>
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <MdPermMedia />
               </div>
