@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import {
-  addCard, changeNewCardCertification, changeNewCardField, changeNewCardTechs,
+  addCard, changeNewCardCertification, changeNewCardField, changeNewCardTechs, missingAddCardFields,
 } from '../../action/cardNew';
 import { getUserWithToken, toggleLogged } from '../../action/userCurrent';
 
@@ -29,7 +29,8 @@ const AddCard = () => {
   const { loading, darkMode } = useSelector((state) => state.displayOptions);
 
   const {
-    title, description, url, image, website, certification, techs, level
+    title, description, image, certification, website, url,
+    techs, level, category, type, lang, missingAddCardFieldsValue,
   } = useSelector((state) => state.cardNew);
 
   const cardNew = useSelector((state) => state.cardNew);
@@ -94,10 +95,15 @@ const AddCard = () => {
   };
 
   const handleSubmitNewCard = (e) => {
-    if (certification) {
-      e.preventDefault();
+    e.preventDefault();
+    if (certification && title && description
+      && techs !== [] && level && category && type && lang) {
       dispatch(addCard());
+      dispatch(missingAddCardFields(false));
       history.push('/');
+    }
+    else {
+      dispatch(missingAddCardFields(true));
     }
   };
 
@@ -112,7 +118,7 @@ const AddCard = () => {
           value={title}
           type="text"
           name="title"
-          placeholder="Titre de la ressource"
+          placeholder="Titre de la ressource*"
           handleChange={handleNewCardTitleChange}
           required
           minlength="10"
@@ -123,7 +129,7 @@ const AddCard = () => {
           value={description}
           type="textarea"
           name="description"
-          placeholder="Description"
+          placeholder="Description*"
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'description'))}
           required
           minLength="10"
@@ -158,7 +164,7 @@ const AddCard = () => {
           required
         />
         <Select
-          placeholder="Type de ressource"
+          placeholder="Type de ressource*"
           closeMenuOnSelect
           components={animatedComponents}
           options={typeValues}
@@ -166,7 +172,7 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Technologies"
+          placeholder="Technologies*"
           closeMenuOnSelect={false}
           components={animatedComponents}
           isMulti
@@ -175,7 +181,7 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Catégorie"
+          placeholder="Catégorie*"
           closeMenuOnSelect
           components={animatedComponents}
           options={categoryValues}
@@ -183,7 +189,7 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Niveau"
+          placeholder="Niveau*"
           closeMenuOnSelect
           components={animatedComponents}
           options={levelValues}
@@ -191,14 +197,16 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Langue"
+          placeholder="Langue*"
           closeMenuOnSelect
           components={animatedComponents}
           options={languageOptions}
           onChange={(value) => dispatch(changeNewCardField(value.value, 'lang'))}
           theme={customTheme}
         />
-
+        { missingAddCardFieldsValue && (
+          <div className="connexion__error">Des champs obligatoires doivent être complétés !</div>
+        )}
         <label className={darkMode ? 'add-card__input-certified add-card__input-certified--dark' : 'add-card__input-certified'} htmlFor="certify-add-card">
 
           <input
@@ -219,12 +227,13 @@ const AddCard = () => {
           />
         </div>
       </form>
-      {(title || image || website) && 
+      {(title || image || website)
+        && (
         <div className="add-card__card-preview">
           <h2 className={darkMode ? 'add-card__card-preview__title add-card__card-preview__title--dark' : 'add-card__card-preview__title'}>Aperçu de la carte</h2>
-          <CardPreview card={cardNew}/>
+          <CardPreview card={cardNew} />
         </div>
-      }
+        )}
     </div>
   );
 };

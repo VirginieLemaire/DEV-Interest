@@ -1,4 +1,3 @@
-
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Masonry from 'react-masonry-css';
@@ -12,14 +11,12 @@ import Loader from '../GenericComponents/Loader';
 import { showDeleteCardModal } from '../../action/displayOptions';
 import { deleteContribution } from '../../action/userCurrent';
 
-
 const BookmarkedCards = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
   const { contributions } = useSelector((state) => state.userCurrent);
   const { loading } = useSelector((state) => state.displayOptions);
-
 
   const handleUpdateButtonClick = (cardId) => {
     history.push('/update-card');
@@ -29,7 +26,6 @@ const BookmarkedCards = () => {
     dispatch(setDeleteCardId(cardId));
     dispatch(showDeleteCardModal());
   };
-
 
   const breakpointsColumnsObj = {
     default: 7,
@@ -66,9 +62,7 @@ const BookmarkedCards = () => {
                         <Button
                           color
                           styling="outline"
-
                           handleClick={() => handleDeleteButtonClick(card.id)}
-
                           content="Supprimer"
                         />
                       </div>

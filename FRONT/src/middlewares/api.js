@@ -590,10 +590,10 @@ export default (store) => (next) => (action) => {
       console.log(`Route empreintée en GET : /cards/${action.id}`);
 
       axiosInstance.get(
-        `/cards/details/${action.id}`,
+        `/update/${action.id}`,
       ).then(
         (response) => {
-          console.log(`REUSSI, les informations reçues de la carte ${action.id} sont`, response.data);
+          console.log(`REUSSI, les informations reçues de la carte ${action.id} sont`, response);
           store.dispatch(autofillUpdateFields(response.data));
         },
       ).catch(

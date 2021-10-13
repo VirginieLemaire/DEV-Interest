@@ -65,3 +65,11 @@ export const saveExistCardUrl = (url) => (
     url,
   }
 );
+
+export const MISSING_ADD_CARD_FIELDS = 'MISSING_ADD_CARD_FIELDS';
+export const missingAddCardFields = (value) => (
+  {
+    type: MISSING_ADD_CARD_FIELDS,
+    value,
+  }
+)

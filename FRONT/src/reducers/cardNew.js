@@ -1,7 +1,9 @@
 import {
   CARD_EXIST,
   CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD,
-  CHANGE_NEW_CARD_TECHS, INSERT_OPENGRAPH_DATA_INTO_NEW_CARD_FORM, RESET_NEW_CARD, SAVE_EXIST_CARD_URL,
+  CHANGE_NEW_CARD_TECHS,
+  MISSING_ADD_CARD_FIELDS,
+  RESET_NEW_CARD, SAVE_EXIST_CARD_URL,
 } from '../action/cardNew';
 
 export const initialState = {
@@ -20,6 +22,7 @@ export const initialState = {
   addCardLinkField: '',
   cardExistValue: false,
   cardExistUrl: '',
+  missingAddCardFieldsValue: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -64,6 +67,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         cardExistUrl: action.url,
+      };
+    case MISSING_ADD_CARD_FIELDS:
+      return {
+        ...state,
+        missingAddCardFieldsValue: action.value,
       };
     default:
       return state;

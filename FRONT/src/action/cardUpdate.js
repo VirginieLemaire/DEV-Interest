@@ -74,3 +74,11 @@ export const deleteCard = (id) => (
     id,
   }
 );
+
+export const MISSING_UPDATE_CARD_FIELDS = 'MISSING_UPDATE_CARD_FIELDS';
+export const missingUpdateCardFields = (value) => (
+  {
+    type: MISSING_UPDATE_CARD_FIELDS,
+    value,
+  }
+)
