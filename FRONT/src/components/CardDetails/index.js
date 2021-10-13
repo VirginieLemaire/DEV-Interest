@@ -27,7 +27,7 @@ import SearchResults from '../SearchResults';
 import CardsDisplay from '../CardsDisplay';
 import './card-details.scss';
 import { showAddCardModal, toggleDisplayUrl } from '../../action/displayOptions';
-import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
+import { addToBookmarks, getUserWithToken, removeFromBookmarks } from '../../action/userCurrent';
 import { fetchCard } from '../../action/cardCurrent';
 import Loader from '../GenericComponents/Loader';
 
@@ -51,6 +51,9 @@ const CardDetails = () => {
   const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
   const { searchQuery } = useSelector((state) => state.cardsSearch);
 
+  // useEffect(() => {
+  //   dispatch(getUserWithToken());
+  // }, [bookmarks]);
   const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
 
   const levelIconsTable = {

@@ -60,7 +60,7 @@ const reducer = (state = initialState, action = {}) => {
     case UPDATE_BOOKMARKS:
       return {
         ...state,
-        bookmarks: action.data.map((card) => ({ ...card, height: randomIntFromInterval(300, 500) })),
+        bookmarks: action.data,
       };
     case SAVE_CONTRIBUTIONS:
       return {
