@@ -8,6 +8,8 @@ const fetchUrlController = require('./controllers/fetchUrlController');
 const contributorController = require('./controllers/contributorController');
 const checkRefreshToken = require('./middlewares/checkRefreshToken');
 const refreshToken = require('./controllers/refreshToken');
+const verifyController = require('./controllers/verifyController');
+
 
 
 const router = Router();
@@ -21,7 +23,7 @@ router.get('/cards', cardController.findAllCards);
     //2. remplir le formulaire et envoyer au back
     router.post('/cards/save',checkJwt, cardController.save);
 //lire une carte
-router.get('/cards/details/:id', cardController.findById);
+router.get('/cards/:slug/:id', cardController.findById);
 
 //modification d'une carte
 router.put('/contributor/cards/:id',checkJwt, contributorController.update);
@@ -56,6 +58,10 @@ router.post('/signup', userController.signUp);
 
 // route pour le refresh Token
 router.post('/api/refreshToken',checkRefreshToken, refreshToken.refreshToken);
+
+//route pour vérifier la présence de données en DB
+router.get('/verify?', verifyController.signUp);
+
 /**
  * Une route au cas où aucune ne répond
  * 
