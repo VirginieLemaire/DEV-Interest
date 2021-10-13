@@ -10,7 +10,7 @@ import './cards-display.scss';
 import Card from '../Card';
 import Loader from '../GenericComponents/Loader';
 
-const CardsDisplay = ({keyword}) => {
+const CardsDisplay = ({keyword, cardIgnored}) => {
   const dispatch = useDispatch();
 
   const useQuery = () => new URLSearchParams(useLocation().search);
@@ -60,7 +60,9 @@ const CardsDisplay = ({keyword}) => {
               cards.map(
                 (card) => (
                   <div className="masonry-div" key={card.id}>
-                    <Card key={card.id} card={card} />
+                    {
+                      card.id !== cardIgnored && <Card key={card.id} card={card} />
+                    }
                   </div>
                 ),
               )
@@ -73,6 +75,11 @@ const CardsDisplay = ({keyword}) => {
 
 CardsDisplay.propTypes = {
   keyword: PropTypes.string.isRequired,
+  cardIgnored: PropTypes.number,
+};
+
+CardsDisplay.defaultProps = {
+  cardIgnored: null,
 };
 
 export default CardsDisplay;

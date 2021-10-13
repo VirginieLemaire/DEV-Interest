@@ -179,7 +179,7 @@ const CardDetails = () => {
         searchQuery && <SearchResults />
       }
       {
-        !searchQuery && <CardsDisplay keyword={card.techs[0]} />
+        !searchQuery && <CardsDisplay keyword={card.techs[0]} cardIgnored={card.id} />
       }
     </div>
   );
