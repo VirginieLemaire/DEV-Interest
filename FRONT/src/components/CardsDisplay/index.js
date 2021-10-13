@@ -1,16 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import PropTypes from 'prop-types';
 import Masonry from 'react-masonry-css';
 import { useLocation } from 'react-router';
 import { useEffect } from 'react';
-import { fetchCardsSearch, LoadMoreResults, setFilter } from '../../action/cardsSearch';
+import { fetchCardsSearch } from '../../action/cardsSearch';
 
 import './cards-display.scss';
 
 import Card from '../Card';
-import AppLoader from '../GenericComponents/AppLoader';
 import Loader from '../GenericComponents/Loader';
-import SearchFilters from '../SearchFilters';
 
 const CardsDisplay = ({keyword}) => {
   const dispatch = useDispatch();
@@ -72,4 +70,9 @@ const CardsDisplay = ({keyword}) => {
     </div>
   );
 };
+
+CardsDisplay.propTypes = {
+  keyword: PropTypes.string.isRequired,
+};
+
 export default CardsDisplay;
