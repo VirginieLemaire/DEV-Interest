@@ -39,7 +39,7 @@ const ErrorPage = () => {
               )
             }
         </Masonry> */}
-        <CardsDisplay />
+        <CardsDisplay keyword={'404'}/>
       </div>
     </div>
   );
