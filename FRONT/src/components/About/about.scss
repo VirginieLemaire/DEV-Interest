@@ -7,6 +7,11 @@
   gap: 2rem;
   max-width: 1080px;
   margin: auto;
+  margin-top: 4rem;
+
+  &--dark{
+    color: vars.$white-color;
+  }
 
   &__description {
     display: flex;
@@ -21,10 +26,16 @@
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    
+    &__cards{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 2rem;
+    }
+
   }
-
 }
-
 .subtitle {
   font-size: 1.5rem;
   font-weight: bold;

@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 2rem;
   align-items: center;
+  margin-top: 4rem;
 
   &__title {
     font-size: 2rem;
@@ -12,5 +13,6 @@
   &__text {
     font-size: 1.5rem;
     font-style: italic;
+    margin-bottom: 2rem;
   }
 }

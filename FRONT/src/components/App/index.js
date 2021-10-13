@@ -12,7 +12,6 @@ import Footer from '../Footer';
 import Header from '../Header';
 import ConnexionModal from '../ConnexionModal';
 import CardDetails from '../CardDetails';
-import Page404 from '../Page404';
 import UserBookmarks from '../UserBookmarks';
 import AddCard from '../AddCard';
 import Legal from '../Legal';

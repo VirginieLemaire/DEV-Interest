@@ -127,9 +127,9 @@ const UpdateCard = () => {
     <div className="update-card">
       <div className={darkMode ? 'add-card add-card--dark' : 'add-card'}>
         <form className="add-card__form" onSubmit={handleSubmitNewCard}>
-          <h2 className={darkMode ? 'add-card__title add-card__title--dark' : 'add-card__title'}>Mise à jour de la ressource</h2>
+          <h2 className={darkMode ? 'add-card__form__title add-card__title--dark' : 'add-card__title'}>Mise à jour de la ressource</h2>
           <Field
-            className="add-card__input-title"
+            className="add-card__form__input-title"
             value={title}
             type="text"
             name="title"
@@ -140,7 +140,7 @@ const UpdateCard = () => {
             maxlength="120"
           />
           <TextareaField
-            className="add-card__input-description"
+            className="add-card__form__input-description"
             value={description}
             type="textarea"
             name="description"
@@ -151,7 +151,7 @@ const UpdateCard = () => {
             maxLength="500"
           />
           <Field
-            className="add-card__input-website"
+            className="add-card__form__input-website"
             value={website}
             type="text"
             name="website"
@@ -162,7 +162,7 @@ const UpdateCard = () => {
             readOnly
           />
           <UrlField
-            className="add-card__input-url"
+            className="add-card__form__input-url"
             value={url}
             name="urlSource"
             placeholder="Lien Url de la ressource"
@@ -171,13 +171,16 @@ const UpdateCard = () => {
             readOnly
           />
           <UrlField
-            className="add-card__input-image"
+            className="add-card__form__input-image"
             value={image}
             name="urlImage"
             placeholder="Lien Url de l'image"
             handleChange={(e) => dispatch(changeUpdateCardField(e.target.value, 'image'))}
             required
           />
+          <div className="add-card__form__image-container">
+            <img className="add-card__form__image-container__image" src={image} alt={title}/>
+          </div>
           <Select
             value={
               typeValues.filter((option) => option.value === type)
@@ -232,7 +235,7 @@ const UpdateCard = () => {
             onChange={(value) => dispatch(changeUpdateCardField(value.value, 'lang'))}
             theme={customTheme}
           />
-          <label className={darkMode ? 'add-card__input-certified add-card__input-certified--dark' : 'add-card__input-certified'} htmlFor="certify-add-card">
+          <label className={darkMode ? 'add-card__form__input-certified add-card__input-certified--dark' : 'add-card__input-certified'} htmlFor="certify-add-card">
             <input
               type="checkbox"
               id="certify-add-card"
@@ -243,7 +246,7 @@ const UpdateCard = () => {
             />
             Je certifie que la ressource partagée respecte les conditions d'utilisations
           </label>
-          <div className="add-card__button">
+          <div className="add-card__form__button">
             <SubmitButton
               color
               styling="full"
