@@ -10,37 +10,6 @@ const About = () => {
   const { darkMode } = useSelector((state) => state.displayOptions);
   const { teamCards } = useSelector((state) => state.cardsTeam);
 
-  // const teamCards = [
-  //   {
-  //     title:"Virginie",
-  //     image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-  //     type:"Product Owner / Git Master",
-  //     techs: ['Javascript', 'PostgreSQL', 'Autres'],
-  //     isFlipped: false,
-  //   },
-  //   {
-  //     title:"Frédéric",
-  //     image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-  //     type:"Product Owner / Git Master",
-  //     techs: ['Javascript', 'PostgreSQL', 'Autres'],
-  //     isFlipped: false,
-  //   },
-  //   {
-  //     title:"Alexandre",
-  //     image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-  //     type:"Product Owner / Git Master",
-  //     techs: ['Javascript', 'CSS'],
-  //     isFlipped: false,
-  //   },
-  //   {
-  //     title:"Romain",
-  //     image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-  //     type:"Product Owner / Git Master",
-  //     techs: ['Javascript', 'CSS'],
-  //     isFlipped: false,
-  //   },
-  // ],
-
   return (
     <div className={darkMode ? "about about--dark" : "about"}>
       <div className="about__description">
@@ -68,7 +37,7 @@ const About = () => {
                 teamCards.map(
                   (card) => (
                     <div onClick={()=> dispatch(flipCard(card.id))} className="about__team__cards__card" key={card.title}>
-                    <ReactCardFlip key={card.id} isFlipped={card.isFlipped} flipDirection="vertical">
+                    <ReactCardFlip key={card.id} isFlipped={card.isFlipped} flipDirection="horizontal" flipSpeedFrontToBack={0.9}	flipSpeedBackToFront={0.9}>
                       <CardTeamFront card={card} />
                       <CardTeamBack card={card} />
                     </ReactCardFlip>
