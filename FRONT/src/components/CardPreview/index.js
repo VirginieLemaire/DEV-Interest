@@ -116,8 +116,8 @@ CardPreview.propTypes = {
     image: PropTypes.string,
     title: PropTypes.string,
     website: PropTypes.string,
-    type: PropTypes.number,
-    level: PropTypes.number,
+    type: PropTypes.string,
+    level: PropTypes.string,
     techs: PropTypes.arrayOf(
       PropTypes.arrayOf(
         PropTypes.number,

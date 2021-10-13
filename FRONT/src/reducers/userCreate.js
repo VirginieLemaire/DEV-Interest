@@ -1,7 +1,9 @@
-import { CHANGE_NEW_USER_FIELD, RESET_NEW_USER_FIELDS } from '../action/userCreate';
+import { CHANGE_NEW_USER_FIELD, RESET_NEW_USER_FIELDS, SET_AVAIL } from '../action/userCreate';
 
 export const initialState = {
   username: '',
+  usernameAvailability: true,
+  emailAvailability: true,
   email: '',
   password: '',
   passwordVerification: '',
@@ -21,6 +23,11 @@ const reducer = (state = initialState, action = {}) => {
         email: '',
         password: '',
         passwordVerification: '',
+      };
+    case SET_AVAIL:
+      return {
+        ...state,
+        [action.fieldName]: action.value,
       };
     default:
       return state;

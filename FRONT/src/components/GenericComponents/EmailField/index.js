@@ -12,6 +12,7 @@ const EmailField = ({
   handleChange,
   required,
   autoComplete,
+  className,
 }) => {
   const inputId = `email-field-${name}`;
 
@@ -25,7 +26,7 @@ const EmailField = ({
         // infos de base
         id={inputId}
         type="email"
-        className="email-field__input"
+        className={className}
         placeholder={placeholder}
         name={name}
         required={required}
@@ -48,6 +49,7 @@ EmailField.propTypes = {
   handleChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
   autoComplete: PropTypes.string,
+  className: PropTypes.string,
 };
 
 // Valeurs par défaut pour les props
@@ -55,6 +57,7 @@ EmailField.defaultProps = {
   value: '',
   required: false,
   autoComplete: 'off',
+  className: 'email-field__input',
 };
 
 // == Export

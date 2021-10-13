@@ -36,3 +36,12 @@ export const verifyEmail = (email) => (
     email,
   }
 )
+
+export const SET_AVAIL = 'SET_AVAIL';
+export const setAvail = (value, fieldName) => (
+  {
+    type: SET_AVAIL,
+    value,
+    fieldName,
+  }
+);

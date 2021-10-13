@@ -13,14 +13,16 @@ import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import Field from '../GenericComponents/Field';
-import { changeNewUserField, signup, verifyEmail, verifyUsername } from '../../action/userCreate';
+import {
+  changeNewUserField, signup, verifyEmail, verifyUsername,
+} from '../../action/userCreate';
 
 const ConnexionModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const { darkMode, hasAnAccount, connexionModal } = useSelector((state) => state.displayOptions);
-  const { isLogged } = useSelector((state) => state.userCurrent);
+  const { usernameAvailability, emailAvailability } = useSelector((state) => state.userCreate);
 
   const { email, password } = useSelector((state) => state.userConnect);
 
@@ -56,11 +58,11 @@ const ConnexionModal = () => {
   const handleChangeNewUsername = (e) => {
     dispatch(verifyUsername(e.target.value));
     dispatch(changeNewUserField(e.target.value, 'username'));
-  }
+  };
   const handleChangeNewEmail = (e) => {
     dispatch(verifyEmail(e.target.value));
     dispatch(changeNewUserField(e.target.value, 'email'));
-  }
+  };
   // const handleKeyPress = (e) => {
   //   if (e.keyCode === 27) {
   //     dispatch(showConnexionModal());
@@ -142,19 +144,21 @@ const ConnexionModal = () => {
                 autoComplete="off"
                 value={newUserUsername}
                 name="new-user_username"
-                placeholder="Nom d'utilisateur"
+                placeholder={usernameAvailability ? 'Nom d\'utilisateur' : 'Nom d\'utilisateur - déjà utilisé'}
                 handleChange={handleChangeNewUsername}
                 minlength="4"
                 maxlength="20"
                 required
+                className={usernameAvailability ? 'field__input' : 'field__input not-available'}
               />
               <EmailField
                 autoComplete="off"
                 value={newUserEmail}
                 name="new-user_email"
-                placeholder="Email"
+                placeholder={emailAvailability ? 'Email' : 'Email - déjà utilisé'}
                 handleChange={handleChangeNewEmail}
                 required
+                className={emailAvailability ? 'email-field__input' : 'email-field__input not-available'}
               />
               <PasswordField
                 autoComplete="new-password"

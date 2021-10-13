@@ -166,3 +166,13 @@ export const setSearchModal = (value) => (
     value,
   }
 );
+
+export const SET_REDIRECT_TO_TRUE = 'SET_REDIRECT_TO_TRUE';
+export const setRedirectToTrue = () => ({
+  type: SET_REDIRECT_TO_TRUE,
+});
+
+export const SET_REDIRECT_TO_FALSE = 'SET_REDIRECT_TO_FALSE';
+export const setRedirectToFalse = () => ({
+  type: SET_REDIRECT_TO_FALSE,
+});

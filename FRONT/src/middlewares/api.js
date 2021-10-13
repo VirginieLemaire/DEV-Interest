@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import axios from 'axios';
 
+import { browserHistory } from 'react-router'
+
 import {
-  ADD_CARD, changeNewCardField, GET_OPENGRAPH_DATA, resetNewCard,
+  ADD_CARD, cardExist, changeNewCardField, GET_OPENGRAPH_DATA, resetNewCard, saveExistCardUrl,
 } from '../action/cardNew';
 
 import {
@@ -19,7 +21,7 @@ import {
   createAccountThankModal,
   deleteCardSuccessModal,
   deleteUserSuccessModal,
-  setAppLoading, setLoading, setMore, setMoreHome, toggleModal,
+  setAppLoading, setLoading, setMore, setMoreHome, setRedirectToTrue, showAddCardModal, toggleModal,
   updateAccountSuccessModal, updateCardSuccessModal,
 } from '../action/displayOptions';
 
@@ -30,7 +32,9 @@ import {
 import {
   connectUser, LOGIN, resetConnectingFields, SET_ACCESSTOKEN_LOCALSTORAGE,
 } from '../action/userConnect';
-import { resetNewUserFields, SIGNUP, VERIFY_EMAIL, VERIFY_USERNAME } from '../action/userCreate';
+import {
+  resetNewUserFields, setAvail, SIGNUP, VERIFY_EMAIL, VERIFY_USERNAME,
+} from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
   FETCH_BOOKMARKED_CARDS, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
@@ -250,10 +254,17 @@ export default (store) => (next) => (action) => {
           if (response.data['og:image']) {
             store.dispatch(changeNewCardField(response.data['og:image'], 'image'));
           }
+          store.dispatch(showAddCardModal());
           store.dispatch(setLoading(false));
+          store.dispatch(setRedirectToTrue());
         },
       ).catch(
-        (error) => console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response),
+        (error) => {
+          console.log('ERREUR : Le serveur n\'a pas réussi à retourner de données :', error.response);
+          store.dispatch(saveExistCardUrl(error.response.data.url));
+          store.dispatch(cardExist(true));
+          store.dispatch(setLoading(false));
+        },
       );
       next(action);
       break;
@@ -763,11 +774,12 @@ export default (store) => (next) => (action) => {
           (response) => {
             console.log('Retour du serveur POSITIF, le username est disponible ');
             console.log(response);
-            store.dispatch(saveCard(response.data));
+            store.dispatch(setAvail(true, 'usernameAvailability'));
           },
         ).catch(
           (error) => {
             console.log('Le nom existe déjà: ', error.message);
+            store.dispatch(setAvail(false, 'usernameAvailability'));
           },
         );
       next(action);
@@ -785,11 +797,12 @@ export default (store) => (next) => (action) => {
           (response) => {
             console.log('Retour du serveur POSITIF, lemail est disponible ');
             console.log(response);
-            store.dispatch(saveCard(response.data));
+            store.dispatch(setAvail(true, 'emailAvailability'));
           },
         ).catch(
           (error) => {
             console.log('Lemail existe déjà: ', error.message);
+            store.dispatch(setAvail(false, 'emailAvailability'));
           },
         );
       next(action);
