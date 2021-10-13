@@ -12,6 +12,7 @@
       font-weight: bold;
       color: vars.$white-color;
       font-size: 15rem;
+      border-radius: vars.$border-radius-input;
     }
 
     &__heart {
@@ -21,7 +22,7 @@
       align-items: center;
       color: vars.$primary-color;
       font-size: 15rem;
-
+      border-radius: vars.$border-radius-input;
     }
   }
 }
