@@ -20,3 +20,19 @@ export const signup = () => (
     type: SIGNUP,
   }
 );
+
+export const VERIFY_USERNAME = 'VERIFY_USERNAME';
+export const verifyUsername = (username) => (
+  {
+    type: VERIFY_USERNAME,
+    username,
+  }
+)
+
+export const VERIFY_EMAIL = 'VERIFY_EMAIL';
+export const verifyEmail = (email) => (
+  {
+    type: VERIFY_EMAIL,
+    email,
+  }
+)
