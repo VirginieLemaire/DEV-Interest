@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import axios from 'axios';
 
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
 
 import {
   ADD_CARD, cardExist, changeNewCardField, GET_OPENGRAPH_DATA, resetNewCard, saveExistCardUrl,
@@ -21,7 +21,7 @@ import {
   createAccountThankModal,
   deleteCardSuccessModal,
   deleteUserSuccessModal,
-  setAppLoading, setLoading, setMore, setMoreHome, setRedirectToTrue, showAddCardModal, toggleModal,
+  setAppLoading, setLoading, setMore, setMoreHome, setRedirectToTrue, showAddCardModal, showConnexionModal, toggleModal,
   updateAccountSuccessModal, updateCardSuccessModal,
 } from '../action/displayOptions';
 
@@ -39,7 +39,7 @@ import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
   FETCH_BOOKMARKED_CARDS, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
   saveBookmarkedCards, toggleLogged, userLogout,
-  updateBookmarks, DELETE_CONTRIBUTION, fetchContributions, USER_API_LOGOUT, userApiLogout, GET_USER_WITH_TOKEN, getUserWithToken,
+  updateBookmarks, DELETE_CONTRIBUTION, fetchContributions, USER_API_LOGOUT, userApiLogout, GET_USER_WITH_TOKEN, getUserWithToken, Logged, connexionError,
 } from '../action/userCurrent';
 import { slugify } from '../selectors/cards';
 import { capitalizeFirstLetter, getDomainName } from '../selectors/utils';
@@ -343,13 +343,20 @@ export default (store) => (next) => (action) => {
 
           store.dispatch(connectUser(response.data.user));
           store.dispatch(resetConnectingFields());
-          store.dispatch(toggleLogged());
+          store.dispatch(Logged(true));
+          store.dispatch(showConnexionModal());
+          store.dispatch(connexionError(false));
 
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`;
           refreshToken = response.data.refreshToken;
         },
       ).catch(
-        (error) => console.log('ERREUR lors du login et voici le error.response: ', error.response),
+        (error) => {
+          console.log('ERREUR lors du login et voici le error.response: ', error.response);
+          store.dispatch(connexionError(true));
+          store.dispatch(resetConnectingFields());
+          store.dispatch(userApiLogout());
+        },
       );
       next(action);
       break;
@@ -691,7 +698,7 @@ export default (store) => (next) => (action) => {
       axiosInstance.get('/user')
         .then((response) => {
           // console.log('Réussite sur la route /user je reçois les infos :', response);
-          store.dispatch(toggleLogged());
+          store.dispatch(Logged(true));
           store.dispatch(connectUser(response.data.user));
           localStorage.setItem('accessToken', response.data.accessToken);
           localStorage.setItem('refreshToken', response.data.refreshToken);
@@ -713,7 +720,7 @@ export default (store) => (next) => (action) => {
                 axiosInstance.get('/user')
                   .then((res) => {
                     // console.log('Réussite sur la route 2 /user je reçois les infos :', res);
-                    store.dispatch(toggleLogged());
+                    store.dispatch(Logged(true));
                     store.dispatch(connectUser(res.data.user));
                     localStorage.setItem('accessToken', res.data.accessToken);
                     localStorage.setItem('refreshToken', res.data.refreshToken);

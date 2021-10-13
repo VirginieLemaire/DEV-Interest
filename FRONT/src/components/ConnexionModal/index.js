@@ -31,13 +31,14 @@ const ConnexionModal = () => {
   const newUserPassword = useSelector((state) => state.userCreate.password);
   const newUserPasswordVerif = useSelector((state) => state.userCreate.passwordVerification);
 
+  const { connexionErrorValue } = useSelector((state) => state.userCurrent);
+
   const handleSignupClick = () => {
     dispatch(showSingupModal());
   };
 
   const handleSubmitConnexion = (e) => {
     e.preventDefault();
-    dispatch(showConnexionModal());
     dispatch(login());
   };
 
@@ -108,6 +109,9 @@ const ConnexionModal = () => {
                 required
                 minlength="4"
               />
+              { connexionErrorValue && (
+                <div className="connexion__error">Les identifiants rentrés sont incorrects</div>
+              )}
             </div>
             <div className="connexion-modal__footer">
               <SubmitButton

@@ -98,8 +98,6 @@ const AddCard = () => {
       e.preventDefault();
       dispatch(addCard());
       history.push('/');
-      dispatch(getUserWithToken());
-      dispatch(toggleLogged());
     }
   };
 
