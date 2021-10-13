@@ -82,6 +82,10 @@ strong {
         flex-wrap: wrap;
         gap: 2rem;
 
+        &__title {
+          font-weight: bold;
+        }
+
         &__techs {
           display: flex;
           flex-direction: row;
@@ -110,6 +114,11 @@ strong {
           flex-direction: column;
           align-items: center;
           gap: 1rem;
+
+          &__title {
+            font-weight: bold;
+          }
+          
           &__icon {
             transform: scale(1.5);
           }

@@ -24,7 +24,7 @@ import { getDomainName, formatDate, capitalizeFirstLetter } from '../../selector
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
-import HomeCards from '../HomeCards';
+import CardsDisplay from '../CardsDisplay';
 import './card-details.scss';
 import { showAddCardModal, toggleDisplayUrl } from '../../action/displayOptions';
 import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
@@ -116,8 +116,7 @@ const CardDetails = () => {
             <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
           <div className="card-details__board__infos__techs-container">
-
-            <p className="card-details__board__infos__techs-container__title">Technos: </p>
+            <p className="card-details__board__infos__techs-container__title">Technos</p>
             <div className="card-details__board__infos__techs-container__techs">
               {
                 card.techs.map((tech) => (
@@ -131,21 +130,21 @@ const CardDetails = () => {
           </div>
           <div className="card-details__board__infos__tags-container">
             <div className="card-details__board__infos__tags-container__tag">
-              <p>Niveau: </p>
+              <p className="card-details__board__infos__tags-container__tag__title">Niveau</p>
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <i className={`bi bi-${levelIconsTable[card.level.toLowerCase()]}`} />
               </div>
               <Tag name={capitalizeFirstLetter(card.level)} />
             </div>
             <div className="card-details__board__infos__tags-container__tag">
-              <p>Catégorie: </p>
+              <p className="card-details__board__infos__tags-container__tag__title">Catégorie</p>
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <FaTags />
               </div>
               <Tag name={capitalizeFirstLetter(card.category)} />
             </div>
             <div className="card-details__board__infos__tags-container__tag">
-              <p>Type: </p>
+              <p className="card-details__board__infos__tags-container__tag__title">Type</p>
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <MdPermMedia />
               </div>
@@ -172,17 +171,10 @@ const CardDetails = () => {
           </div>
         </div>
       </div>
-          {
-      // <div className="card-details__suggestion-title-container">
-      //   <h2 className={darkMode ? 'card-details__suggestion-title-container__title card-details__suggestion-title-container__title--dark' : 'card-details__suggestion-title-container__title'}>D'autres cartes pourraient t'intéresser</h2>
-      // </div>
-          }
-      {
-        // searchQuery && <SearchResults />
-      }
-      {
-        // !searchQuery && <HomeCards />
-      }
+      <div className="card-details__suggestion-title-container">
+         <h2 className={darkMode ? 'card-details__suggestion-title-container__title card-details__suggestion-title-container__title--dark' : 'card-details__suggestion-title-container__title'}>D'autres cartes pourraient t'intéresser</h2>
+      </div>
+      <CardsDisplay keyword={card.techs[0]} cardIgnored={card.id} />
     </div>
   );
 };
