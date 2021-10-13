@@ -28,9 +28,8 @@ const SearchBar = ({
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    history.push('/search');
+    history.push(`/search?keywords=${searchQuery}&tech=all&category=all&level=all&type=all&lang=all`);
     dispatch(resetFiltersToAll());
-    dispatch(fetchCardsSearch());
     dispatch(resetCardsMini());
     dispatch(setSearchModal(false));
   };

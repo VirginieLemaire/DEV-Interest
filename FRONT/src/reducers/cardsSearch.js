@@ -5,6 +5,10 @@ import {
   SAVE_CARDS_MINI_SEARCH, SAVE_CARDS_SEARCH, SAVE_MORE_CARDS, SET_CURRENT_SEARCH, SET_FILTER,
 } from '../action/cardsSearch';
 
+function randomIntFromInterval(min, max) { // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 export const initialState = {
   currentSearch: '',
   cardsMini: [],
@@ -31,7 +35,7 @@ const reducer = (state = initialState, action = {}) => {
     case SAVE_CARDS_SEARCH:
       return {
         ...state,
-        cards: action.data,
+        cards: action.data.map((card) => ({ ...card, height: randomIntFromInterval(300, 500) })),
         page: 1,
         searchQuery: '',
         searchCount: action.count,
@@ -45,7 +49,7 @@ const reducer = (state = initialState, action = {}) => {
     case SAVE_MORE_CARDS:
       return {
         ...state,
-        cards: [...state.cards, ...action.data],
+        cards: [...state.cards, ...action.data.map((card) => ({ ...card, height: randomIntFromInterval(300, 500) }))],
       };
     case CHANGE_SEARCH_FIELD:
       return {

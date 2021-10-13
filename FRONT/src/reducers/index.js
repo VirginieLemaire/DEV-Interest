@@ -7,12 +7,14 @@ import userConnectReducer from './userConnect';
 import userCreateReducer from './userCreate';
 import userUpdateReducer from './userUpdate';
 
+import cardCurrentReducer from './cardCurrent';
 import cardNewReducer from './cardNew';
 import cardUpdateReducer from './cardUpdate';
 import cardsSearchReducer from './cardsSearch';
 import cardsHomeReducer from './cardsHome';
 
 const rootReducer = combineReducers({
+  cardCurrent: cardCurrentReducer,
   cardsSearch: cardsSearchReducer,
   cardsHome: cardsHomeReducer,
   cardNew: cardNewReducer,

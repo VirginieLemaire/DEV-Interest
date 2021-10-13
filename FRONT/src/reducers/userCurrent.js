@@ -4,6 +4,10 @@ import {
   UPDATE_BOOKMARKS, SAVE_CONTRIBUTIONS,
 } from '../action/userCurrent';
 
+function randomIntFromInterval(min, max) { // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 export const initialState = {
   id: '',
   email: '',
@@ -50,17 +54,17 @@ const reducer = (state = initialState, action = {}) => {
     case SAVE_BOOKMARKED_CARDS:
       return {
         ...state,
-        bookmarkedCards: action.data,
+        bookmarkedCards: action.data.map((card) => ({ ...card, height: randomIntFromInterval(300, 500) })),
       };
     case UPDATE_BOOKMARKS:
       return {
         ...state,
-        bookmarks: action.data,
+        bookmarks: action.data.map((card) => ({ ...card, height: randomIntFromInterval(300, 500) })),
       };
     case SAVE_CONTRIBUTIONS:
       return {
         ...state,
-        contributions: action.data,
+        contributions: action.data.map((card) => ({ ...card, height: randomIntFromInterval(300, 500) })),
       };
     case UPDATE_THUMB:
       return {

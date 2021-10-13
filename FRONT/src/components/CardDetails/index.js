@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
 
 import { MdPermMedia } from '@react-icons/all-files/md/MdPermMedia';
-import { CgScreen } from '@react-icons/all-files/cg/CgScreen';
 import { FaTags } from '@react-icons/all-files/fa/FaTags';
 import { MdLanguage } from '@react-icons/all-files/md/MdLanguage';
 
@@ -20,7 +20,7 @@ import { DiRuby } from '@react-icons/all-files/di/DiRuby';
 import { DiPython } from '@react-icons/all-files/di/DiPython';
 import { BsFillQuestionDiamondFill } from '@react-icons/all-files/bs/BsFillQuestionDiamondFill';
 
-import { getDomainName, formatDate } from '../../selectors/utils';
+import { getDomainName, formatDate, capitalizeFirstLetter } from '../../selectors/utils';
 import Button from '../GenericComponents/Button';
 import Tag from '../GenericComponents/Tag';
 import SearchResults from '../SearchResults';
@@ -28,18 +28,29 @@ import HomeCards from '../HomeCards';
 import './card-details.scss';
 import { showAddCardModal, toggleDisplayUrl } from '../../action/displayOptions';
 import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
+import { fetchCard } from '../../action/cardCurrent';
+import Loader from '../GenericComponents/Loader';
 
-// eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-const CardDetails = ({ card }) => {
+const CardDetails = () => {
   const dispatch = useDispatch();
+  const { slug, id } = useParams();
 
-  const { displayUrl, darkMode } = useSelector((state) => state.displayOptions);
+  console.log('slug', slug);
+  console.log('id', id);
+
+  useEffect(() => {
+    dispatch(fetchCard(id, slug));
+  }, [id, slug]);
+
+  const { card } = useSelector((state) => state.cardCurrent);
+  const { displayUrl, darkMode, loading } = useSelector((state) => state.displayOptions);
   const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
   const { searchQuery } = useSelector((state) => state.cardsSearch);
+
   const isBookmarked = bookmarks.find((bookmark) => bookmark === card.id);
 
   const levelIconsTable = {
@@ -72,13 +83,15 @@ const CardDetails = ({ card }) => {
       dispatch(showAddCardModal());
     }
   };
-  const creationDate = formatDate(card.createdat);
+  const creationDate = formatDate(card.createat);
 
   const handleContentToggle = () => {
     dispatch(toggleDisplayUrl());
   };
 
-  console.log(card.level);
+  console.log('Card FETCHED ', card);
+
+  if (!card) return <Loader />;
 
   return (
     <div className="card-details">
@@ -93,7 +106,7 @@ const CardDetails = ({ card }) => {
                 <MdLanguage />
               </div>
               <div className="card-details__board__infos__tags-container__type">
-                <p>{card.lang.capitalize()}</p>
+                <p>{capitalizeFirstLetter(card.lang)}</p>
               </div>
             </div>
           </div>
@@ -103,6 +116,7 @@ const CardDetails = ({ card }) => {
             <p className="card-details__board__infos__date">le {creationDate}</p>
           </div>
           <div className="card-details__board__infos__techs-container">
+
             <p className="card-details__board__infos__techs-container__title">Technos: </p>
             <div className="card-details__board__infos__techs-container__techs">
               {
@@ -121,21 +135,21 @@ const CardDetails = ({ card }) => {
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <i className={`bi bi-${levelIconsTable[card.level.toLowerCase()]}`} />
               </div>
-              <Tag name={card.level.capitalize()} />
+              <Tag name={capitalizeFirstLetter(card.level)} />
             </div>
             <div className="card-details__board__infos__tags-container__tag">
               <p>Catégorie: </p>
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <FaTags />
               </div>
-              <Tag name={card.category.capitalize()} />
+              <Tag name={capitalizeFirstLetter(card.category)} />
             </div>
             <div className="card-details__board__infos__tags-container__tag">
               <p>Type: </p>
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <MdPermMedia />
               </div>
-              <Tag name={card.type.capitalize()} />
+              <Tag name={capitalizeFirstLetter(card.type)} />
             </div>
           </div>
           <div className="card-details__board__infos__buttons-container">
@@ -146,7 +160,7 @@ const CardDetails = ({ card }) => {
                 onMouseEnter={handleContentToggle}
                 onMouseLeave={handleContentToggle}
               >
-                {!displayUrl ? 'Source' : (getDomainName(card.url).capitalize()) }
+                {!displayUrl ? 'Source' : (capitalizeFirstLetter(getDomainName(card.url))) }
               </button>
             </Link>
             <Button
@@ -165,27 +179,6 @@ const CardDetails = ({ card }) => {
       {!searchQuery && <HomeCards />}
     </div>
   );
-};
-
-CardDetails.propTypes = {
-  card: PropTypes.shape({
-    slug: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    website: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    createdat: PropTypes.string.isRequired,
-    contributor: PropTypes.string.isRequired,
-    techs: PropTypes.arrayOf(
-      PropTypes.string.isRequired,
-    ).isRequired,
-    level: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    lang: PropTypes.string.isRequired,
-  }).isRequired,
-
 };
 
 export default CardDetails;
