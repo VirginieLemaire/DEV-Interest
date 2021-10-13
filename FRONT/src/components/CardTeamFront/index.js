@@ -56,34 +56,23 @@ const CardTeamFront = ({ card }) => {
       <div className="card-team__image-container">
         <img className="card-team__image-container__image" src={card.image} alt={card.title} />
       </div>
-      <div className="card-team__buttons-group">
-        <div className="card-team__button media">{card.type}</div>
-      </div>
-      <div className="card-team_link">
-        <h2 className="card-team__title">{card.title}</h2>
-      </div>
+      <div className="card-team__role">{card.role}</div>
+      <h2 className="card-team__title">{card.title}</h2>
       <div className="card-team__meta">
         <div className="card-team__meta__links">
           <Link className="card-team__meta__links__link-container" to={card.linkedin}>
-            <div className="card-team__meta__links__link-container__icon">
-              <SiLinkedin />
-            </div>
-            <p>{card.linkedin}</p>
+            <SiLinkedin />
           </Link>
           <Link className="card-team__meta__links__link-container" to={card.github}>
-            <div className="card-team__meta__links__link-container__icon">
-              <SiGithub />
-            </div>
-            <p>{card.github}</p>
+            <SiGithub />
           </Link>
         </div>
-
-        <div className="card-team__tags">
-          <div className={darkMode ? 'card-team__tags-techno card__tags-techno--dark' : 'card-team__tags-techno'}>
+        <div className="card-team__meta__tags">
+          <div className={darkMode ? 'card-team__meta__tags-techno card-team__meta__tags-techno--dark' : 'card-team__meta__tags-techno'}>
             {
               card.techs.map(
                 (tech) => (
-                  <aside key={`${card.title}-${tech}`} className={darkMode ? `card-team__tags-techno--item card-team__tags-techno--item--dark ${tech.toLowerCase()}` : `card__tags-techno--item ${tech.toLowerCase()}`}>{iconsTable[tech.toLowerCase()]}</aside>
+                  <aside key={`${card.title}-${tech}`} className={darkMode ? `card-team__meta__tags-techno--item card-team__meta__tags-techno--item--dark ${tech.toLowerCase()}` : `card-team__meta__tags-techno--item ${tech.toLowerCase()}`}>{iconsTable[tech.toLowerCase()]}</aside>
                 ),
               )
             }
@@ -98,10 +87,12 @@ CardTeamFront.propTypes = {
   card: PropTypes.shape({
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
     techs: PropTypes.arrayOf(
       PropTypes.string.isRequired,
     ).isRequired,
+    linkedin: PropTypes.string.isRequired,
+    github: PropTypes.string.isRequired,
   }).isRequired,
 };
 

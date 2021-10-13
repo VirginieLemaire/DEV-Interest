@@ -31,12 +31,7 @@ const CardTeamBack = ({ card }) => {
 
 CardTeamBack.propTypes = {
   card: PropTypes.shape({
-    image: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    techs: PropTypes.arrayOf(
-      PropTypes.string.isRequired,
-    ).isRequired,
+    letter: PropTypes.string.isRequired,
   }).isRequired,
 };
 
