@@ -1,0 +1,27 @@
+@use '../../styles/vars';
+
+.card-team {
+  &__back {
+    font-family: 'Goldman', cursive;
+    &__letter {
+      height: 550px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: vars.$primary-color;
+      font-weight: bold;
+      color: vars.$white-color;
+      font-size: 15rem;
+    }
+
+    &__heart {
+      height: 550px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: vars.$primary-color;
+      font-size: 15rem;
+
+    }
+  }
+}

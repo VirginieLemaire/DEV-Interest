@@ -4,6 +4,7 @@
 
 .card-team{
   width: 300px;
+  height: 550px;
   background-color: vars.$white-color;
   border-radius: vars.$border-radius-input;
   // box-shadow: 4px 24px 60px rgba(0,0,0, 0.15);
@@ -18,8 +19,7 @@
   &__image-container{
     &__image{
       border-radius: vars.$border-radius-input;
-      height: auto;
-      min-height: 400px;
+      height: 400px;
       width: 300px;
       object-fit: cover;
     }

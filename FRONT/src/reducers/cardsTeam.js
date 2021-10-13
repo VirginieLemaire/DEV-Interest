@@ -1,38 +1,55 @@
 import { FLIP_CARD } from "../action/cardsTeam";
+import virginie from "../../public/avatars/avatar-Virginie.png";
+import fred from "../../public/avatars/avatar-Fred.png"
+import alex from "../../public/avatars/avatar-Alex.png"
+import romain from "../../public/avatars/avatar-Romain.png"
+
 
 export const initialState = {
   teamCards: [
     {
       id: 1,
       title:"Virginie",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
+      image:virginie,
       type:"Product Owner / Git Master",
       techs: ['Javascript', 'PostgreSQL', 'Autres'],
-      isFlipped: false,
+      linkedin:"",
+      github:"",
+      isFlipped: true,
+      letter: "D",
     },
     {
       id: 2,
       title:"Frédéric",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      type:"Product Owner / Git Master",
+      image:fred,
+      type:"Lead Dev Back",
       techs: ['Javascript', 'PostgreSQL', 'Autres'],
-      isFlipped: false,
+      linkedin:"",
+      github:"",
+      isFlipped: true,
+      letter: "E",
     },
     {
       id: 3,
       title:"Alexandre",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      type:"Product Owner / Git Master",
+      image:alex,
+      type:"Scrum Master",
       techs: ['Javascript', 'CSS'],
-      isFlipped: false,
+      linkedin:"",
+      github:"",
+      isFlipped: true,
+      letter: "V",
     },
     {
       id: 4,
       title:"Romain",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      type:"Product Owner / Git Master",
+      image:romain,
+      type:"Lead Dev Front",
       techs: ['Javascript', 'CSS'],
-      isFlipped: false,
+      linkedin:"",
+      github:"",
+      isFlipped: true,
+      letter: "",
     },
   ],
 };

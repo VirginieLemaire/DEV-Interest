@@ -1,5 +1,8 @@
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
+import { SiLinkedin } from '@react-icons/all-files/si/SiLinkedin';
+import { SiGithub } from '@react-icons/all-files/si/SiGithub';
 import { DiJavascript1 } from '@react-icons/all-files/di/DiJavascript1';
 import { DiCss3 } from '@react-icons/all-files/di/DiCss3';
 import { DiMongodb } from '@react-icons/all-files/di/DiMongodb';
@@ -60,6 +63,21 @@ const CardTeamFront = ({ card }) => {
         <h2 className="card-team__title">{card.title}</h2>
       </div>
       <div className="card-team__meta">
+        <div className="card-team__meta__links">
+          <Link className="card-team__meta__links__link-container" to={card.linkedin}>
+            <div className="card-team__meta__links__link-container__icon">
+              <SiLinkedin />
+            </div>
+            <p>{card.linkedin}</p>
+          </Link>
+          <Link className="card-team__meta__links__link-container" to={card.github}>
+            <div className="card-team__meta__links__link-container__icon">
+              <SiGithub />
+            </div>
+            <p>{card.github}</p>
+          </Link>
+        </div>
+
         <div className="card-team__tags">
           <div className={darkMode ? 'card-team__tags-techno card__tags-techno--dark' : 'card-team__tags-techno'}>
             {
