@@ -13,7 +13,7 @@ import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import Field from '../GenericComponents/Field';
-import { changeNewUserField, signup } from '../../action/userCreate';
+import { changeNewUserField, signup, verifyEmail, verifyUsername } from '../../action/userCreate';
 
 const ConnexionModal = () => {
   const dispatch = useDispatch();
@@ -53,6 +53,14 @@ const ConnexionModal = () => {
     dispatch(showConnexionModal());
   };
 
+  const handleChangeNewUsername = (e) => {
+    dispatch(verifyUsername(e.target.value));
+    dispatch(changeNewUserField(e.target.value, 'username'));
+  }
+  const handleChangeNewEmail = (e) => {
+    dispatch(verifyEmail(e.target.value));
+    dispatch(changeNewUserField(e.target.value, 'email'));
+  }
   // const handleKeyPress = (e) => {
   //   if (e.keyCode === 27) {
   //     dispatch(showConnexionModal());
@@ -135,7 +143,7 @@ const ConnexionModal = () => {
                 value={newUserUsername}
                 name="new-user_username"
                 placeholder="Nom d'utilisateur"
-                handleChange={(e) => dispatch(changeNewUserField(e.target.value, 'username'))}
+                handleChange={handleChangeNewUsername}
                 minlength="4"
                 maxlength="20"
                 required
@@ -145,7 +153,7 @@ const ConnexionModal = () => {
                 value={newUserEmail}
                 name="new-user_email"
                 placeholder="Email"
-                handleChange={(e) => dispatch(changeNewUserField(e.target.value, 'email'))}
+                handleChange={handleChangeNewEmail}
                 required
               />
               <PasswordField

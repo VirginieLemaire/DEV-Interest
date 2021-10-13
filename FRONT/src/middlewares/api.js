@@ -30,7 +30,7 @@ import {
 import {
   connectUser, LOGIN, resetConnectingFields, SET_ACCESSTOKEN_LOCALSTORAGE,
 } from '../action/userConnect';
-import { resetNewUserFields, SIGNUP } from '../action/userCreate';
+import { resetNewUserFields, SIGNUP, VERIFY_EMAIL, VERIFY_USERNAME } from '../action/userCreate';
 import {
   ADD_TO_BOOKMARKS, FETCH_CONTRIBUTIONS, saveContributions,
   FETCH_BOOKMARKED_CARDS, READ_USER_CURRENT_DATA, REMOVE_FROM_BOOKMARKS,
@@ -746,6 +746,50 @@ export default (store) => (next) => (action) => {
         ).catch(
           (error) => {
             console.log('ERREUR la carte n\'a pas pu être récupérée: ', error.response);
+          },
+        );
+      next(action);
+      break;
+    }
+    case VERIFY_USERNAME: {
+      console.log('----------------------------------------------------------');
+
+      console.log(`Je vérifie que l'username ${action.username} existe ou pas`);
+      console.log(`/verify?input=user_name&value=${action.username}`);
+
+      axiosInstance
+        .get(`/verify?input=user_name&value=${action.username}`)
+        .then(
+          (response) => {
+            console.log('Retour du serveur POSITIF, le username est disponible ');
+            console.log(response);
+            store.dispatch(saveCard(response.data));
+          },
+        ).catch(
+          (error) => {
+            console.log('Le nom existe déjà: ', error.message);
+          },
+        );
+      next(action);
+      break;
+    }
+    case VERIFY_EMAIL: {
+      console.log('----------------------------------------------------------');
+
+      console.log(`Je vérifie que l'username ${action.email} existe ou pas`);
+      console.log(`/verify?input=user_name&value=${action.email}`);
+
+      axiosInstance
+        .get(`/verify?input=email&value=${action.email}`)
+        .then(
+          (response) => {
+            console.log('Retour du serveur POSITIF, lemail est disponible ');
+            console.log(response);
+            store.dispatch(saveCard(response.data));
+          },
+        ).catch(
+          (error) => {
+            console.log('Lemail existe déjà: ', error.message);
           },
         );
       next(action);

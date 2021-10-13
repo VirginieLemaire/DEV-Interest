@@ -50,16 +50,6 @@ const App = () => {
 
   const { username, id, isLogged } = useSelector((state) => state.userCurrent);
 
-  const cardsHome = useSelector((state) => state.cardsHome.cards);
-
-  const cardsSearch = useSelector((state) => state.cardsSearch.cards);
-
-  const { contributions, bookmarkedCards } = useSelector((state) => state.userCurrent);
-
-  const mergedCards = [...cardsHome, ...cardsSearch, ...contributions, ...bookmarkedCards];
-
-  // dispatch(getUserWithToken());
-
   useEffect(() => {
     dispatch(getUserWithToken());
     dispatch(setAppLoading(false));
