@@ -42,8 +42,8 @@ Content-Type: application/json
 ### recherche
 get {{baseurl}}/cards/search?keyword=css&tech=javascript&category=all&level=all&type=all&lang=all&page=1&size=3
 
-### recherche 2
-get {{baseurl}}/cards/search?keyword=javascript&tech=javascript&category=apprendre&level=débutant&type=article&lang=français&page=1&size=15
+### recherche
+get {{baseurl}}/cards/search?keyword=javascript&tech=&category=all&level=all&type=all&lang=all&page=1&size=15
 
 https://devinterest.herokuapp.com/cards/search?keyword=javascript&tech=css&category=all&level=all&type=all&lang=all&page=1&size=15
 post {{baseurl}}/cards
@@ -59,4 +59,4 @@ Content-Type: application/json
 get {{baseurl}}/cards/test-slug/164
 
 ### verification de présence d'un élément
-get {{baseurl}}/verify?input=email&value=johnny@mail.io
+get {{baseurl}}/verify?input=user_name&value=Virginie
