@@ -176,8 +176,3 @@ export const SET_REDIRECT_TO_FALSE = 'SET_REDIRECT_TO_FALSE';
 export const setRedirectToFalse = () => ({
   type: SET_REDIRECT_TO_FALSE,
 });
-
-export const FLIP_CARD = 'FLIP_CARD';
-export const flipCard = () => ({
-  type: FLIP_CARD,
-});

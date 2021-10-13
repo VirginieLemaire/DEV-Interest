@@ -38,8 +38,6 @@ export const initialState = {
   activeMenu: '',
 
   redirect: false,
-
-  isFlipped: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -172,11 +170,6 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         redirect: true,
       };
-    case FLIP_CARD:
-      return {
-        ...state,
-        isFlipped: !state.isFlipped,
-      };  
     default:
       return state;
   }

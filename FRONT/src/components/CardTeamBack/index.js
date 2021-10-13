@@ -14,10 +14,10 @@ import { BsFillQuestionDiamondFill } from '@react-icons/all-files/bs/BsFillQuest
 
 import PropTypes from 'prop-types';
 
-import './card-team-front.scss';
+// import './card-team-front.scss';
 
 // == Composant
-const CardTeamFront = ({ card }) => {
+const CardTeamBack = ({ card }) => {
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const iconsTable = {
@@ -76,7 +76,7 @@ const CardTeamFront = ({ card }) => {
   );
 };
 
-CardTeamFront.propTypes = {
+CardTeamBack.propTypes = {
   card: PropTypes.shape({
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -89,4 +89,5 @@ CardTeamFront.propTypes = {
 
 
 // == Export
-export default CardTeam;
+export default CardTeamBack;
+
