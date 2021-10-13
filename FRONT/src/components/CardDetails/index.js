@@ -31,15 +31,22 @@ import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
 import { fetchCard } from '../../action/cardCurrent';
 import Loader from '../GenericComponents/Loader';
 
+String.prototype.capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 const CardDetails = () => {
   const dispatch = useDispatch();
   const { slug, id } = useParams();
 
+  console.log('slug', slug);
+  console.log('id', id);
+
   useEffect(() => {
     dispatch(fetchCard(id, slug));
-  }, []);
+  }, [id, slug]);
 
-  const card = useSelector((state) => state.cardCurrent);
+  const { card } = useSelector((state) => state.cardCurrent);
   const { displayUrl, darkMode, loading } = useSelector((state) => state.displayOptions);
   const { bookmarks, isLogged } = useSelector((state) => state.userCurrent);
   const { searchQuery } = useSelector((state) => state.cardsSearch);
@@ -82,9 +89,9 @@ const CardDetails = () => {
     dispatch(toggleDisplayUrl());
   };
 
-  console.log('Card FETCHED ', card.card);
+  console.log('Card FETCHED ', card);
 
-  if (loading) return <Loader />;
+  if (!card) return <Loader />;
 
   return (
     <div className="card-details">
@@ -124,19 +131,19 @@ const CardDetails = () => {
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <i className={`bi bi-${levelIconsTable[card.level.toLowerCase()]}`} />
               </div>
-              <Tag name={card.level.capitalize()} />
+              <Tag name={capitalizeFirstLetter(card.level)} />
             </div>
             <div className="card-details__board__infos__tags-container__tag">
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <FaTags />
               </div>
-              <Tag name={card.category.capitalize()} />
+              <Tag name={capitalizeFirstLetter(card.category)} />
             </div>
             <div className="card-details__board__infos__tags-container__tag">
               <div className="card-details__board__infos__tags-container__tag__icon">
                 <MdPermMedia />
               </div>
-              <Tag name={card.type.capitalize()} />
+              <Tag name={capitalizeFirstLetter(card.type)} />
             </div>
           </div>
           <div className="card-details__board__infos__buttons-container">
@@ -147,7 +154,7 @@ const CardDetails = () => {
                 onMouseEnter={handleContentToggle}
                 onMouseLeave={handleContentToggle}
               >
-                {!displayUrl ? 'Source' : (getDomainName(card.url).capitalize()) }
+                {!displayUrl ? 'Source' : (capitalizeFirstLetter(getDomainName(card.url))) }
               </button>
             </Link>
             <Button
