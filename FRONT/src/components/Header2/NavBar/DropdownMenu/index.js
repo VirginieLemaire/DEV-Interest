@@ -19,6 +19,11 @@ const DropdownMenu = () => {
 
   const { username, id } = useSelector((state) => state.userCurrent);
 
+  const handleDisconnectClick = () => {
+    dispatch(userApiLogout())
+    history.push('/');
+  };
+
   return (
     <div className={darkMode ? 'dropdown dropdown--dark' : 'dropdown'}>
 
@@ -44,7 +49,7 @@ const DropdownMenu = () => {
 
         <DropdownItem
           leftIcon={<RiShutDownLine />}
-          onClick={() => dispatch(userApiLogout())}
+          onClick={handleDisconnectClick}
         >
           <p>Déconnexion</p>
         </DropdownItem>
