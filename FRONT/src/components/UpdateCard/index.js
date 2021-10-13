@@ -129,7 +129,7 @@ const UpdateCard = () => {
         <form className="add-card__form" onSubmit={handleSubmitNewCard}>
           <h2 className={darkMode ? 'add-card__form__title add-card__title--dark' : 'add-card__title'}>Mise à jour de la ressource</h2>
           <Field
-            className="add-card__form__input-title"
+            className="field__input add-card__form__input-title"
             value={title}
             type="text"
             name="title"
@@ -151,7 +151,7 @@ const UpdateCard = () => {
             maxLength="500"
           />
           <Field
-            className="add-card__form__input-website"
+            className="field__input add-card__form__input-website"
             value={website}
             type="text"
             name="website"
