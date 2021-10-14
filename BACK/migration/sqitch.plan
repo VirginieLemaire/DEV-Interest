@@ -8,3 +8,13 @@ bookmarks 2021-09-23T13:28:32Z fred <frederic.botella@gmail.com> # ajout de id u
 functions_cards 2021-09-24T13:42:18Z Virginie <student@teleporter> # add functions to create and update cards
 functions_add_card 2021-09-25T14:07:42Z Virginie <student@teleporter> # upgrade the add card function by adding relationship tables
 correction-vue 2021-09-27T13:22:31Z Virginie <student@teleporter> # enlever les doublons
+function_add_card_to_bookmarks 2021-09-29T10:06:28Z Virginie <student@teleporter> # creates a function to add the new card to user's bookmarks
+function_update_card 2021-09-30T09:08:43Z Virginie <student@teleporter> # update a card
+function_update_user 2021-09-30T11:16:01Z Virginie <student@teleporter> # replace previous migration with bad name -function_add_card
+view-user-bookmarks 2021-09-30T11:25:29Z Virginie <student@teleporter> # view user with bookmarks id
+cascade_card 2021-09-30T16:03:48Z fred <frederic.botella@gmail.com> # alter table card
+new_update_card 2021-10-04T11:39:44Z Virginie <student@teleporter> # upgrade the update card function
+new_update_user 2021-10-04T11:53:12Z Virginie <student@teleporter> # upgrade the update user function
+unaccent-configuration 2021-10-04T16:03:47Z Virginie <student@teleporter> # configuring unaccent dictionnary and config
+return-update-user 2021-10-06T15:33:10Z Virginie <student@teleporter> # add return table to function
+correction-update-card 2021-10-08T16:41:34Z Virginie <student@teleporter> # correction fonction update card

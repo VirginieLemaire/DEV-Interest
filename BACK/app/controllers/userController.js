@@ -16,19 +16,27 @@ const userController = {
     login: async (request, response) => {
         try {
             //récupérer les infos de login
-            const login = request.body
+            console.log("\n** Hello, je suis le controller : \n-> un user s'est connecté au client, je récupère les infos de login");
+            const login = request.body;
             //authentification
-        
+            console.log('Je veux authentifier le user => je vais envoyer les infos au model pour comparaison\n');
             const user = await new User(login).findUser();
-            //console.log({user});
-            //response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-            response.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
-            response.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-            //response.cookie('Authorization' , jwt.makeToken(user.id), { maxAge: 1800});
-            //response.setHeader(`id = ${user.id}`);
-            response.setHeader('Authorization' , jwt.makeToken(user.id));
-            response.status(200).json(user);
+            console.log("\nC'est à nouveau le controller: ok on m'a renvoyé un user, je crée le token..............");
             
+
+            //access token
+            const accessToken = jwt.makeToken(user.id);
+            console.log(accessToken);
+            // refresh token
+            const refreshToken = jwt.refreshToken(user.id);
+            console.log('token user créé, on envoie tout au client\n\n');
+            response.header({'Authorization': accessToken,'refreshToken': refreshToken}).send({accessToken: accessToken, refreshToken: refreshToken,user,});
+            
+            // response.send({
+            //     accessToken: accessToken,
+            // });
+            // response.status(200).json(user);
+
         } catch (error) {
             //lire l'erreur
             console.trace(error);
@@ -39,24 +47,39 @@ const userController = {
     //S'enregistrer
     signUp: async (request, response) => {
         try {
-            const user = await new User(request.body).signUp();
-            response.setHeader('Authorization', jwt.makeToken(user.id));
-            response.status(201).json(user);
-
+            let data = request.body;
+            console.log('Signup-request.body dans controller',data);
+            console.log("\n>>> signupController: j'envoie les infos envoyées par le client dans le modèle\n");
+            const user = await new User().signUp(data);
+            console.log("\n>>> je suis de retour dans le controller voici ce que je reçois", user);
+            //response.status(200).json(user);
+            //access token
+            const accessToken = jwt.makeToken(user.id);
+            console.log(accessToken);
+            // refresh token
+            const refreshToken = jwt.refreshToken(user.id);
+            console.log('token user créé, on envoie tout au client\n\n');
+            response.header({'Authorization': accessToken,'refreshToken': refreshToken}).send({accessToken: accessToken, refreshToken: refreshToken,user,});
+            console.log("pas d'erreur, je renvoie", user);
+            response.send({user});
+            
         } catch(error) {
-           //lire l'erreur
-           console.trace(error);
-           //envoyer l'info au front
-           response.status(500).json(error.message);
+            //lire l'erreur
+            console.log("!!! Voici l'erreur dans le catch du controller: ",error.message);
+            //console.trace(error);
+            //envoyer l'info au front
+            response.status(409).json(error);
+           //response.status(500).json(error.message);
         }
-    },
+},
     deleteUserById: async (request, response) => {
         try {
             const id = parseInt(request.params.id,10);
             console.log(id);
             const user = await new User(id).deleteUserById(id);
-            response.setHeader('Authorization', jwt.makeToken(id));
+            delete request.headers['authorization']; // should be lowercase
             response.status(201).json({success: true});
+            
 
         } catch(error) {
            //lire l'erreur
@@ -68,11 +91,24 @@ const userController = {
      //update a user
      update : async (request, response) => {
         try {
-            //UPDATE
-            const user = await new User(request.body).update();
-
-            response.status(204).json({success: true});
-            
+            console.log("updateController >> 1) je vais créer un objet userDatas qui va mixer les données en param et dans le body");
+            let userDatas = {
+                id : request.params.id,
+            };
+            console.log("voici ce qui envoyé dans le body par le client", request.body);
+            //boucler sur les propriétés de request.body pour ne mettre à jour que celles qui ont été envoyées
+            for (const key in request.body) {
+                userDatas[key] = request.body[key]
+            }
+            console.log({userDatas});
+            // UPDATE
+            console.log("updateController >> j'envoie cet objet au model pour qu'il cause avec la DB");
+            console.log('- - - - - - -');
+            const user = await new User(userDatas).update();   
+            console.log("\nupdateController >> 2) \\o/ tout s'est bien passé, j'en informe le client\n");
+            //renvoyer un message au front lui signifiant que tout c'est bien passé
+            response.status(201).json(user);
+   
         } catch(error) {
            //lire l'erreur
            console.trace(error);
@@ -80,25 +116,31 @@ const userController = {
            response.status(500).json(error.message);
         }
     },
-    //tester la validation de ce token (qui fait la requête)
-    getInfos: (request, response,next) => {
+    getUserWithBookmarksInfo : async (request, response) => {
         try {
-            console.log(request.userId);
-            const infos = {
-                message: "Ceci est un message obtenu après avoir vérifié qui a fait la requête",
-            }
-            //créer un nouveau token
-            // pour avoir l'id il faut qu'il soit stocké quelque part -> dans la request grâce au middleware
-            response.setHeader('Authorization', jwt.makeToken(request.userId));
-            response.status(200).json(infos);
-            next();
+            console.log("let's see what's in request userId...: ",request.userId);
             
+            console.log("\n Hello, je suis dans le userController !\n je stocke l'id du user connecté dans un objet à passer au model qui va instancier la classe User");
+            const getId ={ userId: request.userId};
+            console.log(getId);
+            const user = await new User(getId).userWithBookmarksId();
+            console.log("<<< de retour dans le controller, voici ce que la requête a retourné : ");
+            console.log(user);
+            
+             //access token
+             const accessToken = jwt.makeToken(request.userId);
+             console.log(accessToken);
+             // refresh token
+             const refreshToken = jwt.refreshToken(request.userId);
+             console.log('token user créé, on envoie tout au client\n\n');
+             response.header({'Authorization': accessToken,'refreshToken': refreshToken}).send({accessToken: accessToken, refreshToken: refreshToken, user});
+            //response.status(201).json(userWithBookmarksId);
         } catch (error) {
-            console.trace(error);
-            //renvoyer l'info au front
-            response.status(500).json(error.message);
+            console.log(error);
+            response.status(401).json(error.message);
         }
     }
+
 
 }
 
