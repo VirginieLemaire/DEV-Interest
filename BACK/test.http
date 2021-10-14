@@ -60,3 +60,6 @@ get {{baseurl}}/cards/test-slug/164
 
 ### verification de présence d'un élément
 get {{baseurl}}/verify?input=user_name&value=virgin
+
+### détails d'une carte pour update
+get {{baseurl}}/update/164

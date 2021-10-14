@@ -22,8 +22,10 @@ router.get('/cards', cardController.findAllCards);
     router.post('/cards',checkJwt, fetchUrlController.findUrl);
     //2. remplir le formulaire et envoyer au back
     router.post('/cards/save',checkJwt, cardController.save);
-//lire une carte
+//lire une carte pour affichage d'une carte
 router.get('/cards/:slug/:id', cardController.findById);
+//lire une carte pour la modification d'une carte
+router.get('/update/:id', cardController.findOneToUpdate);
 
 //modification d'une carte
 router.put('/contributor/cards/:id',checkJwt, contributorController.update);
