@@ -45,7 +45,7 @@ const Header2 = () => {
   return (
     <div className={darkMode ? 'header2 header2--dark' : 'header2'}>
       <div className="header2__logo-area">
-        <Link className="header2__home-link" to="/">
+        <Link className="header2__home-link" to="/" onClick={ () => window.scrollTo({ top: 0, left: 0, behavior: 'auto' })}>
           <div className="header2__home-link--DEV">DEV</div><div className="header2__home-link--heart"><GiTechnoHeart /></div><div className="header2__home-link--interest">Interest</div>
         </Link>
       </div>
