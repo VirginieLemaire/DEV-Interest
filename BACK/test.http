@@ -40,13 +40,13 @@ Content-Type: application/json
 }
 
 ### recherche
-
 get {{baseurl}}/cards/search?keyword=css&tech=javascript&category=all&level=all&type=all&lang=all&page=1&size=3
 
-### recherche 2
-get {{baseurl}}/cards/search?keyword=javascript&tech=&category=all&level=all&type=all&lang=all&page=1&size=15
+### recherche
+get {{baseurl}}/cards/search?keyword=javascript&tech=all&category=all&level=all&type=all&lang=all&page=1&size=15
+>>>>>>> 45cbd31d5746ee894be1eead720be71d7965f8fe
 
-### ajout d'une carte
+https://devinterest.herokuapp.com/cards/search?keyword=javascript&tech=css&category=all&level=all&type=all&lang=all&page=1&size=15
 post {{baseurl}}/cards
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYzMzk2MDk4MywiZXhwIjoxNjMzOTYyNzgzfQ.NBYI0KCL2qVbtJUDxYKdXyrDzcyOnD4LlVEdZ0jEgVI
 
@@ -55,3 +55,14 @@ Content-Type: application/json
 {
     "url": "https://www.bortzmeyer.org/postgresql-recherche-texte.html"
 }
+
+### détails d'une carte
+
+get {{baseurl}}/cards/test-slug/164
+
+### verification de présence d'un élément
+get {{baseurl}}/verify?input=user_name&value=virgin
+
+### détails d'une carte pour update
+get {{baseurl}}/update/164
+
