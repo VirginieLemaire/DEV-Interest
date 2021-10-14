@@ -12,7 +12,6 @@ import Footer from '../Footer';
 import Header from '../Header';
 import ConnexionModal from '../ConnexionModal';
 import CardDetails from '../CardDetails';
-import Page404 from '../Page404';
 import UserBookmarks from '../UserBookmarks';
 import AddCard from '../AddCard';
 import Legal from '../Legal';
@@ -51,16 +50,6 @@ const App = () => {
 
   const { username, id, isLogged } = useSelector((state) => state.userCurrent);
 
-  const cardsHome = useSelector((state) => state.cardsHome.cards);
-
-  const cardsSearch = useSelector((state) => state.cardsSearch.cards);
-
-  const { contributions, bookmarkedCards } = useSelector((state) => state.userCurrent);
-
-  const mergedCards = [...cardsHome, ...cardsSearch, ...contributions, ...bookmarkedCards];
-
-  // dispatch(getUserWithToken());
-
   useEffect(() => {
     dispatch(getUserWithToken());
     dispatch(setAppLoading(false));
@@ -78,15 +67,7 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={Home2} />
             <Route path="/search" exact component={SearchResults} />
-            {
-              mergedCards.map(
-                (card) => (
-                  <Route key={card.id} path={`/cards/${card.slug}/${card.id}`} exact>
-                    <CardDetails key={card.id} card={card} />
-                  </Route>
-                ),
-              )
-            }
+            <Route path="/cards/:slug/:id" exact component={CardDetails} />
             <Route path="/add-card" exact component={AddCard} />
             <Route path="/update-card" exact component={UpdateCard} />
             <Route path={`/${username.toLowerCase()}/${id}/bookmarks/(favorites|contributions)`} exact component={UserBookmarks} />

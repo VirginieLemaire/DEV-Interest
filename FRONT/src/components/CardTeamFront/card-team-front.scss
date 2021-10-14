@@ -1,0 +1,117 @@
+@use '../../styles/vars';
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
+
+
+.card-team{
+  width: 300px;
+  height: 530px;
+  background-color: vars.$white-color;
+  border-radius: vars.$border-radius-input;
+  // box-shadow: 4px 24px 60px rgba(0,0,0, 0.15);
+  box-shadow: 4px 24px 60px rgba(124, 81, 81, 0.10);
+  font-family: 'Roboto', sans-serif;
+
+  &--dark{
+    background-color: vars.$dark-color;
+    color: vars.$white-color;
+  }
+
+  &__image-container{
+    &__image{
+      border-radius: vars.$border-radius-input;
+      height: 400px;
+      width: 300px;
+      object-fit: cover;
+    }
+    
+  }
+  
+  &__role{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: vars.$primary-color;
+    padding: 0.5rem;
+  }
+
+  &__title {
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    font-family: 'Noto Sans Display', sans-serif;
+    font-weight: 500;
+  }
+
+  &__meta{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5rem;
+    padding-top: 1rem;
+    &__links {
+      display: flex;
+      gap: .8rem;
+      &__link-container {
+        font-size: 1.2rem;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+
+    }
+    &__tags{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+  
+      &-techno{
+        width: 100%;
+        display:flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0.5rem;
+  
+        &--item{
+          font-size: 1.4rem;
+          border-radius: vars.$border-radius-input;
+          &--dark{
+  
+          }
+        }
+      }
+
+    
+    &-level{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 1.7rem;
+      width: 50%;
+    }
+  }
+
+  }
+}
+
+.hidden{
+  display: none;
+}
+
+@media screen and (max-width: 600px){
+  .card{
+    width: 100vw;
+    border-radius:0;
+    &__image{
+      border-radius: 0;
+      // height: auto;
+      // min-height: 350px;
+      width: 100vw;
+      object-fit: cover;
+    }
+  }
+
+  
+}

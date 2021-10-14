@@ -1,63 +1,17 @@
 import './about.scss';
-
-import CardPreview from '../CardPreview';
-import Masonry from 'react-masonry-css';
+import { useSelector, useDispatch } from 'react-redux';
+import CardTeamFront from '../CardTeamFront';
+import CardTeamBack from '../CardTeamBack';
+import ReactCardFlip from 'react-card-flip';
+import { flipCard } from '../../action/cardsTeam';
 
 const About = () => {
-
-  const teamCards = [
-    {
-      title:"Virginie",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      type:"Product Owner / Git Master",
-      website: '',
-    },
-    {
-      id:1,
-      title:"Virginie",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      description:"",
-      category:"",
-      level:"",
-      type:"Product Owner / Git Master",
-      slug: '',
-      website: '',
-      url: '',
-      techs: [""],
-      lang: '',
-    },
-    {
-      id:1,
-      title:"Virginie",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      description:"",
-      category:"",
-      level:"",
-      type:"Product Owner / Git Master",
-      slug: '',
-      website: '',
-      url: '',
-      techs: [""],
-      lang: '',
-    },
-    {
-      id:1,
-      title:"Virginie",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      description:"",
-      category:"",
-      level:"",
-      type:"Product Owner / Git Master",
-      slug: '',
-      website: '',
-      url: '',
-      techs: [""],
-      lang: '',
-    },
-  ]
+  const dispatch = useDispatch();
+  const { darkMode } = useSelector((state) => state.displayOptions);
+  const { teamCards } = useSelector((state) => state.cardsTeam);
 
   return (
-    <div className="about">
+    <div className={darkMode ? "about about--dark" : "about"}>
       <div className="about__description">
         <h2 className="about__description__title subtitle">Qu'est-ce que DEVinterest?</h2>
         <p className="about__description__text">
@@ -76,23 +30,22 @@ const About = () => {
           Les cartes sont des liens vers des ressources diverses (astuces, tutos, inspiration, outils, plateformes de challenges, ...) aux formats variés (articles, vidéos, jeux...). 
         </p>
       </div>
+      <div className="about__description__title subtitle">L'équipe DEVinterest</div>
       <div className="about__team">
-        <div className="about__team__title subtitle">L'équipe DEVinterest</div>
-        <Masonry
-            breakpointCols={4}
-            className="masonry-grid about__team__cards"
-            columnClassName="masonry-grid_column"
-          >
+        <div className="about__team__cards">
             {
                 teamCards.map(
                   (card) => (
-                    <div className="masonry-div" key={card.id}>
-                      <CardPreview key={card.id} card={card} />
+                    <div onClick={()=> dispatch(flipCard(card.id))} className="about__team__cards__card" key={card.title}>
+                    <ReactCardFlip key={card.id} isFlipped={card.isFlipped} flipDirection="horizontal" flipSpeedFrontToBack={0.9}	flipSpeedBackToFront={0.9}>
+                      <CardTeamFront card={card} />
+                      <CardTeamBack card={card} />
+                    </ReactCardFlip>
                     </div>
                   ),
                 )
             }
-        </Masonry>
+        </div>
       </div>
     </div>
   );

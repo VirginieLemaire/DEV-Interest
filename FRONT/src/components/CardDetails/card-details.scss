@@ -76,18 +76,33 @@ strong {
       
       &__techs-container {
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        flex-direction: row;
+        align-items: center;
         flex-wrap: wrap;
         gap: 2rem;
-        
-        &__tech {
+
+        &__title {
+          font-weight: bold;
+        }
+
+        &__techs {
           display: flex;
+          flex-direction: row;
+          justify-content: center;
           gap: 1rem;
-          &__icon{
-            transform: scale(2);
+  
+          &__tech {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            &__icon{
+              transform: scale(2);
+            }
           }
         }
+
       }
       &__tags-container {
         display: flex;
@@ -96,7 +111,14 @@ strong {
 
         &__tag {
           display: flex;
+          flex-direction: column;
+          align-items: center;
           gap: 1rem;
+
+          &__title {
+            font-weight: bold;
+          }
+          
           &__icon {
             transform: scale(1.5);
           }

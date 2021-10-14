@@ -6,9 +6,17 @@ export const searchCards = () => (
 );
 
 export const FETCH_CARDS_SEARCH = 'FETCH_CARDS_SEARCH';
-export const fetchCardsSearch = () => (
+export const fetchCardsSearch = (
+  keywords, techFilter, categoryFilter, levelFilter, typeFilter, langFilter,
+) => (
   {
     type: FETCH_CARDS_SEARCH,
+    keywords,
+    techFilter,
+    categoryFilter,
+    levelFilter,
+    typeFilter,
+    langFilter,
   }
 );
 
@@ -31,9 +39,17 @@ export const saveCardsSearch = (data, count) => (
 );
 
 export const LOAD_MORE_RESULTS = 'LOAD_MORE_RESULTS';
-export const LoadMoreResults = () => (
+export const LoadMoreResults = (
+  keywords, techFilter, categoryFilter, levelFilter, typeFilter, langFilter,
+) => (
   {
     type: LOAD_MORE_RESULTS,
+    keywords,
+    techFilter,
+    categoryFilter,
+    levelFilter,
+    typeFilter,
+    langFilter,
   }
 );
 

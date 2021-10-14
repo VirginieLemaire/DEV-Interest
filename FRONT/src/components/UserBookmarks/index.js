@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import BookmarkedCards from '../BookmarkedCards';
 import Contributions from '../Contributions';
-import { fetchBookmarkedCards, fetchContributions, updateThumb } from '../../action/userCurrent';
+import { fetchBookmarkedCards, fetchContributions, getUserWithToken, updateThumb } from '../../action/userCurrent';
 import Loader from '../GenericComponents/Loader';
 
 const UserBookmarks = () => {
@@ -19,6 +19,8 @@ const UserBookmarks = () => {
   const {
     id, username, bookmarkedCards, contributions, thumb, bookmarks,
   } = useSelector((state) => state.userCurrent);
+
+
   useEffect(() => {
     dispatch(fetchBookmarkedCards());
     dispatch(fetchContributions());

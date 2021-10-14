@@ -73,7 +73,6 @@ const CardPreview = ({ card }) => {
     'Python',
     'Autre',
   ];
-
   return (
     <div className={darkMode ? 'card-preview card-preview--dark' : 'card-preview'}>
       <div className="card-preview__image-container">
@@ -114,14 +113,28 @@ const CardPreview = ({ card }) => {
 
 CardPreview.propTypes = {
   card: PropTypes.shape({
-    image: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    website: PropTypes.string.isRequired,
-    type: PropTypes.number.isRequired,
-    level: PropTypes.number.isRequired,
+    image: PropTypes.string,
+    title: PropTypes.string,
+    website: PropTypes.string,
+    type: PropTypes.string,
+    level: PropTypes.string,
     techs: PropTypes.arrayOf(
-      PropTypes.number.isRequired,
-    ).isRequired,  }).isRequired,
+      PropTypes.arrayOf(
+        PropTypes.number,
+      ),
+    ),}),
+};
+
+// Valeurs par défaut pour les props
+CardPreview.defaultProps = {
+  card: PropTypes.shape({
+    image: "",
+    title: "",
+    website: "",
+    type: null,
+    level: null,
+    techs: null,
+  },),
 };
 
 // == Export

@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Masonry from 'react-masonry-css';
-import { LoadMoreResults } from '../../action/cardsSearch';
+import { useLocation } from 'react-router';
+import { useEffect } from 'react';
+import { fetchCardsSearch, LoadMoreResults, setFilter } from '../../action/cardsSearch';
 
 import './search-results.scss';
 
@@ -12,6 +14,23 @@ import SearchFilters from '../SearchFilters';
 
 const SearchResults = () => {
   const dispatch = useDispatch();
+
+  const useQuery = () => new URLSearchParams(useLocation().search);
+
+  const query = useQuery();
+
+  const keywords = query.get('keywords');
+  const techFilter = query.get('tech');
+  const categoryFilter = query.get('category');
+  const levelFilter = query.get('level');
+  const typeFilter = query.get('type');
+  const langFilter = query.get('lang');
+
+  useEffect(() => {
+    dispatch(fetchCardsSearch(
+      keywords, techFilter, categoryFilter, levelFilter, typeFilter, langFilter,
+    ));
+  }, [keywords, techFilter, categoryFilter, levelFilter, typeFilter, langFilter]);
 
   const { cards, searchCount } = useSelector((state) => state.cardsSearch);
   const { loading, more, darkMode } = useSelector((state) => state.displayOptions);
@@ -36,7 +55,9 @@ const SearchResults = () => {
       <div className="search-results">
         <InfiniteScroll
           dataLength={cards.length}
-          next={() => dispatch(LoadMoreResults())}
+          next={() => dispatch(LoadMoreResults(
+            keywords, techFilter, categoryFilter, levelFilter, typeFilter, langFilter,
+          ))}
           hasMore={more}
           loader={more ? null : (<AppLoader />)}
         >

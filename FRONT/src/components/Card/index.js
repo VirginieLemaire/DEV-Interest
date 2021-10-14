@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import './card.scss';
+import { useEffect } from 'react';
 import { showAddCardModal } from '../../action/displayOptions';
 import { addToBookmarks, removeFromBookmarks } from '../../action/userCurrent';
 import { capitalizeFirstLetter } from '../../selectors/utils';
@@ -53,12 +54,8 @@ const Card = ({ card }) => {
     expert: 'reception-4',
   };
 
-  function randomIntFromInterval(min, max) { // min and max included
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
   const imgStyle = {
-    minHeight: `${randomIntFromInterval(300, 500)}px`,
+    minHeight: `${card.height}px`,
   };
 
   const handleClick = () => {
@@ -114,6 +111,7 @@ Card.propTypes = {
     title: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
     techs: PropTypes.arrayOf(
       PropTypes.string.isRequired,
     ).isRequired,
