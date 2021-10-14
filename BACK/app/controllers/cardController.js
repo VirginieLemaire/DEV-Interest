@@ -101,6 +101,15 @@ const cardsController = {
             console.log(error);
         }
     },
+    findOneToUpdate :async (request, response) => {
+        try {
+            const id = parseInt(request.params.id, 10);
+            const card = await Cards.findOneToUpdate(id);
+            response.json(card);
+        } catch(error) {
+            console.log(error);
+        }
+    },
     //insert a card
     save : async (request, response) => {
         try {

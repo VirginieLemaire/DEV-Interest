@@ -32,13 +32,14 @@ class Cards {
             let type = '';
             let lang = '';
             const pagination = `ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`;
-
             if (searchQuery.keyword) keyword = `WHERE to_tsvector('fr',cards::text) @@websearch_to_tsquery('fr', '${searchQuery.keyword}')`;
+
             if (searchQuery.tech !== 'all') tech = `AND to_tsvector('fr', techs::text) @@websearch_to_tsquery('fr', '${searchQuery.tech}')`;
             if (searchQuery.category !== 'all') category = `AND to_tsvector('fr', category::text) @@websearch_to_tsquery('fr', '${searchQuery.category}')`;
             if (searchQuery.level !== 'all') level = `AND to_tsvector('fr', level::text) @@websearch_to_tsquery('fr', '${searchQuery.level}')`;
             if (searchQuery.type !== 'all') type = `AND to_tsvector('fr', type::text) @@websearch_to_tsquery('fr', '${searchQuery.type}')`;
             if (searchQuery.lang !== 'all') lang = `AND to_tsvector('fr', lang::text) @@websearch_to_tsquery('fr', '${searchQuery.lang}')`;
+
             console.log(`${select} ${keyword} ${tech} ${category} ${level} ${type} ${lang}${pagination};`);
             
             //chercher dans toutes les colonnes sauf slug et URLs
@@ -59,8 +60,30 @@ class Cards {
             //requête vers la table
             console.log(">>> je vais chercher la vue carte dans la table");
             
-            const { rows } = await client.query('SELECT card.*, ARRAY_AGG(card_has_tech.tech_id) techs FROM card JOIN card_has_tech ON card_has_tech.card_id = card.id WHERE card.id=$1 GROUP BY card.id;', [id]);
+            //const { rows } = await client.query('SELECT card.*, ARRAY_AGG(card_has_tech.tech_id) techs FROM card JOIN card_has_tech ON card_has_tech.card_id = card.id WHERE card.id=$1 GROUP BY card.id;', [id]);
+            const {rows} = await client.query(`SELECT * FROM cards WHERE id=$1`, [id]);
+            //condition pour agir selon que la requête renvoie quelque chose ou non
+            if (rows[0]) {
+                return new Cards(rows[0]);
+            }
+            return null;
+
             
+        } catch (error) {
+            //voir l'erreur en console
+            console.trace(error);
+            //renvoyer l'erreur au front
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+        //trouver une carte via son id
+    static async findOneToUpdate(id) {
+        try {
+            //requête vers la table
+            console.log(">>> je vais chercher la vue carte dans la table");
+            
+            //const { rows } = await client.query('SELECT card.*, ARRAY_AGG(card_has_tech.tech_id) techs FROM card JOIN card_has_tech ON card_has_tech.card_id = card.id WHERE card.id=$1 GROUP BY card.id;', [id]);
+            const {rows} = await client.query(`SELECT * FROM card WHERE id=$1`, [id]);
             //condition pour agir selon que la requête renvoie quelque chose ou non
             if (rows[0]) {
                 return new Cards(rows[0]);
