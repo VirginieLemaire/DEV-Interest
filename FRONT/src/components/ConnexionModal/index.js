@@ -13,14 +13,18 @@ import EmailField from '../GenericComponents/EmailField';
 import PasswordField from '../GenericComponents/PasswordField';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import Field from '../GenericComponents/Field';
-import { changeNewUserField, signup } from '../../action/userCreate';
+import {
+  changeNewUserField, passwordMatch, signup, verifyEmail, verifyUsername,
+} from '../../action/userCreate';
 
 const ConnexionModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const { darkMode, hasAnAccount, connexionModal } = useSelector((state) => state.displayOptions);
-  const { isLogged } = useSelector((state) => state.userCurrent);
+  const {
+    usernameAvailability, emailAvailability, passwordMatchValue,
+  } = useSelector((state) => state.userCreate);
 
   const { email, password } = useSelector((state) => state.userConnect);
 
@@ -29,15 +33,15 @@ const ConnexionModal = () => {
   const newUserPassword = useSelector((state) => state.userCreate.password);
   const newUserPasswordVerif = useSelector((state) => state.userCreate.passwordVerification);
 
+  const { connexionErrorValue } = useSelector((state) => state.userCurrent);
+
   const handleSignupClick = () => {
     dispatch(showSingupModal());
   };
 
   const handleSubmitConnexion = (e) => {
     e.preventDefault();
-    dispatch(showConnexionModal());
     dispatch(login());
-    history.push('/');
   };
 
   const handleSubmitSignup = (e) => {
@@ -46,6 +50,10 @@ const ConnexionModal = () => {
       dispatch(showConnexionModal());
       dispatch(signup());
       history.push('/');
+      dispatch(passwordMatch(false));
+    }
+    else if (newUserPassword !== newUserPasswordVerif) {
+      dispatch(passwordMatch(true));
     }
   };
 
@@ -54,6 +62,14 @@ const ConnexionModal = () => {
     dispatch(showConnexionModal());
   };
 
+  const handleChangeNewUsername = (e) => {
+    dispatch(verifyUsername(e.target.value));
+    dispatch(changeNewUserField(e.target.value, 'username'));
+  };
+  const handleChangeNewEmail = (e) => {
+    dispatch(verifyEmail(e.target.value));
+    dispatch(changeNewUserField(e.target.value, 'email'));
+  };
   // const handleKeyPress = (e) => {
   //   if (e.keyCode === 27) {
   //     dispatch(showConnexionModal());
@@ -99,6 +115,9 @@ const ConnexionModal = () => {
                 required
                 minlength="4"
               />
+              { connexionErrorValue && (
+                <div className="connexion__error">Les identifiants rentrés sont incorrects</div>
+              )}
             </div>
             <div className="connexion-modal__footer">
               <SubmitButton
@@ -135,19 +154,21 @@ const ConnexionModal = () => {
                 autoComplete="off"
                 value={newUserUsername}
                 name="new-user_username"
-                placeholder="Nom d'utilisateur"
-                handleChange={(e) => dispatch(changeNewUserField(e.target.value, 'username'))}
+                placeholder={usernameAvailability ? 'Nom d\'utilisateur' : 'Nom d\'utilisateur - déjà utilisé'}
+                handleChange={handleChangeNewUsername}
                 minlength="4"
                 maxlength="20"
                 required
+                className={usernameAvailability ? 'field__input' : 'field__input not-available'}
               />
               <EmailField
                 autoComplete="off"
                 value={newUserEmail}
                 name="new-user_email"
-                placeholder="Email"
-                handleChange={(e) => dispatch(changeNewUserField(e.target.value, 'email'))}
+                placeholder={emailAvailability ? 'Email' : 'Email - déjà utilisé'}
+                handleChange={handleChangeNewEmail}
                 required
+                className={emailAvailability ? 'email-field__input' : 'email-field__input not-available'}
               />
               <PasswordField
                 autoComplete="new-password"
@@ -167,6 +188,9 @@ const ConnexionModal = () => {
                 required
                 minlength="4"
               />
+              { passwordMatchValue && (
+                <div className="connexion__error">Les mots de passe ne correspondent pas !</div>
+              )}
             </div>
             <div className="connexion-modal__footer">
               <SubmitButton

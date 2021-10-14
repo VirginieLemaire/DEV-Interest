@@ -1,0 +1,10 @@
+.header-offset{
+  width: 100%;
+  height: 60px;
+}
+
+@media screen and (max-width: 500px){
+  .header-offset{
+    display: none;
+  }
+}

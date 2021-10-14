@@ -1,9 +1,11 @@
 @use '../../styles/vars';
 
 .home {
+  max-width: 1080px;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 6rem;
+  gap: 2rem; 
   align-items: center;
   color: vars.$text-color;
 
@@ -11,26 +13,55 @@
     color: vars.$white-color;
   }
 
-  &__catch-title {
+  &__welcome-container{
+    display: flex;
     margin-top: 4rem;
-    font-size: 2rem;
-    font-style: italic;
-    line-height: 2.5rem;
+    max-width: 1080px;
+    gap: 2.5rem;
+
+    &__slider {
+      width: 50%;
+      color: rgba(vars.$primary-color, 0.5);
+      border-radius: vars.$border-radius-input;
+
+      &--dark {
+        color: rgba(vars.$primary-color, 0.5);
+        border-radius: vars.$border-radius-input;
+      }
+    }
+
+    &__actions {
+      max-width: 540px;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8rem;
+
+      &__catch-title {
+        font-size: 2rem;
+        font-style: italic;
+        line-height: 2.5rem;
+      }
+    
+      &__searchbar-container {
+        width: 80%;
+      }
+    
+      &__break {
+        width: 20%;
+      }
+    
+      &__catch-phrase {
+        font-size: 1.5rem;
+        font-style: italic;
+        line-height: 2rem;
+      }
+    }
+
   }
 
-  &__searchbar-container {
-    width: 40%;
-  }
-
-  &__break {
-    width: 20%;
-  }
-
-  &__catch-phrase {
-    font-size: 1.5rem;
-    font-style: italic;
-    line-height: 2rem;
-  }
 
   &__tags-content-wraper {
 

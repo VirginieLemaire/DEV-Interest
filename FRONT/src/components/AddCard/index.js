@@ -1,17 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import {
-  addCard, changeNewCardCertification, changeNewCardField, changeNewCardTechs,
+  addCard, changeNewCardCertification, changeNewCardField, changeNewCardTechs, missingAddCardFields,
 } from '../../action/cardNew';
+import { getUserWithToken, toggleLogged } from '../../action/userCurrent';
 
 import { slugify } from '../../selectors/cards';
+import { capitalizeFirstLetter } from '../../selectors/utils';
 
 import Field from '../GenericComponents/Field';
+import Loader from '../GenericComponents/Loader';
 import SubmitButton from '../GenericComponents/SubmitButton';
 import TextareaField from '../GenericComponents/TextareaField';
 import UrlField from '../GenericComponents/UrlField';
+import CardPreview from '../CardPreview';
 
 import './add-card.scss';
 
@@ -24,8 +29,11 @@ const AddCard = () => {
   const { loading, darkMode } = useSelector((state) => state.displayOptions);
 
   const {
-    title, description, url, image, website, certification,
+    title, description, image, certification, website, url,
+    techs, level, category, type, lang, missingAddCardFieldsValue,
   } = useSelector((state) => state.cardNew);
+
+  const cardNew = useSelector((state) => state.cardNew);
 
   const customTheme = (theme) => ({
     ...theme,
@@ -82,48 +90,53 @@ const AddCard = () => {
   ];
 
   const handleNewCardTitleChange = (e) => {
-    dispatch(changeNewCardField(e.target.value, 'title'));
+    dispatch(changeNewCardField(capitalizeFirstLetter(e.target.value), 'title'));
     dispatch(changeNewCardField(slugify(e.target.value), 'slug'));
   };
 
   const handleSubmitNewCard = (e) => {
-    if (certification) {
-      e.preventDefault();
+    e.preventDefault();
+    if (certification && title && description
+      && techs !== [] && level && category && type && lang) {
       dispatch(addCard());
+      dispatch(missingAddCardFields(false));
       history.push('/');
+    }
+    else {
+      dispatch(missingAddCardFields(true));
     }
   };
 
-  if (loading) return null;
+  if (loading) return <Loader />;
 
   return (
-    <div className={darkMode ? 'add-card add-card--dark' : 'add-card'}>
+    <div className="add-card">
       <form className="add-card__form" onSubmit={handleSubmitNewCard}>
-        <h2 className={darkMode ? 'add-card__title add-card__title--dark' : 'add-card__title'}>Ajout d'une nouvelle ressource</h2>
+        <h2 className={darkMode ? 'add-card__form__title add-card__form__title--dark' : 'add-card__form__title'}>Ajout d'une nouvelle ressource</h2>
         <Field
-          className="add-card__input-title"
+          className="field__input add-card__form__input-title"
           value={title}
           type="text"
           name="title"
-          placeholder="Titre de la ressource"
+          placeholder="Titre de la ressource*"
           handleChange={handleNewCardTitleChange}
           required
           minlength="10"
           maxlength="120"
         />
         <TextareaField
-          className="add-card__input-description"
+          className="add-card__form__input-description"
           value={description}
           type="textarea"
           name="description"
-          placeholder="Description"
+          placeholder="Description*"
           handleChange={(e) => dispatch(changeNewCardField(e.target.value, 'description'))}
           required
           minLength="10"
           maxLength="500"
         />
         <Field
-          className="add-card__input-website"
+          className="field__input add-card__form__input-website"
           value={website}
           type="text"
           name="website"
@@ -134,7 +147,7 @@ const AddCard = () => {
           readOnly
         />
         <UrlField
-          className="add-card__input-url"
+          className="add-card__form__input-url"
           value={url}
           name="urlSource"
           placeholder="Lien Url de la ressource"
@@ -143,7 +156,7 @@ const AddCard = () => {
           readOnly
         />
         <UrlField
-          className="add-card__input-image"
+          className="add-card__form__input-image"
           value={image}
           name="urlImage"
           placeholder="Lien Url de l'image"
@@ -151,7 +164,7 @@ const AddCard = () => {
           required
         />
         <Select
-          placeholder="Type de ressource"
+          placeholder="Type de ressource*"
           closeMenuOnSelect
           components={animatedComponents}
           options={typeValues}
@@ -159,7 +172,7 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Technologies"
+          placeholder="Technologies*"
           closeMenuOnSelect={false}
           components={animatedComponents}
           isMulti
@@ -168,7 +181,7 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Catégorie"
+          placeholder="Catégorie*"
           closeMenuOnSelect
           components={animatedComponents}
           options={categoryValues}
@@ -176,7 +189,7 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Niveau"
+          placeholder="Niveau*"
           closeMenuOnSelect
           components={animatedComponents}
           options={levelValues}
@@ -184,14 +197,18 @@ const AddCard = () => {
           theme={customTheme}
         />
         <Select
-          placeholder="Langue"
+          placeholder="Langue*"
           closeMenuOnSelect
           components={animatedComponents}
           options={languageOptions}
           onChange={(value) => dispatch(changeNewCardField(value.value, 'lang'))}
           theme={customTheme}
         />
-        <label className="add-card__input-certified" htmlFor="certify-add-card">
+        { missingAddCardFieldsValue && (
+          <div className="connexion__error">Des champs obligatoires doivent être complétés !</div>
+        )}
+        <label className={darkMode ? 'add-card__input-certified add-card__input-certified--dark' : 'add-card__input-certified'} htmlFor="certify-add-card">
+
           <input
             type="checkbox"
             id="certify-add-card"
@@ -202,7 +219,7 @@ const AddCard = () => {
           />
           Je certifie que la ressource partagée respecte les conditions d'utilisations
         </label>
-        <div className="add-card__button">
+        <div className="add-card__form__button">
           <SubmitButton
             color
             styling="full"
@@ -210,6 +227,13 @@ const AddCard = () => {
           />
         </div>
       </form>
+      {(title || image || website)
+        && (
+        <div className="add-card__card-preview">
+          <h2 className={darkMode ? 'add-card__card-preview__title add-card__card-preview__title--dark' : 'add-card__card-preview__title'}>Aperçu de la carte</h2>
+          <CardPreview card={cardNew} />
+        </div>
+        )}
     </div>
   );
 };

@@ -2,8 +2,9 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GrFormClose } from '@react-icons/all-files/gr/GrFormClose';
 
-import { changeNewCardField, getOpengraphData } from '../../action/cardNew';
-import { showAddCardModal, showConnexionModal } from '../../action/displayOptions';
+import { useEffect } from 'react';
+import { changeNewCardField, getOpengraphData, cardExist } from '../../action/cardNew';
+import { setRedirectToFalse, showAddCardModal, showConnexionModal } from '../../action/displayOptions';
 
 import LogoDEVLovePPER from '../../assets/LogoDEVLovePPER.svg';
 
@@ -17,16 +18,22 @@ const AddCardModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { url } = useSelector((state) => state.cardNew);
+  const { url, cardExistValue, cardExistUrl } = useSelector((state) => state.cardNew);
   const { darkMode, addCardModal } = useSelector((state) => state.displayOptions);
   const { isLogged } = useSelector((state) => state.userCurrent);
+
+  const { redirect } = useSelector((state) => state.displayOptions);
+  useEffect(() => {
+    if (redirect) {
+      history.push('/add-card');
+      dispatch(setRedirectToFalse());
+    }
+  }, [redirect]);
 
   const handleModalAddCardUrlSubmit = (e) => {
     e.preventDefault();
     if (isLogged) {
-      dispatch(showAddCardModal());
       dispatch(getOpengraphData());
-      history.push('/add-card');
     }
   };
 
@@ -38,6 +45,18 @@ const AddCardModal = () => {
   const handleHomeRedirect = () => {
     history.push('/');
     dispatch(showConnexionModal());
+  };
+
+  const handleNewCardEntryClick = () => {
+    dispatch(changeNewCardField('', 'url'));
+    dispatch(cardExist(false));
+  };
+
+  const handleSeeCardClick = () => {
+    dispatch(cardExist(false));
+    dispatch(changeNewCardField('', 'url'));
+    dispatch(showAddCardModal());
+    history.push(cardExistUrl);
   };
 
   if (!addCardModal) {
@@ -58,7 +77,7 @@ const AddCardModal = () => {
                 <GrFormClose className="close-icon" />
               </div>
             </div>
-            <h4 className="add-card-modal__title">Partage une nouvelle ressource</h4>
+            <h4 className="add-card-modal__title">Enregistrement d'une nouvelle ressource</h4>
           </div>
           {
               (!isLogged) && (
@@ -66,7 +85,7 @@ const AddCardModal = () => {
                   <div
                     className="add-card-modal__connexion-warning"
                   >
-                    Il faut être connecter pour pouvoir ajouter une nouvelle ressource !
+                    Il faut être connecté.e pour pouvoir ajouter une ressource ou la mettre en favoris!
                   </div>
                   <div className="add-card-modal__footer">
 
@@ -82,7 +101,7 @@ const AddCardModal = () => {
               )
             }
           {
-              (isLogged) && (
+              (isLogged) && !cardExistValue && (
                 <form autoComplete="off" onSubmit={handleModalAddCardUrlSubmit}>
                   <div className="add-card-modal__body">
                     <UrlField
@@ -102,6 +121,33 @@ const AddCardModal = () => {
                     />
                   </div>
                 </form>
+              )
+            }
+          {
+              (isLogged) && cardExistValue && (
+                <div className="add-card-modal__connexion-warning__container">
+                  <div
+                    className="add-card-modal__connexion-warning"
+                  >
+                    Votre carte existe déjà sur DEV Interest !
+                  </div>
+                  <div className="add-card-modal__footer">
+                    <Button
+                      submit
+                      styling="outline"
+                      handleClick={handleNewCardEntryClick}
+                      content="Rentrer un nouveau lien"
+                      color
+                    />
+                    <Button
+                      submit
+                      styling="full"
+                      handleClick={handleSeeCardClick}
+                      content="Voir la carte"
+                      color
+                    />
+                  </div>
+                </div>
               )
             }
         </div>

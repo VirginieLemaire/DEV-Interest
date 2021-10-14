@@ -15,7 +15,7 @@ export const login = () => (
 );
 
 export const RESET_CONNECTING_FIELDS = 'RESET_CONNECTING_FIELDS';
-export const resteConnectingFields = () => (
+export const resetConnectingFields = () => (
   {
     type: RESET_CONNECTING_FIELDS,
   }
@@ -26,5 +26,12 @@ export const connectUser = (data) => (
   {
     type: CONNECT_USER,
     data,
+  }
+);
+
+export const SET_ACCESSTOKEN_LOCALSTORAGE = 'SET_ACCESSTOKEN_LOCALSTORAGE';
+export const setAccesstokenLocalStorage = () => (
+  {
+    type: SET_ACCESSTOKEN_LOCALSTORAGE,
   }
 );

@@ -1,1 +1,54 @@
 @use '../../styles/vars';
+
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1080px;
+  margin: auto;
+  margin-top: 4rem;
+
+  &--dark{
+    color: vars.$white-color;
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    line-height: 1.5rem;
+  }
+
+  &__team {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    
+    &__cards{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 2rem;
+
+      &__card{
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+  }
+}
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+  .about__team__cards {
+    flex-direction: column;
+  }
+}

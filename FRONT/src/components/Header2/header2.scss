@@ -1,0 +1,149 @@
+@use '../../styles/vars';
+
+.header2{
+  z-index: 1000;
+  position: sticky;
+  top: 0;
+  display: flex;
+  background-color: vars.$white-color;
+  box-shadow: 2px 12px 30px rgba(88, 88, 88, 0.1);
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem ;
+  gap: 2rem;
+  width: 100%;
+
+  &--dark{
+    background-color: vars.$dark-color;
+  }
+
+  &__logo-area{
+      // margin-right: 2rem;
+  }
+
+  &__home-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: vars.$primary-color;
+    font-size: 1.5rem;
+    padding: 0.3rem;
+    font-family: 'Goldman', cursive;
+    
+    &--DEV{
+        color: vars.$white-color;
+        font-weight: bold;
+        border-radius: vars.$border-radius-input;
+        background: vars.$primary-color-gradient;
+        padding: 0.2rem;
+    }
+
+    &--heart{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        margin: 0 0 0 0.1rem;
+    }
+
+    &--interest{
+        font-weight: bold;
+    }
+  }
+
+  &__search-bar-area{
+    width: 250px;
+  }
+}
+
+.icon-text{
+  color: vars.$text-color;
+  &--dark{
+    color: vars.$white-color;
+  }
+}
+
+#header-search-button{
+  display: none;
+}
+ 
+@media screen and (max-width: 600px) {
+    .header2{
+      z-index: 1000;
+      position: sticky;
+      top: 0;
+      display: flex;
+      background-color: vars.$white-color;
+      box-shadow: 2px 12px 30px rgba(88, 88, 88, 0.1);
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem ;
+      gap: 0.5rem;
+      width: 100vw;
+    
+      &--dark{
+        background-color: vars.$dark-color;
+      }
+    
+      &__logo-area{
+          // margin-right: 2rem;
+      }
+    
+      &__home-link{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: vars.$primary-color;
+        font-size: 1.5rem;
+        padding: 0.3rem;
+        font-family: 'Goldman', cursive;
+        
+        &--DEV{
+            display: none;
+        }
+    
+        &--heart{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin: 0 0 0 0.1rem;
+        }
+    
+        &--interest{
+          display: none;
+        }
+      }
+  
+
+      &__search-bar-area{
+        width: 250px;
+      }
+    }
+    
+    #header-searchbar{
+      display: none;
+    }
+    
+    .icon-text{
+      color: vars.$text-color;
+      &--dark{
+        color: vars.$white-color;
+      }
+    }
+    .darkmode-button{
+      display: none;
+    }
+
+    #header-search-button{
+      display: flex;
+    }
+    
+    .header-button-text{
+      display: none;
+    }
+
+    #header-account-button{
+      display: none;
+    }
+  }

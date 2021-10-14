@@ -2,14 +2,13 @@
 
 .add-card{
   display: flex;
-  flex-direction: column;
-  max-width: 450px;
-  margin: auto;
+  max-width: 1080px;
+  margin: 2rem auto;
   gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
 
-  &--dark{
-    color: vars.$white-color;
-  }
+
 
   &__form{
     display: flex;
@@ -17,85 +16,125 @@
     max-width: 450px;
     margin: auto;
     gap: 2rem;
-  }
 
-  &__title{
-    font-weight: bold;
-    font-size: 1.5rem;
-    text-align: center;
-    color: vars.$text-color;
-    &--dark{
-      color: vars.$white-color;
-    }
-  }
-
-  &__input{
-
-    &-title{
-
-    }
-
-    &-description{
-
-    }
-
-    &-url{
-
+    &__title{
+      font-weight: bold;
+      font-size: 1.5rem;
+      text-align: center;
+      color: vars.$text-color;
+      &--dark{
+        color: vars.$white-color;
+      }
     }
     
-    &-image{
-
-    }
-
-    &-type{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1rem;
+    &__image-container {
       
-    }
-
-    &-level{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1rem;
-    }
-
-    &-language{
-      padding: 0.5rem;
-      border-radius: vars.$border-radius-input;
-      border: 1px solid vars.$light-color;
-      outline: none;
-      color: vars.$text-color;
-      font-size: 1em;
-      appearance: none;
-      text-align: center;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-
-      &::-ms-expand{
-        display: none;
-      }
-
-      &:focus{
-        border: 2px solid vars.$primary-color;
+      &__image {
+        max-width: 100%;
+        height: auto;
       }
     }
-
-    &-techs{
-
+    &__input{
+  
+      &-title{
+  
+      }
+  
+      &-description{
+  
+      }
+  
+      &-url{
+  
+      }
+      
+      &-image{
+  
+      }
+  
+      &-type{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        
+      }
+  
+      &-level{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+      }
+  
+      &-language{
+        padding: 0.5rem;
+        border-radius: vars.$border-radius-input;
+        border: 1px solid vars.$light-color;
+        outline: none;
+        color: vars.$text-color;
+        font-size: 1em;
+        appearance: none;
+        text-align: center;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+  
+        &::-ms-expand{
+          display: none;
+        }
+  
+        &:focus{
+          border: 2px solid vars.$primary-color;
+        }
+      }
+  
+      &-techs{
+  
+      }
+  
+      &-certified{
+        margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        font-size: 0.8rem;
+        &--dark{
+          color: vars.$white-color;
+        }
+      }
     }
-
-    &-certified{
+  
+    &__button{
       margin-top: 2rem;
+
       display: flex;
+      justify-content: center;
       align-items: center;
       font-size: 0.8rem;
+      &--dark{
+        color: vars.$white-color;
+      }
+
     }
   }
 
-  &__button{
-    margin-top: 2rem;
-    text-align: center;
+  &__card-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    &__title{
+      font-weight: bold;
+      font-size: 1.5rem;
+      text-align: center;
+      color: vars.$text-color;
+      &--dark{
+        color: vars.$white-color;
+      }
+    }
+  }
+
+}
+
+.add-card__input-certified{
+  &--dark{
+    color: vars.$white-color;
   }
 }
 
@@ -105,4 +144,13 @@
 
 #field-title{
   
+}
+
+@media screen and (max-width: 600px) {
+  .add-card{
+    padding: 1rem;
+    &__card-preview{
+      display: none;
+    }
+  }
 }

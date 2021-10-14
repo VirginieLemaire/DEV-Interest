@@ -1,12 +1,15 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Masonry from 'react-masonry-css';
 
 import './bookmarked-cards.scss';
 
+import { useEffect } from 'react';
 import Card from '../Card';
+import { getUserWithToken } from '../../action/userCurrent';
 
 const BookmarkedCards = () => {
-  const { bookmarkedCards } = useSelector((state) => state.userCurrent);
+  const dispatch = useDispatch();
+  const { bookmarkedCards, bookmarks } = useSelector((state) => state.userCurrent);
   const { loading } = useSelector((state) => state.displayOptions);
 
   const breakpointsColumnsObj = {

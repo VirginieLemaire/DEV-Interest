@@ -16,3 +16,4 @@ const rootReactElement = (
 const target = document.getElementById('root');
 
 ReactDom.render(rootReactElement, target);
+

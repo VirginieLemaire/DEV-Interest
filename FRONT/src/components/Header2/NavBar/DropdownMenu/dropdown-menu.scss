@@ -1,0 +1,77 @@
+@use '../../../../styles/vars';
+
+.dropdown{
+  position: absolute;
+  top: 56px;
+  width: 300px;
+  transform: translateX(-45%);
+  background-color: vars.$white-color;
+  border: 1px solid vars.$light-color;
+  border-radius: vars.$border-radius-input;
+  padding: 0.5rem;
+  overflow: hidden;
+  box-shadow: vars.$shadow-primary;
+  &--dark{
+    background-color: vars.$dark-color;
+    border: 2px solid vars.$dark-color-accent;
+  }
+}
+
+.dropdown-text{
+  color: vars.$text-color;  
+
+  &--dark{
+    color: vars.$white-color;  
+  }
+}
+
+.menu {
+  width: 100%;
+
+  &--dark{
+    background-color: vars.$dark-color;
+    & p {
+      color: vars.$white-color;
+    }
+  }
+}
+
+.dark-mode-toggle-dd{
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  &--dark{
+    color: vars.$white-color;
+  }
+}
+
+.menu-primary-enter{
+  position: absolute;
+  transform: translateX(-110%);
+}
+
+.menu-primary-enter-active{
+  transform: translateX(0%);
+  transition: all vars.$speed ease;
+}
+
+.menu-primary-exit{
+  position: absolute;
+}
+
+.menu-primary-exit-active{
+  transform: translateX(-110%);
+  transition: all vars.$speed ease;
+}
+
+@media screen and (max-width: 600px) {
+  .dark-mode-toggle-dd{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+}

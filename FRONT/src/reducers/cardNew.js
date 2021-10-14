@@ -1,9 +1,10 @@
 import {
+  CARD_EXIST,
   CHANGE_NEW_CARD_CERTIFICATION, CHANGE_NEW_CARD_FIELD,
-  CHANGE_NEW_CARD_TECHS, INSERT_OPENGRAPH_DATA_INTO_NEW_CARD_FORM, RESET_NEW_CARD,
+  CHANGE_NEW_CARD_TECHS,
+  MISSING_ADD_CARD_FIELDS,
+  RESET_NEW_CARD, SAVE_EXIST_CARD_URL,
 } from '../action/cardNew';
-import { slugify } from '../selectors/cards';
-import { getDomainName } from '../selectors/utils';
 
 export const initialState = {
   title: '',
@@ -19,6 +20,9 @@ export const initialState = {
   category: '',
   certification: false,
   addCardLinkField: '',
+  cardExistValue: false,
+  cardExistUrl: '',
+  missingAddCardFieldsValue: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -50,9 +54,24 @@ const reducer = (state = initialState, action = {}) => {
         type: '',
         techs: [],
         level: '',
-        language: '',
+        lang: '',
         category: '',
         certification: false,
+      };
+    case CARD_EXIST:
+      return {
+        ...state,
+        cardExistValue: action.value,
+      };
+    case SAVE_EXIST_CARD_URL:
+      return {
+        ...state,
+        cardExistUrl: action.url,
+      };
+    case MISSING_ADD_CARD_FIELDS:
+      return {
+        ...state,
+        missingAddCardFieldsValue: action.value,
       };
     default:
       return state;

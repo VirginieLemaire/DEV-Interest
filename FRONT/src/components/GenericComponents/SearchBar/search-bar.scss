@@ -1,13 +1,27 @@
 @use '../../../styles/vars';
 
+.search-bar__container{
+  border: 2px solid vars.$light-color;
+  border-radius: vars.$border-radius-input;
+  background-color: vars.$light-color;
+
+  &:focus-within{
+    border-radius: vars.$border-radius-input;
+    caret-color: vars.$primary-color;
+  }
+}
+
 .search-bar{
+  z-index: 1100;
   background-color: vars.$light-color;
   color: vars.$text-color;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 1rem;
   border-radius: vars.$border-radius-input;
   font-size: 1rem;
 
-  &.quarter{
+
+
+    &.quarter{
     width: 25%;
   }
 
@@ -47,6 +61,59 @@
     width: 100%;
     background-color: transparent;
     border: none;
+
+  }
+
+  &__container{
+    position: relative;
+  }
+  
+  &__mini-results{
+    margin-top: 0.3rem;
+    border-top: 1px solid vars.$light-color-plus;
+    box-sizing: border-box;
+    position: absolute;
+    float:inline-end;
+    left: 0;
+    width: 100%;
+    background-color: vars.$light-color;
+    color: vars.$text-color;
+    border-radius: 0 0 vars.$border-radius-input vars.$border-radius-input;
+    font-size: 1rem;
+    box-shadow: vars.$shadow-primary;
+    & > a{
+      color: vars.$text-color;
+    }
+      &--counter{
+        text-align: center;
+        padding: 0.5rem 0;
+        font-weight: bold;
+      }
+
+      &--item{
+      box-sizing: border-box;
+      font-size: 0.9rem;
+      width:auto;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-radius: vars.$border-radius-input;
+      padding: 0.5rem 0 0.5rem 1rem;
+      margin: 0.5rem 0.5rem;
+      &__image{
+        object-fit: cover;
+        width: 2rem;
+        height: 2rem;
+      }
+
+      &__title{
+
+      }
+      &:hover{
+        background-color: vars.$light-color-plus;
+        cursor: pointer;
+      }
+    }
   }
 }
 
@@ -66,3 +133,92 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+@media screen and (max-width: 600px) {
+ 
+  .normal {
+    font-size: 0.6rem;
+  }
+  
+  .medium {
+    font-size: 0.9rem;
+  }
+  
+  .big {
+    font-size: 0.7rem;
+  }
+
+  .search-bar__container{
+    border: 2px solid vars.$light-color;
+    border-radius: vars.$border-radius-input;
+    background-color: vars.$light-color;
+  
+    &:focus-within{
+      border-radius: vars.$border-radius-input;
+      caret-color: vars.$primary-color;
+    }
+  }
+  
+  .search-bar{
+    z-index: 1000;
+    background-color: vars.$light-color;
+    color: vars.$text-color;
+    padding: 0.4rem 1rem;
+    border-radius: vars.$border-radius-input;
+    font-size: 1rem;
+  
+  
+  
+      &.quarter{
+      width: 25%;
+    }
+  
+    &.half{
+      width: 50%;
+    }
+  
+    &.three-quarter{
+      width: 75%;
+    }
+  
+    &.full{
+      width: 100%;
+    }
+  
+    &__form{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  
+    &__icon{
+      color: vars.$text-color;
+  
+      &.notloading{
+  
+      }
+  
+      &.loading{
+        animation: spin 2s linear infinite;
+      }
+    }
+  
+    &__input{
+      width: 100%;
+      background-color: transparent;
+      border: none;
+  
+    }
+  
+    &__container{
+      position: relative;
+    }
+    
+    &__mini-results{
+      display: none;
+    }
+  }
+}
+

@@ -65,3 +65,114 @@ export const setMoreHome = (more) => (
     more,
   }
 );
+
+export const CREATE_ACCOUNT_THANK_MODAL = 'CREATE_ACCOUNT_THANK_MODAL';
+export const createAccountThankModal = () => (
+  {
+    type: CREATE_ACCOUNT_THANK_MODAL,
+  }
+);
+
+export const UPDATE_ACCOUNT_SUCCESS_MODAL = 'UPDATE_ACCOUNT_SUCCESS_MODAL';
+export const updateAccountSuccessModal = () => (
+  {
+    type: UPDATE_ACCOUNT_SUCCESS_MODAL,
+  }
+);
+
+export const ADD_CARD_THANK_MODAL = 'ADD_CARD_THANK_MODAL';
+export const addCardThankModal = () => (
+  {
+    type: ADD_CARD_THANK_MODAL,
+  }
+);
+
+export const UPDATE_CARD_SUCCESS_MODAL = 'UPDATE_CARD_SUCCESS_MODAL';
+export const updateCardSuccessModal = () => (
+  {
+    type: UPDATE_CARD_SUCCESS_MODAL,
+  }
+);
+
+export const DELETE_USER_SUCCESS_MODAL = 'DELETE_USER_SUCCESS_MODAL';
+export const deleteUserSuccessModal = () => (
+  {
+    type: DELETE_USER_SUCCESS_MODAL,
+  }
+);
+
+export const TOGGLE_MODAL = 'TOGGLE_MODAL';
+export const toggleModal = () => (
+  {
+    type: TOGGLE_MODAL,
+  }
+);
+
+export const TOGGLE_OPENNAV = 'TOGGLE_OPENNAV';
+export const toggleOpenNav = () => (
+  {
+    type: TOGGLE_OPENNAV,
+  }
+);
+
+export const SET_ACTIVE_MENU = 'SET_ACTIVE_MENU';
+export const setActiveMenu = (activeMenu) => (
+  {
+    type: SET_ACTIVE_MENU,
+    activeMenu,
+  }
+);
+
+export const SHOW_DELETE_USER_MODAL = 'SHOW_DELETE_USER_MODAL';
+export const showDeleteUserModal = () => (
+  {
+    type: SHOW_DELETE_USER_MODAL,
+  }
+);
+
+export const SHOW_DELETE_CARD_MODAL = 'SHOW_DELETE_CARD_MODAL';
+export const showDeleteCardModal = () => (
+  {
+    type: SHOW_DELETE_CARD_MODAL,
+  }
+);
+
+export const DELETE_CARD_SUCCESS_MODAL = 'DELETE_CARD_SUCCESS_MODAL';
+export const deleteCardSuccessModal = () => (
+  {
+    type: DELETE_CARD_SUCCESS_MODAL,
+  }
+);
+
+export const SHOW_SEARCH_MODAL = 'SHOW_SEARCH_MODAL';
+export const showSearchModal = () => (
+  {
+    type: SHOW_SEARCH_MODAL,
+  }
+);
+
+export const SET_DARKMODE = 'SET_DARKMODE';
+export const setDarkMode = (value) => (
+  {
+    type: SET_DARKMODE,
+    value,
+  }
+);
+
+export const SET_SEARCH_MODAL = 'SET_SEARCH_MODAL';
+export const setSearchModal = (value) => (
+  {
+    type: SET_SEARCH_MODAL,
+    value,
+  }
+);
+
+export const SET_REDIRECT_TO_TRUE = 'SET_REDIRECT_TO_TRUE';
+export const setRedirectToTrue = () => ({
+  type: SET_REDIRECT_TO_TRUE,
+});
+
+export const SET_REDIRECT_TO_FALSE = 'SET_REDIRECT_TO_FALSE';
+export const setRedirectToFalse = () => ({
+  type: SET_REDIRECT_TO_FALSE,
+});
