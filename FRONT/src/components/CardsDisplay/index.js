@@ -36,6 +36,8 @@ const CardsDisplay = ({keyword, cardIgnored}) => {
   const { cards, searchCount } = useSelector((state) => state.cardsSearch);
   const { loading, more, darkMode } = useSelector((state) => state.displayOptions);
 
+  const cardsWithoutCardIgnored = cards.filter((card) => card.id !== cardIgnored);
+
   const breakpointsColumnsObj = {
     default: 7,
     2500: 6,
@@ -57,7 +59,7 @@ const CardsDisplay = ({keyword, cardIgnored}) => {
             columnClassName="masonry-grid_column"
           >
             {
-              cards.map(
+              cardsWithoutCardIgnored.map(
                 (card) => (
                   <div className="masonry-div" key={card.id}>
                     {
