@@ -9,6 +9,8 @@ const Slider = () => {
 
   return (
     <div className="slider">
+    {
+      data.length > 0 && 
       <Carousel
         autoPlay
         width={800}
@@ -34,6 +36,7 @@ const Slider = () => {
           ))
 }
       </Carousel>
+    }
     </div>
   );
 };
