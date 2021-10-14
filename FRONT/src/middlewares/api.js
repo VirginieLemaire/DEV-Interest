@@ -700,8 +700,8 @@ export default (store) => (next) => (action) => {
           // console.log('Réussite sur la route /user je reçois les infos :', response);
           store.dispatch(Logged(true));
           store.dispatch(connectUser(response.data.user));
-          localStorage.setItem('accessToken', response.data.accessToken);
-          localStorage.setItem('refreshToken', response.data.refreshToken);
+          localStorage.setItem('userToken', response.data.accessToken);
+          localStorage.setItem('userRefreshToken', response.data.refreshToken);
           // console.log('je me connecte avec ces informations', response.data);
         })
         .catch((error) => {
