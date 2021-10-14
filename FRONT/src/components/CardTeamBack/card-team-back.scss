@@ -1,0 +1,49 @@
+@use '../../styles/vars';
+
+.card-team {
+  &__back {
+    font-family: 'Goldman', cursive;
+    height: 530px;
+    position: relative;
+
+    &__letter {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: vars.$primary-color;
+      font-weight: bold;
+      color: vars.$white-color;
+      font-size: 15rem;
+      border-radius: vars.$border-radius-input;
+
+      &__arrow {
+        font-size: 1.5rem;
+        position: absolute;
+        left: 16rem;
+        bottom: 1rem;
+      }
+    }
+
+    &__heart {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: vars.$primary-color;
+      font-size: 15rem;
+      border-radius: vars.$border-radius-input;
+
+      &__arrow {
+        font-size: 1.5rem;
+        position: absolute;
+        left: 16rem;
+        bottom: 1rem;
+        color: vars.$primary-color;
+      }
+    }
+    
+  }
+}

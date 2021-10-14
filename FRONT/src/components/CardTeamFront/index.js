@@ -1,5 +1,8 @@
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
+import { SiLinkedin } from '@react-icons/all-files/si/SiLinkedin';
+import { SiGithub } from '@react-icons/all-files/si/SiGithub';
 import { DiJavascript1 } from '@react-icons/all-files/di/DiJavascript1';
 import { DiCss3 } from '@react-icons/all-files/di/DiCss3';
 import { DiMongodb } from '@react-icons/all-files/di/DiMongodb';
@@ -14,10 +17,10 @@ import { BsFillQuestionDiamondFill } from '@react-icons/all-files/bs/BsFillQuest
 
 import PropTypes from 'prop-types';
 
-import './card-team.scss';
+import './card-team-front.scss';
 
 // == Composant
-const CardTeam = ({ card }) => {
+const CardTeamFront = ({ card }) => {
   const { darkMode } = useSelector((state) => state.displayOptions);
 
   const iconsTable = {
@@ -53,19 +56,23 @@ const CardTeam = ({ card }) => {
       <div className="card-team__image-container">
         <img className="card-team__image-container__image" src={card.image} alt={card.title} />
       </div>
-      <div className="card-team__buttons-group">
-        <div className="card-team__button media">{card.type}</div>
-      </div>
-      <div className="card-team_link">
-        <h2 className="card-team__title">{card.title}</h2>
-      </div>
+      <div className="card-team__role">{card.role}</div>
+      <h2 className="card-team__title">{card.title}</h2>
       <div className="card-team__meta">
-        <div className="card-team__tags">
-          <div className={darkMode ? 'card-team__tags-techno card__tags-techno--dark' : 'card-team__tags-techno'}>
+        <div className="card-team__meta__links">
+          <Link className="card-team__meta__links__link-container" to={{ pathname: card.linkedin }} target="_blank">
+            <SiLinkedin />
+          </Link>
+          <Link className="card-team__meta__links__link-container" to={{ pathname: card.github }} target="_blank">
+            <SiGithub />
+          </Link>
+        </div>
+        <div className="card-team__meta__tags">
+          <div className={darkMode ? 'card-team__meta__tags-techno card-team__meta__tags-techno--dark' : 'card-team__meta__tags-techno'}>
             {
               card.techs.map(
                 (tech) => (
-                  <aside key={`${card.title}-${tech}`} className={darkMode ? `card-team__tags-techno--item card-team__tags-techno--item--dark ${tech.toLowerCase()}` : `card__tags-techno--item ${tech.toLowerCase()}`}>{iconsTable[tech.toLowerCase()]}</aside>
+                  <aside key={`${card.title}-${tech}`} className={darkMode ? `card-team__meta__tags-techno--item card-team__meta__tags-techno--item--dark ${tech.toLowerCase()}` : `card-team__meta__tags-techno--item ${tech.toLowerCase()}`}>{iconsTable[tech.toLowerCase()]}</aside>
                 ),
               )
             }
@@ -76,17 +83,19 @@ const CardTeam = ({ card }) => {
   );
 };
 
-CardTeam.propTypes = {
+CardTeamFront.propTypes = {
   card: PropTypes.shape({
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
     techs: PropTypes.arrayOf(
       PropTypes.string.isRequired,
     ).isRequired,
+    linkedin: PropTypes.string.isRequired,
+    github: PropTypes.string.isRequired,
   }).isRequired,
 };
 
 
 // == Export
-export default CardTeam;
+export default CardTeamFront;

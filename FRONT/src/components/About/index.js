@@ -1,36 +1,14 @@
 import './about.scss';
-import { useSelector } from 'react-redux';
-import CardTeam from '../CardTeam';
+import { useSelector, useDispatch } from 'react-redux';
+import CardTeamFront from '../CardTeamFront';
+import CardTeamBack from '../CardTeamBack';
+import ReactCardFlip from 'react-card-flip';
+import { flipCard } from '../../action/cardsTeam';
 
 const About = () => {
+  const dispatch = useDispatch();
   const { darkMode } = useSelector((state) => state.displayOptions);
-
-  const teamCards = [
-    {
-      title:"Virginie",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      type:"Product Owner / Git Master",
-      techs: ['Javascript', 'PostgreSQL', 'Autres'],
-    },
-    {
-      title:"Frédéric",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      type:"Product Owner / Git Master",
-      techs: ['Javascript', 'PostgreSQL', 'Autres'],
-    },
-    {
-      title:"Alexandre",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      type:"Product Owner / Git Master",
-      techs: ['Javascript', 'CSS'],
-    },
-    {
-      title:"Romain",
-      image:"https://www.nombresdesanges.com/wp-content/uploads/2018/09/4.jpg",
-      type:"Product Owner / Git Master",
-      techs: ['Javascript', 'CSS'],
-    },
-  ]
+  const { teamCards } = useSelector((state) => state.cardsTeam);
 
   return (
     <div className={darkMode ? "about about--dark" : "about"}>
@@ -58,8 +36,11 @@ const About = () => {
             {
                 teamCards.map(
                   (card) => (
-                    <div className="about__team__cards__card" key={card.title}>
-                      <CardTeam key={card.title} card={card} />
+                    <div onClick={()=> dispatch(flipCard(card.id))} className="about__team__cards__card" key={card.title}>
+                    <ReactCardFlip key={card.id} isFlipped={card.isFlipped} flipDirection="horizontal" flipSpeedFrontToBack={0.9}	flipSpeedBackToFront={0.9}>
+                      <CardTeamFront card={card} />
+                      <CardTeamBack card={card} />
+                    </ReactCardFlip>
                     </div>
                   ),
                 )

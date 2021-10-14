@@ -12,11 +12,13 @@ import cardNewReducer from './cardNew';
 import cardUpdateReducer from './cardUpdate';
 import cardsSearchReducer from './cardsSearch';
 import cardsHomeReducer from './cardsHome';
+import cardsTeamReducer from './cardsTeam';
 
 const rootReducer = combineReducers({
   cardCurrent: cardCurrentReducer,
   cardsSearch: cardsSearchReducer,
   cardsHome: cardsHomeReducer,
+  cardsTeam: cardsTeamReducer,
   cardNew: cardNewReducer,
   cardUpdate: cardUpdateReducer,
   displayOptions: displayOptionsReducer,
