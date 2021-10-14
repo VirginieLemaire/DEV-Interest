@@ -60,10 +60,10 @@ const CardTeamFront = ({ card }) => {
       <h2 className="card-team__title">{card.title}</h2>
       <div className="card-team__meta">
         <div className="card-team__meta__links">
-          <Link className="card-team__meta__links__link-container" to={card.linkedin}>
+          <Link className="card-team__meta__links__link-container" to={{ pathname: card.linkedin }} target="_blank">
             <SiLinkedin />
           </Link>
-          <Link className="card-team__meta__links__link-container" to={card.github}>
+          <Link className="card-team__meta__links__link-container" to={{ pathname: card.github }} target="_blank">
             <SiGithub />
           </Link>
         </div>
