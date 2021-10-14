@@ -46,3 +46,9 @@
   font-size: 1.5rem;
   font-weight: bold;
 }
+
+@media screen and (max-width: 600px) {
+  .about__team__cards {
+    flex-direction: column;
+  }
+}
