@@ -1,5 +1,6 @@
 const client = require('../database');
 const bcrypt = require('bcrypt');
+//validation des données avec Joi
 const {userSchema} = require('../schemas/userSchema');
 
 class User {
@@ -110,13 +111,14 @@ class User {
         try {
             
             const {email, password, username} = data;
-            console.log('<<< Signup-je suis dans le model et je reçois -je vais le valider avec joi- ' ,data);
-            // validation de joi
+            console.log('<<< Signup-je suis dans le model et je valider avec joi les données reçues:  ' ,data);
+            // validation avec joi
             const result = await userSchema.validate(data);
             console.log('\nSignup-resultat du validate de joi', result);
             if (result.error) {
                 console.log("erreur dans le modèle",result.error.details);
                 console.log("erreur details message: " ,result.error.message );
+                //erreur "personnalisée" par joi
                 const persError = result.error.message ;
                 throw new Error(persError);     
             }
@@ -124,15 +126,15 @@ class User {
             let saltRounds = await bcrypt.genSalt(10);
             let HashedPassword = await bcrypt.hash(password, saltRounds);
             console.log("je hash le password", {HashedPassword});
+            //envoi de la requête à la DB
             const {rows} = await client.query('INSERT INTO "user" (email, password, user_name, role_id) VALUES ($1, $2, $3, $4) RETURNING *', [
                 data.email,
                 HashedPassword,
                 data.username,
-                //id du rôle par défaut (utilisateur)
-                1
+                1 //pour le MVP, l'id du rôle est renseigné à 1 (utilisateur)
             ]);
             console.log("\n voici le résultat",rows[0]);
-                // creer un user pour securiser
+                // creer un objet user "sécurisé" (sans password ni rôle) à envoyer au front  depuis plusieurs sources
                 const userSecure = {
                 id: rows[0].id,
                 username: data.username,
@@ -140,7 +142,7 @@ class User {
                 createdAt: rows[0].createat
             }
             console.log("\n et mon user sécurisé qui va être renvoyé au controller", {userSecure});
-            
+            //renvoyer le user au front
             return userSecure;
             
   

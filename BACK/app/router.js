@@ -1,27 +1,22 @@
 const {Router, request, response} = require('express');
 const checkJwt = require('./middlewares/checkJwt');
 
-const cardController = require('./controllers/cardController');
-const userController = require('./controllers/userController');
-const bookmarksController = require('./controllers/userBookmarks');
-const fetchUrlController = require('./controllers/fetchUrlController');
-const contributorController = require('./controllers/contributorController');
+//import controllers
+const {cardController, userController, bookmarksController, fetchUrlController, contributorController, refreshToken, verifyController} = require('./controllers');
+
+//import middlewares
 const checkRefreshToken = require('./middlewares/checkRefreshToken');
-const refreshToken = require('./controllers/refreshToken');
-const verifyController = require('./controllers/verifyController');
-
-
 
 const router = Router();
 
 //CARDS
-//liste de toutes les cartes, paginées par 30 dans l'ordre chronologique descendant
-router.get('/cards', cardController.findAllCards);
-//ajout d'une carte
-    //1. renseigner l'URL et fetcher les infos open graph
-    router.post('/cards',checkJwt, fetchUrlController.findUrl);
-    //2. remplir le formulaire et envoyer au back
-    router.post('/cards/save',checkJwt, cardController.save);
+
+router.route('/cards')
+    .get(cardController.findAllCards) //liste de toutes les cartes, paginées par 30 dans l'ordre chronologique descendant
+    .post(checkJwt, fetchUrlController.findUrl); //renseigner l'URL à fetcher pour nécessaire à l'ajout d'une carte
+
+//ajout d'une carte, suite fetch des données Open Graph, envoi des données du formulaire et envoyer au back
+router.post('/cards/save',checkJwt, cardController.save);
 
 //lire une carte pour affichage d'une carte
 router.get('/cards/:slug/:id', cardController.findById);
@@ -63,7 +58,7 @@ router.post('/signup', userController.signUp);
 // route pour le refresh Token
 router.post('/api/refreshToken',checkRefreshToken, refreshToken.refreshToken);
 
-//route pour vérifier la présence de données en DB
+//route pour vérifier la présence de données en DB avant de se rendre sur une route d'ajout de données (demandée par l'équipe front")
 router.get('/verify?', verifyController.signUp);
 
 /**

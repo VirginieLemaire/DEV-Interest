@@ -29,7 +29,7 @@ const cardsController = {
             
         } catch(error) {
             console.log(error);
-            res.status(500).json(error.message);
+            response.status(500).json(error.message);
         }
     },
     //réponse à une requête dans la barre de recherche
