@@ -1,21 +1,43 @@
 const {Router, request, response} = require('express');
+//import middlewares
+const checkRefreshToken = require('./middlewares/checkRefreshToken');
 const checkJwt = require('./middlewares/checkJwt');
 
 //import controllers
-const {cardController, userController, bookmarksController, fetchUrlController, contributorController, refreshToken, verifyController} = require('./controllers');
-
-//import middlewares
-const checkRefreshToken = require('./middlewares/checkRefreshToken');
+const cardController = require('./controllers/cardController');
+const userController = require('./controllers/userController');
+const bookmarksController = require('./controllers/userBookmarks');
+const fetchUrlController = require('./controllers/fetchUrlController');
+const contributorController = require('./controllers/contributorController');
+const refreshToken = require('./controllers/refreshToken');
+const verifyController = require('./controllers/verifyController');
 
 const router = Router();
 
-//CARDS
+// ************** CARDS *******************
+// READ
+/**
+ * list of all cards with custom pagination (default is 30 cards per page, ordre by date of creation descendant)
+ * 
+ */
+ router.get('/cards', cardController.findAllCards);
 
-router.route('/cards')
-    .get(cardController.findAllCards) //liste de toutes les cartes, paginées par 30 dans l'ordre chronologique descendant
-    .post(checkJwt, fetchUrlController.findUrl); //renseigner l'URL à fetcher pour nécessaire à l'ajout d'une carte
+/**
+ * CREATE
+ * To create a new ressource (card) follow 2 steps :
+ * 
+ */
 
-//ajout d'une carte, suite fetch des données Open Graph, envoi des données du formulaire et envoyer au back
+/**
+ * 1st : Fetches Open Graph meta datas from URL sent by client. Front developpers can insert thoses datas into inputs
+ * @returns {Object} Json   Open Graph meta datas
+ */
+ router.post('/cards',checkJwt, fetchUrlController.findUrl);//renseigner l'URL à fetcher pour nécessaire à l'ajout d'une carte
+
+
+/**
+ * 2nd : Imports card's data into DB
+ */
 router.post('/cards/save',checkJwt, cardController.save);
 
 //lire une carte pour affichage d'une carte

@@ -1,20 +1,30 @@
 const client = require('../database');
 
 class Cards {
+    /**
+     * Constructor : creates properties by looping the object sent
+     * @param {Object} obj a literal object with properties copied in the instance
+     */
     constructor(obj ={}) {
         for (const proname in obj) {
             this[proname] = obj[proname];
         }
     }
+    /**
+     * Fetches all cards in the database, with a pagination. By default, order is set by date of creation descending
+     * @param {Number} limit pagination paramater : number of cards per page desired by client
+     * @param {Number} skip pagination paramater : number of the page to load
+     * @returns {Array<object>} Array containing a json with all cards for one page (corresponding to pagination parameters)
+     */
     static async findAllCards(limit, skip) {
         try {
-            
+            //Send query to DB with pagination paramaters
             const {rows} = await client.query(`SELECT * FROM cards ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`);
+            //return data to controller
             return rows.map(row => new Cards(row));
-            
-                
         }catch(error) {
             console.log(error);
+            //send error details to controller
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
