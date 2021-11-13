@@ -2,7 +2,7 @@ const Bookmarks = require('../models/bookmarks');
 const jwt = require('../services/jwt');
 
 
-const bookmarksController = {
+const bookmarkController = {
     findBookmarksByUserId: async (request, response) => {
         try {
             const id = request.params.id;
@@ -62,4 +62,4 @@ const bookmarksController = {
 
 }
 
-module.exports = bookmarksController;
+module.exports = bookmarkController;

@@ -4,10 +4,10 @@ const checkRefreshToken = require('./middlewares/checkRefreshToken');
 const checkJwt = require('./middlewares/checkJwt');
 
 //import controllers
-const {cardController, userController, userBookmarks, fetchUrlController, contributorController, refreshToken, verifyController} = require('./controllers');
+const {cardController, userController, bookmarkController, fetchUrlController, contributorController, refreshToken, verifyController} = require('./controllers');
 /* const cardController = require('./controllers/cardController');
 const userController = require('./controllers/userController');
-const userBookmarks = require('./controllers/userBookmarks');
+const bookmarkController = require('./controllers/bookmarkController');
 const fetchUrlController = require('./controllers/fetchUrlController');
 const contributorController = require('./controllers/contributorController');
 const refreshToken = require('./controllers/refreshToken');
@@ -23,7 +23,7 @@ const router = Router();
  */
  router.post('/cards/save',checkJwt, cardController.save);
 // Ajout d'une carte en favoris
-router.post('/cards/:id/bookmarks',checkJwt, userBookmarks.addBookmarkById);
+router.post('/cards/:id/bookmarks',checkJwt, bookmarkController.addBookmarkById);
 
 // ----  READ ---- 
 /**
@@ -39,7 +39,7 @@ router.get('/update/:id', cardController.findOneToUpdate);
 //résultat de recherche
 router.get('/cards/search?',cardController.findQueryAllCards);
 // VOIR les cartes en favoris
-router.get('/users/:id/bookmarks',checkJwt, userBookmarks.findBookmarksByUserId);
+router.get('/users/:id/bookmarks',checkJwt, bookmarkController.findBookmarksByUserId);
 // voir les cartes crées
 router.get('/contributor/cards', checkJwt, contributorController.findByContributor);
 
@@ -51,7 +51,7 @@ router.put('/contributor/cards/:id',checkJwt, contributorController.update);
 //suppression d'une carte (nécessite d'être le contributeur de la carte)
 router.delete('/cards/:id/users', checkJwt, contributorController.deleteCardById);
 //Delete une carte des favoris
-router.delete('/users/:id/bookmarks/:id',checkJwt, userBookmarks.deleteBookmarkById);
+router.delete('/users/:id/bookmarks/:id',checkJwt, bookmarkController.deleteBookmarkById);
 
 // ************** USERS *******************
 // ---- CREATE ---- 
