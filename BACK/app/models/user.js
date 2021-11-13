@@ -112,29 +112,29 @@ class User {
             
             const {email, password, username} = data;
             console.log('<<< Signup-je suis dans le model et je valider avec joi les données reçues:  ' ,data);
-            // validation avec joi
+            // validate with joi
             const result = await userSchema.validate(data);
             console.log('\nSignup-resultat du validate de joi', result);
             if (result.error) {
                 console.log("erreur dans le modèle",result.error.details);
                 console.log("erreur details message: " ,result.error.message );
-                //erreur "personnalisée" par joi
+                //error customized by joi
                 const persError = result.error.message ;
                 throw new Error(persError);     
             }
-            // hash du password (obligatoire à cause de joi)
+            // hash password
             let saltRounds = await bcrypt.genSalt(10);
             let HashedPassword = await bcrypt.hash(password, saltRounds);
             console.log("je hash le password", {HashedPassword});
-            //envoi de la requête à la DB
+            //send request to DB
             const {rows} = await client.query('INSERT INTO "user" (email, password, user_name, role_id) VALUES ($1, $2, $3, $4) RETURNING *', [
                 data.email,
                 HashedPassword,
                 data.username,
-                1 //pour le MVP, l'id du rôle est renseigné à 1 (utilisateur)
+                1 //for MVP, role is set to 1 ("utilisateur")
             ]);
             console.log("\n voici le résultat",rows[0]);
-                // creer un objet user "sécurisé" (sans password ni rôle) à envoyer au front  depuis plusieurs sources
+                //create "secure" objetc user without not wanted data to send to front. Data comes from several places
                 const userSecure = {
                 id: rows[0].id,
                 username: data.username,
@@ -142,16 +142,16 @@ class User {
                 createdAt: rows[0].createat
             }
             console.log("\n et mon user sécurisé qui va être renvoyé au controller", {userSecure});
-            //renvoyer le user au front
+            //send user to front
             return userSecure;
             
   
         } catch (persError) {
-            //voir l'erreur en console
+            //see error
            console.log("***\ndans le catch du model");
            //console.log(error.message);
             console.log(persError);
-            //renvoyer l'erreur au front
+            //send it to front
             throw new Error(persError);
         }
     }
