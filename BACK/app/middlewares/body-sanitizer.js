@@ -3,7 +3,7 @@ const sanitizer = require('sanitizer');
 const bodySanitizer = (req, res, next) => {
     console.log("\n*** Hello, je suis Sanitizer, ma fonction est d'éviter les attaques XSS en nettoyant ce qui envoyé du client");
     //if client doesn't send data to sanitize, go next
-    if (Object.keys(req.body).length === 0) {
+    if (!req.body) {
         console.log("Aucune donnée envoyée, je passe la main *****************************");
     } else {
         // sanitize every data

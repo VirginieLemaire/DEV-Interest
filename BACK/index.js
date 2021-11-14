@@ -13,10 +13,10 @@ app.use(cors());//grant access to every URL
 const bodySanitizer = require('./app/middlewares/body-sanitizer');
 app.use(bodySanitizer);
 
-
 //body-parsers
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+
 
 //send router
 app.use('/', router);

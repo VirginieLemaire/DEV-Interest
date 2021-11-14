@@ -4,16 +4,16 @@ const checkRefreshToken = require('./middlewares/checkRefreshToken');
 const checkJwt = require('./middlewares/checkJwt');
 
 //import controllers
-const {cardController, userController, bookmarkController, fetchUrlController, contributorController, refreshToken, verifyController} = require('./controllers');
-/* const cardController = require('./controllers/cardController');
+const cardController = require('./controllers/cardController');
 const userController = require('./controllers/userController');
 const bookmarkController = require('./controllers/bookmarkController');
 const fetchUrlController = require('./controllers/fetchUrlController');
 const contributorController = require('./controllers/contributorController');
 const refreshToken = require('./controllers/refreshToken');
-const verifyController = require('./controllers/verifyController'); */
+const verifyController = require('./controllers/verifyController');
 
 const router = Router();
+
 
 // ************** CARDS *******************
 // ---- CREATE ---- 
@@ -21,7 +21,7 @@ const router = Router();
  * Create a new ressource (card)
  * 
  */
- router.post('/cards/save',checkJwt, cardController.save);
+router.post('/cards/save',checkJwt, cardController.save);
 // Ajout d'une carte en favoris
 router.post('/cards/:id/bookmarks',checkJwt, bookmarkController.addBookmarkById);
 
@@ -54,23 +54,20 @@ router.delete('/cards/:id/users', checkJwt, contributorController.deleteCardById
 router.delete('/users/:id/bookmarks/:id',checkJwt, bookmarkController.deleteBookmarkById);
 
 // ************** USERS *******************
-// ---- CREATE ---- 
-//SIGNUP
+
+//USER ACCOUNT CRUD
+
+//CREATE
 router.post('/signup', userController.signUp);
 
-// ---- READ ---- 
-//Accéder aux infos d'un user avec la liste des id bookmarks
+router.route('/users/:id')
+    .get(checkJwt, userController.findById) //READ
+    .put(checkJwt, userController.update) //UPDATE
+    .delete(checkJwt, userController.deleteUserById); //DELETE
+
+// READ : for user experience
+//Acces a view of a user with the list of its bookmarks' id : allow to show bookmarked cards from all cards in client
 router.get('/user',checkJwt, userController.getUserWithBookmarksInfo);
-//USERS by id
-router.get('/users/:id' ,checkJwt, userController.findById);
-
-// ---- UPDATE ---- 
-//modifier un user
-router.put('/users/:id' , checkJwt, userController.update);
-
-// ---- DELETE ---- 
-//DELETE USER BY ID
-router.delete('/users/:id' ,checkJwt, userController.deleteUserById);
 
 // ************** SECURITY **************
 // route pour le refresh Token
@@ -85,7 +82,7 @@ router.post('/login', userController.login);
  * Access : only logged users
  * @returns {Object} Json   Open Graph meta datas
  */
- router.post('/cards',checkJwt, fetchUrlController.findUrl);//renseigner l'URL à fetcher pour nécessaire à l'ajout d'une carte
+router.post('/cards',checkJwt, fetchUrlController.findUrl);//renseigner l'URL à fetcher pour nécessaire à l'ajout d'une carte
 
 //route pour vérifier la présence de données en DB avant de se rendre sur une route d'ajout de données (demandée par l'équipe front)
 router.get('/verify?', verifyController.signUp);
@@ -94,7 +91,7 @@ router.get('/verify?', verifyController.signUp);
  * No resource found : error 404
  * 
  */
- router.use((_, response) => response.status(404).json('Endpoint non trouvé'));
+router.use((_, response) => response.status(404).json('Endpoint non trouvé'));
 
 
 module.exports = router;
