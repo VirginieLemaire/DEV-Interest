@@ -66,3 +66,4 @@ La partie front a été déployée sur [surge](https://devinterest.surge.sh/)
 - [Git](https://git-scm.com/downloads) pour le versionning
 
 L'API a été déployée sur [Heroku](https://devinterest.herokuapp.com/cards).
+

@@ -132,7 +132,7 @@ class Cards {
   
         } catch (error) {
             console.log('Erreur SQL', error.detail);
-            //relancer l'erreur pout que le controller puisse l'attrapper et la renvoyer au front
+            //relancer l'erreur pour que le controller puisse l'attrapper et la renvoyer au front
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
