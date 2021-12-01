@@ -8,7 +8,11 @@ const port = process.env.PORT || 3000;
 //SECURITY:
 //protects access to API
 const cors = require('cors');
-app.use(cors());//grant access to every URL
+var corsOptions = {
+    origin: 'http://devinterest.surge.sh/',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
+app.use(cors(corsOptions));//grant access to every URL
 //avoid XSS attacks
 const bodySanitizer = require('./app/middlewares/body-sanitizer');
 app.use(bodySanitizer);
