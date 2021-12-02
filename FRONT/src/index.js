@@ -6,6 +6,7 @@ import App from 'src/components/App';
 import store from 'src/store';
 
 const rootReactElement = (
+  // lance le store Redux qui contient les éléments du state
   <Provider store={store}>
     <Router>
       <App />

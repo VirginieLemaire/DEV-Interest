@@ -1,0 +1,8 @@
+[core]
+	engine = pg ou autre
+	top_dir = dossier de migration 
+	# plan_file = chemin du fichier
+# [engine "pg"]
+	target = accès à la DB dispo dans les accès hébergement
+	# registry = sqitch
+	# client = psql

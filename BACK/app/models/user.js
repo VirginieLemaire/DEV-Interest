@@ -106,7 +106,7 @@ class User {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-
+    //signup
     async signUp(data) {
         try {
             
