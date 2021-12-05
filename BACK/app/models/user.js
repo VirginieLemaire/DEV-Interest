@@ -47,14 +47,14 @@ class User {
             console.log("** Coucou! Je suis findUser du model User.\nJe compare l'email envoyé par le client avec celui de la DB");
             const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]);//this vient du constructeur
             console.log(rows);
-            //stocker l'id trouvé dans la table user
-            const id = rows[0].id;
-            console.log("J'ai trouvé le user" + id );
             //si pas de réponse => retourner l'erreur
-            if (!rows[0].id) {
+            if (!rows[0]) {
                 console.log("les emails ne correspondent pas, je renvoie l'erreur au client sans préciser la cause pour des raisons de sécurité");
                 throw new Error('Identification failed');
             }
+            //stocker l'id trouvé dans la table user
+            const id = rows[0].id;
+            console.log("J'ai trouvé le user" + id );
             //vérifier que les mots de passe correspondent
             console.log("Maintenant je vérifie que les mots de passe correspondent\n...");
             const isValid = await bcrypt.compare(this.password, rows[0].password);
