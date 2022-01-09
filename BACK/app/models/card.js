@@ -33,7 +33,7 @@ class Cards {
             console.log(`\nHI! Je suis le model findQueryAllCards, voyons la recherche passée et les infos de pagination : `);
             
             console.log({searchQuery}, {limit}, {skip});
-            //faire une phrase avec tous les champs
+            //faire une requête avec tous les champs
             const select = 'SELECT *,count(*) OVER() AS full_count FROM cards';
             let keyword = '';
             let tech = '';
@@ -43,7 +43,7 @@ class Cards {
             let lang = '';
             const pagination = `ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`;
             if (searchQuery.keyword) keyword = `WHERE to_tsvector('fr',cards::text) @@websearch_to_tsquery('fr', '${searchQuery.keyword}')`;
-
+            //ajout des filtres
             if (searchQuery.tech !== 'all') tech = `AND to_tsvector('fr', techs::text) @@websearch_to_tsquery('fr', '${searchQuery.tech}')`;
             if (searchQuery.category !== 'all') category = `AND to_tsvector('fr', category::text) @@websearch_to_tsquery('fr', '${searchQuery.category}')`;
             if (searchQuery.level !== 'all') level = `AND to_tsvector('fr', level::text) @@websearch_to_tsquery('fr', '${searchQuery.level}')`;

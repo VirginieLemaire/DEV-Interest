@@ -31,8 +31,6 @@ class User {
                 return new User(rows[0]);
             }
             return null;
-
-            
         } catch (error) {
             //voir l'erreur en console
             console.trace(error);
@@ -155,6 +153,7 @@ class User {
             throw new Error(persError);
         }
     }
+    //Delete one user
     async deleteUserById(id) {
         try {
             // TODO verifier si l'utilisateur connecté est celui qui peut supprimer
@@ -172,7 +171,7 @@ class User {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-
+    //Update one user
     async update() {
         try {
             console.log(">> coucou c'est moi, la méthode update du model");
