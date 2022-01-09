@@ -1,20 +1,30 @@
 const client = require('../database');
 
 class Cards {
+    /**
+     * Constructor : creates properties by looping the object sent
+     * @param {Object} obj a literal object with properties copied in the instance
+     */
     constructor(obj ={}) {
         for (const proname in obj) {
             this[proname] = obj[proname];
         }
     }
+    /**
+     * Fetches all cards in the database, with a pagination. By default, order is set by date of creation descending
+     * @param {Number} limit pagination paramater : number of cards per page desired by client
+     * @param {Number} skip pagination paramater : number of the page to load
+     * @returns {Array<object>} Array containing a json with all cards for one page (corresponding to pagination parameters)
+     */
     static async findAllCards(limit, skip) {
         try {
-            
+            //Send query to DB with pagination paramaters
             const {rows} = await client.query(`SELECT * FROM cards ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`);
+            //return data to controller
             return rows.map(row => new Cards(row));
-            
-                
         }catch(error) {
             console.log(error);
+            //send error details to controller
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
@@ -23,7 +33,7 @@ class Cards {
             console.log(`\nHI! Je suis le model findQueryAllCards, voyons la recherche passée et les infos de pagination : `);
             
             console.log({searchQuery}, {limit}, {skip});
-            //faire une phrase avec tous les champs
+            //faire une requête avec tous les champs
             const select = 'SELECT *,count(*) OVER() AS full_count FROM cards';
             let keyword = '';
             let tech = '';
@@ -33,7 +43,7 @@ class Cards {
             let lang = '';
             const pagination = `ORDER BY createdAt DESC LIMIT ${limit} OFFSET ${skip}`;
             if (searchQuery.keyword) keyword = `WHERE to_tsvector('fr',cards::text) @@websearch_to_tsquery('fr', '${searchQuery.keyword}')`;
-
+            //ajout des filtres
             if (searchQuery.tech !== 'all') tech = `AND to_tsvector('fr', techs::text) @@websearch_to_tsquery('fr', '${searchQuery.tech}')`;
             if (searchQuery.category !== 'all') category = `AND to_tsvector('fr', category::text) @@websearch_to_tsquery('fr', '${searchQuery.category}')`;
             if (searchQuery.level !== 'all') level = `AND to_tsvector('fr', level::text) @@websearch_to_tsquery('fr', '${searchQuery.level}')`;
@@ -122,7 +132,7 @@ class Cards {
   
         } catch (error) {
             console.log('Erreur SQL', error.detail);
-            //relancer l'erreur pout que le controller puisse l'attrapper et la renvoyer au front
+            //relancer l'erreur pour que le controller puisse l'attrapper et la renvoyer au front
             throw new Error(error.detail ? error.detail : error.message);
         }
     }

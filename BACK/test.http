@@ -5,8 +5,8 @@ POST {{baseurl}}/login
 Content-Type: application/json
 
 {
-    "email": "virginie@mail.io",
-    "password": "1234",
+    "email": "virg@mail.io",
+    "password": "12345678",
     "username": "Virginie"
 }
 

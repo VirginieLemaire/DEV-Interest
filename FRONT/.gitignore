@@ -7,3 +7,4 @@ Thumbs.db
 yarn-error.log
 .env*
 !.env*.example
+CNAME

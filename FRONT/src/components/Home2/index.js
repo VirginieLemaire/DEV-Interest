@@ -11,11 +11,11 @@ import { getUserWithToken } from '../../action/userCurrent';
 
 const Home2 = () => {
   const dispatch = useDispatch();
-
+  //focntion qui va se déclencher à chaque changement de state
   useEffect(() => {
     dispatch(fetchCardsHome());
     dispatch(getUserWithToken());
-  }, []);
+  }, []);//uniquement au 1er chargement de la page
 
   return (
     <div className="home2">

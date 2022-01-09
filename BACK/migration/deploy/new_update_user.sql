@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION update_user(data json) RETURNS void AS $$
 	UPDATE "user" SET 
         email=COALESCE(data->>'email', email),
         user_name=COALESCE(data->>'username', user_name),
-        password=COALESCE(data->>'password', password),
+        "password"=COALESCE(data->>'password', "password"),
         updateat=(now())::TIMESTAMPTZ
     WHERE id=(data->>'id')::INT
 $$ LANGUAGE SQL STRICT;

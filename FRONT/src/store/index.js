@@ -3,7 +3,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import reducer from 'src/reducers';
 
 import apiMiddleware from '../middlewares/api';
-
+//voir le changement de state en temps réel dans les outils de développement
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const middlewares = [apiMiddleware];

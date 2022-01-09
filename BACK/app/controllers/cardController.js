@@ -2,36 +2,42 @@ const Cards = require('../models/card');
 const jwt = require('../services/jwt');
 
 const cardsController = {
+    //Get a list of all cards with pagination
+    
     findAllCards: async (request, response) => {
         try {
+            //set pagination
             let {page, size} = request.query;
             if (!page) {
-                page =1;
+                page = 1;
             }
             if (!size) {
                 size = 30;
             }
-
             const limit = parseInt(size);
             const skip = (page - 1) * size;
+            //Send data to model
             const card = await Cards.findAllCards(limit, skip);
-            //response.setHeader('Authorization', jwt.makeToken(request.userId));
+            //Set tests and send response to client
             if(card === "") {
-                response.status(200).json('Pas de contenu !');
+                response.status(204).json('Pas de contenu !');
             }else {
+                //send result's length in header for frontend purposes
                 response.header('resultat_home_cards', card.length);
-                response.json({
+                //send datas
+                response.status(200).json({
                     page,
                     size,
                     data: card
                 });
             }
-            
         } catch(error) {
             console.log(error);
-            res.status(500).json(error.message);
+            //send error to frontend
+            response.status(500).json(error.message);
         }
     },
+
     //réponse à une requête dans la barre de recherche
     findQueryAllCards: async (request, response) => {
         try {
