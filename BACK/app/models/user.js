@@ -14,7 +14,7 @@ class User {
         }
     }
 
-    //Récupérer un user via son id
+    //Récupérer un user via son id dans la table user
     /**
      * Fetch un user dans la base de données
      * @param {number} id id du user
@@ -38,21 +38,19 @@ class User {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-    //login
+    //login (va chercher dans la vue user_bookmarks)
     async findUser() {
         try {
-            //comparer l'email de connexion avec la DB dans la table user
+            //comparer l'email de connexion avec la DB
             console.log("** Coucou! Je suis findUser du model User.\nJe compare l'email envoyé par le client avec celui de la DB");
-            const { rows } = await client.query(`SELECT * FROM "user" WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]);//this vient du constructeur
-            console.log(rows);
+            const { rows } = await client.query(`SELECT * FROM user_bookmarks WHERE id=(SELECT id FROM "user" WHERE email = $1);`, [this.email]);//this vient du constructeur
+            console.log('Résultat de la requête: ',rows);
             //si pas de réponse => retourner l'erreur
             if (!rows[0]) {
                 console.log("les emails ne correspondent pas, je renvoie l'erreur au client sans préciser la cause pour des raisons de sécurité");
                 throw new Error('Identification failed');
             }
-            //stocker l'id trouvé dans la table user
-            const id = rows[0].id;
-            console.log("J'ai trouvé le user" + id );
+
             //vérifier que les mots de passe correspondent
             console.log("Maintenant je vérifie que les mots de passe correspondent\n...");
             const isValid = await bcrypt.compare(this.password, rows[0].password);
@@ -60,42 +58,20 @@ class User {
                     console.log("ce n'est pas bon, on renvoie une erreur au client sans préciser la raison par sécurité");
                     throw new Error('Identification failed');
                 }
-            console.log("vérif ok!\n");
-            //si user voir s'il a des bookmarks
-            //console.log('id trouvé dans la table user: ',id);
-            
-            console.log("Je cherche à savoir si le user a des favoris");
-            
-            const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [id]);
-            //console.log("Voici ce que j'ai trouvé :");
-            //console.log(bookmarksUser.rows);
-            if (!bookmarksUser.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
-                console.log("Cet utilisateur n'est pas présent dans la table bookmarks: je renvoie les infos user au controller");
-                // créer un objet user "sécurisé"
-                let userSecure = {
-                    id: rows[0].id,
-                    username: rows[0].user_name,
-                    email: rows[0].email,
-                    createdAt: rows[0].createat
-                };
-                console.log(userSecure);
-                //renvoyer le user au controller            
-                return userSecure;
-            } else {
-                //sinon retourner user_bookmarks
-                console.log("Cet utilisateur est présent dans la table bookmarks: je renvoie les infos user avec le tableau des id des bookmarks au controller");
-                // créer un objet user "sécurisé" avec ses bookmarks
-                let userSecure = {
-                    id: bookmarksUser.rows[0].id,
-                    username: bookmarksUser.rows[0].user_name,
-                    email: bookmarksUser.rows[0].email,
-                    createdAt: rows[0].createat,
-                    bookmarks: bookmarksUser.rows[0].bookmarks
-                };
-                console.log(userSecure);
-                //renvoyer le user au controller            
-                return userSecure;
-            }
+            console.log("vérif mot de passe ok!\n");
+
+            // créer un objet user "sécurisé" = sans mot de passe
+            let userSecure = {
+                id: rows[0].id,
+                username: rows[0].user_name,
+                email: rows[0].email,
+                createdAt: rows[0].createat,
+                bookmarks: rows[0].bookmarks
+            };
+            console.log(userSecure);
+        
+            //renvoyer le user au controller            
+            return userSecure;
 
         } catch (error) {
             //voir l'erreur en console
@@ -195,38 +171,20 @@ class User {
             
             console.log("Je cherche à savoir si le user a des favoris");
             
-            const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [this.id]);
-            //console.log("Voici ce que j'ai trouvé :");
-            if (!bookmarksUser.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
-                console.log("Cet utilisateur n'est pas présent dans la table bookmarks: je renvoie les infos user au controller");
-                // créer un objet user "sécurisé"
-                let userSecure = {
-                    id: this.id,
-                    username: rows[0].user_name,
-                    email: rows[0].email,
-                    createdAt: rows[0].createat
-                };
-                console.log(userSecure);
-                //renvoyer le user au controller            
-                return userSecure;
-            } else {
-                //sinon retourner user_bookmarks
-                console.log("Cet utilisateur est présent dans la table bookmarks: je renvoie les infos user avec le tableau des id des bookmarks au controller");
-                console.log(bookmarksUser.rows[0]);
-                // créer un objet user "sécurisé" avec ses bookmarks
-                let userSecure = {
-                    id: this.id,
-                    username: bookmarksUser.rows[0].user_name,
-                    email: bookmarksUser.rows[0].email,
-                    createdAt: rows[0].createat,
-                    bookmarks: bookmarksUser.rows[0].bookmarks
-                };
-                console.log(userSecure);
-                //renvoyer le user au controller            
-                return userSecure;
-            }
-
-        } catch (error) {
+            const user = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [this.id]);
+            console.log(user.rows[0]);
+            // créer un objet user "sécurisé" avec ses bookmarks
+            let userSecure = {
+                id: this.id,
+                username: user.rows[0].user_name,
+                email: user.rows[0].email,
+                createdAt: user.rows[0].createat,
+                bookmarks: user.rows[0].bookmarks
+            };
+            console.log(userSecure);
+            //renvoyer le user au controller            
+            return userSecure;
+            } catch (error) {
             console.log('Erreur SQL', error.detail);
             //relancer l'erreur pour que le controller puisse l'attrapper et la renvoyer au front
             throw new Error(error.detail ? error.detail : error.message);
@@ -251,17 +209,17 @@ class User {
                         
             console.log("\n>> ??? Je cherche à savoir si le user a des favoris ???\n");
 
-            const bookmarksUser = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [this.userId]);
+            const user = await client.query(`SELECT * FROM user_bookmarks WHERE id= $1;`, [this.userId]);
             //console.log("Voici ce que j'ai trouvé :");
-            if (!bookmarksUser.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
+            if (!user.rows[0]) { //si pas de bookmarks retourner le user sans le tableau bookmarks
                 console.log(">> Cet utilisateur n'est pas présent dans la vue bookmarks: je renvoie les infos user au controller");
                 //renvoyer le user au controller            
                 return userSecure;
             } else {
                 //sinon retourner user_bookmarks
                 console.log(">> Cet utilisateur est présent dans la vue bookmarks: j'atoute le tableau des id des bookmarks à userSecure et j'en envoi user Secure au controller\n");
-                //console.log(bookmarksUser.rows[0]);
-                userSecure.bookmarks = bookmarksUser.rows[0].bookmarks;
+                //console.log(user.rows[0]);
+                userSecure.bookmarks = user.rows[0].bookmarks;
                 //console.log(userSecure);
                 //renvoyer le user au controller            
                 return userSecure;
