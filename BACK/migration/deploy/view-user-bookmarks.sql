@@ -8,7 +8,7 @@ SELECT
 	"user".*, 
 	ARRAY_AGG(user_prefer_card.card_id) bookmarks
 FROM "user"
-	JOIN user_prefer_card ON user_prefer_card.user_id = "user".id
+	LEFT JOIN user_prefer_card ON user_prefer_card.user_id = "user".id
 	GROUP BY "user".id
 ;
 

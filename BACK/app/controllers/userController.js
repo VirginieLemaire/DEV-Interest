@@ -2,7 +2,7 @@ const User = require("../models/user");
 const jwt = require("../services/jwt");
 
 const userController = {
-  //Trouver une user (nécessite un id)
+  //Trouver un user (nécessite un id)
   findById: async (request, response) => {
     try {
       const id = parseInt(request.params.id, 10);
@@ -16,33 +16,24 @@ const userController = {
   login: async (request, response) => {
     try {
       //récupérer les infos de login
-      console.log(
-        "\n** Hello, je suis le controller : \n-> un user s'est connecté au client, je récupère les infos de login"
-      );
+      console.log("\n** Hello, je suis le controller : \n-> un user s'est connecté au client, je récupère les infos de login");
       const login = request.body;
       //authentification
-      console.log(
-        "Je veux authentifier le user => je vais envoyer les infos au model pour comparaison\n"
-      );
+      console.log("Je veux authentifier le user => je vais envoyer les infos au model pour comparaison\n");
       const user = await new User(login).findUser();
-      console.log(
-        "\nC'est à nouveau le controller: ok on m'a renvoyé un user, je crée le token.............."
-      );
+      console.log("\nC'est à nouveau le controller: ok on m'a renvoyé un user, je crée les token..............");
 
       //access token
       const accessToken = jwt.makeToken(user.id);
-      console.log(accessToken);
+      //console.log(accessToken);
       // refresh token
       const refreshToken = jwt.refreshToken(user.id);
-      console.log("token user créé, on envoie tout au client\n\n");
+      //console.log(refreshToken);
+      console.log("tokens user créés, on envoie tout au client\n\n");
+      //envoi au client
       response
         .header({ Authorization: accessToken, refreshToken: refreshToken })
         .send({ accessToken: accessToken, refreshToken: refreshToken, user });
-
-      // response.send({
-      //     accessToken: accessToken,
-      // });
-      // response.status(200).json(user);
     } catch (error) {
       //lire l'erreur
       console.trace(error);

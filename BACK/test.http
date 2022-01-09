@@ -7,7 +7,6 @@ Content-Type: application/json
 {
     "email": "virg@mail.io",
     "password": "12345678",
-    "username": "Virginie"
 }
 
 ### --- Afficher les cartes
