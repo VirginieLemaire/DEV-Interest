@@ -55,7 +55,7 @@ L'équipe a utilisé:
 - Semantic UI
 - Figma
   
-La partie front a été déployée sur [surge](https://devinterest.surge.sh/)
+La partie front a été déployée sur [surge](https://devinterest.surge.sh/) mais n'est plus fonctionnelle.
 
 ### Back-end
 
@@ -65,5 +65,5 @@ La partie front a été déployée sur [surge](https://devinterest.surge.sh/)
 - [Sqitch](https://sqitch.org/download/) (v1 ou supérieure) pour la gestion des migrations
 - [Git](https://git-scm.com/downloads) pour le versionning
 
-L'API a été déployée sur [Heroku](https://devinterest.herokuapp.com/cards).
+L'API a été déployée sur [Heroku](https://devinterest.herokuapp.com/cards). Elle a migré sur render à l'adresse suivante: [https://dev-interest.onrender.com/cards](https://dev-interest.onrender.com/cards) en attente d'un nouveau front
 
