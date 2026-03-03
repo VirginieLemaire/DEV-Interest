@@ -1,5 +1,7 @@
 # DEV INTEREST
 
+> ⚠️ EDIT : Ce projet **n'est plus à jour** et **contient trop de dépendances contenant des failles de sécurité**. Je le garde en public uniquement "pour mémoire".
+
 DEV INTEREST est un projet que j'ai soumis à la promotion afin de le présenter en tant que projet de fin de formation.
 
 J'ai eu le plaisir de le voir sélectionné par plusieurs de mes camarades. L'équipe a ainsi été formée par 4 élèves développeurs (2 développeurs front-end, 2 développeurs back-end).
@@ -55,7 +57,7 @@ L'équipe a utilisé:
 - Semantic UI
 - Figma
   
-La partie front a été déployée sur [surge](https://devinterest.surge.sh/) mais n'est plus fonctionnelle.
+La partie front avait été déployée sur [surge](https://devinterest.surge.sh/) **mais n'est plus fonctionnelle**.
 
 ### Back-end
 
@@ -65,5 +67,5 @@ La partie front a été déployée sur [surge](https://devinterest.surge.sh/) ma
 - [Sqitch](https://sqitch.org/download/) (v1 ou supérieure) pour la gestion des migrations
 - [Git](https://git-scm.com/downloads) pour le versionning
 
-L'API a été déployée sur [Heroku](https://devinterest.herokuapp.com/cards). Elle a migré sur render à l'adresse suivante: [https://dev-interest.onrender.com/cards](https://dev-interest.onrender.com/cards) en attente d'un nouveau front
+L'API avait été déployée sur [Heroku](https://devinterest.herokuapp.com/cards) puis a migré sur render mais n'est plus disponible non plus
 
